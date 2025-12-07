@@ -5,7 +5,7 @@ import sys
 # If you want Sphinx to document your source code (optional)
 # sys.path.insert(0, os.path.abspath('..'))
 
-project = 'Forensics PXE Station'
+project = 'Digital Forensics Notes'
 copyright = '2025, PumukyDev'
 author = 'PumukyDev'
 release = '0.1.0'
