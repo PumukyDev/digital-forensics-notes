@@ -81,7 +81,7 @@ Open Active Disk Editor in your machine
 
 ![alt text](./images/image-20.png)
 
-The following window will appear. Select **“Open File…”** and choose [disk1.dd](./disks/disk1.dd).
+The following window will appear. Select **“Open File…”** and choose disk1.dd found in [disks.7z](./disks.7z).
 
 
 ![alt text](./images/image.png)
@@ -208,7 +208,7 @@ Since the tools were previously explained, only the requested data is analyzed h
 
 ### Determine whether the partition table is MBR or GPT
 
-Now, select [disk2.dd](./disks/disk2.dd)
+Now, select disk2.dd found in [disks.7z](./disks.7z).
 
 ![alt text](./images/image-21.png)
 
@@ -270,7 +270,7 @@ Additional logical volumes inside the extended partition were displayed, providi
 
 ---
 
-# Peculiarities
+### Peculiarities
 
 Several areas contained incomplete or inconsistent data.  
 Sleuth Kit provided more detailed logical structure information than Active Disk Editor, particularly within the extended partition.
