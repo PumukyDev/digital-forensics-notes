@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="PRACTICE 3 — DATA RECOVERY" href="practica3.html"><link rel="prev" title="PRACTICE 1" href="exercise1.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Exercise 3" href="exercise3.html"><link rel="prev" title="Exercise 1" href="exercise1.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.09.25 -->
         <title>Exercise 2 - Digital Forensics Notes 0.1.0 documentation</title>
@@ -193,9 +193,9 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Content:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="exercise1.html">PRACTICE 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exercise1.html">Exercise 1</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Exercise 2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="practica3.html">PRACTICE 3 — DATA RECOVERY</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exercise3.html">Exercise 3</a></li>
 </ul>
 
 </div>
@@ -236,43 +236,64 @@
         <article role="main" id="furo-main-content">
           <section id="exercise-2">
 <h1>Exercise 2<a class="headerlink" href="#exercise-2" title="Link to this heading">¶</a></h1>
+<p>The file system on any storage device is essential for the overall organization, storage mechanisms, and data control of the device. Understanding how these file systems work, as well as the design of key structures, storage mechanisms, associated metadata, and file system features, is crucial for conducting forensic investigations on a computer or other device.</p>
+<p>NTFS and FAT file systems are two widely used and commonly encountered systems. Both offer significant and mandatory forensic evidence in any investigation.</p>
+<section id="main-objective-of-the-practice">
+<h2>Main Objective of the Practice<a class="headerlink" href="#main-objective-of-the-practice" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Study the metadata provided by the NTFS file system for forensic analysis.</p></li>
+</ul>
+</section>
+<section id="software-to-use">
+<h2>Software to Use<a class="headerlink" href="#software-to-use" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>FTK Imager 4.3 or higher</p></li>
+<li><p>Active Disk Editor v7.0</p></li>
+<li><p>MFT2Csv</p></li>
+<li><p>NTFSLogFile</p></li>
+<li><p>UsnJrl2Csv</p></li>
+<li><p>ANJP</p></li>
+<li><p>AlternateStreamViewer</p></li>
+<li><p>Indx2Csv</p></li>
+</ul>
+<p><strong>Disk image to use:</strong> Download it from <a class="reference download internal" download="" href="_downloads/62b1184d13f159058e863a444a3b8606/disk2.7z"><span class="xref download myst">here</span></a>.</p>
+</section>
 <section id="section-1">
 <h2>Section 1<a class="headerlink" href="#section-1" title="Link to this heading">¶</a></h2>
 <section id="statement">
 <h3>Statement<a class="headerlink" href="#statement" title="Link to this heading">¶</a></h3>
-<p>Download the disk image and open it with Active Disk Editor (ADE). Try to identify with the ADE tool, by inspecting the MFT records (1 KB), which ones have been deleted based on the FLAGS property (field “in use” = ‘0’).</p>
-<p>Locate any entry corresponding to a deleted file, for example I found “texto - copia.txt”, and take a screenshot. Memory position. Hint: go to position 03397XXXX.</p>
-<p>Recover the file using the FTK Imager tool (it is located in the recycle bin folder).</p>
+<p>Download the disk image and open it with Active Disk Editor (ADE). Try to identify, using ADE and by inspecting the 1 KB MFT records, which of them have been deleted based on the <strong>FLAGS</strong> property (<code class="docutils literal notranslate"><span class="pre">in</span> <span class="pre">use</span> <span class="pre">=</span> <span class="pre">0</span></code>).
+a. Locate any entry corresponding to a deleted file (for example, “texto - copia.txt”), and take a screenshot. Memory position hint: go to position <code class="docutils literal notranslate"><span class="pre">03397XXXX</span></code>.<br />
+b. Recover the file using FTK Imager (found in the Recycle Bin folder).</p>
 </section>
 <section id="solution">
 <h3>Solution<a class="headerlink" href="#solution" title="Link to this heading">¶</a></h3>
-<p>We open Active Disk Editor and go to offset 03397XXXX as stated in the statement, we can see a file called “texto - copia.txt”</p>
+<p>If we open Active Disk Editor and go to offset 03397XXXX as stated in the statement, we can see a file called “texto - copia.txt”</p>
 <p><img alt="alt text" src="_images/image-35.png" /></p>
-<p>Once inside, we will use the search function, for this we do Right click + Find or Ctrl + F, and we can enter search mode. I noticed that in ASCII, between each word or symbol there is a dot, so I searched for: <code class="docutils literal notranslate"><span class="pre">t.e.x.t.o.</span> <span class="pre">.-.</span> <span class="pre">.c.o.p.i.a…t.x.t.</span></code> and we would click Find ALL.</p>
-<p>Once achieved, at the bottom left it will show us the results and I went through the results one by one, until the beginning of the sector starts with FILE0, to properly identify the file. Reminder: Change the Template to NTFS MFT File Record and select the beginning of File0.</p>
-<p>Once the file is identified, we simply need to look at the Flags on the left and check if it is in use (Exists).</p>
-<p>In this case we can certify that the file has been deleted since it is not in use or does not exist.</p>
+<p>Once the file is identified, we simply need to look at the “Flags” on the left and check if it is in use (Exists).</p>
+<p>In this case we can certify that the file has been deleted since it is not in use.</p>
 <p><img alt="alt text" src="_images/image-36.png" /></p>
-<p>Now we proceed to recover the file data, for this we must CLOSE the Active Disk Editor program, as it causes problems together with FTK Imager.</p>
+<p>Now we proceed to recover the file data, for this we can close the Active Disk Editor program and open FTK Imager.</p>
+<p>Then, click on the icon of the image to start mounting the disk.</p>
 <p><img alt="alt text" src="_images/image-23.png" /></p>
-<p><img alt="alt text" src="_images/image-24.png" />
-<img alt="alt text" src="_images/image-25.png" />
-<img alt="alt text" src="_images/image-26.png" />
-<img alt="alt text" src="_images/image-27.png" />
-<img alt="alt text" src="_images/image-28.png" />
-<img alt="alt text" src="_images/image-29.png" />
-<img alt="alt text" src="_images/image-30.png" />
+<p>Select the disk, click on “Mount” and verify that the partition appears on the “Mapped Image List”.</p>
+<p><img alt="alt text" src="_images/image-24.png" /></p>
+<p>Then, click on the icon of the image to start make an evidence tree.</p>
+<p><img alt="alt text" src="_images/image-25.png" /></p>
+<p>Click on “Physical Drive” and continue.</p>
+<p><img alt="alt text" src="_images/image-26.png" /></p>
+<p>Select the previously mounted image and finish.</p>
+<p><img alt="alt text" src="_images/image-27.png" /></p>
+<p>Verify that and evidence tree appears.</p>
+<p><img alt="alt text" src="_images/image-28.png" /></p>
+<p>Click on the folder “carpeta” and find out the filed called “texto - copia.txt” marked with a red cross.
+<img alt="alt text" src="_images/image-29.png" /></p>
+<p>Click on said file and click on “Export Files…”</p>
+<p><img alt="alt text" src="_images/image-30.png" />
 <img alt="alt text" src="_images/image-31.png" />
-<img alt="alt text" src="_images/image-32.png" />
-<img alt="alt text" src="_images/image-33.png" /></p>
-<p>After that we will mount the disk either on the machine or we will work with it as an image, in my case we are going to mount the image to have better reading of the device. To mount it we do Image mounting -&gt; Select File.</p>
-<p>After this we will do an Add Evidence Item -&gt; Physical Drive -&gt; (The last one we have)</p>
-<p>This order will be maintained except if we have added a new hard drive, the important thing is that we see a partition called DATOS.</p>
-<p>Now we must explore through the directories we have until we find texto - copia.txt, to restore it. In this case the file is in Datos &gt; Root &gt; Carpeta.</p>
-<p>As we can see, it has a small red cross indicating that the file was deleted.</p>
-<p>For file recovery, we right-click on the desired file and export files.</p>
-<p>After this, we will indicate where we want to export it and click accept.</p>
-<p>After this we can verify that we have indeed exported and recovered it.</p>
+<img alt="alt text" src="_images/image-32.png" /></p>
+<p>Verify that the file has been recovered successfully.</p>
+<p><img alt="alt text" src="_images/image-33.png" /></p>
 </section>
 </section>
 <hr class="docutils" />
@@ -280,13 +301,13 @@
 <h2>Section 2<a class="headerlink" href="#section-2" title="Link to this heading">¶</a></h2>
 <section id="id1">
 <h3>Statement<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
-<p>Identify the low-level attributes of one of the files (MFT records) using the Active Disk Editor 7 tool. The attributes we are interested in are $10, $30 and $80.</p>
-<p>Where can I find the creation, modification and access dates?</p>
-<p>What does the non-resident property mean and its associated values 0/1?</p>
+<p>Identify low-level attributes of one of the files (MFT records) using Active Disk Editor 7. The attributes of interest are <strong>$10</strong>, <strong>$30</strong>, and <strong>$80</strong>.<br />
+a. Where can you find the creation, modification, and access dates?<br />
+b. What does the <strong>non-resident</strong> property mean, and what are the values 0/1 associated with it?</p>
 </section>
 <section id="id2">
 <h3>Solution<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
-<p>Remember: We have selected the FILE0 file and we have indicated the NTFS MFT File Record template.</p>
+<p>Having the <a class="reference download internal" download="" href="_downloads/62b1184d13f159058e863a444a3b8606/disk2.7z"><span class="xref download myst">disk</span></a> imported in Active Disk Editor, select the “FILE0” file and select the NTFS MFT File Record template. With that, we can find out this information:</p>
 <p>The <strong>$10</strong> attribute is about Standard information, we will find:</p>
 <ul class="simple">
 <li><p>The dates of: creation, modification and access.</p></li>
@@ -304,7 +325,7 @@
 <p><img alt="alt text" src="_images/image-38.png" /></p>
 <p>The <strong>$80</strong> attribute has Data information and we can see:</p>
 <ul class="simple">
-<li><p>The direct information in the MFT, as long as it is Non-resident (The Non-Resident parameter must be set to 1)</p></li>
+<li><p>The direct information in the MFT, as long as it is Non-resident (The “Non-resident flag” parameter must be set to 1)</p></li>
 </ul>
 <p><img alt="alt text" src="_images/image-39.png" /></p>
 <p>Answering the activity, we can find creation, update and file opening information in the $10 attribute. And in case the file is resident, its content can be read directly in the MFT, otherwise it would not be possible.</p>
@@ -315,19 +336,17 @@
 <h2>Section 3<a class="headerlink" href="#section-3" title="Link to this heading">¶</a></h2>
 <section id="id3">
 <h3>Statement<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
-<p>Export the $MFT metadata file using FTK, process it with the MFT2CSV tool and import it into a spreadsheet editor in order to analyze the attributes. We are interested in studying which files have been deleted and on what date. Filter by the “in use” field to state ‘0’ (deleted) and/or by the “RecordActive” field = DELETED/ALLOCATED to obtain the deletion date/time.</p>
+<p>Export the <strong>$MFT</strong> metadata file using FTK, process it with MFT2CSV, and import it into a spreadsheet editor to analyze the attributes. The goal is to study which files were deleted and when. Filter by the field <strong>“in use = 0”</strong> (deleted) and/or by <strong>RecordActive = DELETED/ALLOCATED</strong> to obtain the deletion date/time.</p>
 </section>
 <section id="id4">
 <h3>Solution<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
-<p>Important: To be able to modify the $MFT file, I recommend using FTK Imager, and extract it from Tree Evidence, to a directory where we have the desired file. We extract the file as taught in section 1-b.</p>
-<p>To analyze the MFT, we download the MTF2csv tool, available on GitHub. Once we have it open, we must indicate the path of the hard drive from which we extracted the MFT, and we will also have to change the separator to be able to read it more comfortably. We must also select the output where it will send the files ourselves.</p>
+<p>To analyze the MFT, download <a class="reference external" href="https://github.com/jschicht/Mft2Csv">MTF2csv</a>. Once we have it open, we must indicate the path of the volume (explained on <a class="reference internal" href="#section-1"><span class="xref myst">section 1</span></a>) and hard drive from which we extracted the MFT, we will also have to change the separator to be able to read it more comfortably. We must also select the output where it will send the files ourselves.</p>
 <p><img alt="alt text" src="_images/image-40.png" /></p>
-<p>Once finished, we will go to the output area we have placed and we can see a large number of files, however the file we need to read is the one in a green box.</p>
+<p>Once finished, go to the output area and verify that many files appear there. Open the file inside the red box.</p>
 <p><img alt="alt text" src="_images/image-41.png" /></p>
-<p>With the OpenOffice program, we can open the file and start analyzing it.</p>
-<p>Once the file is open, it is very important to do Data &gt; Filter &gt; Auto filters, to be able to analyze the spreadsheet more comfortably. Once this is done we can do a more comfortable analysis of the information and we can mark in column M or in the RecordActive area the option of only Delete and we can observe the following:</p>
+<p>Open the file using OpenOffice.</p>
+<p>Activate some filters by doing the following: Data &gt; Filter &gt; Auto filters. This will let us to analyze the spreadsheet more comfortably. Once this is done, go to column M and select “Deleted”, verify that this two files appear:</p>
 <p><img alt="alt text" src="_images/image-42.png" /></p>
-<p>All other rows have been removed to have a more comfortable reading of the files, in this case, the deleted files.</p>
 </section>
 </section>
 <hr class="docutils" />
@@ -335,20 +354,21 @@
 <h2>Section 4<a class="headerlink" href="#section-4" title="Link to this heading">¶</a></h2>
 <section id="id5">
 <h3>Statement<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
-<p>Export the $LogFILE metadata file, which together with the $MFT from the previous section will provide data on the transactions performed in the file system. Process the files with the NTFSLogFile Parse tool to decode the information and obtain a CSV. Search for transactions where the “lf_RedoOperation” field equals “DeallocateFileRecordSegment” to locate permanently deleted files since as its name indicates the operation was to deallocate the file record segment.</p>
+<p>Export the <strong>$LogFILE</strong> metadata file. Together with the $MFT from the previous step, it provides information about file system transactions. Process the files using <strong>NTFSLogFile Parse</strong> to decode the information and obtain a CSV.</p>
+<ul class="simple">
+<li><p>Search for transactions where <strong>lf_RedoOperation = DeallocateFileRecordSegment</strong> to locate files that were permanently deleted, since this operation deallocates the file record segment.</p></li>
+</ul>
 </section>
 <section id="id6">
 <h3>Solution<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
-<p>Important: To be able to modify the $LogFile file, I recommend using FTK Imager, and extract it from Tree Evidence, to a directory where we have the desired file. We extract the file as taught in section 1-b.</p>
-<p>On this occasion we are going to analyze the $LogFile, and for this we must select the file and also select the excel sheet that we obtained previously with the MFT extraction.
-NOTE: Remember to change the Separator to <code class="docutils literal notranslate"><span class="pre">;</span></code>.</p>
-<p>After all this, we can click Start.</p>
+<p>This time, we are going to analyze the $LogFile, in order to do that, select the file and also select the excel sheet that we obtained previously with the MFT extraction. Remember to change the separator to <code class="docutils literal notranslate"><span class="pre">;</span></code>.</p>
+<p>After all this, we can click on “Start”.</p>
 <p><img alt="alt text" src="_images/image-43.png" /></p>
-<p>Once finished, we can see the following at the bottom:</p>
+<p>Once finished, we can see something like that:</p>
 <p><img alt="alt text" src="_images/image-44.png" /></p>
-<p>Now we will analyze the LogFile.csv file, this file has been created in: (Inside the LogFileParser execution folder -&gt; LogFile_(date) -&gt; LogFile.scv. When we open it we should see something similar to the following. We must modify the separator to <code class="docutils literal notranslate"><span class="pre">|</span></code>.</p>
+<p>Now we will analyze the LogFile.csv file, open it using Open Office.</p>
 <p><img alt="alt text" src="_images/image-45.png" /></p>
-<p>Once we have established the filters, we can do the task which is to set if_RedoOperation to DeallocateFileRecordSegment, to be able to see the files that have been completely deleted. And we will obtain the following:</p>
+<p>After establishing some filters, these are the files which have been deleted.</p>
 <p><img alt="alt text" src="_images/image-46.png" /></p>
 </section>
 </section>
@@ -357,16 +377,22 @@ NOTE: Remember to change the Separator to <code class="docutils literal notransl
 <h2>Section 5<a class="headerlink" href="#section-5" title="Link to this heading">¶</a></h2>
 <section id="id7">
 <h3>Statement<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
-<p>Export the metadata file corresponding to $USNJournal ( $Extend -&gt; $USNjrl -&gt; $J). Processed with the UsnJrl2Csv tool to decode the information it stores. Filter the resulting information by the “Reason” field = “CLOSE+DELETE” to obtain the dates when the permanent deletion of the files occurred.</p>
+<p>Export the metadata file corresponding to <strong>$USNJournal</strong><br />
+(<code class="docutils literal notranslate"><span class="pre">$Extend</span> <span class="pre">-&gt;</span> <span class="pre">$USNjrl</span> <span class="pre">-&gt;</span> <span class="pre">$J</span></code>).<br />
+Process it using <strong>UsnJrl2Csv</strong> to decode its stored information.</p>
+<ul class="simple">
+<li><p>Filter the resulting data by <strong>Reason = CLOSE+DELETE</strong> to obtain the timestamps of permanent file deletions.</p></li>
+</ul>
 </section>
 <section id="id8">
 <h3>Solution<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
-<p>Important: To be able to modify the $J file, I recommend using FTK Imager, and extract it from Tree Evidence, to a directory where we have the desired file. We extract the file as taught in section 1-b. To find this file please pay attention to the statement.</p>
-<p>Now we will analyze the $J file, using the UsnJrl2Csv tool. We must change, as we are already used to, the separator to <code class="docutils literal notranslate"><span class="pre">;</span></code>, and set the file output path to what we want. After this we will click Start.</p>
+<p>Now we will analyze the $J file, using <a class="reference internal" href="#github.com/jschicht/UsnJrnl2Csv"><span class="xref myst">UsnJrl2Csv</span></a>. Change the separator to <code class="docutils literal notranslate"><span class="pre">;</span></code>, and set the file output path to what we want. After this we will click on “Start”.</p>
 <p><img alt="alt text" src="_images/image-47.png" /></p>
 <p>Once finished we can go to the folder we have selected and open the .csv file, with OpenOffice.</p>
-<p>After this we can set the separator to Semicolon, we can click accept.</p>
-<p>On this occasion, we are going to filter in Reason, by Close+File_Delete, to know which files were closed and deleted, as well as at what time it was.</p>
+<p>Change the separator to <code class="docutils literal notranslate"><span class="pre">;</span></code> and click on accept.</p>
+<p><img alt="alt text" src="_images/image-89.png" /></p>
+<p>Add the proper filters in and verify which files have been closed and deleted.</p>
+<p><img alt="alt text" src="_images/image-90.png" /></p>
 </section>
 </section>
 <hr class="docutils" />
@@ -374,17 +400,22 @@ NOTE: Remember to change the Separator to <code class="docutils literal notransl
 <h2>Section 6<a class="headerlink" href="#section-6" title="Link to this heading">¶</a></h2>
 <section id="id9">
 <h3>Statement<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
-<p>In this section, we are going to use the ANJP tool to perform joint processing of $MFT, $LogFile and $USNJrnl. You will see that it works with the same information from the previous sections in an integrated way in the same tool. It has a tab to decode the information (Parse) and another to view the results (Report). It is a paid tool. You are asked to use it and take a couple of screenshots of the results report it offers.</p>
+<p>Use the <strong>ANJP</strong> tool to perform a combined analysis of <strong>$MFT</strong>, <strong>$LogFile</strong>, and <strong>$USNJournal</strong>.<br />
+You will see that it processes the same information as the previous sections but in an integrated way. It includes a <strong>Parse</strong> tab and a <strong>Report</strong> tab.</p>
+<ul class="simple">
+<li><p>Use the tool and take a couple of screenshots of the generated report.<br />
+<em>(Note: This is a paid tool.)</em></p></li>
+</ul>
 </section>
 <section id="id10">
 <h3>Solution<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
 <p>Now we are going to use the ANJP tool, which combines all the previous tools. For this we must first put a case name, the path where it will leave the files and the files we have used previously.</p>
 <p><img alt="alt text" src="_images/image-48.png" /></p>
-<p>Once we have put the paths of all the necessary files, we can click Parse, to execute it.</p>
+<p>Once we have put the paths of all the necessary files, we can click “Parse”, to execute it.</p>
 <p><img alt="alt text" src="_images/image-49.png" /></p>
-<p>Once the process is finished, we go to Reports, and we can view (If we have properly placed the file path), the data obtained from the documents.</p>
+<p>Once the process is finished, we can go to “Reports”, and view the data obtained from the documents.</p>
 <p><img alt="alt text" src="_images/image-50.png" /></p>
-<p>For example, if we access LogFile &gt; File Interactions, we can find relevant information about texto - copia.txt</p>
+<p>For example, if we access LogFile &gt; File Interactions, we can find relevant information about “texto - copia.txt”</p>
 <p><img alt="alt text" src="_images/image-51.png" /></p>
 </section>
 </section>
@@ -393,27 +424,60 @@ NOTE: Remember to change the Separator to <code class="docutils literal notransl
 <h2>Section 7<a class="headerlink" href="#section-7" title="Link to this heading">¶</a></h2>
 <section id="id11">
 <h3>Statement<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
-<p>Use the “FTK Imager” and “AlternateDataViewer” tools to study the origin of the files that appear in the “datos.dd” image. Take a screenshot with each tool showing an example.</p>
+<p>Use <strong>FTK Imager</strong> and <strong>AlternateDataViewer</strong> to study the origin of the files found in the <code class="docutils literal notranslate"><span class="pre">datos.dd</span></code> image.</p>
+<ul class="simple">
+<li><p>Take a screenshot with each tool showing one example.</p></li>
+</ul>
 </section>
 <section id="id12">
 <h3>Solution<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h3>
-<p>In FTK Imager, we must first add evidence to start exploring the files inside, for this we will click Add Evidence Item &gt; Physical Drive &gt; Last mounted disk, remember that we have already done this before.</p>
-<p>As we can see, in the Evidence tree, an evidence called \PHYSICALDRIVE3 (In my case) has been created. After this we will click Partition, whichever we want and we can start seeing the folders and other files.</p>
+<p>In FTK Imager, deploy the entire Evidence Tree.</p>
 <p><img alt="alt text" src="_images/image-52.png" /></p>
-<p>For example, let’s analyze the file Proyecto Educativo.pdf</p>
+<p>Click over a file as “Proyecto Educativo.pdf”. And study the “Zone.Identifier”.</p>
 <p><img alt="alt text" src="_images/image-53.png" /></p>
-<p>As we can see above, there is a file called Zone.Identifier, if we click it, it will show us in plain text a ZoneID, identified from where it was downloaded. In this case, the ID is 3.</p>
+<p>If we click tie “Zone.Identifier”, it will show us in plain text a ZoneID, in this example the zone ZoneID is 3, which means that the file has been downloaded from the internet.</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>ZoneID</p></th>
+<th class="head"><p>Security Zone</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>My Computer</p></td>
+<td><p>Local machine files</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>Local Intranet</p></td>
+<td><p>Internal network locations</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>Trusted Sites</p></td>
+<td><p>Trusted web sites</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>Internet</p></td>
+<td><p>Files downloaded from the Internet</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>Restricted Sites</p></td>
+<td><p>Restricted or blocked sites</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <p><img alt="alt text" src="_images/image-54.png" /></p>
-<p>In this case, the document was downloaded from Internet Explorer.</p>
-<p>If we use AlternateStreamView, the first thing we will see when running it is to indicate the path where the files we want to analyze are located. For example, we are going to put it directly on the partition.</p>
+<p>Opening AlternateStreamView will look like this:</p>
 <p><img alt="alt text" src="_images/image-55.png" /></p>
-<p>As we can see, there are several files and we can analyze their Zone.Identifier, in my case it will be the ProyectoEducativo.pdf file. If we double-click on the file, we can obtain the following properties</p>
+<p>As we can see, there are several files and we can analyze their Zone.Identifier, in my case it will be the “ProyectoEducativo.pdf” file. If we double-click on the file, we can obtain the following properties:</p>
 <p><img alt="alt text" src="_images/image-56.png" /></p>
 <p>We still need to know where it was downloaded from, so we are going to right-click on it, and we are going to extract the file.</p>
 <p><img alt="alt text" src="_images/image-58.png" /></p>
 <p>After that, we will indicate the path where we are going to extract the documents.</p>
 <p><img alt="alt text" src="_images/image-57.png" /></p>
-<p>If we open the document that has been generated (For example with Notepad), we can see the transfer zone.</p>
+<p>If we open the generated document, we can see the transfer zone, however, the website from which it was downloaded is not shown.</p>
 <p><img alt="alt text" src="_images/image-59.png" /></p>
 </section>
 </section>
@@ -422,34 +486,32 @@ NOTE: Remember to change the Separator to <code class="docutils literal notransl
 <h2>Section 8<a class="headerlink" href="#section-8" title="Link to this heading">¶</a></h2>
 <section id="id13">
 <h3>Statement<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h3>
-<p>Export the directory index type metadata files ($I30) from the three directories that appear in the “datos.dd” disk image of this practice: the root directory, the “carpeta” directory and the directory corresponding to the recycle bin. Process these files with the “Indx2Csv” tool. Analyze what files exist and have existed in the different directories</p>
+<p>Export the directory index metadata files (<strong>$I30</strong>) for the three directories present in the <code class="docutils literal notranslate"><span class="pre">datos.dd</span></code> disk image:</p>
+<ul class="simple">
+<li><p>the root directory,</p></li>
+<li><p>the directory named “carpeta”,</p></li>
+<li><p>and the Recycle Bin directory.<br />
+Process these files with <strong>Indx2Csv</strong>.</p></li>
+<li><p>Analyze which files exist now and which existed in the past in each directory.</p></li>
+</ul>
 </section>
 <section id="id14">
 <h3>Solution<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h3>
-<p>Important: To be able to modify the $I30 file, I recommend using FTK Imager, and extract it from Tree Evidence, to a directory where we have the desired file. We extract the file as taught in section 1-b.</p>
-<p>In this activity, we need to extract the $30 files, from the following folders:</p>
-<ul class="simple">
-<li><p>carpeta</p></li>
-<li><p>root</p></li>
-<li><p>Recycle bin.</p></li>
-</ul>
-<p>To extract the files, we must open FTK Imager, and have it with the evidence tree (It has been shown before how to do it). Once we have the file located, we will right-click on it and we can extract it wherever we want (In my case the desktop).</p>
+<p>To extract the files, we must open FTK Imager and mount the evidence tree. Once we have the file located, we will right-click on it and we can extract it wherever we want.</p>
 <p><img alt="alt text" src="_images/image-60.png" />
 <img alt="alt text" src="_images/image-61.png" /></p>
-<p><img alt="alt text" src="_images/image-62.png" /></p>
-<p>The recycle bin file, which may be the most difficult to find, is located in Recycle Bin and then in the existing subfolder</p>
-<p><img alt="alt text" src="_images/image-63.png" /></p>
+<p>Repeat it with root and the recycle bin folders.</p>
+<p><img alt="alt text" src="_images/image-62.png" />
+<img alt="alt text" src="_images/image-63.png" /></p>
 <p>Once we have done this with the three files, we will start using the other tool.</p>
 <p>We must configure the launcher with the following parameters:</p>
 <p><img alt="alt text" src="_images/image-64.png" /></p>
-<p>We will do this with each file from each folder. If we go to the outputs of the files we set, we can check what documents have been extracted</p>
-<p>TBD - I’M NOT GOING TO PUT A PHOTO AT THE END</p>
-<p>As we can observe, we have a .csv file, to be able to analyze it with OpenOffice. Let’s analyze what we have found.</p>
+<p>A <code class="docutils literal notranslate"><span class="pre">.csv</span></code> file has been generated for each folder. Open them.</p>
 </section>
 <section id="carpeta-folder">
 <h3>“Carpeta” Folder<a class="headerlink" href="#carpeta-folder" title="Link to this heading">¶</a></h3>
 <p><img alt="alt text" src="_images/image-65.png" /></p>
-<p>In this folder, we can observe a series of 6 pairs, where 3 of them are texto.txt, this is because this document has been opened numerous times on different occasions. Thanks to this tool, we can see, for example, the access, creation and deletion time.</p>
+<p>In this folder, we can observe a series of 6 pairs, where 3 of them are “texto.txt”, this is because this document has been opened numerous times on different occasions. Thanks to this tool, we can see, for example, the access, creation and deletion time.</p>
 </section>
 <section id="root-folder">
 <h3>Root Folder<a class="headerlink" href="#root-folder" title="Link to this heading">¶</a></h3>
@@ -467,25 +529,26 @@ NOTE: Remember to change the Separator to <code class="docutils literal notransl
 <h2>Section 9<a class="headerlink" href="#section-9" title="Link to this heading">¶</a></h2>
 <section id="id15">
 <h3>Statement<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h3>
-<p>Install the automated file recovery tool “Recuva”. Mount the “datos.dd” disk image with “FTK Imager” and use the tool to recover all the files you can. Compare the results obtained with the files that the “FTK Imager” tool is able to recover (marked with the “deletion cross” symbol).</p>
+<p>Install the automated file recovery tool <strong>Recuva</strong>.<br />
+Mount the <code class="docutils literal notranslate"><span class="pre">datos.dd</span></code> disk image with <strong>FTK Imager</strong> and use Recuva to recover as many files as possible.</p>
+<ul class="simple">
+<li><p>Compare the recovered files with those that FTK Imager is able to recover (marked with the deletion cross icon).</p></li>
+</ul>
 </section>
 <section id="id16">
 <h3>Solution<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h3>
-<p>Now we will use the Recuva program, to be able to recover the lost files we saw in practice 1-B.</p>
-<p>The first thing we will do is show the specific area where those files were located, in this case it is on disk G.</p>
+<p>Now we will use the Recuva program, to be able to recover the lost files we saw previously.</p>
+<p>The first thing we will do is show the specific area where those files were located.</p>
 <p><img alt="alt text" src="_images/image-68.png" /></p>
-<p>Click on deep scan</p>
-<p><img alt="alt text" src="_images/image-69.png" />
-Once the area is selected, we will click Next, and the next thing we will see is a list of files that it has been able to recover.</p>
-<p>We will select all the files and click Recover.</p>
+<p>Enable the Deep Scan and click on “Start”</p>
+<p><img alt="alt text" src="_images/image-69.png" /></p>
+<p>Delect all the files and click on “Recover”.</p>
 <p><img alt="alt text" src="_images/image-70.png" /></p>
 <p>Then it will ask us where we want to leave the files.</p>
 <p><img alt="alt text" src="_images/image-71.png" /></p>
-<p>And as we can see, we have been able to recover all the selected files.</p>
+<p>And as we can see, we have been able to recover all these files.</p>
 <p><img alt="alt text" src="_images/image-72.png" /></p>
-<p>Now we compare what we obtained with the files that are on the disk according to FTK Imager, the first thing we can see, in the Root folder, is the calendarioSept2018.pdf file.</p>
-<p>After that we have been able to recover the texto - copia.txt file, which is located in the folder.</p>
-<p>Unfortunately, for the rest of the files, I do not have information about where they may have been obtained.</p>
+<p>When comparing the results obtained with Recuva to those obtained using FTK Imager, we can confirm the recovery of the file “calendarioSept2018.pdf” from the root directory and the file “texto - copia.txt” from the “carpeta” directory. For the remaining recovered files, it was not possible to determine their original locations based on the available information.</p>
 </section>
 </section>
 </section>
@@ -495,12 +558,12 @@ Once the area is selected, we will click Next, and the next thing we will see is
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="practica3.html">
+          <a class="next-page" href="exercise3.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">PRACTICE 3 — DATA RECOVERY</div>
+                <div class="title">Exercise 3</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -511,7 +574,7 @@ Once the area is selected, we will click Next, and the next thing we will see is
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">PRACTICE 1</div>
+                <div class="title">Exercise 1</div>
                 
               </div>
             </a>
@@ -546,6 +609,8 @@ Once the area is selected, we will click Next, and the next thing we will see is
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Exercise 2</a><ul>
+<li><a class="reference internal" href="#main-objective-of-the-practice">Main Objective of the Practice</a></li>
+<li><a class="reference internal" href="#software-to-use">Software to Use</a></li>
 <li><a class="reference internal" href="#section-1">Section 1</a><ul>
 <li><a class="reference internal" href="#statement">Statement</a></li>
 <li><a class="reference internal" href="#solution">Solution</a></li>

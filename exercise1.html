@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Exercise 2" href="exercise2.html"><link rel="prev" title="Digital Forensics Notes" href="index.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.09.25 -->
-        <title>PRACTICE 1 - Digital Forensics Notes 0.1.0 documentation</title>
+        <title>Exercise 1 - Digital Forensics Notes 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -193,9 +193,9 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Content:</span></p>
 <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">PRACTICE 1</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Exercise 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="exercise2.html">Exercise 2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="practica3.html">PRACTICE 3 — DATA RECOVERY</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exercise3.html">Exercise 3</a></li>
 </ul>
 
 </div>
@@ -234,8 +234,8 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="practice-1">
-<h1>PRACTICE 1<a class="headerlink" href="#practice-1" title="Link to this heading">¶</a></h1>
+          <section id="exercise-1">
+<h1>Exercise 1<a class="headerlink" href="#exercise-1" title="Link to this heading">¶</a></h1>
 <section id="statement">
 <h2>Statement<a class="headerlink" href="#statement" title="Link to this heading">¶</a></h2>
 <p>The partition table is an essential component of a computer system. Depending on whether it uses <strong>MBR</strong> or <strong>GPT</strong>, it is physically located in different sectors of the disk and controls the boot process. In digital forensic analysis, it is necessary to study its structure to ensure that the system is not infected by malicious programs, such as malware capable of replacing the MBR and loading malicious software into memory during the boot process.</p>
@@ -332,7 +332,7 @@ g. For each partition:</p>
 <h4>Determine whether the partition table is MBR or GPT<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
 <p>Open Active Disk Editor in your machine</p>
 <p><img alt="alt text" src="_images/image-20.png" /></p>
-<p>The following window will appear. Select <strong>“Open File…”</strong> and choose disk1.dd found in <a class="reference download internal" download="" href="_downloads/566293a3cd20c6527d4a3046a5bda413/disks.7z"><span class="xref download myst">disks.7z</span></a>.</p>
+<p>The following window will appear. Select <strong>“Open File…”</strong> and choose disk1.dd found in <a class="reference download internal" download="" href="_downloads/23f9a2e873d1cf7ca4ed5bfca1f88e94/disks1.7z"><span class="xref download myst">disks1.7z</span></a>.</p>
 <p><img alt="alt text" src="_images/image.png" /></p>
 <p>Once the file is loaded, a new disk will appear in the interface. Double click on it to open the explorer.</p>
 <p><img alt="alt text" src="_images/image-1.png" /></p>
@@ -448,7 +448,7 @@ The colored segmentation in Active Disk Editor also visually confirmed inconsist
 <p>Since the tools were previously explained, only the requested data is analyzed here.</p>
 <section id="id2">
 <h4>Determine whether the partition table is MBR or GPT<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
-<p>Now, select disk2.dd found in <a class="reference download internal" download="" href="_downloads/566293a3cd20c6527d4a3046a5bda413/disks.7z"><span class="xref download myst">disks.7z</span></a>.</p>
+<p>Now, select disk2.dd found in <a class="reference download internal" download="" href="_downloads/23f9a2e873d1cf7ca4ed5bfca1f88e94/disks1.7z"><span class="xref download myst">disks1.7z</span></a>.</p>
 <p><img alt="alt text" src="_images/image-21.png" /></p>
 <p>Select “Master Boot Record” template again.</p>
 <p><img alt="alt text" src="_images/image-4.png" />
@@ -573,7 +573,7 @@ Sleuth Kit provided more detailed logical structure information than Active Disk
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">PRACTICE 1</a><ul>
+<li><a class="reference internal" href="#">Exercise 1</a><ul>
 <li><a class="reference internal" href="#statement">Statement</a><ul>
 <li><a class="reference internal" href="#main-objectives-of-the-practice">Main Objectives of the Practice</a></li>
 <li><a class="reference internal" href="#software-to-use">Software to Use</a></li>
