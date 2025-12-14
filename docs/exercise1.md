@@ -1,4 +1,4 @@
-# PRACTICE 1
+# Exercise 1
 
 ## Statement
 
@@ -83,7 +83,7 @@ Open Active Disk Editor in your machine
 
 ![alt text](./images/image-20.png)
 
-The following window will appear. Select **“Open File…”** and choose disk1.dd found in [disks.7z](./disks.7z).
+The following window will appear. Select **“Open File…”** and choose disk1.dd found in [disks1.7z](./disks1.7z).
 
 
 ![alt text](./images/image.png)
@@ -210,7 +210,7 @@ Since the tools were previously explained, only the requested data is analyzed h
 
 #### Determine whether the partition table is MBR or GPT
 
-Now, select disk2.dd found in [disks.7z](./disks.7z).
+Now, select disk2.dd found in [disks1.7z](./disks1.7z).
 
 ![alt text](./images/image-21.png)
 
