@@ -309,19 +309,19 @@ We must configure the launcher with the following parameters:
 
 A `.csv` file has been generated for each folder. Open them.
 
-### "Carpeta" Folder
+#### "Carpeta" Folder
 
 ![alt text](./images/image-65.png)
 
 In this folder, we can observe a series of 6 pairs, where 3 of them are "texto.txt", this is because this document has been opened numerous times on different occasions. Thanks to this tool, we can see, for example, the access, creation and deletion time.
 
-### Root Folder
+#### Root Folder
 
 ![alt text](./images/image-66.png)
 
 In this folder, we can not only see the files that are there previously, but we can also see even those hidden files and how they have been modified.
 
-### "Papelera" Folder
+#### "Papelera" Folder
 
 ![alt text](./images/image-67.png)
 
