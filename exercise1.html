@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="prev" title="Digital Forensics Notes" href="index.html">
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Exercise 2" href="exercise2.html"><link rel="prev" title="Digital Forensics Notes" href="index.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.09.25 -->
-        <title>PRACTICE 1 — STATEMENT - Digital Forensics Notes 0.1.0 documentation</title>
+        <title>PRACTICE 1 - Digital Forensics Notes 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -193,8 +193,9 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Content:</span></p>
 <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">PRACTICE 1 — STATEMENT</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#practice-1-solution">PRACTICE 1 — SOLUTION</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">PRACTICE 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exercise2.html">Exercise 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practica3.html">PRACTICE 3 — DATA RECOVERY</a></li>
 </ul>
 
 </div>
@@ -233,18 +234,20 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="practice-1-statement">
-<h1>PRACTICE 1 — STATEMENT<a class="headerlink" href="#practice-1-statement" title="Link to this heading">¶</a></h1>
+          <section id="practice-1">
+<h1>PRACTICE 1<a class="headerlink" href="#practice-1" title="Link to this heading">¶</a></h1>
+<section id="statement">
+<h2>Statement<a class="headerlink" href="#statement" title="Link to this heading">¶</a></h2>
 <p>The partition table is an essential component of a computer system. Depending on whether it uses <strong>MBR</strong> or <strong>GPT</strong>, it is physically located in different sectors of the disk and controls the boot process. In digital forensic analysis, it is necessary to study its structure to ensure that the system is not infected by malicious programs, such as malware capable of replacing the MBR and loading malicious software into memory during the boot process.</p>
 <p>Additionally, analyzing partition tables helps forensic investigators extract details about the disk, identify the file system type used by each partition, and determine their size. These analyses may also serve as digital evidence or even assist in recovering lost data. In any case, understanding the structure of both logical and physical storage media used to store information on a computer is essential.</p>
 <section id="main-objectives-of-the-practice">
-<h2>Main Objectives of the Practice<a class="headerlink" href="#main-objectives-of-the-practice" title="Link to this heading">¶</a></h2>
+<h3>Main Objectives of the Practice<a class="headerlink" href="#main-objectives-of-the-practice" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Study MBR and GPT partition tables.</p></li>
 </ul>
 </section>
 <section id="software-to-use">
-<h2>Software to Use<a class="headerlink" href="#software-to-use" title="Link to this heading">¶</a></h2>
+<h3>Software to Use<a class="headerlink" href="#software-to-use" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Windows X</p></li>
 <li><p>WinHex</p></li>
@@ -253,7 +256,7 @@
 </ul>
 </section>
 <section id="tasks">
-<h2>Tasks<a class="headerlink" href="#tasks" title="Link to this heading">¶</a></h2>
+<h3>Tasks<a class="headerlink" href="#tasks" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Create a Windows virtual machine.</p></li>
 <li><p>Download two hard disk images from the provided source.</p></li>
@@ -272,10 +275,10 @@ dd count=1 bs=512 if=\\.\PHYSICALDRIVE2 of=d:\mbr.dd skip=0
 <li><p>Extract as much information as possible from the disk images:</p></li>
 </ul>
 <section id="determine-whether-the-partition-table-is-mbr-or-gpt">
-<h3>1. Determine whether the partition table is MBR or GPT.<a class="headerlink" href="#determine-whether-the-partition-table-is-mbr-or-gpt" title="Link to this heading">¶</a></h3>
+<h4>1. Determine whether the partition table is MBR or GPT.<a class="headerlink" href="#determine-whether-the-partition-table-is-mbr-or-gpt" title="Link to this heading">¶</a></h4>
 </section>
 <section id="if-it-is-mbr-determine-the-following-for-each-partition">
-<h3>2. If it is MBR, determine the following for each partition:<a class="headerlink" href="#if-it-is-mbr-determine-the-following-for-each-partition" title="Link to this heading">¶</a></h3>
+<h4>2. If it is MBR, determine the following for each partition:<a class="headerlink" href="#if-it-is-mbr-determine-the-following-for-each-partition" title="Link to this heading">¶</a></h4>
 <p>a. Partition number<br />
 b. Boot indicator<br />
 c. Cylinder, Head, Sector (CHS) of the first sector in the partition<br />
@@ -285,7 +288,7 @@ f. Logical Block Address (LBA) of the first sector<br />
 g. Partition length in sectors</p>
 </section>
 <section id="if-it-is-gpt-determine-the-following-for-each-partition">
-<h3>3. If it is GPT, determine the following for each partition:<a class="headerlink" href="#if-it-is-gpt-determine-the-following-for-each-partition" title="Link to this heading">¶</a></h3>
+<h4>3. If it is GPT, determine the following for each partition:<a class="headerlink" href="#if-it-is-gpt-determine-the-following-for-each-partition" title="Link to this heading">¶</a></h4>
 <p>a. GPT header location (LBA)<br />
 b. Header size<br />
 c. First usable LBA<br />
@@ -302,13 +305,13 @@ g. For each partition:</p>
 </ol>
 </section>
 <section id="compare-the-information-obtained-manually-with-the-output-of-forensic-tools-such-as-sleuth-kit-example">
-<h3>4. Compare the information obtained manually with the output of forensic tools such as Sleuth Kit. Example:<a class="headerlink" href="#compare-the-information-obtained-manually-with-the-output-of-forensic-tools-such-as-sleuth-kit-example" title="Link to this heading">¶</a></h3>
+<h4>4. Compare the information obtained manually with the output of forensic tools such as Sleuth Kit. Example:<a class="headerlink" href="#compare-the-information-obtained-manually-with-the-output-of-forensic-tools-such-as-sleuth-kit-example" title="Link to this heading">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mmls<span class="w"> </span>-t<span class="w"> </span>gpt<span class="p">|</span>dos<span class="w"> </span>&lt;disk&gt;
 </pre></div>
 </div>
 </section>
 <section id="comment-on-any-peculiarities-you-find-in-the-disks-such-as">
-<h3>5. Comment on any peculiarities you find in the disks, such as:<a class="headerlink" href="#comment-on-any-peculiarities-you-find-in-the-disks-such-as" title="Link to this heading">¶</a></h3>
+<h4>5. Comment on any peculiarities you find in the disks, such as:<a class="headerlink" href="#comment-on-any-peculiarities-you-find-in-the-disks-such-as" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p>Hidden partitions</p></li>
 <li><p>Blank or unallocated data areas</p></li>
@@ -317,16 +320,16 @@ g. For each partition:</p>
 </section>
 </section>
 </section>
-<section id="practice-1-solution">
-<h1>PRACTICE 1 — SOLUTION<a class="headerlink" href="#practice-1-solution" title="Link to this heading">¶</a></h1>
+<section id="solution">
+<h2>Solution<a class="headerlink" href="#solution" title="Link to this heading">¶</a></h2>
 <section id="partition-table-analysis">
-<h2>Partition Table Analysis<a class="headerlink" href="#partition-table-analysis" title="Link to this heading">¶</a></h2>
+<h3>Partition Table Analysis<a class="headerlink" href="#partition-table-analysis" title="Link to this heading">¶</a></h3>
 <p>For this practice, a <strong>Kali Linux</strong> virtual machine and the tool <strong>Active Disk Editor</strong> were used to manually inspect the disk images.</p>
 </section>
 <section id="disk-1">
-<h2>Disk 1<a class="headerlink" href="#disk-1" title="Link to this heading">¶</a></h2>
+<h3>Disk 1<a class="headerlink" href="#disk-1" title="Link to this heading">¶</a></h3>
 <section id="id1">
-<h3>Determine whether the partition table is MBR or GPT<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<h4>Determine whether the partition table is MBR or GPT<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
 <p>Open Active Disk Editor in your machine</p>
 <p><img alt="alt text" src="_images/image-20.png" /></p>
 <p>The following window will appear. Select <strong>“Open File…”</strong> and choose disk1.dd found in <a class="reference download internal" download="" href="_downloads/566293a3cd20c6527d4a3046a5bda413/disks.7z"><span class="xref download myst">disks.7z</span></a>.</p>
@@ -346,7 +349,7 @@ g. For each partition:</p>
 <p>After analyzing the disk, we can conclude that it is a <strong>GPT</strong> disk.</p>
 </section>
 <section id="gpt-header">
-<h3>GPT Header<a class="headerlink" href="#gpt-header" title="Link to this heading">¶</a></h3>
+<h4>GPT Header<a class="headerlink" href="#gpt-header" title="Link to this heading">¶</a></h4>
 <p>From the header we can extract the following information:</p>
 <ul class="simple">
 <li><p>Signature: <strong>EFI</strong></p></li>
@@ -361,9 +364,9 @@ Then, assign the proper template in the right panel.</p>
 <p><img alt="alt text" src="_images/image-10.png" /></p>
 </section>
 <section id="partitions">
-<h3>Partitions<a class="headerlink" href="#partitions" title="Link to this heading">¶</a></h3>
+<h4>Partitions<a class="headerlink" href="#partitions" title="Link to this heading">¶</a></h4>
 <section id="first-partition">
-<h4>First Partition<a class="headerlink" href="#first-partition" title="Link to this heading">¶</a></h4>
+<h5>First Partition<a class="headerlink" href="#first-partition" title="Link to this heading">¶</a></h5>
 <ul class="simple">
 <li><p><strong>Type:</strong> Primary, hidden (contains partition table information)</p></li>
 <li><p><strong>GUID:</strong> 1C 40 E0 CE ED 42 4B 19 92 90 EC 39 77 3D E9 42</p></li>
@@ -374,7 +377,7 @@ Then, assign the proper template in the right panel.</p>
 <p><img alt="alt text" src="_images/image-11.png" /></p>
 </section>
 <section id="second-partition">
-<h4>Second Partition<a class="headerlink" href="#second-partition" title="Link to this heading">¶</a></h4>
+<h5>Second Partition<a class="headerlink" href="#second-partition" title="Link to this heading">¶</a></h5>
 <ul class="simple">
 <li><p><strong>Type:</strong> Primary</p></li>
 <li><p><strong>GUID:</strong> E5 FA E0 91 62 C6 41 D1 8C 23 8C CF 50 32 B2 38</p></li>
@@ -385,7 +388,7 @@ Then, assign the proper template in the right panel.</p>
 <p><img alt="alt text" src="_images/image-12.png" /></p>
 </section>
 <section id="third-partition">
-<h4>Third Partition<a class="headerlink" href="#third-partition" title="Link to this heading">¶</a></h4>
+<h5>Third Partition<a class="headerlink" href="#third-partition" title="Link to this heading">¶</a></h5>
 <p>This partition appears to be <strong>corrupted</strong>.</p>
 <ul class="simple">
 <li><p><strong>Type:</strong> —</p></li>
@@ -397,7 +400,7 @@ Then, assign the proper template in the right panel.</p>
 <p><img alt="alt text" src="_images/image-13.png" /></p>
 </section>
 <section id="fourth-partition">
-<h4>Fourth Partition<a class="headerlink" href="#fourth-partition" title="Link to this heading">¶</a></h4>
+<h5>Fourth Partition<a class="headerlink" href="#fourth-partition" title="Link to this heading">¶</a></h5>
 <ul class="simple">
 <li><p><strong>Type:</strong> Primary</p></li>
 <li><p><strong>GUID:</strong> 55 EF 48 65 C1 CA 4D 08 A3 F0 AC 68 AF C2 4A 76</p></li>
@@ -408,7 +411,7 @@ Then, assign the proper template in the right panel.</p>
 <p><img alt="alt text" src="_images/image-14.png" /></p>
 </section>
 <section id="fifth-partition">
-<h4>Fifth Partition<a class="headerlink" href="#fifth-partition" title="Link to this heading">¶</a></h4>
+<h5>Fifth Partition<a class="headerlink" href="#fifth-partition" title="Link to this heading">¶</a></h5>
 <ul class="simple">
 <li><p><strong>Type:</strong> Primary</p></li>
 <li><p><strong>GUID:</strong> F6 1B F4 D0 F8 F1 43 8E 9E E6 4A 30 01 3A 3F 28</p></li>
@@ -420,7 +423,7 @@ Then, assign the proper template in the right panel.</p>
 </section>
 </section>
 <section id="sleuth-kit">
-<h3>Sleuth Kit<a class="headerlink" href="#sleuth-kit" title="Link to this heading">¶</a></h3>
+<h4>Sleuth Kit<a class="headerlink" href="#sleuth-kit" title="Link to this heading">¶</a></h4>
 <p>To use Sleuth Kit, install it (on Kali it is usually installed by default):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>sleuthkit
 sudo<span class="w"> </span>mmls<span class="w"> </span>&lt;disk_image&gt;
@@ -435,16 +438,16 @@ sudo<span class="w"> </span>mmls<span class="w"> </span>&lt;disk_image&gt;
 <p>This matches with the manual findings.</p>
 </section>
 <section id="peculiarities-found">
-<h3>Peculiarities Found<a class="headerlink" href="#peculiarities-found" title="Link to this heading">¶</a></h3>
+<h4>Peculiarities Found<a class="headerlink" href="#peculiarities-found" title="Link to this heading">¶</a></h4>
 <p>A strange partition was identified that contained no meaningful data, leading to the conclusion that it is corrupted.<br />
 The colored segmentation in Active Disk Editor also visually confirmed inconsistencies.</p>
 </section>
 </section>
 <section id="disk-2-analysis">
-<h2>Disk 2 Analysis<a class="headerlink" href="#disk-2-analysis" title="Link to this heading">¶</a></h2>
+<h3>Disk 2 Analysis<a class="headerlink" href="#disk-2-analysis" title="Link to this heading">¶</a></h3>
 <p>Since the tools were previously explained, only the requested data is analyzed here.</p>
 <section id="id2">
-<h3>Determine whether the partition table is MBR or GPT<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<h4>Determine whether the partition table is MBR or GPT<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
 <p>Now, select disk2.dd found in <a class="reference download internal" download="" href="_downloads/566293a3cd20c6527d4a3046a5bda413/disks.7z"><span class="xref download myst">disks.7z</span></a>.</p>
 <p><img alt="alt text" src="_images/image-21.png" /></p>
 <p>Select “Master Boot Record” template again.</p>
@@ -453,14 +456,14 @@ The colored segmentation in Active Disk Editor also visually confirmed inconsist
 <p>Inspecting the disk we can confirm that it is <strong>MBR</strong> by checking the first bytes of the disk.</p>
 </section>
 <section id="mbr-header">
-<h3>MBR Header<a class="headerlink" href="#mbr-header" title="Link to this heading">¶</a></h3>
+<h4>MBR Header<a class="headerlink" href="#mbr-header" title="Link to this heading">¶</a></h4>
 <p>Unlike GPT, MBR does not have a dedicated metadata header.<br />
 The partition table is located within the last 66 bytes of sector 0, containing four 16-byte entries.</p>
 </section>
 <section id="id3">
-<h3>Partitions<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<h4>Partitions<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h4>
 <section id="id4">
-<h4>First Partition<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h4>
+<h5>First Partition<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h5>
 <ul class="simple">
 <li><p><strong>Boot indicator:</strong> 00 (not active)</p></li>
 <li><p><strong>CHS (first sector):</strong> 32-21-0</p></li>
@@ -471,10 +474,8 @@ The partition table is located within the last 66 bytes of sector 0, containing 
 </ul>
 <p><img alt="alt text" src="_images/image-17.png" /></p>
 </section>
-</section>
-</section>
 <section id="id5">
-<h2>Second Partition<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
+<h5>Second Partition<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h5>
 <ul class="simple">
 <li><p><strong>Boot indicator:</strong> 00 (not active)</p></li>
 <li><p><strong>CHS (first sector):</strong> 172-2B-02</p></li>
@@ -486,7 +487,7 @@ The partition table is located within the last 66 bytes of sector 0, containing 
 <p><img alt="alt text" src="_images/image-18.png" /></p>
 </section>
 <section id="id6">
-<h2>Third Partition<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
+<h5>Third Partition<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h5>
 <ul class="simple">
 <li><p><strong>Boot indicator:</strong> 00 (not active)</p></li>
 <li><p><strong>CHS (first sector):</strong> 57-35-05</p></li>
@@ -496,8 +497,10 @@ The partition table is located within the last 66 bytes of sector 0, containing 
 <li><p><strong>Length:</strong> 120,832 sectors</p></li>
 </ul>
 <p><img alt="alt text" src="_images/image-19.png" /></p>
+</section>
+</section>
 <section id="id7">
-<h3>Sleuth Kit<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<h4>Sleuth Kit<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h4>
 <p>Using the same command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>mmls<span class="w"> </span>&lt;disk_image&gt;
 </pre></div>
@@ -507,9 +510,10 @@ The partition table is located within the last 66 bytes of sector 0, containing 
 </section>
 <hr class="docutils" />
 <section id="peculiarities">
-<h3>Peculiarities<a class="headerlink" href="#peculiarities" title="Link to this heading">¶</a></h3>
+<h4>Peculiarities<a class="headerlink" href="#peculiarities" title="Link to this heading">¶</a></h4>
 <p>Several areas contained incomplete or inconsistent data.<br />
 Sleuth Kit provided more detailed logical structure information than Active Disk Editor, particularly within the extended partition.</p>
+</section>
 </section>
 </section>
 </section>
@@ -519,7 +523,15 @@ Sleuth Kit provided more detailed logical structure information than Active Disk
       <footer>
         
         <div class="related-pages">
-          
+          <a class="next-page" href="exercise2.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Exercise 2</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
           <a class="prev-page" href="index.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
@@ -561,7 +573,8 @@ Sleuth Kit provided more detailed logical structure information than Active Disk
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">PRACTICE 1 — STATEMENT</a><ul>
+<li><a class="reference internal" href="#">PRACTICE 1</a><ul>
+<li><a class="reference internal" href="#statement">Statement</a><ul>
 <li><a class="reference internal" href="#main-objectives-of-the-practice">Main Objectives of the Practice</a></li>
 <li><a class="reference internal" href="#software-to-use">Software to Use</a></li>
 <li><a class="reference internal" href="#tasks">Tasks</a><ul>
@@ -574,7 +587,7 @@ Sleuth Kit provided more detailed logical structure information than Active Disk
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#practice-1-solution">PRACTICE 1 — SOLUTION</a><ul>
+<li><a class="reference internal" href="#solution">Solution</a><ul>
 <li><a class="reference internal" href="#partition-table-analysis">Partition Table Analysis</a></li>
 <li><a class="reference internal" href="#disk-1">Disk 1</a><ul>
 <li><a class="reference internal" href="#id1">Determine whether the partition table is MBR or GPT</a></li>
@@ -596,14 +609,14 @@ Sleuth Kit provided more detailed logical structure information than Active Disk
 <li><a class="reference internal" href="#mbr-header">MBR Header</a></li>
 <li><a class="reference internal" href="#id3">Partitions</a><ul>
 <li><a class="reference internal" href="#id4">First Partition</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li><a class="reference internal" href="#id5">Second Partition</a></li>
-<li><a class="reference internal" href="#id6">Third Partition</a><ul>
+<li><a class="reference internal" href="#id6">Third Partition</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#id7">Sleuth Kit</a></li>
 <li><a class="reference internal" href="#peculiarities">Peculiarities</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

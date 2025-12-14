@@ -39,3 +39,50 @@ File systems such as FAT, NTFS, ext2/ext3/ext4 store files in data blocks or clu
 
 5. Import a multi-system virtual machine (Windows 7–Debian) from the provided OVA.  
    Corrupt the MBR on purpose and attempt to recover it using the Windows 7 installation disk.
+
+
+
+Con active disk editor no podemos saber directamente de forma sencilla cuántas particiones hay, porque al estar estropeada la partición de arranque, no lo sobe.
+
+![alt text](image-73.png)
+
+Al menos sabemos que es MBR
+
+![alt text](image-74.png)
+
+PS C:\Users\usuario\Desktop\Práctica 3\photorec testdisk-7.2-WIP.win\testdisk-7.2-WIP> .\photorec_win.exe ..\..\recuperacion.dd                                                                     
+
+![alt text](image-75.png)
+
+![alt text](image-76.png)
+
+![alt text](image-77.png)
+
+![alt text](image-78.png)
+
+![alt text](image-79.png)
+
+![alt text](image-80.png)
+
+![alt text](image-81.png)
+
+
+autopsy
+
+![alt text](image-82.png)
+
+![alt text](image-83.png)
+
+it will create a database
+
+![alt text](image-84.png)
+
+![alt text](image-85.png)
+
+![alt text](image-86.png)
+
+![alt text](image-87.png)
+
+Te muestra muchas más cosas, quizás un poco más lioso por la poca cantidad de archivos que tenemos, pero si el sistema fuese mucho más grnade, estaría bastante bien estructurado. Podemos ver más cosas que en photorec
+
+![alt text](image-88.png)
