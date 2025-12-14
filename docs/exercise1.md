@@ -1,19 +1,21 @@
-# PRACTICE 1 — STATEMENT
+# PRACTICE 1
+
+## Statement
 
 The partition table is an essential component of a computer system. Depending on whether it uses **MBR** or **GPT**, it is physically located in different sectors of the disk and controls the boot process. In digital forensic analysis, it is necessary to study its structure to ensure that the system is not infected by malicious programs, such as malware capable of replacing the MBR and loading malicious software into memory during the boot process.
 
 Additionally, analyzing partition tables helps forensic investigators extract details about the disk, identify the file system type used by each partition, and determine their size. These analyses may also serve as digital evidence or even assist in recovering lost data. In any case, understanding the structure of both logical and physical storage media used to store information on a computer is essential.
 
-## Main Objectives of the Practice
+### Main Objectives of the Practice
 - Study MBR and GPT partition tables.
 
-## Software to Use
+### Software to Use
 - Windows X  
 - WinHex  
 - Sleuth Kit  
 - `dd`
 
-## Tasks
+### Tasks
 - Create a Windows virtual machine.  
 - Download two hard disk images from the provided source.  
 - Practice sector extraction commands for the sectors where partition tables reside.  
@@ -31,9 +33,9 @@ dd count=1 bs=512 if=\\.\PHYSICALDRIVE2 of=d:\mbr.dd skip=0
 
 - Extract as much information as possible from the disk images:
 
-### 1. Determine whether the partition table is MBR or GPT.
+#### 1. Determine whether the partition table is MBR or GPT.
 
-### 2. If it is MBR, determine the following for each partition:
+#### 2. If it is MBR, determine the following for each partition:
 a. Partition number  
 b. Boot indicator  
 c. Cylinder, Head, Sector (CHS) of the first sector in the partition  
@@ -42,7 +44,7 @@ e. Cylinder, Head, Sector (CHS) of the last sector in the partition
 f. Logical Block Address (LBA) of the first sector  
 g. Partition length in sectors  
 
-### 3. If it is GPT, determine the following for each partition:
+#### 3. If it is GPT, determine the following for each partition:
 a. GPT header location (LBA)  
 b. Header size  
 c. First usable LBA  
@@ -56,26 +58,26 @@ g. For each partition:
    4. Ending LBA  
    5. Name  
 
-### 4. Compare the information obtained manually with the output of forensic tools such as Sleuth Kit. Example:
+#### 4. Compare the information obtained manually with the output of forensic tools such as Sleuth Kit. Example:
 
 ```bash
 mmls -t gpt|dos <disk>
 ```
 
-### 5. Comment on any peculiarities you find in the disks, such as:
+#### 5. Comment on any peculiarities you find in the disks, such as:
 - Hidden partitions  
 - Blank or unallocated data areas  
 - Any other noteworthy structures  
 
-# PRACTICE 1 — SOLUTION  
+## Solution  
 
-## Partition Table Analysis
+### Partition Table Analysis
 
 For this practice, a **Kali Linux** virtual machine and the tool **Active Disk Editor** were used to manually inspect the disk images.
 
-## Disk 1
+### Disk 1
 
-### Determine whether the partition table is MBR or GPT
+#### Determine whether the partition table is MBR or GPT
 
 Open Active Disk Editor in your machine
 
@@ -110,7 +112,7 @@ Once we select the **GUID template**, more colors appear in the application and 
 
 After analyzing the disk, we can conclude that it is a **GPT** disk.
 
-### GPT Header
+#### GPT Header
 
 From the header we can extract the following information:
 
@@ -126,9 +128,9 @@ Then, assign the proper template in the right panel.
 
 ![alt text](./images/image-10.png)
 
-### Partitions
+#### Partitions
 
-#### First Partition
+##### First Partition
 
 - **Type:** Primary, hidden (contains partition table information)
 - **GUID:** 1C 40 E0 CE ED 42 4B 19 92 90 EC 39 77 3D E9 42
@@ -138,7 +140,7 @@ Then, assign the proper template in the right panel.
 
 ![alt text](./images/image-11.png)
 
-#### Second Partition
+##### Second Partition
 
 - **Type:** Primary
 - **GUID:** E5 FA E0 91 62 C6 41 D1 8C 23 8C CF 50 32 B2 38
@@ -148,7 +150,7 @@ Then, assign the proper template in the right panel.
 
 ![alt text](./images/image-12.png)
 
-#### Third Partition
+##### Third Partition
 
 This partition appears to be **corrupted**.
 - **Type:** —
@@ -159,7 +161,7 @@ This partition appears to be **corrupted**.
 
 ![alt text](./images/image-13.png)
 
-#### Fourth Partition
+##### Fourth Partition
 
 - **Type:** Primary
 - **GUID:** 55 EF 48 65 C1 CA 4D 08 A3 F0 AC 68 AF C2 4A 76
@@ -169,7 +171,7 @@ This partition appears to be **corrupted**.
 
 ![alt text](./images/image-14.png)
 
-#### Fifth Partition
+##### Fifth Partition
 
 - **Type:** Primary
 - **GUID:** F6 1B F4 D0 F8 F1 43 8E 9E E6 4A 30 01 3A 3F 28
@@ -179,7 +181,7 @@ This partition appears to be **corrupted**.
 
 ![alt text](./images/image-15.png)
 
-### Sleuth Kit
+#### Sleuth Kit
 
 To use Sleuth Kit, install it (on Kali it is usually installed by default):
 
@@ -197,16 +199,16 @@ The tool outputs information similar to what we obtained manually, including:
 
 This matches with the manual findings.
 
-### Peculiarities Found
+#### Peculiarities Found
 
 A strange partition was identified that contained no meaningful data, leading to the conclusion that it is corrupted.  
 The colored segmentation in Active Disk Editor also visually confirmed inconsistencies.
 
-## Disk 2 Analysis
+### Disk 2 Analysis
 
 Since the tools were previously explained, only the requested data is analyzed here.
 
-### Determine whether the partition table is MBR or GPT
+#### Determine whether the partition table is MBR or GPT
 
 Now, select disk2.dd found in [disks.7z](./disks.7z).
 
@@ -219,14 +221,14 @@ Select "Master Boot Record" template again.
 
 Inspecting the disk we can confirm that it is **MBR** by checking the first bytes of the disk.
 
-### MBR Header
+#### MBR Header
 
 Unlike GPT, MBR does not have a dedicated metadata header.  
 The partition table is located within the last 66 bytes of sector 0, containing four 16-byte entries.
 
-### Partitions
+#### Partitions
 
-#### First Partition
+##### First Partition
 - **Boot indicator:** 00 (not active)
 - **CHS (first sector):** 32-21-0
 - **Type:** Primary
@@ -236,7 +238,7 @@ The partition table is located within the last 66 bytes of sector 0, containing 
 
 ![alt text](./images/image-17.png)
 
-## Second Partition
+##### Second Partition
 - **Boot indicator:** 00 (not active)
 - **CHS (first sector):** 172-2B-02
 - **Type:** Primary
@@ -246,7 +248,7 @@ The partition table is located within the last 66 bytes of sector 0, containing 
 
 ![alt text](./images/image-18.png)
 
-## Third Partition
+##### Third Partition
 - **Boot indicator:** 00 (not active)
 - **CHS (first sector):** 57-35-05
 - **Type:** Primary — *Extended*, meaning it may contain logical partitions
@@ -256,7 +258,7 @@ The partition table is located within the last 66 bytes of sector 0, containing 
 
 ![alt text](./images/image-19.png)
 
-### Sleuth Kit
+#### Sleuth Kit
 
 Using the same command:
 
@@ -270,7 +272,7 @@ Additional logical volumes inside the extended partition were displayed, providi
 
 ---
 
-### Peculiarities
+#### Peculiarities
 
 Several areas contained incomplete or inconsistent data.  
 Sleuth Kit provided more detailed logical structure information than Active Disk Editor, particularly within the extended partition.

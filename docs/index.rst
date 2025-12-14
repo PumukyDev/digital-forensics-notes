@@ -10,3 +10,5 @@ Welcome to the Digital Forensics Notes documentation!
    :hidden:
 
    exercise1
+   exercise2
+   practica3

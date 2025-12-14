@@ -88,9 +88,25 @@ Next, to recover the file, we must CLOSE Active Disk Editor because it conflicts
 
 - **Image mounting → Select File**
 
+
+![alt text](image-23.png)
+![alt text](image-24.png)
+
 Then:
 
 - **Add Evidence Item → Physical Drive → (the last detected drive)**
+
+![alt text](image-25.png)
+![alt text](image-26.png)
+![alt text](image-27.png)
+![alt text](image-28.png)
+![alt text](image-29.png)
+![alt text](image-30.png)
+![alt text](image-31.png)
+![alt text](image-32.png)
+![alt text](image-33.png)
+
+TBD No sé hacer lo de Active no se qué
 
 We browse the contents until we find `texto - copia.txt` under:  
 **Datos → Root → Carpeta**
