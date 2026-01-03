@@ -9,6 +9,5 @@ Welcome to the Digital Forensics Notes documentation!
    :caption: Content:
    :hidden:
 
-   exercise1
-   exercise2
-   exercise3
+   windows-file-system/index
+   windows-artifacts/index
