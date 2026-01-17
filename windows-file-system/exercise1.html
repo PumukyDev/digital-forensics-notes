@@ -199,7 +199,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Windows artifacts:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../windows-artifacts/exercise1.html">PRACTICE 1: Post-mortem Analysis, Windows Artifacts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../windows-artifacts/exercise1.html">Exercise</a></li>
 </ul>
 
 </div>
@@ -335,21 +335,21 @@ g. For each partition:</p>
 <section id="id1">
 <h4>Determine whether the partition table is MBR or GPT<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
 <p>Open Active Disk Editor in your machine</p>
-<p><img alt="alt text" src="../_images/image-20.png" /></p>
+<p><img alt="alt text" src="../_images/image-201.png" /></p>
 <p>The following window will appear. Select <strong>“Open File…”</strong> and choose disk1.dd found in <a class="reference download internal" download="" href="../_downloads/6c43a752af96bd1e24c53b95453a36a9/disks1.7z"><span class="xref download myst">disks1.7z</span></a>.</p>
-<p><img alt="alt text" src="../_images/image.png" /></p>
+<p><img alt="alt text" src="../_images/image1.png" /></p>
 <p>Once the file is loaded, a new disk will appear in the interface. Double click on it to open the explorer.</p>
-<p><img alt="alt text" src="../_images/image-1.png" /></p>
+<p><img alt="alt text" src="../_images/image-110.png" /></p>
 <p>Change the <strong>template</strong> in order to start analyzing it correctly. To start with, as we don’t know the correct partition, select “Master Boot</p>
-<p><img alt="alt text" src="../_images/image-4.png" /></p>
+<p><img alt="alt text" src="../_images/image-410.png" /></p>
 <p>When trying to analyze the first disk, it is impossible to interpret it, if we attempt to read it as a standard MBR, the data shown will be meaningless or inconsistent.</p>
-<p><img alt="alt text" src="../_images/image-5.png" />
-<img alt="alt text" src="../_images/image-6.png" /></p>
+<p><img alt="alt text" src="../_images/image-56.png" />
+<img alt="alt text" src="../_images/image-610.png" /></p>
 <p>Try changing the template to “GUID Partition Table”.</p>
 <p><img alt="alt text" src="../_images/image-7.png" /></p>
 <p>Once we select the <strong>GUID template</strong>, more colors appear in the application and the structure becomes clearer and more logical. Each color corresponds to a specific partition, helping with visual analysis.</p>
-<p><img alt="alt text" src="../_images/image-8.png" />
-<img alt="alt text" src="../_images/image-9.png" /></p>
+<p><img alt="alt text" src="../_images/image-81.png" />
+<img alt="alt text" src="../_images/image-91.png" /></p>
 <p>After analyzing the disk, we can conclude that it is a <strong>GPT</strong> disk.</p>
 </section>
 <section id="gpt-header">
@@ -365,7 +365,7 @@ g. For each partition:</p>
 </ul>
 <p>To analyze each partition, you must <strong>Ctrl + Left Click</strong> on the first LBA of the partition.<br />
 Then, assign the proper template in the right panel.</p>
-<p><img alt="alt text" src="../_images/image-10.png" /></p>
+<p><img alt="alt text" src="../_images/image-101.png" /></p>
 </section>
 <section id="partitions">
 <h4>Partitions<a class="headerlink" href="#partitions" title="Link to this heading">¶</a></h4>
@@ -378,7 +378,7 @@ Then, assign the proper template in the right panel.</p>
 <li><p><strong>Ending LBA:</strong> 104,447</p></li>
 <li><p><strong>Name:</strong> EFI System Partition</p></li>
 </ul>
-<p><img alt="alt text" src="../_images/image-11.png" /></p>
+<p><img alt="alt text" src="../_images/image-111.png" /></p>
 </section>
 <section id="second-partition">
 <h5>Second Partition<a class="headerlink" href="#second-partition" title="Link to this heading">¶</a></h5>
@@ -389,7 +389,7 @@ Then, assign the proper template in the right panel.</p>
 <li><p><strong>Ending LBA:</strong> 206,847</p></li>
 <li><p><strong>Name:</strong> Linux Swap Partition</p></li>
 </ul>
-<p><img alt="alt text" src="../_images/image-12.png" /></p>
+<p><img alt="alt text" src="../_images/image-121.png" /></p>
 </section>
 <section id="third-partition">
 <h5>Third Partition<a class="headerlink" href="#third-partition" title="Link to this heading">¶</a></h5>
@@ -401,7 +401,7 @@ Then, assign the proper template in the right panel.</p>
 <li><p><strong>Ending LBA:</strong> 372,735</p></li>
 <li><p><strong>Name:</strong> —</p></li>
 </ul>
-<p><img alt="alt text" src="../_images/image-13.png" /></p>
+<p><img alt="alt text" src="../_images/image-131.png" /></p>
 </section>
 <section id="fourth-partition">
 <h5>Fourth Partition<a class="headerlink" href="#fourth-partition" title="Link to this heading">¶</a></h5>
@@ -412,7 +412,7 @@ Then, assign the proper template in the right panel.</p>
 <li><p><strong>Ending LBA:</strong> 475,135</p></li>
 <li><p><strong>Name:</strong> Basic Data Partition</p></li>
 </ul>
-<p><img alt="alt text" src="../_images/image-14.png" /></p>
+<p><img alt="alt text" src="../_images/image-141.png" /></p>
 </section>
 <section id="fifth-partition">
 <h5>Fifth Partition<a class="headerlink" href="#fifth-partition" title="Link to this heading">¶</a></h5>
@@ -423,7 +423,7 @@ Then, assign the proper template in the right panel.</p>
 <li><p><strong>Ending LBA:</strong> 614,366</p></li>
 <li><p><strong>Name:</strong> Basic Data Partition</p></li>
 </ul>
-<p><img alt="alt text" src="../_images/image-15.png" /></p>
+<p><img alt="alt text" src="../_images/image-151.png" /></p>
 </section>
 </section>
 <section id="sleuth-kit">
@@ -433,7 +433,7 @@ Then, assign the proper template in the right panel.</p>
 sudo<span class="w"> </span>mmls<span class="w"> </span>&lt;disk_image&gt;
 </pre></div>
 </div>
-<p><img alt="alt text" src="../_images/image-2.png" /></p>
+<p><img alt="alt text" src="../_images/image-210.png" /></p>
 <p>The tool outputs information similar to what we obtained manually, including:</p>
 <ul class="simple">
 <li><p>The same empty/corrupted third entry</p></li>
@@ -453,10 +453,10 @@ The colored segmentation in Active Disk Editor also visually confirmed inconsist
 <section id="id2">
 <h4>Determine whether the partition table is MBR or GPT<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
 <p>Now, select disk2.dd found in <a class="reference download internal" download="" href="../_downloads/6c43a752af96bd1e24c53b95453a36a9/disks1.7z"><span class="xref download myst">disks1.7z</span></a>.</p>
-<p><img alt="alt text" src="../_images/image-21.png" /></p>
+<p><img alt="alt text" src="../_images/image-211.png" /></p>
 <p>Select “Master Boot Record” template again.</p>
-<p><img alt="alt text" src="../_images/image-4.png" />
-<img alt="alt text" src="../_images/image-16.png" /></p>
+<p><img alt="alt text" src="../_images/image-410.png" />
+<img alt="alt text" src="../_images/image-161.png" /></p>
 <p>Inspecting the disk we can confirm that it is <strong>MBR</strong> by checking the first bytes of the disk.</p>
 </section>
 <section id="mbr-header">
@@ -476,7 +476,7 @@ The partition table is located within the last 66 bytes of sector 0, containing 
 <li><p><strong>Starting LBA:</strong> 2,048</p></li>
 <li><p><strong>Length:</strong> 40,960 sectors</p></li>
 </ul>
-<p><img alt="alt text" src="../_images/image-17.png" /></p>
+<p><img alt="alt text" src="../_images/image-171.png" /></p>
 </section>
 <section id="id5">
 <h5>Second Partition<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h5>
@@ -488,7 +488,7 @@ The partition table is located within the last 66 bytes of sector 0, containing 
 <li><p><strong>Starting LBA:</strong> 43,008</p></li>
 <li><p><strong>Length:</strong> 40,960 sectors</p></li>
 </ul>
-<p><img alt="alt text" src="../_images/image-18.png" /></p>
+<p><img alt="alt text" src="../_images/image-181.png" /></p>
 </section>
 <section id="id6">
 <h5>Third Partition<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h5>
@@ -500,7 +500,7 @@ The partition table is located within the last 66 bytes of sector 0, containing 
 <li><p><strong>Starting LBA:</strong> 83,968</p></li>
 <li><p><strong>Length:</strong> 120,832 sectors</p></li>
 </ul>
-<p><img alt="alt text" src="../_images/image-19.png" /></p>
+<p><img alt="alt text" src="../_images/image-191.png" /></p>
 </section>
 </section>
 <section id="id7">
@@ -509,7 +509,7 @@ The partition table is located within the last 66 bytes of sector 0, containing 
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>mmls<span class="w"> </span>&lt;disk_image&gt;
 </pre></div>
 </div>
-<p><img alt="alt text" src="../_images/image-3.png" /></p>
+<p><img alt="alt text" src="../_images/image-310.png" /></p>
 <p>Additional logical volumes inside the extended partition were displayed, providing more detail than Active Disk Editor alone.</p>
 </section>
 <hr class="docutils" />
