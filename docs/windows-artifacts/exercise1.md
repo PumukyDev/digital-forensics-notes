@@ -445,7 +445,11 @@ Using a tool like Shellbags Explorer is it possible to visualize Shellbags on a 
 ![alt text](image-68.png)
 
 Copy for analysis:  
+
+```powershell
 Copy-Item -Recurse -Force 'C:\$Recycle.Bin\S-1-5-21-4071608857-1089510339-248207473-1000' 'C:\RecycleBackup'  
+```
+
 ![alt text](image-69.png)
 
 Export to CSV:  
