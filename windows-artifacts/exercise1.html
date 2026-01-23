@@ -684,9 +684,11 @@ Indicates the most recent time the USB device was safely removed.
 <em>Stores deleted files.</em><br />
 <img alt="alt text" src="../_images/image-68.png" /></p></li>
 </ul>
-<p>Copy for analysis:<br />
-Copy-Item -Recurse -Force ‘C:$Recycle.Bin\S-1-5-21-4071608857-1089510339-248207473-1000’ ‘C:\RecycleBackup’<br />
-<img alt="alt text" src="../_images/image-69.png" /></p>
+<p>Copy for analysis:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">Copy-Item</span> <span class="n">-Recurse</span> <span class="n">-Force</span> <span class="s1">&#39;C:\$Recycle.Bin\S-1-5-21-4071608857-1089510339-248207473-1000&#39;</span> <span class="s1">&#39;C:\RecycleBackup&#39;</span>  
+</pre></div>
+</div>
+<p><img alt="alt text" src="../_images/image-69.png" /></p>
 <p>Export to CSV:</p>
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">.\</span><span class="n">rifiuti-vista</span><span class="p">.</span><span class="n">exe</span> <span class="n">-t</span> <span class="s2">&quot;,&quot;</span> <span class="n">-o</span> <span class="s2">&quot;recycle-bin.csv&quot;</span> <span class="s2">&quot;C:\RecycleBackup&quot;</span>
 </pre></div>
