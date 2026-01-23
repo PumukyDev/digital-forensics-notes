@@ -1,4 +1,4 @@
-# Exercise
+# Post-mortem analysis
 
 ## Main objectives of the practice
 - Analyze the evidence provided by different artifacts in Windows operating systems.
@@ -95,7 +95,7 @@ The practice consists of extracting as much evidence as possible from a Windows 
 
 Although in a real scenario this would be done using a system image, for this practice it is recommended, for agility, to use the operating system installed on the student’s computer.
 
-In my case, I will use a Windows partition that I use for a few things, but as I don't use it a lot some hives will not exist because I do not use Windows or daily life
+In my case, I will use a Windows partition that I use for a few things, but as I don't use it a lot some hives will not exist because I do not use Windows for daily life.
 
 ### Software to be used
 - **A.** Windows 10 (32 or 64 bits)  
@@ -169,7 +169,8 @@ Add "NTUSER.DAT" inside {USER}\ and "UsrClass.DAT" inside {USER}\AppData\Local\M
 
 - **Last access timestamp**  
 `System\ControlSet001\Control\Filesystem`  
-![alt text](image-80.png)
+![alt text](image-80.png)  
+
 *Controls if Windows updates the last access date of files and folders.*
 
 | Value | Actual behavior |
@@ -202,7 +203,7 @@ Add "NTUSER.DAT" inside {USER}\ and "UsrClass.DAT" inside {USER}\AppData\Local\M
 *These are the root DNS*
 
 `Software\Microsoft\Windows NT\CurrentVersion\NetworkList\Nla\Cache`  
-(Not present.)
+(Not present.)  
 *Cached information about networks.*  
 
 `Software\Microsoft\Windows NT\CurrentVersion\NetworkList\Nla\Wireless`  
@@ -272,7 +273,7 @@ Add "NTUSER.DAT" inside {USER}\ and "UsrClass.DAT" inside {USER}\AppData\Local\M
 
 - **Autosaved Office files**  
 `C:\Users\{user}\AppData\Roaming\Microsoft\{Excel|Word|PowerPoint}\`  
-*Temporary autosave files for Office apps.*
+*Temporary autosave files for Office apps.*  
 (Not present.)
 
 - **OpenSaveMRU**  
@@ -298,18 +299,26 @@ Add "NTUSER.DAT" inside {USER}\ and "UsrClass.DAT" inside {USER}\AppData\Local\M
 `NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\FeatureUsage`  
 *Tracks user interaction with taskbar features.*  
 ![alt text](image-37.png)  
+
 `...\AppBadgeUpdated`  
 ![alt text](image-38.png)  
+*Records when a taskbar app badge (like notifications) is updated.*  
+
 `...\AppLaunch`  
 ![alt text](image-39.png)  
+*Logs when a user launches an application from the taskbar.*  
+
 `...\AppSwitched`  
 ![alt text](image-40.png)  
+*Tracks when the user switches between apps pinned or open on the taskbar.*  
+
 `...\ShowJumpView`  
 ![alt text](image-41.png)
+*Logs when the user opens a jump list (right-click menu) on a taskbar app.*  
 
 - **Recent applications**  
 `Software\Microsoft\Windows\CurrentVersion\Search\RecentApps`  
-*Lists recently used apps.*
+*Lists recently used apps.*  
 (Not present.)
 
 #### Shortcuts and Jump Lists
@@ -318,30 +327,34 @@ Add "NTUSER.DAT" inside {USER}\ and "UsrClass.DAT" inside {USER}\AppData\Local\M
 *Contains shortcut (.lnk) files of recently opened documents.*  
 ![alt text](image-43.png)  
 ![alt text](image-42.png)
+![alt text](image-44.png)  
 
 - **Jump Lists**  
-`AutomaticDestinations` and `CustomDestinations`  
-`C:\Users\{user}\AppData\Roaming\Microsoft\Windows\Recent\`  
+`C:\Users\{user}\AppData\Roaming\Microsoft\Windows\Recent\AutomaticDestinations`  
 *Shows recent and pinned items for applications.*  
-![alt text](image-44.png)  
 ![alt text](image-45.png)  
 ![alt text](image-46.png)  
 ![alt text](image-47.png)  
+
+`C:\Users\{user}\AppData\Roaming\Microsoft\Windows\Recent\CustomDestinations`  
 ![alt text](image-48.png)  
 ![alt text](image-49.png)
 
 #### Shellbags
 ![alt text](image-50.png)  
 `USRCLASS.DAT\Local Settings\Software\Microsoft\Windows\Shell\Bags`  
+*Stores the view settings of folders (icon view, details view, window size, etc.) for individual folders.*  
 ![alt text](image-87.png)
 
 `USRCLASS.DAT\Local Settings\Software\Microsoft\Windows\Shell\BagMRU`  
+*Stores the hierarchy of folders that the user has accessed, linking to the corresponding Bags entries.*  
 ![alt text](image-88.png)
 
 `NTUSER.DAT\Software\Microsoft\Windows\Shell\BagMRU`  
+*Another location tracking folder access and structure, used by newer versions of Windows for the MRU (Most Recently Used) folder list.*  
 ![alt text](image-89.png)
 
-Using a tool like Shellbags Explorer is it possible to visualize Shellbags on a easiest way
+Using a tool like Shellbags Explorer is it possible to visualize Shellbags on a easiest way.
 ![alt text](image-86.png)
 
 #### USB and MTP devices
@@ -377,6 +390,7 @@ Using a tool like Shellbags Explorer is it possible to visualize Shellbags on a 
 ![alt text](image-81.png)
 
 `C:\Windows\inf\setupapi.dev.log`  
+*Tracks the installation and configuration of device drivers on the system*  
 ![alt text](image-99.png)
 
 - **0064 – First connection (InstallDate)**  
@@ -392,7 +406,7 @@ Using a tool like Shellbags Explorer is it possible to visualize Shellbags on a 
 ![alt text](image-84.png)
 
 #### Databases and system artifacts
-- **Cortana database (older versions)**  
+- **Cortana database**  
 `C:\Users\{user}\AppData\Local\Packages\Microsoft.Windows.Cortana_xxxx\LocalState\ESEDatabase_CortanaCoreInstance\CortanaCoreDb.dat`  
 (Not present.)
 
@@ -435,7 +449,11 @@ Copy-Item -Recurse -Force 'C:\$Recycle.Bin\S-1-5-21-4071608857-1089510339-248207
 ![alt text](image-69.png)
 
 Export to CSV:  
-.\rifiuti-vista.exe -t "," -o "recycle-bin.csv" "C:\RecycleBackup"  
+
+```powershell
+.\rifiuti-vista.exe -t "," -o "recycle-bin.csv" "C:\RecycleBackup"
+```
+
 ![alt text](image-67.png)
 
 - **OfficeFileCache**  
@@ -449,7 +467,10 @@ Export to CSV:
 - **Public IP (ETLParser)**  
 `C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Logs`  
 
-.\ETLParser.exe -c DeliveryLogs -s "C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Logs" -o "C:\Users\adrian\Downloads\ETLOutput"  
+```powershell
+.\ETLParser.exe -c DeliveryLogs -s "C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Logs" -o "C:\Users\adrian\Downloads\ETLOutput"
+```
+
 ![alt text](image-71.png)  
 ![alt text](image-70.png)  
 ![alt text](image-72.png)
@@ -478,7 +499,7 @@ Export to CSV:
 ![alt text](image-90.png)
 
 - **ShimCache**  
-`SYSTEM\CurrentControlSet\Control\SessionManager\AppCompatCache\AppCompatCache`  
+`SYSTEM\ControlSet001\Control\SessionManager\AppCompatCache\AppCompatCache`  
 *Registry-based cache listing previously executed programs, even if deleted.*
 
 
