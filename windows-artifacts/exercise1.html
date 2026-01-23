@@ -342,6 +342,7 @@ System events: Track software installations and failures.</p></li>
 <h2>PART B<a class="headerlink" href="#part-b" title="Link to this heading">¶</a></h2>
 <p>The practice consists of extracting as much evidence as possible from a Windows operating system by performing targeted searches on the different artifacts it uses.</p>
 <p>Although in a real scenario this would be done using a system image, for this practice it is recommended, for agility, to use the operating system installed on the student’s computer.</p>
+<p>In my case, I will use a Windows partition that I use for a few things, but as I don’t use it a lot some hives will not exist because I do not use Windows or daily life</p>
 <section id="software-to-be-used">
 <h3>Software to be used<a class="headerlink" href="#software-to-be-used" title="Link to this heading">¶</a></h3>
 <ul class="simple">
@@ -362,7 +363,7 @@ System events: Track software installations and failures.</p></li>
 <p>Open FTK Imager and click the image icon.<br />
 <img alt="alt text" src="../_images/image-1.png" /><br />
 <em>This will allow you to mount the disk image for analysis.</em></p>
-<p>Click “Logical Drive”.<br />
+<p>Click “Logical Drive” and click on “Next”.<br />
 <img alt="alt text" src="../_images/image-2.png" /></p>
 <p>Select your disk and click “Finish”.<br />
 <img alt="alt text" src="../_images/image-3.png" /></p>
@@ -373,18 +374,17 @@ System events: Track software installations and failures.</p></li>
 <em>These are critical registry hives for forensic analysis.</em></p>
 <p>I’ll save them as “windows-artifacts”.<br />
 <img alt="alt text" src="../_images/image-6.png" /></p>
-<p>Open WRR, click “Open” → “File”.<br />
+<p>Open WRR, click “File” → “Open…”.<br />
 <img alt="alt text" src="../_images/image-8.png" /></p>
-<p>Select “SOFTWARE”, “SYSTEM” and “SAM”.<br />
+<p>Select “SOFTWARE”, “SYSTEM” and “SAM” and click on “Open”.<br />
 <img alt="alt text" src="../_images/image-9.png" /><br />
 <em>These registry hives contain software settings, system info, and user account data.</em></p>
 <p>Verify files were correctly exported to WRR.<br />
 <img alt="alt text" src="../_images/image-10.png" /></p>
-<p>Do the same for <code class="docutils literal notranslate"><span class="pre">root\Windows\Users\{USER}</span></code>.<br />
+<p>Repeat the same process for <code class="docutils literal notranslate"><span class="pre">root\Windows\Users\{USER}</span></code>.<br />
 <img alt="alt text" src="../_images/image-26.png" /></p>
-<p>Add “NTUSER.DAT” to WRR.<br />
-<img alt="alt text" src="../_images/image-78.png" /><br />
-<em>This contains user-specific settings and activity.</em></p>
+<p>Add “NTUSER.DAT” inside {USER}\ and “UsrClass.DAT” inside {USER}\AppData\Local\Microsoft\Windows\ to WRR.<br />
+<img alt="alt text" src="../_images/image-85.png" /></p>
 </section>
 <hr class="docutils" />
 <section id="artifacts-and-paths-of-interest">
@@ -406,7 +406,33 @@ System events: Track software installations and failures.</p></li>
 <img alt="alt text" src="../_images/image-12.png" /></p></li>
 <li><p><strong>Last access timestamp</strong><br />
 <code class="docutils literal notranslate"><span class="pre">System\ControlSet001\Control\Filesystem</span></code><br />
-<em>Tracks last access times of files.</em></p></li>
+<img alt="alt text" src="../_images/image-80.png" />
+<em>Controls if Windows updates the last access date of files and folders.</em></p></li>
+</ul>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-right"><p>Value</p></th>
+<th class="head"><p>Actual behavior</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-right"><p><strong>0</strong></p></td>
+<td><p>Updates the last access timestamp for both files and directories (legacy behavior, lower performance).</p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p><strong>1</strong></p></td>
+<td><p>Does not update the last access timestamp for <strong>files or directories</strong>.</p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p><strong>2</strong></p></td>
+<td><p><strong>System managed</strong> (default since Windows Vista/7). Windows decides when to update to balance compatibility and performance.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p><strong>3</strong></p></td>
+<td><p>Updates the last access timestamp <strong>for directories only</strong>, <strong>not for files</strong>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="simple">
 <li><p><strong>Shutdown time</strong><br />
 <code class="docutils literal notranslate"><span class="pre">System\ControlSet001\Control\Windows</span></code><br />
 <em>Stores last shutdown or restart timestamps.</em><br />
@@ -419,7 +445,7 @@ System events: Track software installations and failures.</p></li>
 <ul class="simple">
 <li><p><strong>Network interfaces</strong><br />
 <code class="docutils literal notranslate"><span class="pre">System\ControlSet001\Services\Tcpip\Parameters\Interfaces\{GUID_INTERFACE}</span></code><br />
-<em>Shows IP addresses, MACs, and interface configurations.</em><br />
+<em>Stores DNS root servers and whether the computer has completed the network configuration after installation.</em><br />
 <img alt="alt text" src="../_images/image-16.png" /><br />
 <img alt="alt text" src="../_images/image-17.png" /></p></li>
 <li><p><strong>Network history</strong><br />
@@ -427,10 +453,13 @@ System events: Track software installations and failures.</p></li>
 <em>Contains networks the computer connected to, including SSIDs.</em><br />
 <img alt="alt text" src="../_images/image-20.png" /><br />
 <img alt="alt text" src="../_images/image-19.png" /><br />
-<img alt="alt text" src="../_images/image-18.png" /></p></li>
+<img alt="alt text" src="../_images/image-18.png" />
+<em>These are the root DNS</em></p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows</span> <span class="pre">NT\CurrentVersion\NetworkList\Nla\Cache</span></code><br />
-<code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows</span> <span class="pre">NT\CurrentVersion\NetworkList\Nla\Wireless</span></code><br />
+(Not present.)
+<em>Cached information about networks.</em></p>
+<p><code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows</span> <span class="pre">NT\CurrentVersion\NetworkList\Nla\Wireless</span></code><br />
 <em>Cached information about wireless networks.</em><br />
 <img alt="alt text" src="../_images/image-22.png" /><br />
 <img alt="alt text" src="../_images/image-21.png" /></p>
@@ -455,14 +484,16 @@ System events: Track software installations and failures.</p></li>
 <img alt="alt text" src="../_images/image-27.png" /></p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\RunOnce</span></code><br />
-<em>Programs that run once on next login.</em><br />
+<em>Per-user programs that run once on the user’s next login.</em><br />
 <img alt="alt text" src="../_images/image-28.png" /></p>
 <p><code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows\CurrentVersion\RunOnce</span></code><br />
+<em>System-wide programs that run once at the next login for any use.</em><br />
 <img alt="alt text" src="../_images/image-29.png" /></p>
 <p><code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run</span></code><br />
 <em>Sometimes contains enforced startup items.</em><br />
-(Doesn’t exist in my case.)</p>
+(Not present.)</p>
 <p><code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows\CurrentVersion\Run</span></code><br />
+<em>Programs that start automatically every time the user logs in</em>
 <img alt="alt text" src="../_images/image-30.png" /></p>
 </section>
 <section id="user-activity">
@@ -470,7 +501,8 @@ System events: Track software installations and failures.</p></li>
 <ul class="simple">
 <li><p><strong>Searches in the search bar</strong><br />
 <code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\WordWheelQuery</span></code><br />
-<em>(Not present on this system.)</em></p></li>
+<em>Stores user search queries in Windows Explorer/Start menu</em><br />
+(Not present.)</p></li>
 <li><p><strong>Typed paths in Start or Explorer</strong><br />
 <code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths</span></code><br />
 <em>Shows file paths the user manually entered.</em><br />
@@ -482,12 +514,15 @@ System events: Track software installations and failures.</p></li>
 <img alt="alt text" src="../_images/image-32.png" /></p></li>
 <li><p><strong>Recent Office documents</strong><br />
 <code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Office\{Version}\{Excel|Word}\UserMRU</span></code><br />
+<em>Tracks recently opened Office file.</em><br />
 (Not present.)</p></li>
 <li><p><strong>Reading position of last opened document</strong><br />
 <code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Office\Word\Reading</span> <span class="pre">Locations\Document</span> <span class="pre">X</span></code><br />
+<em>Stores where you left off in Word documents.</em><br />
 (Not present.)</p></li>
 <li><p><strong>Autosaved Office files</strong><br />
 <code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Roaming\Microsoft\{Excel|Word|PowerPoint}\</span></code><br />
+<em>Temporary autosave files for Office apps.</em>
 (Not present.)</p></li>
 <li><p><strong>OpenSaveMRU</strong><br />
 <code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\OpenSavePidlMRU</span></code><br />
@@ -495,9 +530,11 @@ System events: Track software installations and failures.</p></li>
 <img alt="alt text" src="../_images/image-34.png" /></p></li>
 <li><p><strong>Last executed commands</strong><br />
 <code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU</span></code><br />
+<em>Tracks commands typed in Run dialog.</em><br />
 <img alt="alt text" src="../_images/image-35.png" /></p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\Policies\RunMRU</span></code><br />
+<em>Same as RunMRU but enforced by policies.</em><br />
 (Not present.)</p>
 <ul class="simple">
 <li><p><strong>UserAssist (programs executed)</strong><br />
@@ -518,6 +555,7 @@ System events: Track software installations and failures.</p></li>
 <img alt="alt text" src="../_images/image-41.png" /></p></li>
 <li><p><strong>Recent applications</strong><br />
 <code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows\CurrentVersion\Search\RecentApps</span></code><br />
+<em>Lists recently used apps.</em>
 (Not present.)</p></li>
 </ul>
 </section>
@@ -545,10 +583,13 @@ System events: Track software installations and failures.</p></li>
 <h4>Shellbags<a class="headerlink" href="#shellbags" title="Link to this heading">¶</a></h4>
 <p><img alt="alt text" src="../_images/image-50.png" /><br />
 <code class="docutils literal notranslate"><span class="pre">USRCLASS.DAT\Local</span> <span class="pre">Settings\Software\Microsoft\Windows\Shell\Bags</span></code><br />
-<code class="docutils literal notranslate"><span class="pre">USRCLASS.DAT\Local</span> <span class="pre">Settings\Software\Microsoft\Windows\Shell\BagMRU</span></code><br />
-<code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\Shell\BagMRU</span></code><br />
-<em>Tracks folder browsing activity and structure.</em><br />
-(Not present in my case.)</p>
+<img alt="alt text" src="../_images/image-87.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">USRCLASS.DAT\Local</span> <span class="pre">Settings\Software\Microsoft\Windows\Shell\BagMRU</span></code><br />
+<img alt="alt text" src="../_images/image-88.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\Shell\BagMRU</span></code><br />
+<img alt="alt text" src="../_images/image-89.png" /></p>
+<p>Using a tool like Shellbags Explorer is it possible to visualize Shellbags on a easiest way
+<img alt="alt text" src="../_images/image-86.png" /></p>
 </section>
 <section id="usb-and-mtp-devices">
 <h4>USB and MTP devices<a class="headerlink" href="#usb-and-mtp-devices" title="Link to this heading">¶</a></h4>
@@ -576,9 +617,21 @@ System events: Track software installations and failures.</p></li>
 <img alt="alt text" src="../_images/image-55.png" /></p></li>
 <li><p><strong>First and last connection time</strong><br />
 <code class="docutils literal notranslate"><span class="pre">SYSTEM\ControlSet001\Enum\USBSTOR\{VEN_PROD_VERSION}\{USB_SERIAL}\Properties\{83da6326-97a6-4088-9453-a1923f573b29}</span></code><br />
-<code class="docutils literal notranslate"><span class="pre">C:\Windows\inf\setupapi.dev.log</span></code><br />
 <em>Tracks timestamps of USB device connections.</em><br />
-(TBD)</p></li>
+<img alt="alt text" src="../_images/image-81.png" /></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">C:\Windows\inf\setupapi.dev.log</span></code><br />
+<img alt="alt text" src="../_images/image-99.png" /></p>
+<ul class="simple">
+<li><p><strong>0064 – First connection (InstallDate)</strong><br />
+Indicates the first time the USB device was installed/connected on the system.
+<img alt="alt text" src="../_images/image-82.png" /></p></li>
+<li><p><strong>0065 – Last connection (LastArrivalDate)</strong><br />
+Indicates the most recent time the USB device was connected.
+<img alt="alt text" src="../_images/image-83.png" /></p></li>
+<li><p><strong>0066 – Last disconnection (LastRemovalDate)</strong><br />
+Indicates the most recent time the USB device was safely removed.
+<img alt="alt text" src="../_images/image-84.png" /></p></li>
 </ul>
 </section>
 <section id="databases-and-system-artifacts">
@@ -601,7 +654,7 @@ System events: Track software installations and failures.</p></li>
 <li><p><strong>Windows Store</strong><br />
 <code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\ProgramData\Microsoft\Windows\AppRepository\StateRepositoryDeployment.srd</span></code><br />
 <em>Contains Windows Store app installation state.</em><br />
-(Not accessible.)</p></li>
+(Not present.)</p></li>
 </ul>
 </section>
 <section id="other-artifacts">
@@ -656,13 +709,40 @@ Copy-Item -Recurse -Force ‘C:$Recycle.Bin\S-1-5-21-4071608857-1089510339-24820
 <li><p><strong>SuperFetch</strong><br />
 <code class="docutils literal notranslate"><span class="pre">C:\Windows\Prefetch\Ag*.db</span></code><br />
 <em>Caches frequently used applications to speed up loading.</em><br />
-(TBD)</p></li>
+<em>As I’m using a ssd superfetch files are not generated</em></p></li>
 <li><p><strong>SRUM</strong><br />
 <code class="docutils literal notranslate"><span class="pre">C:\Windows\System32\sru\SRUDB.dat</span></code><br />
-<em>Tracks network, CPU, and power usage.</em></p></li>
+<em>Tracks network, CPU, and power usage.</em>
+<img alt="alt text" src="../_images/image-90.png" /></p></li>
 <li><p><strong>ShimCache</strong><br />
 <code class="docutils literal notranslate"><span class="pre">SYSTEM\CurrentControlSet\Control\SessionManager\AppCompatCache\AppCompatCache</span></code><br />
-*Lists executed</p></li>
+<em>Registry-based cache listing previously executed programs, even if deleted.</em></p></li>
+<li><p><strong>AmCache (AppCompatCacheParser)</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Windows\AppCompat\Programs\Amcache.hve</span></code><br />
+<em>Stores metadata about executed programs, installation times, and file paths.</em>
+<img alt="alt text" src="../_images/image-91.png" />
+<img alt="alt text" src="../_images/image-92.png" /></p></li>
+<li><p><strong>Scheduled Tasks</strong><br />
+<code class="docutils literal notranslate"><span class="pre">SOFTWARE\Microsoft\Windows</span> <span class="pre">NT\Current</span> <span class="pre">Version\TaskCache\Tree</span></code><br />
+<em>Lists tasks scheduled by the system or users.</em>
+<img alt="alt text" src="../_images/image-94.png" /></p></li>
+<li><p><strong>Services</strong><br />
+<code class="docutils literal notranslate"><span class="pre">SYSTEM\ControlSet001\Services</span></code><br />
+<em>Registry keys storing installed services and their configuration.</em>
+<img alt="alt text" src="../_images/image-95.png" /></p></li>
+<li><p><strong>BAM (DCode)</strong><br />
+<em>Tracks per-user application activity and resource usage.</em>
+<code class="docutils literal notranslate"><span class="pre">SYSTEM\ControlSet001\Services\bam\UserSettings{SID}</span></code><br />
+<em>Not present</em></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">SYSTEM\ControlSet001\Services\bam\state\UserSettings{SID}</span></code><br />
+<img alt="alt text" src="../_images/image-96.png" /></p>
+<ul class="simple">
+<li><p><strong>Windows Event Logs</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Windows\System32\winevt\Logs</span></code><br />
+<em>Stores system, security, and application events for auditing and forensic analysis.</em>
+<img alt="alt text" src="../_images/image-97.png" />
+<img alt="alt text" src="../_images/image-98.png" /></p></li>
 </ul>
 </section>
 </section>
