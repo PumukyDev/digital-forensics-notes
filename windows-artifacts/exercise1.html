@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="prev" title="Exercise 3" href="../windows-file-system/exercise3.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
-        <title>Exercise - Digital Forensics Notes 0.1.0 documentation</title>
+        <title>Post-mortem analysis - Digital Forensics Notes 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -199,7 +199,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Windows artifacts:</span></p>
 <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Exercise</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Post-mortem analysis</a></li>
 </ul>
 
 </div>
@@ -238,8 +238,8 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="exercise">
-<h1>Exercise<a class="headerlink" href="#exercise" title="Link to this heading">¶</a></h1>
+          <section id="post-mortem-analysis">
+<h1>Post-mortem analysis<a class="headerlink" href="#post-mortem-analysis" title="Link to this heading">¶</a></h1>
 <section id="main-objectives-of-the-practice">
 <h2>Main objectives of the practice<a class="headerlink" href="#main-objectives-of-the-practice" title="Link to this heading">¶</a></h2>
 <ul class="simple">
@@ -342,7 +342,7 @@ System events: Track software installations and failures.</p></li>
 <h2>PART B<a class="headerlink" href="#part-b" title="Link to this heading">¶</a></h2>
 <p>The practice consists of extracting as much evidence as possible from a Windows operating system by performing targeted searches on the different artifacts it uses.</p>
 <p>Although in a real scenario this would be done using a system image, for this practice it is recommended, for agility, to use the operating system installed on the student’s computer.</p>
-<p>In my case, I will use a Windows partition that I use for a few things, but as I don’t use it a lot some hives will not exist because I do not use Windows or daily life</p>
+<p>In my case, I will use a Windows partition that I use for a few things, but as I don’t use it a lot some hives will not exist because I do not use Windows for daily life.</p>
 <section id="software-to-be-used">
 <h3>Software to be used<a class="headerlink" href="#software-to-be-used" title="Link to this heading">¶</a></h3>
 <ul class="simple">
@@ -406,9 +406,9 @@ System events: Track software installations and failures.</p></li>
 <img alt="alt text" src="../_images/image-12.png" /></p></li>
 <li><p><strong>Last access timestamp</strong><br />
 <code class="docutils literal notranslate"><span class="pre">System\ControlSet001\Control\Filesystem</span></code><br />
-<img alt="alt text" src="../_images/image-80.png" />
-<em>Controls if Windows updates the last access date of files and folders.</em></p></li>
+<img alt="alt text" src="../_images/image-80.png" /></p></li>
 </ul>
+<p><em>Controls if Windows updates the last access date of files and folders.</em></p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
@@ -457,7 +457,7 @@ System events: Track software installations and failures.</p></li>
 <em>These are the root DNS</em></p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows</span> <span class="pre">NT\CurrentVersion\NetworkList\Nla\Cache</span></code><br />
-(Not present.)
+(Not present.)<br />
 <em>Cached information about networks.</em></p>
 <p><code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows</span> <span class="pre">NT\CurrentVersion\NetworkList\Nla\Wireless</span></code><br />
 <em>Cached information about wireless networks.</em><br />
@@ -522,7 +522,7 @@ System events: Track software installations and failures.</p></li>
 (Not present.)</p></li>
 <li><p><strong>Autosaved Office files</strong><br />
 <code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Roaming\Microsoft\{Excel|Word|PowerPoint}\</span></code><br />
-<em>Temporary autosave files for Office apps.</em>
+<em>Temporary autosave files for Office apps.</em><br />
 (Not present.)</p></li>
 <li><p><strong>OpenSaveMRU</strong><br />
 <code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\OpenSavePidlMRU</span></code><br />
@@ -544,18 +544,24 @@ System events: Track software installations and failures.</p></li>
 <li><p><strong>Taskbar-related events</strong><br />
 <code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\FeatureUsage</span></code><br />
 <em>Tracks user interaction with taskbar features.</em><br />
-<img alt="alt text" src="../_images/image-37.png" /><br />
-<code class="docutils literal notranslate"><span class="pre">...\AppBadgeUpdated</span></code><br />
+<img alt="alt text" src="../_images/image-37.png" /></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">...\AppBadgeUpdated</span></code><br />
 <img alt="alt text" src="../_images/image-38.png" /><br />
-<code class="docutils literal notranslate"><span class="pre">...\AppLaunch</span></code><br />
+<em>Records when a taskbar app badge (like notifications) is updated.</em></p>
+<p><code class="docutils literal notranslate"><span class="pre">...\AppLaunch</span></code><br />
 <img alt="alt text" src="../_images/image-39.png" /><br />
-<code class="docutils literal notranslate"><span class="pre">...\AppSwitched</span></code><br />
+<em>Logs when a user launches an application from the taskbar.</em></p>
+<p><code class="docutils literal notranslate"><span class="pre">...\AppSwitched</span></code><br />
 <img alt="alt text" src="../_images/image-40.png" /><br />
-<code class="docutils literal notranslate"><span class="pre">...\ShowJumpView</span></code><br />
-<img alt="alt text" src="../_images/image-41.png" /></p></li>
+<em>Tracks when the user switches between apps pinned or open on the taskbar.</em></p>
+<p><code class="docutils literal notranslate"><span class="pre">...\ShowJumpView</span></code><br />
+<img alt="alt text" src="../_images/image-41.png" />
+<em>Logs when the user opens a jump list (right-click menu) on a taskbar app.</em></p>
+<ul class="simple">
 <li><p><strong>Recent applications</strong><br />
 <code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows\CurrentVersion\Search\RecentApps</span></code><br />
-<em>Lists recently used apps.</em>
+<em>Lists recently used apps.</em><br />
 (Not present.)</p></li>
 </ul>
 </section>
@@ -566,29 +572,32 @@ System events: Track software installations and failures.</p></li>
 <code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Roaming\Microsoft\Windows\Recent</span></code><br />
 <em>Contains shortcut (.lnk) files of recently opened documents.</em><br />
 <img alt="alt text" src="../_images/image-43.png" /><br />
-<img alt="alt text" src="../_images/image-42.png" /></p></li>
+<img alt="alt text" src="../_images/image-42.png" />
+<img alt="alt text" src="../_images/image-44.png" /></p></li>
 <li><p><strong>Jump Lists</strong><br />
-<code class="docutils literal notranslate"><span class="pre">AutomaticDestinations</span></code> and <code class="docutils literal notranslate"><span class="pre">CustomDestinations</span></code><br />
-<code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Roaming\Microsoft\Windows\Recent\</span></code><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Roaming\Microsoft\Windows\Recent\AutomaticDestinations</span></code><br />
 <em>Shows recent and pinned items for applications.</em><br />
-<img alt="alt text" src="../_images/image-44.png" /><br />
 <img alt="alt text" src="../_images/image-45.png" /><br />
 <img alt="alt text" src="../_images/image-46.png" /><br />
-<img alt="alt text" src="../_images/image-47.png" /><br />
-<img alt="alt text" src="../_images/image-48.png" /><br />
-<img alt="alt text" src="../_images/image-49.png" /></p></li>
+<img alt="alt text" src="../_images/image-47.png" /></p></li>
 </ul>
+<p><code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Roaming\Microsoft\Windows\Recent\CustomDestinations</span></code><br />
+<img alt="alt text" src="../_images/image-48.png" /><br />
+<img alt="alt text" src="../_images/image-49.png" /></p>
 </section>
 <section id="shellbags">
 <h4>Shellbags<a class="headerlink" href="#shellbags" title="Link to this heading">¶</a></h4>
 <p><img alt="alt text" src="../_images/image-50.png" /><br />
 <code class="docutils literal notranslate"><span class="pre">USRCLASS.DAT\Local</span> <span class="pre">Settings\Software\Microsoft\Windows\Shell\Bags</span></code><br />
+<em>Stores the view settings of folders (icon view, details view, window size, etc.) for individual folders.</em><br />
 <img alt="alt text" src="../_images/image-87.png" /></p>
 <p><code class="docutils literal notranslate"><span class="pre">USRCLASS.DAT\Local</span> <span class="pre">Settings\Software\Microsoft\Windows\Shell\BagMRU</span></code><br />
+<em>Stores the hierarchy of folders that the user has accessed, linking to the corresponding Bags entries.</em><br />
 <img alt="alt text" src="../_images/image-88.png" /></p>
 <p><code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\Shell\BagMRU</span></code><br />
+<em>Another location tracking folder access and structure, used by newer versions of Windows for the MRU (Most Recently Used) folder list.</em><br />
 <img alt="alt text" src="../_images/image-89.png" /></p>
-<p>Using a tool like Shellbags Explorer is it possible to visualize Shellbags on a easiest way
+<p>Using a tool like Shellbags Explorer is it possible to visualize Shellbags on a easiest way.
 <img alt="alt text" src="../_images/image-86.png" /></p>
 </section>
 <section id="usb-and-mtp-devices">
@@ -621,6 +630,7 @@ System events: Track software installations and failures.</p></li>
 <img alt="alt text" src="../_images/image-81.png" /></p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">C:\Windows\inf\setupapi.dev.log</span></code><br />
+<em>Tracks the installation and configuration of device drivers on the system</em><br />
 <img alt="alt text" src="../_images/image-99.png" /></p>
 <ul class="simple">
 <li><p><strong>0064 – First connection (InstallDate)</strong><br />
@@ -637,7 +647,7 @@ Indicates the most recent time the USB device was safely removed.
 <section id="databases-and-system-artifacts">
 <h4>Databases and system artifacts<a class="headerlink" href="#databases-and-system-artifacts" title="Link to this heading">¶</a></h4>
 <ul class="simple">
-<li><p><strong>Cortana database (older versions)</strong><br />
+<li><p><strong>Cortana database</strong><br />
 <code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Local\Packages\Microsoft.Windows.Cortana_xxxx\LocalState\ESEDatabase_CortanaCoreInstance\CortanaCoreDb.dat</span></code><br />
 (Not present.)</p></li>
 <li><p><strong>Windows notifications</strong><br />
@@ -677,9 +687,11 @@ Indicates the most recent time the USB device was safely removed.
 <p>Copy for analysis:<br />
 Copy-Item -Recurse -Force ‘C:$Recycle.Bin\S-1-5-21-4071608857-1089510339-248207473-1000’ ‘C:\RecycleBackup’<br />
 <img alt="alt text" src="../_images/image-69.png" /></p>
-<p>Export to CSV:<br />
-.\rifiuti-vista.exe -t “,” -o “recycle-bin.csv” “C:\RecycleBackup”<br />
-<img alt="alt text" src="../_images/image-67.png" /></p>
+<p>Export to CSV:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">.\</span><span class="n">rifiuti-vista</span><span class="p">.</span><span class="n">exe</span> <span class="n">-t</span> <span class="s2">&quot;,&quot;</span> <span class="n">-o</span> <span class="s2">&quot;recycle-bin.csv&quot;</span> <span class="s2">&quot;C:\RecycleBackup&quot;</span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="../_images/image-67.png" /></p>
 <ul class="simple">
 <li><p><strong>OfficeFileCache</strong><br />
 <code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Local\Microsoft\Office\{Version}\OfficeFileCache</span></code><br />
@@ -690,8 +702,10 @@ Copy-Item -Recurse -Force ‘C:$Recycle.Bin\S-1-5-21-4071608857-1089510339-24820
 <li><p><strong>Public IP (ETLParser)</strong><br />
 <code class="docutils literal notranslate"><span class="pre">C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Logs</span></code></p></li>
 </ul>
-<p>.\ETLParser.exe -c DeliveryLogs -s “C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Logs” -o “C:\Users\adrian\Downloads\ETLOutput”<br />
-<img alt="alt text" src="../_images/image-71.png" /><br />
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">.\</span><span class="n">ETLParser</span><span class="p">.</span><span class="n">exe</span> <span class="n">-c</span> <span class="n">DeliveryLogs</span> <span class="n">-s</span> <span class="s2">&quot;C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Logs&quot;</span> <span class="n">-o</span> <span class="s2">&quot;C:\Users\adrian\Downloads\ETLOutput&quot;</span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="../_images/image-71.png" /><br />
 <img alt="alt text" src="../_images/image-70.png" /><br />
 <img alt="alt text" src="../_images/image-72.png" /></p>
 <ul class="simple">
@@ -715,7 +729,7 @@ Copy-Item -Recurse -Force ‘C:$Recycle.Bin\S-1-5-21-4071608857-1089510339-24820
 <em>Tracks network, CPU, and power usage.</em>
 <img alt="alt text" src="../_images/image-90.png" /></p></li>
 <li><p><strong>ShimCache</strong><br />
-<code class="docutils literal notranslate"><span class="pre">SYSTEM\CurrentControlSet\Control\SessionManager\AppCompatCache\AppCompatCache</span></code><br />
+<code class="docutils literal notranslate"><span class="pre">SYSTEM\ControlSet001\Control\SessionManager\AppCompatCache\AppCompatCache</span></code><br />
 <em>Registry-based cache listing previously executed programs, even if deleted.</em></p></li>
 <li><p><strong>AmCache (AppCompatCacheParser)</strong><br />
 <code class="docutils literal notranslate"><span class="pre">C:\Windows\AppCompat\Programs\Amcache.hve</span></code><br />
@@ -796,7 +810,7 @@ Copy-Item -Recurse -Force ‘C:$Recycle.Bin\S-1-5-21-4071608857-1089510339-24820
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Exercise</a><ul>
+<li><a class="reference internal" href="#">Post-mortem analysis</a><ul>
 <li><a class="reference internal" href="#main-objectives-of-the-practice">Main objectives of the practice</a></li>
 <li><a class="reference internal" href="#part-a">PART A</a><ul>
 <li><a class="reference internal" href="#regarding-prefetch">1. Regarding <em>prefetch</em></a></li>
