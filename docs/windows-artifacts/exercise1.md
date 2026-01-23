@@ -95,6 +95,8 @@ The practice consists of extracting as much evidence as possible from a Windows 
 
 Although in a real scenario this would be done using a system image, for this practice it is recommended, for agility, to use the operating system installed on the student’s computer.
 
+In my case, I will use a Windows partition that I use for a few things, but as I don't use it a lot some hives will not exist because I do not use Windows or daily life
+
 ### Software to be used
 - **A.** Windows 10 (32 or 64 bits)  
 - **B.** FTK Imager  
@@ -113,7 +115,7 @@ Open FTK Imager and click the image icon.
 ![alt text](image-1.png)  
 *This will allow you to mount the disk image for analysis.*
 
-Click "Logical Drive".  
+Click "Logical Drive" and click on "Next".  
 ![alt text](image-2.png)  
 
 Select your disk and click "Finish".  
@@ -126,25 +128,24 @@ Now extract some files for analysis by navigating to `\root\Windows\System32\Con
 ![alt text](image-5.png)  
 *These are critical registry hives for forensic analysis.*
 
-I’ll save them as "windows-artifacts".  
+I'll save them as "windows-artifacts".  
 ![alt text](image-6.png)  
 
-Open WRR, click "Open" → "File".  
+Open WRR, click "File" → "Open...".  
 ![alt text](image-8.png)  
 
-Select "SOFTWARE", "SYSTEM" and "SAM".  
+Select "SOFTWARE", "SYSTEM" and "SAM" and click on "Open".  
 ![alt text](image-9.png)  
 *These registry hives contain software settings, system info, and user account data.*
 
 Verify files were correctly exported to WRR.  
 ![alt text](image-10.png)  
 
-Do the same for `root\Windows\Users\{USER}`.  
+Repeat the same process for `root\Windows\Users\{USER}`.  
 ![alt text](image-26.png)  
 
-Add "NTUSER.DAT" to WRR.  
-![alt text](image-78.png)  
-*This contains user-specific settings and activity.*
+Add "NTUSER.DAT" inside {USER}\ and "UsrClass.DAT" inside {USER}\AppData\Local\Microsoft\Windows\ to WRR.  
+![alt text](image-85.png)
 
 ---
 
@@ -168,7 +169,16 @@ Add "NTUSER.DAT" to WRR.
 
 - **Last access timestamp**  
 `System\ControlSet001\Control\Filesystem`  
-*Tracks last access times of files.*
+![alt text](image-80.png)
+*Controls if Windows updates the last access date of files and folders.*
+
+| Value | Actual behavior |
+|------:|-----------------|
+| **0** | Updates the last access timestamp for both files and directories (legacy behavior, lower performance). |
+| **1** | Does not update the last access timestamp for **files or directories**. |
+| **2** | **System managed** (default since Windows Vista/7). Windows decides when to update to balance compatibility and performance. |
+| **3** | Updates the last access timestamp **for directories only**, **not for files**. |
+
 
 - **Shutdown time**  
 `System\ControlSet001\Control\Windows`  
@@ -179,7 +189,7 @@ Add "NTUSER.DAT" to WRR.
 #### Network
 - **Network interfaces**  
 `System\ControlSet001\Services\Tcpip\Parameters\Interfaces\{GUID_INTERFACE}`  
-*Shows IP addresses, MACs, and interface configurations.*  
+*Stores DNS root servers and whether the computer has completed the network configuration after installation.*  
 ![alt text](image-16.png)  
 ![alt text](image-17.png)
 
@@ -189,8 +199,12 @@ Add "NTUSER.DAT" to WRR.
 ![alt text](image-20.png)  
 ![alt text](image-19.png)  
 ![alt text](image-18.png)
+*These are the root DNS*
 
 `Software\Microsoft\Windows NT\CurrentVersion\NetworkList\Nla\Cache`  
+(Not present.)
+*Cached information about networks.*  
+
 `Software\Microsoft\Windows NT\CurrentVersion\NetworkList\Nla\Wireless`  
 *Cached information about wireless networks.*  
 ![alt text](image-22.png)  
@@ -214,23 +228,26 @@ Add "NTUSER.DAT" to WRR.
 ![alt text](image-27.png)
 
 `NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\RunOnce`  
-*Programs that run once on next login.*  
+*Per-user programs that run once on the user’s next login.*  
 ![alt text](image-28.png)
 
 `Software\Microsoft\Windows\CurrentVersion\RunOnce`  
+*System-wide programs that run once at the next login for any use.*  
 ![alt text](image-29.png)
 
 `Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run`  
 *Sometimes contains enforced startup items.*  
-(Doesn’t exist in my case.)
+(Not present.)
 
 `Software\Microsoft\Windows\CurrentVersion\Run`  
+*Programs that start automatically every time the user logs in*
 ![alt text](image-30.png)
 
 #### User activity
 - **Searches in the search bar**  
 `NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\WordWheelQuery`  
-*(Not present on this system.)*
+*Stores user search queries in Windows Explorer/Start menu*  
+(Not present.)
 
 - **Typed paths in Start or Explorer**  
 `NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths`  
@@ -245,14 +262,17 @@ Add "NTUSER.DAT" to WRR.
 
 - **Recent Office documents**  
 `NTUSER.DAT\Software\Microsoft\Office\{Version}\{Excel|Word}\UserMRU`  
+*Tracks recently opened Office file.*  
 (Not present.)
 
 - **Reading position of last opened document**  
 `NTUSER.DAT\Software\Microsoft\Office\Word\Reading Locations\Document X`  
+*Stores where you left off in Word documents.*  
 (Not present.)
 
 - **Autosaved Office files**  
 `C:\Users\{user}\AppData\Roaming\Microsoft\{Excel|Word|PowerPoint}\`  
+*Temporary autosave files for Office apps.*
 (Not present.)
 
 - **OpenSaveMRU**  
@@ -262,9 +282,11 @@ Add "NTUSER.DAT" to WRR.
 
 - **Last executed commands**  
 `NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU`  
+*Tracks commands typed in Run dialog.*  
 ![alt text](image-35.png)
 
 `NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\Policies\RunMRU`  
+*Same as RunMRU but enforced by policies.*  
 (Not present.)
 
 - **UserAssist (programs executed)**  
@@ -287,6 +309,7 @@ Add "NTUSER.DAT" to WRR.
 
 - **Recent applications**  
 `Software\Microsoft\Windows\CurrentVersion\Search\RecentApps`  
+*Lists recently used apps.*
 (Not present.)
 
 #### Shortcuts and Jump Lists
@@ -310,10 +333,16 @@ Add "NTUSER.DAT" to WRR.
 #### Shellbags
 ![alt text](image-50.png)  
 `USRCLASS.DAT\Local Settings\Software\Microsoft\Windows\Shell\Bags`  
+![alt text](image-87.png)
+
 `USRCLASS.DAT\Local Settings\Software\Microsoft\Windows\Shell\BagMRU`  
+![alt text](image-88.png)
+
 `NTUSER.DAT\Software\Microsoft\Windows\Shell\BagMRU`  
-*Tracks folder browsing activity and structure.*  
-(Not present in my case.)
+![alt text](image-89.png)
+
+Using a tool like Shellbags Explorer is it possible to visualize Shellbags on a easiest way
+![alt text](image-86.png)
 
 #### USB and MTP devices
 - **MTP devices**  
@@ -344,9 +373,23 @@ Add "NTUSER.DAT" to WRR.
 
 - **First and last connection time**  
 `SYSTEM\ControlSet001\Enum\USBSTOR\{VEN_PROD_VERSION}\{USB_SERIAL}\Properties\{83da6326-97a6-4088-9453-a1923f573b29}`  
-`C:\Windows\inf\setupapi.dev.log`  
 *Tracks timestamps of USB device connections.*  
-(TBD)
+![alt text](image-81.png)
+
+`C:\Windows\inf\setupapi.dev.log`  
+![alt text](image-99.png)
+
+- **0064 – First connection (InstallDate)**  
+  Indicates the first time the USB device was installed/connected on the system.
+![alt text](image-82.png)
+
+- **0065 – Last connection (LastArrivalDate)**  
+  Indicates the most recent time the USB device was connected.
+![alt text](image-83.png)
+
+- **0066 – Last disconnection (LastRemovalDate)**  
+  Indicates the most recent time the USB device was safely removed.
+![alt text](image-84.png)
 
 #### Databases and system artifacts
 - **Cortana database (older versions)**  
@@ -369,7 +412,7 @@ Add "NTUSER.DAT" to WRR.
 - **Windows Store**  
 `C:\Users\{user}\ProgramData\Microsoft\Windows\AppRepository\StateRepositoryDeployment.srd`  
 *Contains Windows Store app installation state.*  
-(Not accessible.)
+(Not present.)
 
 #### Other artifacts
 - **Thumbnails and Thumbcache**  
@@ -427,12 +470,44 @@ Export to CSV:
 - **SuperFetch**  
 `C:\Windows\Prefetch\Ag*.db`  
 *Caches frequently used applications to speed up loading.*  
-(TBD)
+*As I'm using a ssd superfetch files are not generated*
 
 - **SRUM**  
 `C:\Windows\System32\sru\SRUDB.dat`  
 *Tracks network, CPU, and power usage.*
+![alt text](image-90.png)
 
 - **ShimCache**  
 `SYSTEM\CurrentControlSet\Control\SessionManager\AppCompatCache\AppCompatCache`  
-*Lists executed
+*Registry-based cache listing previously executed programs, even if deleted.*
+
+
+- **AmCache (AppCompatCacheParser)**  
+`C:\Windows\AppCompat\Programs\Amcache.hve`  
+*Stores metadata about executed programs, installation times, and file paths.*
+![alt text](image-91.png)
+![alt text](image-92.png)
+
+- **Scheduled Tasks**  
+`SOFTWARE\Microsoft\Windows NT\Current Version\TaskCache\Tree`  
+*Lists tasks scheduled by the system or users.*
+![alt text](image-94.png)
+
+- **Services**  
+`SYSTEM\ControlSet001\Services`  
+*Registry keys storing installed services and their configuration.*
+![alt text](image-95.png)
+
+- **BAM (DCode)**  
+*Tracks per-user application activity and resource usage.*
+`SYSTEM\ControlSet001\Services\bam\UserSettings{SID}`  
+*Not present*
+
+`SYSTEM\ControlSet001\Services\bam\state\UserSettings{SID}`  
+![alt text](image-96.png)
+
+- **Windows Event Logs**  
+`C:\Windows\System32\winevt\Logs`  
+*Stores system, security, and application events for auditing and forensic analysis.*
+![alt text](image-97.png)
+![alt text](image-98.png)
