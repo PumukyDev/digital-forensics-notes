@@ -1,5 +1,4 @@
-<img src="./assets/magnifying-glass.png" align="right" alt="magnifying glass dfir" width="20%">
-magnifying
+<img src="./assets/magnifying-glass.png" align="right" alt="magnifying glass dfir" width="25%">
 <h1 align="center">Digital forensics notes</h1>
 
 This repository contains notes, exercises, and practical work related to the **DFIR* subject, part of the **Cybersecurity Specialization Course** at **IES Zaidín Vergeles**.
