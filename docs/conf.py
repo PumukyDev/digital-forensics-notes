@@ -6,9 +6,8 @@ import sys
 # sys.path.insert(0, os.path.abspath('..'))
 
 project = 'Digital Forensics Notes'
-copyright = '2025, PumukyDev'
+copyright = '2026, PumukyDev'
 author = 'PumukyDev'
-release = '0.1.0'
 
 # -- General Configuration ---------------------------------------------------
 
