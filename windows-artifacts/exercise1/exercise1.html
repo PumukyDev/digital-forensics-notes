@@ -1,0 +1,872 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Sysmon" href="../exercise3/exercise3.html"><link rel="prev" title="Exercise 3" href="../../windows-file-system/exercise3/exercise3.html">
+
+    <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+        <title>Post-mortem analysis - Digital Forensics Notes documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #254F6D;
+  --color-brand-content: #254F6D;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Digital Forensics Notes  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Windows file system:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise1/exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise2/exercise2.html">Exercise 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise3/exercise3.html">Exercise 3</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Windows artifacts:</span></p>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Post-mortem analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise3/exercise3.html">Sysmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise4/exercise4.html">Evidence in Web Browsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-volatility/exercise1/exercise1.html">Volatility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-volatility/exercise2/exercise2.html">Advanced analysis Volatility</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../_sources/windows-artifacts/exercise1/exercise1.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="post-mortem-analysis">
+<h1>Post-mortem analysis<a class="headerlink" href="#post-mortem-analysis" title="Link to this heading">¶</a></h1>
+<section id="main-objectives-of-the-practice">
+<h2>Main objectives of the practice<a class="headerlink" href="#main-objectives-of-the-practice" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Analyze the evidence provided by different artifacts in Windows operating systems.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="part-a">
+<h2>PART A<a class="headerlink" href="#part-a" title="Link to this heading">¶</a></h2>
+<section id="regarding-prefetch">
+<h3>1. Regarding <em>prefetch</em><a class="headerlink" href="#regarding-prefetch" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>What are they?</strong><br />
+These are files generated by Windows that contain data about executed programs.</p></li>
+<li><p><strong>What file extension do they have?</strong><br />
+.pf</p></li>
+<li><p><strong>In which directory can they be found?</strong><br />
+The default path for prefetch files is <code class="docutils literal notranslate"><span class="pre">C:\Windows\Prefetch</span></code>.</p></li>
+<li><p><strong>What forensic information do they store that may be important for an investigation?</strong><br />
+They allow reconstruction of user activity, showing a chronology of executed programs and sometimes how many times they were run.</p></li>
+</ul>
+</section>
+<section id="regarding-logs">
+<h3>2. Regarding <em>LOGs</em><a class="headerlink" href="#regarding-logs" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Which ones do you think are the most important based on the content they store?</strong><br />
+Application logs are the most important for forensic analysis, as they show user actions. In enterprise environments, system logs are also crucial to check for damage caused by malware.</p></li>
+<li><p><strong>Where can they be found?</strong><br />
+System logs are located at <code class="docutils literal notranslate"><span class="pre">C:\Windows\System32\winevt\Logs</span></code>.<br />
+<em>These logs record security events, system events, and application events.</em></p></li>
+</ul>
+</section>
+<section id="regarding-the-hibernation-file-hiberfil-sys">
+<h3>3. Regarding the hibernation file <code class="docutils literal notranslate"><span class="pre">hiberfil.sys</span></code><a class="headerlink" href="#regarding-the-hibernation-file-hiberfil-sys" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Where can it be found?</strong><br />
+The typical location is the root of the disk: <code class="docutils literal notranslate"><span class="pre">C:\</span></code>.</p></li>
+<li><p><strong>Which tool can be used to decode its contents?</strong><br />
+Rekall, Volatility, or WinDbg (Microsoft Windows Debugger), among others.</p></li>
+<li><p><strong>Do you think the information it contains is important?</strong><br />
+Yes, it contains a snapshot of RAM when the system enters hibernation, potentially holding sensitive user data and system state.</p></li>
+</ul>
+</section>
+<section id="regarding-snapshots-restore-points-and-or-volume-shadow-copies-service-vss">
+<h3>4. Regarding snapshots, restore points and/or Volume Shadow Copies Service (VSS)<a class="headerlink" href="#regarding-snapshots-restore-points-and-or-volume-shadow-copies-service-vss" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>What file system is required to use this technology?</strong><br />
+NTFS</p></li>
+<li><p><strong>Is it enabled by default or does the user need to activate it?</strong><br />
+It is enabled by default, but periodic snapshots are not configured automatically.</p></li>
+<li><p><strong>How often are they created?</strong><br />
+They are typically created during major installations or updates.</p></li>
+<li><p><strong>Think of a couple of scenarios where they may be useful:</strong></p></li>
+</ul>
+<ol class="arabic simple">
+<li><p>Recovering the system after a ransomware attack.</p></li>
+<li><p>Undoing changes caused by faulty driver updates.</p></li>
+</ol>
+</section>
+<section id="questions-related-to-the-windows-registry">
+<h3>5. Questions related to the Windows Registry<a class="headerlink" href="#questions-related-to-the-windows-registry" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Research how to import and export registry keys in CLI and GUI environments:</strong><br />
+a) GUI: Open Regedit → select key → File → Export / Import<br />
+<img alt="alt text" src="windows-artifacts/exercise1/images./image.png" /><br />
+b) CLI:<br />
+reg export “(Key)” C:(Name_to_export)<br />
+reg import C:(Name_of_the_key_to_import)</p></li>
+<li><p><strong>List registry keys that are forensically interesting to export and analyze, explaining what information they reveal:</strong><br />
+<code class="docutils literal notranslate"><span class="pre">Run</span></code>: Programs executed at startup.<br />
+<code class="docutils literal notranslate"><span class="pre">RecentDocs</span></code>: Recently opened files.<br />
+<code class="docutils literal notranslate"><span class="pre">USBStor</span></code>: USB devices connected to the system.</p></li>
+</ul>
+</section>
+<section id="events-of-forensic-interest">
+<h3>6. Events of forensic interest<a class="headerlink" href="#events-of-forensic-interest" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>What types of events may be interesting to inspect from a forensic perspective? Give a couple of examples:</strong><br />
+Security events: Track user logins.<br />
+System events: Track software installations and failures.</p></li>
+</ul>
+</section>
+<section id="software-tools">
+<h3>7. Software tools<a class="headerlink" href="#software-tools" title="Link to this heading">¶</a></h3>
+<p><strong>Tools for each artifact:</strong></p>
+<ul class="simple">
+<li><p><strong>Prefetch:</strong> <a class="reference external" href="https://github.com/EricZimmerman/PECmd">PECmd</a></p></li>
+<li><p><strong>Logs:</strong> <a class="reference external" href="https://www.eventlogxp.com/">Event Log Explorer</a></p></li>
+<li><p><strong>Hibernation file:</strong> <a class="reference external" href="https://volatilityfoundation.org/">Volatility</a></p></li>
+<li><p><strong>Volume Shadow Copies Service:</strong> <a class="reference external" href="https://www.shadowexplorer.com/downloads.html">ShadowExplorer</a></p></li>
+<li><p><strong>System registry:</strong> <a class="reference external" href="https://www.exterro.com/digital-forensics-software/ftk-imager">FTK Imager</a></p></li>
+<li><p><strong>Event management:</strong> <a class="reference external" href="https://www.eventlogxp.com/">Event Log Explorer</a></p></li>
+<li><p><strong>Shortcuts &amp; Caches and browsing history:</strong> <a class="reference external" href="https://www.nirsoft.net/web_browser_tools.html">Nirsoft</a></p></li>
+<li><p><strong>Recycle Bin:</strong> <a class="reference external" href="https://abelcheung.github.io/rifiuti2/">Rifiuti</a></p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="part-b">
+<h2>PART B<a class="headerlink" href="#part-b" title="Link to this heading">¶</a></h2>
+<p>The practice consists of extracting as much evidence as possible from a Windows operating system by performing targeted searches on the different artifacts it uses.</p>
+<p>Although in a real scenario this would be done using a system image, for this practice it is recommended, for agility, to use the operating system installed on the student’s computer.</p>
+<p>In my case, I will use a Windows partition that I use for a few things, but as I don’t use it a lot some hives will not exist because I do not use Windows for daily life.</p>
+<section id="software-to-be-used">
+<h3>Software to be used<a class="headerlink" href="#software-to-be-used" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>A.</strong> Windows 10 (32 or 64 bits)</p></li>
+<li><p><strong>B.</strong> FTK Imager</p></li>
+<li><p><strong>C.</strong> Arsenal Image Mounter</p></li>
+<li><p><strong>D.</strong> Registry Explorer</p></li>
+<li><p><strong>E.</strong> Reg Ripper</p></li>
+<li><p><strong>F.</strong> WRR</p></li>
+<li><p><strong>G.</strong> LinkParser</p></li>
+<li><p><strong>H.</strong> JumpListExplorer</p></li>
+<li><p><strong>I.</strong> ShellbagExplorer</p></li>
+<li><p><strong>J.</strong> USB Detective</p></li>
+</ul>
+</section>
+<section id="evidence-extraction">
+<h3>Evidence extraction<a class="headerlink" href="#evidence-extraction" title="Link to this heading">¶</a></h3>
+<p>Open FTK Imager and click the image icon.<br />
+<img alt="alt text" src="../../_images/image-1.png" /><br />
+<em>This will allow you to mount the disk image for analysis.</em></p>
+<p>Click “Logical Drive” and click on “Next”.<br />
+<img alt="alt text" src="../../_images/image-2.png" /></p>
+<p>Select your disk and click “Finish”.<br />
+<img alt="alt text" src="../../_images/image-3.png" /></p>
+<p>Verify the evidence tree appears in FTK Imager.<br />
+<img alt="alt text" src="../../_images/image-4.png" /></p>
+<p>Now extract some files for analysis by navigating to <code class="docutils literal notranslate"><span class="pre">\root\Windows\System32\Config\</span></code> and clicking “Export Files…”<br />
+<img alt="alt text" src="../../_images/image-5.png" /><br />
+<em>These are critical registry hives for forensic analysis.</em></p>
+<p>I’ll save them as “windows-artifacts”.<br />
+<img alt="alt text" src="../../_images/image-6.png" /></p>
+<p>Open WRR, click “File” → “Open…”.<br />
+<img alt="alt text" src="../../_images/image-8.png" /></p>
+<p>Select “SOFTWARE”, “SYSTEM” and “SAM” and click on “Open”.<br />
+<img alt="alt text" src="../../_images/image-9.png" /><br />
+<em>These registry hives contain software settings, system info, and user account data.</em></p>
+<p>Verify files were correctly exported to WRR.<br />
+<img alt="alt text" src="../../_images/image-10.png" /></p>
+<p>Repeat the same process for <code class="docutils literal notranslate"><span class="pre">root\Windows\Users\{USER}</span></code>.<br />
+<img alt="alt text" src="../../_images/image-26.png" /></p>
+<p>Add “NTUSER.DAT” inside {USER}\ and “UsrClass.DAT” inside {USER}\AppData\Local\Microsoft\Windows\ to WRR.<br />
+<img alt="alt text" src="../../_images/image-85.png" /></p>
+</section>
+<hr class="docutils" />
+<section id="artifacts-and-paths-of-interest">
+<h3>Artifacts and paths of interest<a class="headerlink" href="#artifacts-and-paths-of-interest" title="Link to this heading">¶</a></h3>
+<section id="system-information">
+<h4>System information<a class="headerlink" href="#system-information" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>System version</strong><br />
+<code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows</span> <span class="pre">NT\CurrentVersion</span></code><br />
+<em>Shows OS version, build, and install info.</em><br />
+<img alt="alt text" src="../../_images/image-11.png" /></p></li>
+<li><p><strong>Machine name</strong><br />
+<code class="docutils literal notranslate"><span class="pre">System\ControlSet001\Control\ComputerName\ComputerName</span></code><br />
+<em>Stores the hostname of the computer.</em><br />
+<img alt="alt text" src="../../_images/image-13.png" /></p></li>
+<li><p><strong>Time zone</strong><br />
+<code class="docutils literal notranslate"><span class="pre">System\ControlSet001\Control\TimeZoneInformation</span></code><br />
+<em>Shows local time zone settings.</em><br />
+<img alt="alt text" src="../../_images/image-12.png" /></p></li>
+<li><p><strong>Last access timestamp</strong><br />
+<code class="docutils literal notranslate"><span class="pre">System\ControlSet001\Control\Filesystem</span></code><br />
+<img alt="alt text" src="../../_images/image-80.png" /></p></li>
+</ul>
+<p><em>Controls if Windows updates the last access date of files and folders.</em></p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-right"><p>Value</p></th>
+<th class="head"><p>Actual behavior</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-right"><p><strong>0</strong></p></td>
+<td><p>Updates the last access timestamp for both files and directories (legacy behavior, lower performance).</p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p><strong>1</strong></p></td>
+<td><p>Does not update the last access timestamp for <strong>files or directories</strong>.</p></td>
+</tr>
+<tr class="row-even"><td class="text-right"><p><strong>2</strong></p></td>
+<td><p><strong>System managed</strong> (default since Windows Vista/7). Windows decides when to update to balance compatibility and performance.</p></td>
+</tr>
+<tr class="row-odd"><td class="text-right"><p><strong>3</strong></p></td>
+<td><p>Updates the last access timestamp <strong>for directories only</strong>, <strong>not for files</strong>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="simple">
+<li><p><strong>Shutdown time</strong><br />
+<code class="docutils literal notranslate"><span class="pre">System\ControlSet001\Control\Windows</span></code><br />
+<em>Stores last shutdown or restart timestamps.</em><br />
+<img alt="alt text" src="../../_images/image-14.png" /><br />
+<img alt="alt text" src="../../_images/image-15.png" /></p></li>
+</ul>
+</section>
+<section id="network">
+<h4>Network<a class="headerlink" href="#network" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Network interfaces</strong><br />
+<code class="docutils literal notranslate"><span class="pre">System\ControlSet001\Services\Tcpip\Parameters\Interfaces\{GUID_INTERFACE}</span></code><br />
+<em>Stores DNS root servers and whether the computer has completed the network configuration after installation.</em><br />
+<img alt="alt text" src="../../_images/image-16.png" /><br />
+<img alt="alt text" src="../../_images/image-17.png" /></p></li>
+<li><p><strong>Network history</strong><br />
+<code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows</span> <span class="pre">NT\CurrentVersion\NetworkList\</span></code><br />
+<em>Contains networks the computer connected to, including SSIDs.</em><br />
+<img alt="alt text" src="../../_images/image-20.png" /><br />
+<img alt="alt text" src="../../_images/image-19.png" /><br />
+<img alt="alt text" src="../../_images/image-18.png" />
+<em>These are the root DNS</em></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows</span> <span class="pre">NT\CurrentVersion\NetworkList\Nla\Cache</span></code><br />
+(Not present.)<br />
+<em>Cached information about networks.</em></p>
+<p><code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows</span> <span class="pre">NT\CurrentVersion\NetworkList\Nla\Wireless</span></code><br />
+<em>Cached information about wireless networks.</em><br />
+<img alt="alt text" src="../../_images/image-22.png" /><br />
+<img alt="alt text" src="../../_images/image-21.png" /></p>
+<ul class="simple">
+<li><p><strong>When a network was connected</strong><br />
+<code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows</span> <span class="pre">NT\CurrentVersion\NetworkList\Profiles</span></code><br />
+<em>Shows timestamps of network connections.</em><br />
+<img alt="alt text" src="../../_images/image-24.png" /><br />
+<img alt="alt text" src="../../_images/image-23.png" /></p></li>
+</ul>
+</section>
+<section id="sharing-and-startup">
+<h4>Sharing and startup<a class="headerlink" href="#sharing-and-startup" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Shared folders</strong><br />
+<code class="docutils literal notranslate"><span class="pre">System\ControlSet001\Services\LanmanServer\Shares\</span></code><br />
+<em>Lists folders shared over the network.</em><br />
+<img alt="alt text" src="../../_images/image-25.png" /></p></li>
+<li><p><strong>Startup programs</strong><br />
+<code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Run</span></code><br />
+<em>Programs set to start automatically when the user logs in.</em><br />
+<img alt="alt text" src="../../_images/image-27.png" /></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\RunOnce</span></code><br />
+<em>Per-user programs that run once on the user’s next login.</em><br />
+<img alt="alt text" src="../../_images/image-28.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows\CurrentVersion\RunOnce</span></code><br />
+<em>System-wide programs that run once at the next login for any use.</em><br />
+<img alt="alt text" src="../../_images/image-29.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run</span></code><br />
+<em>Sometimes contains enforced startup items.</em><br />
+(Not present.)</p>
+<p><code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows\CurrentVersion\Run</span></code><br />
+<em>Programs that start automatically every time the user logs in</em>
+<img alt="alt text" src="../../_images/image-30.png" /></p>
+</section>
+<section id="user-activity">
+<h4>User activity<a class="headerlink" href="#user-activity" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Searches in the search bar</strong><br />
+<code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\WordWheelQuery</span></code><br />
+<em>Stores user search queries in Windows Explorer/Start menu</em><br />
+(Not present.)</p></li>
+<li><p><strong>Typed paths in Start or Explorer</strong><br />
+<code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths</span></code><br />
+<em>Shows file paths the user manually entered.</em><br />
+<img alt="alt text" src="../../_images/image-31.png" /></p></li>
+<li><p><strong>Recent documents</strong><br />
+<code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs</span></code><br />
+<em>Tracks recently opened files.</em><br />
+<img alt="alt text" src="../../_images/image-33.png" /><br />
+<img alt="alt text" src="../../_images/image-32.png" /></p></li>
+<li><p><strong>Recent Office documents</strong><br />
+<code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Office\{Version}\{Excel|Word}\UserMRU</span></code><br />
+<em>Tracks recently opened Office file.</em><br />
+(Not present.)</p></li>
+<li><p><strong>Reading position of last opened document</strong><br />
+<code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Office\Word\Reading</span> <span class="pre">Locations\Document</span> <span class="pre">X</span></code><br />
+<em>Stores where you left off in Word documents.</em><br />
+(Not present.)</p></li>
+<li><p><strong>Autosaved Office files</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Roaming\Microsoft\{Excel|Word|PowerPoint}\</span></code><br />
+<em>Temporary autosave files for Office apps.</em><br />
+(Not present.)</p></li>
+<li><p><strong>OpenSaveMRU</strong><br />
+<code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\OpenSavePidlMRU</span></code><br />
+<em>Stores recently opened/saved files per application.</em><br />
+<img alt="alt text" src="../../_images/image-34.png" /></p></li>
+<li><p><strong>Last executed commands</strong><br />
+<code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU</span></code><br />
+<em>Tracks commands typed in Run dialog.</em><br />
+<img alt="alt text" src="../../_images/image-35.png" /></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\Policies\RunMRU</span></code><br />
+<em>Same as RunMRU but enforced by policies.</em><br />
+(Not present.)</p>
+<ul class="simple">
+<li><p><strong>UserAssist (programs executed)</strong><br />
+<code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist\{GUID}\Count</span></code><br />
+<em>Tracks execution counts of applications.</em><br />
+<img alt="alt text" src="../../_images/image-36.png" /></p></li>
+<li><p><strong>Taskbar-related events</strong><br />
+<code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\FeatureUsage</span></code><br />
+<em>Tracks user interaction with taskbar features.</em><br />
+<img alt="alt text" src="../../_images/image-37.png" /></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">...\AppBadgeUpdated</span></code><br />
+<img alt="alt text" src="../../_images/image-38.png" /><br />
+<em>Records when a taskbar app badge (like notifications) is updated.</em></p>
+<p><code class="docutils literal notranslate"><span class="pre">...\AppLaunch</span></code><br />
+<img alt="alt text" src="../../_images/image-39.png" /><br />
+<em>Logs when a user launches an application from the taskbar.</em></p>
+<p><code class="docutils literal notranslate"><span class="pre">...\AppSwitched</span></code><br />
+<img alt="alt text" src="../../_images/image-40.png" /><br />
+<em>Tracks when the user switches between apps pinned or open on the taskbar.</em></p>
+<p><code class="docutils literal notranslate"><span class="pre">...\ShowJumpView</span></code><br />
+<img alt="alt text" src="../../_images/image-41.png" />
+<em>Logs when the user opens a jump list (right-click menu) on a taskbar app.</em></p>
+<ul class="simple">
+<li><p><strong>Recent applications</strong><br />
+<code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows\CurrentVersion\Search\RecentApps</span></code><br />
+<em>Lists recently used apps.</em><br />
+(Not present.)</p></li>
+</ul>
+</section>
+<section id="shortcuts-and-jump-lists">
+<h4>Shortcuts and Jump Lists<a class="headerlink" href="#shortcuts-and-jump-lists" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Recent documents (LinkParser / LeCMD)</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Roaming\Microsoft\Windows\Recent</span></code><br />
+<em>Contains shortcut (.lnk) files of recently opened documents.</em><br />
+<img alt="alt text" src="../../_images/image-43.png" /><br />
+<img alt="alt text" src="../../_images/image-42.png" />
+<img alt="alt text" src="../../_images/image-44.png" /></p></li>
+<li><p><strong>Jump Lists</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Roaming\Microsoft\Windows\Recent\AutomaticDestinations</span></code><br />
+<em>Shows recent and pinned items for applications.</em><br />
+<img alt="alt text" src="../../_images/image-45.png" /><br />
+<img alt="alt text" src="../../_images/image-46.png" /><br />
+<img alt="alt text" src="../../_images/image-47.png" /></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Roaming\Microsoft\Windows\Recent\CustomDestinations</span></code><br />
+<img alt="alt text" src="../../_images/image-48.png" /><br />
+<img alt="alt text" src="../../_images/image-49.png" /></p>
+</section>
+<section id="shellbags">
+<h4>Shellbags<a class="headerlink" href="#shellbags" title="Link to this heading">¶</a></h4>
+<p><img alt="alt text" src="../../_images/image-50.png" /><br />
+<code class="docutils literal notranslate"><span class="pre">USRCLASS.DAT\Local</span> <span class="pre">Settings\Software\Microsoft\Windows\Shell\Bags</span></code><br />
+<em>Stores the view settings of folders (icon view, details view, window size, etc.) for individual folders.</em><br />
+<img alt="alt text" src="../../_images/image-87.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">USRCLASS.DAT\Local</span> <span class="pre">Settings\Software\Microsoft\Windows\Shell\BagMRU</span></code><br />
+<em>Stores the hierarchy of folders that the user has accessed, linking to the corresponding Bags entries.</em><br />
+<img alt="alt text" src="../../_images/image-88.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\Shell\BagMRU</span></code><br />
+<em>Another location tracking folder access and structure, used by newer versions of Windows for the MRU (Most Recently Used) folder list.</em><br />
+<img alt="alt text" src="../../_images/image-89.png" /></p>
+<p>Using a tool like Shellbags Explorer is it possible to visualize Shellbags on a easiest way.
+<img alt="alt text" src="../../_images/image-86.png" /></p>
+</section>
+<section id="usb-and-mtp-devices">
+<h4>USB and MTP devices<a class="headerlink" href="#usb-and-mtp-devices" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>MTP devices</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Local\Temp\WPDNSE\{GUID}</span></code><br />
+(Not present.)</p></li>
+<li><p><strong>USB storage (VID / PID)</strong><br />
+<code class="docutils literal notranslate"><span class="pre">SYSTEM\ControlSet001\Enum\USBSTOR</span></code><br />
+<em>Shows vendor/product IDs and device serials.</em><br />
+<img alt="alt text" src="../../_images/image-51.png" /></p></li>
+<li><p><strong>USB volume names</strong><br />
+<code class="docutils literal notranslate"><span class="pre">SOFTWARE\Microsoft\Windows</span> <span class="pre">Portable</span> <span class="pre">Devices\Devices</span></code><br />
+<em>Stores friendly device names.</em><br />
+<img alt="alt text" src="../../_images/image-52.png" /></p></li>
+<li><p><strong>User who used the USB device</strong><br />
+<code class="docutils literal notranslate"><span class="pre">SYSTEM\MountedDevices</span></code><br />
+<code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\MountPoints2</span></code><br />
+<em>Shows which user mounted the device and assigned drive letters.</em><br />
+<img alt="alt text" src="../../_images/image-53.png" /><br />
+<img alt="alt text" src="../../_images/image-54.png" /></p></li>
+<li><p><strong>Logical volume serial number</strong><br />
+<code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows</span> <span class="pre">NT\CurrentVersion\EMDMgmt</span></code><br />
+<em>Stores volume serials for identification.</em><br />
+<img alt="alt text" src="../../_images/image-55.png" /></p></li>
+<li><p><strong>First and last connection time</strong><br />
+<code class="docutils literal notranslate"><span class="pre">SYSTEM\ControlSet001\Enum\USBSTOR\{VEN_PROD_VERSION}\{USB_SERIAL}\Properties\{83da6326-97a6-4088-9453-a1923f573b29}</span></code><br />
+<em>Tracks timestamps of USB device connections.</em><br />
+<img alt="alt text" src="../../_images/image-81.png" /></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">C:\Windows\inf\setupapi.dev.log</span></code><br />
+<em>Tracks the installation and configuration of device drivers on the system</em><br />
+<img alt="alt text" src="../../_images/image-99.png" /></p>
+<ul class="simple">
+<li><p><strong>0064 – First connection (InstallDate)</strong><br />
+Indicates the first time the USB device was installed/connected on the system.
+<img alt="alt text" src="../../_images/image-82.png" /></p></li>
+<li><p><strong>0065 – Last connection (LastArrivalDate)</strong><br />
+Indicates the most recent time the USB device was connected.
+<img alt="alt text" src="../../_images/image-83.png" /></p></li>
+<li><p><strong>0066 – Last disconnection (LastRemovalDate)</strong><br />
+Indicates the most recent time the USB device was safely removed.
+<img alt="alt text" src="../../_images/image-84.png" /></p></li>
+</ul>
+</section>
+<section id="databases-and-system-artifacts">
+<h4>Databases and system artifacts<a class="headerlink" href="#databases-and-system-artifacts" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Cortana database</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Local\Packages\Microsoft.Windows.Cortana_xxxx\LocalState\ESEDatabase_CortanaCoreInstance\CortanaCoreDb.dat</span></code><br />
+(Not present.)</p></li>
+<li><p><strong>Windows notifications</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Local\Microsoft\Windows\Notifications\wpndatabase.db</span></code><br />
+<em>Tracks notifications shown to the user.</em><br />
+<img alt="alt text" src="../../_images/image-57.png" /><br />
+<img alt="alt text" src="../../_images/image-58.png" /><br />
+<img alt="alt text" src="../../_images/image-59.png" /><br />
+<img alt="alt text" src="../../_images/image-60.png" /></p></li>
+<li><p><strong>Timeline</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Local\ConnectedDevicesPlatform\ActivitiesCache.db</span></code><br />
+<em>Tracks app and file activity over time.</em><br />
+<img alt="alt text" src="../../_images/image-61.png" /></p></li>
+<li><p><strong>Windows Store</strong><br />
+<code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Applications\</span></code><br />
+<em>Contains Windows Store app installation state.</em><br />
+<img alt="alt text" src="../../_images/image-101.png" /></p></li>
+</ul>
+</section>
+<section id="other-artifacts">
+<h4>Other artifacts<a class="headerlink" href="#other-artifacts" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p><strong>Thumbnails and Thumbcache</strong><br />
+<code class="docutils literal notranslate"><span class="pre">thumbs.db</span></code><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Local\Microsoft\Windows\Explorer</span></code><br />
+<em>Stores thumbnail images of files for faster previews.</em><br />
+<img alt="alt text" src="../../_images/image-62.png" /><br />
+<img alt="alt text" src="../../_images/image-63.png" /><br />
+<img alt="alt text" src="../../_images/image-64.png" /><br />
+<img alt="alt text" src="../../_images/image-65.png" /><br />
+<img alt="alt text" src="../../_images/image-66.png" /></p></li>
+<li><p><strong>Recycle Bin</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\$Recycle.Bin</span></code><br />
+<em>Stores deleted files.</em><br />
+<img alt="alt text" src="../../_images/image-68.png" /></p></li>
+</ul>
+<p>Copy for analysis:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">Copy-Item</span> <span class="n">-Recurse</span> <span class="n">-Force</span> <span class="s1">&#39;C:\$Recycle.Bin\S-1-5-21-4071608857-1089510339-248207473-1000&#39;</span> <span class="s1">&#39;C:\RecycleBackup&#39;</span>  
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-69.png" /></p>
+<p>Export to CSV:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">.\</span><span class="n">rifiuti-vista</span><span class="p">.</span><span class="n">exe</span> <span class="n">-t</span> <span class="s2">&quot;,&quot;</span> <span class="n">-o</span> <span class="s2">&quot;recycle-bin.csv&quot;</span> <span class="s2">&quot;C:\RecycleBackup&quot;</span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-67.png" /></p>
+<ul class="simple">
+<li><p><strong>OfficeFileCache</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Local\Microsoft\Office\{Version}\OfficeFileCache</span></code><br />
+(Not present.)</p></li>
+<li><p><strong>OfficeBackstage</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Local\Microsoft\Office\16.0\BackstageInAppNavCache</span></code><br />
+(Not present.)</p></li>
+<li><p><strong>Public IP (ETLParser)</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Logs</span></code></p></li>
+</ul>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">.\</span><span class="n">ETLParser</span><span class="p">.</span><span class="n">exe</span> <span class="n">-c</span> <span class="n">DeliveryLogs</span> <span class="n">-s</span> <span class="s2">&quot;C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Logs&quot;</span> <span class="n">-o</span> <span class="s2">&quot;C:\Users\adrian\Downloads\ETLOutput&quot;</span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-71.png" /><br />
+<img alt="alt text" src="../../_images/image-70.png" /><br />
+<img alt="alt text" src="../../_images/image-72.png" /></p>
+<ul class="simple">
+<li><p><strong>PowerShell command history</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt</span></code><br />
+<em>Stores previously executed PowerShell commands.</em><br />
+<img alt="alt text" src="../../_images/image-73.png" /></p></li>
+<li><p><strong>Prefetch</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Windows\Prefetch</span></code><br />
+<em>Stores data about program execution.</em><br />
+<img alt="alt text" src="../../_images/image-74.png" /><br />
+<img alt="alt text" src="../../_images/image-75.png" /><br />
+<img alt="alt text" src="../../_images/image-76.png" /><br />
+<img alt="alt text" src="../../_images/image-77.png" /></p></li>
+<li><p><strong>SuperFetch</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Windows\Prefetch\Ag*.db</span></code><br />
+<em>Caches frequently used applications to speed up loading.</em><br />
+<em>As I’m using a ssd superfetch files are not generated</em></p></li>
+<li><p><strong>SRUM</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Windows\System32\sru\SRUDB.dat</span></code><br />
+<em>Tracks network, CPU, and power usage.</em>
+<img alt="alt text" src="../../_images/image-90.png" /></p></li>
+<li><p><strong>ShimCache</strong><br />
+<code class="docutils literal notranslate"><span class="pre">SYSTEM\ControlSet001\Control\SessionManager\AppCompatCache\AppCompatCache</span></code><br />
+<em>Registry-based cache listing previously executed programs, even if deleted.</em></p></li>
+<li><p><strong>AmCache (AppCompatCacheParser)</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Windows\AppCompat\Programs\Amcache.hve</span></code><br />
+<em>Stores metadata about executed programs, installation times, and file paths.</em>
+<img alt="alt text" src="../../_images/image-91.png" />
+<img alt="alt text" src="../../_images/image-92.png" /></p></li>
+<li><p><strong>Scheduled Tasks</strong><br />
+<code class="docutils literal notranslate"><span class="pre">SOFTWARE\Microsoft\Windows</span> <span class="pre">NT\Current</span> <span class="pre">Version\TaskCache\Tree</span></code><br />
+<em>Lists tasks scheduled by the system or users.</em>
+<img alt="alt text" src="../../_images/image-94.png" /></p></li>
+<li><p><strong>Services</strong><br />
+<code class="docutils literal notranslate"><span class="pre">SYSTEM\ControlSet001\Services</span></code><br />
+<em>Registry keys storing installed services and their configuration.</em>
+<img alt="alt text" src="../../_images/image-95.png" /></p></li>
+<li><p><strong>BAM (DCode)</strong><br />
+<em>Tracks per-user application activity and resource usage.</em>
+<code class="docutils literal notranslate"><span class="pre">SYSTEM\ControlSet001\Services\bam\UserSettings{SID}</span></code><br />
+<em>Not present</em></p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">SYSTEM\ControlSet001\Services\bam\state\UserSettings{SID}</span></code><br />
+<img alt="alt text" src="../../_images/image-96.png" /></p>
+<ul class="simple">
+<li><p><strong>Windows Event Logs</strong><br />
+<code class="docutils literal notranslate"><span class="pre">C:\Windows\System32\winevt\Logs</span></code><br />
+<em>Stores system, security, and application events for auditing and forensic analysis.</em>
+<img alt="alt text" src="../../_images/image-97.png" />
+<img alt="alt text" src="../../_images/image-98.png" /></p></li>
+</ul>
+</section>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../exercise3/exercise3.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Sysmon</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../../windows-file-system/exercise3/exercise3.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Exercise 3</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, PumukyDev
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Post-mortem analysis</a><ul>
+<li><a class="reference internal" href="#main-objectives-of-the-practice">Main objectives of the practice</a></li>
+<li><a class="reference internal" href="#part-a">PART A</a><ul>
+<li><a class="reference internal" href="#regarding-prefetch">1. Regarding <em>prefetch</em></a></li>
+<li><a class="reference internal" href="#regarding-logs">2. Regarding <em>LOGs</em></a></li>
+<li><a class="reference internal" href="#regarding-the-hibernation-file-hiberfil-sys">3. Regarding the hibernation file <code class="docutils literal notranslate"><span class="pre">hiberfil.sys</span></code></a></li>
+<li><a class="reference internal" href="#regarding-snapshots-restore-points-and-or-volume-shadow-copies-service-vss">4. Regarding snapshots, restore points and/or Volume Shadow Copies Service (VSS)</a></li>
+<li><a class="reference internal" href="#questions-related-to-the-windows-registry">5. Questions related to the Windows Registry</a></li>
+<li><a class="reference internal" href="#events-of-forensic-interest">6. Events of forensic interest</a></li>
+<li><a class="reference internal" href="#software-tools">7. Software tools</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#part-b">PART B</a><ul>
+<li><a class="reference internal" href="#software-to-be-used">Software to be used</a></li>
+<li><a class="reference internal" href="#evidence-extraction">Evidence extraction</a></li>
+<li><a class="reference internal" href="#artifacts-and-paths-of-interest">Artifacts and paths of interest</a><ul>
+<li><a class="reference internal" href="#system-information">System information</a></li>
+<li><a class="reference internal" href="#network">Network</a></li>
+<li><a class="reference internal" href="#sharing-and-startup">Sharing and startup</a></li>
+<li><a class="reference internal" href="#user-activity">User activity</a></li>
+<li><a class="reference internal" href="#shortcuts-and-jump-lists">Shortcuts and Jump Lists</a></li>
+<li><a class="reference internal" href="#shellbags">Shellbags</a></li>
+<li><a class="reference internal" href="#usb-and-mtp-devices">USB and MTP devices</a></li>
+<li><a class="reference internal" href="#databases-and-system-artifacts">Databases and system artifacts</a></li>
+<li><a class="reference internal" href="#other-artifacts">Other artifacts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>
