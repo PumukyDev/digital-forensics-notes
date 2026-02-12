@@ -22,7 +22,7 @@ Welcome to the Digital Forensics Notes documentation!
    windows-artifacts/exercise3/exercise3
    windows-artifacts/exercise4/exercise4
 
-   .. toctree::
+.. toctree::
    :maxdepth: 2
    :caption: Windows volatility:
    :hidden:
