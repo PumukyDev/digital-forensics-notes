@@ -18,9 +18,10 @@ Welcome to the Digital Forensics Notes documentation!
    :caption: Windows artifacts:
    :hidden:
 
-   windows-artifacts/exercise1/exercise1
-   windows-artifacts/exercise3/exercise3
-   windows-artifacts/exercise4/exercise4
+   windows-artifacts/exercise1/post-mortem-analysis
+   windows-artifacts/exercise3/sysmon
+   windows-artifacts/exercise4/web-browsers
+   windows-artifacts/exercise6/automatic-tools
 
 .. toctree::
    :maxdepth: 2

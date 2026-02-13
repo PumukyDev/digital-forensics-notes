@@ -62,7 +62,7 @@ Of course, each web browser leaves its own individual artifacts on the operating
 - Downloaded files (Downloads)
 - Bookmarks
 
-(Source: *An Overview of Web Browser Forensics | Digital Forensics | Computer Forensics | Blog*)
+(Source: [*An Overview of Web Browser Forensics | Digital Forensics | Computer Forensics | Blog*](https://www.digitalforensics.com/blog/articles/an-overview-of-web-browser-forensics/))
 
 ## Main Objectives of the Practice
 
@@ -79,6 +79,177 @@ The practice consists of extracting all the evidence mentioned above in the intr
 
 ## Tasks Required
 
-1. Use the operating system of your own computer and/or a virtual machine where the most common browsers are installed: Firefox, Chrome, and Internet Explorer.
+1. Use the operating system of your own computer and/or a virtual machine where the most common browsers are installed: Firefox, Chrome, and Microsoft Edge.
 2. Investigate the directory paths where each browser stores its evidence.
 3. Download and test the different tools offered by NirSoft to analyze and process the evidence obtained in section 2.
+
+
+
+### Microsoft Edge
+
+```plaintext
+Browsing history - %localappdata%\Microsoft\Edge\User Data\Default\History
+
+Cache - %localappdata%\Microsoft\Edge\User Data\Default\Cache
+
+Cookies - %localappdata%\Microsoft\Edge\User Data\Default\Cookies
+
+Thumbnails - %localappdata%\Microsoft\Edge\User Data\Default\Cache\Cache_Data
+
+Sessions - %localappdata%\Microsoft\Edge\User Data\Default\Sessions
+
+Form values - %localappdata%\Microsoft\Edge\User Data\Default\Web Data
+
+Download history - %localappdata%\Microsoft\Edge\User Data\Default\History
+
+Bookmarks - %localappdata%\Microsoft\Edge\User Data\Default\Bookmarks
+```
+
+### Firefox
+
+```plaintext
+Browsing history - %appdata%\Mozilla\Firefox\Profiles\[Perfil]\places.sqlite
+
+Files in the cache directory - %localappdata%\Mozilla\Firefox\Profiles\[Perfil]\cache2
+
+Cookies - %appdata%\Mozilla\Firefox\Profiles\[Perfil]\cookies.sqlite
+
+Thumbnails - %appdata%\Local\Mozilla\Firefox\Profiles\eqainsr.default-release\cache2\entries
+
+Sessions - %appdata%\Roaming\Mozilla\Firefox\Profiles\[profile name]\
+
+Form values - %appdata%\Mozilla\Firefox\Profiles\[Perfil]\formhistory.sqlite
+
+Downloaded files (Downloads) - %appdata%\Mozilla\Firefox\Profiles\[Perfil]\places.sqlite
+
+Bookmarks - %appdata%\Mozilla\Firefox\Profiles\[Perfil]\places.sqlite
+```
+
+### Google Chrome
+
+```plaintext
+Browsing history - %localappdata%\Google\Chrome\User Data\Default\History
+
+Files in the cache directory - %localappdata%\Google\Chrome\User Data\Default\Cache
+
+Cookies - %localappdata%\Google\Chrome\User Data\Default\Cookies
+
+Sessions - %localappdata%\Google\Chrome\User Data\Default\Sessions
+
+Thumbnails - %localappdata%\Google\Chrome\User Data\Default\Cache\Cache_Data
+
+Form values - %localappdata%\Google\Chrome\User Data\Default\Web Data
+
+Downloaded files (Downloads) - %localappdata%\Google\Chrome\User Data\Default\History
+
+Bookmarks - %localappdata%\Google\Chrome\User Data\Default\Bookmarks
+```
+
+### Note
+
+In both Chrome and Firefox we can have multiple users.
+
+The name of the folder that contains the data varies depending on this, for example:
+
+Firefox - profiles are stored in folders with names generated like name.default, etc.
+
+Chrome - profiles are stored in folders according to the profile number; if no new profile has been created it will be Default.
+
+![Firefox](/assets/img/posts/artefactos_en_los_navegadores/20241220_164956_2024-12-20_17-49.png)
+_Firefox_
+
+![Chrome](/assets/img/posts/artefactos_en_los_navegadores/20241220_165007_2024-12-20_17-49_1.png)
+_Chrome_
+
+## Browsing history
+
+[Browsing History View](https://www.nirsoft.net/utils/browsinghistoryview-x64.zip)
+
+### Edge, Chrome and Firefox
+
+![alt text](image.png)
+
+![alt text](image-1.png)
+
+## Cache
+
+[Mozilla cache viewer (GECKO)](https://www.nirsoft.net/utils/mzcacheview.zip)
+
+[Chrome caché viewer (CHROMIUM)](https://www.nirsoft.net/utils/chromecacheview.zip)
+
+### Chrome
+
+![alt text](image-3.png)
+
+### Edge
+
+![alt text](image-5.png)
+![alt text](image-6.png)
+![alt text](image-7.png)
+
+### Firefox
+
+![alt text](image-4.png)
+
+## Cookies
+
+[MZCookiesView](https://www.nirsoft.net/utils/mzcv-x64.zip)
+
+[ChromeCookiesView](https://www.nirsoft.net/utils/chromecookiesview-x64.zip)
+
+### Note
+
+Before accessing the cookie files, it is necessary to completely terminate the browser processes; otherwise, these files will be locked.
+
+### Chrome
+
+![alt text](image-9.png)
+
+### Edge
+
+![alt text](image-10.png)
+![alt text](image-11.png)
+![alt text](image-12.png)
+![alt text](image-13.png)
+![alt text](image-14.png)
+
+### Firefox
+
+![alt text](image-8.png)
+
+## Thumbnails
+
+[ImageCaché viewer](https://www.nirsoft.net/utils/imagecacheviewer.zip)
+
+![alt text](./videos/thumbnails.mp4)
+![alt text](./videos/thumbnails.gif)
+
+## Bookmarks
+
+[WebBookmarks view](https://www.nirsoft.net/utils/webbrowserbookmarksview.zip)
+
+![alt text](image-15.png)
+
+## Downloaded files
+
+[BrowserDownloads viewer](https://www.nirsoft.net/utils/browserdownloadsview.zip)
+
+![alt text](image-16.png)
+
+## Form values
+
+[Web Browser pass view - password (wbpv28821@)](https://www.nirsoft.net/toolsdownload/webbrowserpassview.zip)
+
+[Browser AutoFill view](https://www.nirsoft.net/utils/browserautofillview.zip)
+
+![alt text](image-17.png)
+_BrowserAutoFillView_
+
+![alt text](image-18.png)
+_WebBrowserPassView_
+
+## Bonus - Searches
+
+[MyLastSearch](https://www.nirsoft.net/utils/mylastsearch.zip)
+
+![alt text](image-19.png)
