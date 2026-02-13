@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Volatility" href="../../windows-volatility/exercise1/exercise1.html"><link rel="prev" title="Sysmon" href="../exercise3/exercise3.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="SECTION A)" href="../exercise6/automatic-tools.html"><link rel="prev" title="Sysmon" href="../exercise3/sysmon.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
         <title>Evidence in Web Browsers - Digital Forensics Notes documentation</title>
@@ -199,9 +199,11 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Windows artifacts:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../exercise1/exercise1.html">Post-mortem analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../exercise3/exercise3.html">Sysmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise1/post-mortem-analysis.html">Post-mortem analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise3/sysmon.html">Sysmon</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Evidence in Web Browsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise6/automatic-tools.html">SECTION A)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise6/automatic-tools.html#section-b">SECTION B)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Windows volatility:</span></p>
 <ul>
@@ -227,7 +229,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="../../_sources/windows-artifacts/exercise4/exercise4.md.txt" title="View this page">
+  <a class="muted-link" href="../../_sources/windows-artifacts/exercise4/web-browsers.md.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -296,7 +298,7 @@
 <li><p>Downloaded files (Downloads)</p></li>
 <li><p>Bookmarks</p></li>
 </ul>
-<p>(Source: <em>An Overview of Web Browser Forensics | Digital Forensics | Computer Forensics | Blog</em>)</p>
+<p>(Source: <a class="reference external" href="https://www.digitalforensics.com/blog/articles/an-overview-of-web-browser-forensics/"><em>An Overview of Web Browser Forensics | Digital Forensics | Computer Forensics | Blog</em></a>)</p>
 <section id="main-objectives-of-the-practice">
 <h2>Main Objectives of the Practice<a class="headerlink" href="#main-objectives-of-the-practice" title="Link to this heading">¶</a></h2>
 <ul class="simple">
@@ -315,10 +317,164 @@ B. Various tools provided by NirSoft</p>
 <section id="tasks-required">
 <h2>Tasks Required<a class="headerlink" href="#tasks-required" title="Link to this heading">¶</a></h2>
 <ol class="arabic simple">
-<li><p>Use the operating system of your own computer and/or a virtual machine where the most common browsers are installed: Firefox, Chrome, and Internet Explorer.</p></li>
+<li><p>Use the operating system of your own computer and/or a virtual machine where the most common browsers are installed: Firefox, Chrome, and Microsoft Edge.</p></li>
 <li><p>Investigate the directory paths where each browser stores its evidence.</p></li>
 <li><p>Download and test the different tools offered by NirSoft to analyze and process the evidence obtained in section 2.</p></li>
 </ol>
+<section id="microsoft-edge">
+<h3>Microsoft Edge<a class="headerlink" href="#microsoft-edge" title="Link to this heading">¶</a></h3>
+<div class="highlight-plaintext notranslate"><div class="highlight"><pre><span></span>Browsing history - %localappdata%\Microsoft\Edge\User Data\Default\History
+
+Cache - %localappdata%\Microsoft\Edge\User Data\Default\Cache
+
+Cookies - %localappdata%\Microsoft\Edge\User Data\Default\Cookies
+
+Thumbnails - %localappdata%\Microsoft\Edge\User Data\Default\Cache\Cache_Data
+
+Sessions - %localappdata%\Microsoft\Edge\User Data\Default\Sessions
+
+Form values - %localappdata%\Microsoft\Edge\User Data\Default\Web Data
+
+Download history - %localappdata%\Microsoft\Edge\User Data\Default\History
+
+Bookmarks - %localappdata%\Microsoft\Edge\User Data\Default\Bookmarks
+</pre></div>
+</div>
+</section>
+<section id="firefox">
+<h3>Firefox<a class="headerlink" href="#firefox" title="Link to this heading">¶</a></h3>
+<div class="highlight-plaintext notranslate"><div class="highlight"><pre><span></span>Browsing history - %appdata%\Mozilla\Firefox\Profiles\[Perfil]\places.sqlite
+
+Files in the cache directory - %localappdata%\Mozilla\Firefox\Profiles\[Perfil]\cache2
+
+Cookies - %appdata%\Mozilla\Firefox\Profiles\[Perfil]\cookies.sqlite
+
+Thumbnails - %appdata%\Local\Mozilla\Firefox\Profiles\eqainsr.default-release\cache2\entries
+
+Sessions - %appdata%\Roaming\Mozilla\Firefox\Profiles\[profile name]\
+
+Form values - %appdata%\Mozilla\Firefox\Profiles\[Perfil]\formhistory.sqlite
+
+Downloaded files (Downloads) - %appdata%\Mozilla\Firefox\Profiles\[Perfil]\places.sqlite
+
+Bookmarks - %appdata%\Mozilla\Firefox\Profiles\[Perfil]\places.sqlite
+</pre></div>
+</div>
+</section>
+<section id="google-chrome">
+<h3>Google Chrome<a class="headerlink" href="#google-chrome" title="Link to this heading">¶</a></h3>
+<div class="highlight-plaintext notranslate"><div class="highlight"><pre><span></span>Browsing history - %localappdata%\Google\Chrome\User Data\Default\History
+
+Files in the cache directory - %localappdata%\Google\Chrome\User Data\Default\Cache
+
+Cookies - %localappdata%\Google\Chrome\User Data\Default\Cookies
+
+Sessions - %localappdata%\Google\Chrome\User Data\Default\Sessions
+
+Thumbnails - %localappdata%\Google\Chrome\User Data\Default\Cache\Cache_Data
+
+Form values - %localappdata%\Google\Chrome\User Data\Default\Web Data
+
+Downloaded files (Downloads) - %localappdata%\Google\Chrome\User Data\Default\History
+
+Bookmarks - %localappdata%\Google\Chrome\User Data\Default\Bookmarks
+</pre></div>
+</div>
+</section>
+<section id="note">
+<h3>Note<a class="headerlink" href="#note" title="Link to this heading">¶</a></h3>
+<p>In both Chrome and Firefox we can have multiple users.</p>
+<p>The name of the folder that contains the data varies depending on this, for example:</p>
+<p>Firefox - profiles are stored in folders with names generated like name.default, etc.</p>
+<p>Chrome - profiles are stored in folders according to the profile number; if no new profile has been created it will be Default.</p>
+<p><img alt="Firefox" src="assets/img/posts/artefactos_en_los_navegadores/20241220_164956_2024-12-20_17-49.png" />
+<em>Firefox</em></p>
+<p><img alt="Chrome" src="assets/img/posts/artefactos_en_los_navegadores/20241220_165007_2024-12-20_17-49_1.png" />
+<em>Chrome</em></p>
+</section>
+</section>
+<section id="browsing-history">
+<h2>Browsing history<a class="headerlink" href="#browsing-history" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://www.nirsoft.net/utils/browsinghistoryview-x64.zip">Browsing History View</a></p>
+<section id="edge-chrome-and-firefox">
+<h3>Edge, Chrome and Firefox<a class="headerlink" href="#edge-chrome-and-firefox" title="Link to this heading">¶</a></h3>
+<p><img alt="alt text" src="../../_images/image1.png" /></p>
+<p><img alt="alt text" src="../../_images/image-111.png" /></p>
+</section>
+</section>
+<section id="cache">
+<h2>Cache<a class="headerlink" href="#cache" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://www.nirsoft.net/utils/mzcacheview.zip">Mozilla cache viewer (GECKO)</a></p>
+<p><a class="reference external" href="https://www.nirsoft.net/utils/chromecacheview.zip">Chrome caché viewer (CHROMIUM)</a></p>
+<section id="chrome">
+<h3>Chrome<a class="headerlink" href="#chrome" title="Link to this heading">¶</a></h3>
+<p><img alt="alt text" src="../../_images/image-311.png" /></p>
+</section>
+<section id="edge">
+<h3>Edge<a class="headerlink" href="#edge" title="Link to this heading">¶</a></h3>
+<p><img alt="alt text" src="../../_images/image-510.png" />
+<img alt="alt text" src="../../_images/image-611.png" />
+<img alt="alt text" src="../../_images/image-78.png" /></p>
+</section>
+<section id="id1">
+<h3>Firefox<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<p><img alt="alt text" src="../../_images/image-411.png" /></p>
+</section>
+</section>
+<section id="cookies">
+<h2>Cookies<a class="headerlink" href="#cookies" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://www.nirsoft.net/utils/mzcv-x64.zip">MZCookiesView</a></p>
+<p><a class="reference external" href="https://www.nirsoft.net/utils/chromecookiesview-x64.zip">ChromeCookiesView</a></p>
+<section id="id2">
+<h3>Note<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<p>Before accessing the cookie files, it is necessary to completely terminate the browser processes; otherwise, these files will be locked.</p>
+</section>
+<section id="id3">
+<h3>Chrome<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<p><img alt="alt text" src="../../_images/image-910.png" /></p>
+</section>
+<section id="id4">
+<h3>Edge<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<p><img alt="alt text" src="../../_images/image-103.png" />
+<img alt="alt text" src="../../_images/image-112.png" />
+<img alt="alt text" src="../../_images/image-121.png" />
+<img alt="alt text" src="../../_images/image-131.png" />
+<img alt="alt text" src="../../_images/image-141.png" /></p>
+</section>
+<section id="id5">
+<h3>Firefox<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<p><img alt="alt text" src="../../_images/image-811.png" /></p>
+</section>
+</section>
+<section id="thumbnails">
+<h2>Thumbnails<a class="headerlink" href="#thumbnails" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://www.nirsoft.net/utils/imagecacheviewer.zip">ImageCaché viewer</a></p>
+<p><video src="../../_images/thumbnails.mp4" title="alt text"><a href="../../_images/thumbnails.mp4">alt text</a></video>
+<img alt="alt text" src="../../_images/thumbnails.gif" /></p>
+</section>
+<section id="bookmarks">
+<h2>Bookmarks<a class="headerlink" href="#bookmarks" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://www.nirsoft.net/utils/webbrowserbookmarksview.zip">WebBookmarks view</a></p>
+<p><img alt="alt text" src="../../_images/image-151.png" /></p>
+</section>
+<section id="downloaded-files">
+<h2>Downloaded files<a class="headerlink" href="#downloaded-files" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://www.nirsoft.net/utils/browserdownloadsview.zip">BrowserDownloads viewer</a></p>
+<p><img alt="alt text" src="../../_images/image-161.png" /></p>
+</section>
+<section id="form-values">
+<h2>Form values<a class="headerlink" href="#form-values" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://www.nirsoft.net/toolsdownload/webbrowserpassview.zip">Web Browser pass view - password (wbpv28821&#64;)</a></p>
+<p><a class="reference external" href="https://www.nirsoft.net/utils/browserautofillview.zip">Browser AutoFill view</a></p>
+<p><img alt="alt text" src="../../_images/image-171.png" />
+<em>BrowserAutoFillView</em></p>
+<p><img alt="alt text" src="../../_images/image-181.png" />
+<em>WebBrowserPassView</em></p>
+</section>
+<section id="bonus-searches">
+<h2>Bonus - Searches<a class="headerlink" href="#bonus-searches" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://www.nirsoft.net/utils/mylastsearch.zip">MyLastSearch</a></p>
+<p><img alt="alt text" src="../../_images/image-191.png" /></p>
 </section>
 </section>
 
@@ -327,16 +483,16 @@ B. Various tools provided by NirSoft</p>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../../windows-volatility/exercise1/exercise1.html">
+          <a class="next-page" href="../exercise6/automatic-tools.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Volatility</div>
+                <div class="title">SECTION A)</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../exercise3/exercise3.html">
+          <a class="prev-page" href="../exercise3/sysmon.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
@@ -381,7 +537,35 @@ B. Various tools provided by NirSoft</p>
 <li><a class="reference internal" href="#main-objectives-of-the-practice">Main Objectives of the Practice</a></li>
 <li><a class="reference internal" href="#software-to-be-used">Software to Be Used</a></li>
 <li><a class="reference internal" href="#practice-description">Practice Description</a></li>
-<li><a class="reference internal" href="#tasks-required">Tasks Required</a></li>
+<li><a class="reference internal" href="#tasks-required">Tasks Required</a><ul>
+<li><a class="reference internal" href="#microsoft-edge">Microsoft Edge</a></li>
+<li><a class="reference internal" href="#firefox">Firefox</a></li>
+<li><a class="reference internal" href="#google-chrome">Google Chrome</a></li>
+<li><a class="reference internal" href="#note">Note</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#browsing-history">Browsing history</a><ul>
+<li><a class="reference internal" href="#edge-chrome-and-firefox">Edge, Chrome and Firefox</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cache">Cache</a><ul>
+<li><a class="reference internal" href="#chrome">Chrome</a></li>
+<li><a class="reference internal" href="#edge">Edge</a></li>
+<li><a class="reference internal" href="#id1">Firefox</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cookies">Cookies</a><ul>
+<li><a class="reference internal" href="#id2">Note</a></li>
+<li><a class="reference internal" href="#id3">Chrome</a></li>
+<li><a class="reference internal" href="#id4">Edge</a></li>
+<li><a class="reference internal" href="#id5">Firefox</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#thumbnails">Thumbnails</a></li>
+<li><a class="reference internal" href="#bookmarks">Bookmarks</a></li>
+<li><a class="reference internal" href="#downloaded-files">Downloaded files</a></li>
+<li><a class="reference internal" href="#form-values">Form values</a></li>
+<li><a class="reference internal" href="#bonus-searches">Bonus - Searches</a></li>
 </ul>
 </li>
 </ul>

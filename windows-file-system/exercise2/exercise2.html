@@ -199,9 +199,11 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Windows artifacts:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise1/exercise1.html">Post-mortem analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise3/exercise3.html">Sysmon</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise4/exercise4.html">Evidence in Web Browsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise1/post-mortem-analysis.html">Post-mortem analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise3/sysmon.html">Sysmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise4/web-browsers.html">Evidence in Web Browsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise6/automatic-tools.html">SECTION A)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise6/automatic-tools.html#section-b">SECTION B)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Windows volatility:</span></p>
 <ul>
@@ -301,7 +303,7 @@ b. Recover the file using FTK Imager (found in the Recycle Bin folder).</p>
 <img alt="alt text" src="../../_images/image-291.png" /></p>
 <p>Click on said file and click on “Export Files…”</p>
 <p><img alt="alt text" src="../../_images/image-301.png" />
-<img alt="alt text" src="../../_images/image-311.png" />
+<img alt="alt text" src="../../_images/image-313.png" />
 <img alt="alt text" src="../../_images/image-321.png" /></p>
 <p>Verify that the file has been recovered successfully.</p>
 <p><img alt="alt text" src="../../_images/image-331.png" /></p>
@@ -354,7 +356,7 @@ b. What does the <strong>non-resident</strong> property mean, and what are the v
 <p>To analyze the MFT, download <a class="reference external" href="https://github.com/jschicht/Mft2Csv">MTF2csv</a>. Once we have it open, we must indicate the path of the volume (explained on <a class="reference internal" href="#section-1"><span class="xref myst">section 1</span></a>) and hard drive from which we extracted the MFT, we will also have to change the separator to be able to read it more comfortably. We must also select the output where it will send the files ourselves.</p>
 <p><img alt="alt text" src="../../_images/image-401.png" /></p>
 <p>Once finished, go to the output area and verify that many files appear there. Open the file inside the red box.</p>
-<p><img alt="alt text" src="../../_images/image-411.png" /></p>
+<p><img alt="alt text" src="../../_images/image-413.png" /></p>
 <p>Open the file using OpenOffice.</p>
 <p>Activate some filters by doing the following: Data &gt; Filter &gt; Auto filters. This will let us to analyze the spreadsheet more comfortably. Once this is done, go to column M and select “Deleted”, verify that this two files appear:</p>
 <p><img alt="alt text" src="../../_images/image-421.png" /></p>
@@ -427,7 +429,7 @@ You will see that it processes the same information as the previous sections but
 <p>Once the process is finished, we can go to “Reports”, and view the data obtained from the documents.</p>
 <p><img alt="alt text" src="../../_images/image-501.png" /></p>
 <p>For example, if we access LogFile &gt; File Interactions, we can find relevant information about “texto - copia.txt”</p>
-<p><img alt="alt text" src="../../_images/image-511.png" /></p>
+<p><img alt="alt text" src="../../_images/image-512.png" /></p>
 </section>
 </section>
 <hr class="docutils" />
@@ -510,7 +512,7 @@ Process these files with <strong>Indx2Csv</strong>.</p></li>
 <h3>Solution<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h3>
 <p>To extract the files, we must open FTK Imager and mount the evidence tree. Once we have the file located, we will right-click on it and we can extract it wherever we want.</p>
 <p><img alt="alt text" src="../../_images/image-601.png" />
-<img alt="alt text" src="../../_images/image-611.png" /></p>
+<img alt="alt text" src="../../_images/image-613.png" /></p>
 <p>Repeat it with root and the recycle bin folders.</p>
 <p><img alt="alt text" src="../../_images/image-621.png" />
 <img alt="alt text" src="../../_images/image-631.png" /></p>

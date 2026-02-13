@@ -43,7 +43,7 @@ In a forensic investigation, we will study logs in general. In particular, the l
 
 ## Solution
 
-1. Download and save all the and configuration files on the same folder
+1. Download and save all the tools and configuration files on the same folder
 
 ![alt text](./images/image.png)
 
@@ -85,10 +85,14 @@ eventvwr.msc C:\Windows\System32\winevt\Logs\Microsoft-Windows-Sysmon%4Operation
 
 ![alt text](./images/image-7.png)
 
-10. If the import is succesful, a message wil appear. Then, click on "Ok".
+10. If the import is succesful, a message will appear. Then, click on "Ok".
 
 ![alt text](./images/image-8.png)
 
+11. On the left side, the most recent events will appear. Select the one related to the installation of Notepad++. Then, a complete schema containing all the logs will be generated. There, we can see how the entire process started with the download from Firefox and continued with the creation of .dll files after executing the installer.
+
 ![alt text](./images/image-9.png)
+
+12. On the left side, there is another event related to Notepad++. In the schema, we can see two events: one corresponds to the application launching automatically after the installation was completed, and the other corresponds to the instance that I launched manually from the windows explorer.
 
 ![alt text](./images/image-10.png)
