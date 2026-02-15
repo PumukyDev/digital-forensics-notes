@@ -6,13 +6,8 @@ The first occurs when the system is still active during the analysis. In this sc
 
 The analyst should also not trust any tools provided by the system itself, as they may have been deliberately manipulated.
 
----
 
-
-
-## SECTION C)
-
-We have been provided with a RAM capture that must be subjected to a complete forensic analysis.
+We have been provided with a [RAM capture](ram.7z) that must be subjected to a complete forensic analysis.
 
 ### Main Objectives of the Practice
 

@@ -202,8 +202,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise1/post-mortem-analysis.html">Post-mortem analysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise3/sysmon.html">Sysmon</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise4/web-browsers.html">Evidence in Web Browsers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise6/automatic-tools.html">SECTION A)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise6/automatic-tools.html#section-b">SECTION B)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise6/automatic-tools.html">Automatic forensics tools</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Windows volatility:</span></p>
 <ul>
@@ -346,11 +345,11 @@ g. For each partition:</p>
 <p>Open Active Disk Editor in your machine</p>
 <p><img alt="alt text" src="../../_images/image-201.png" /></p>
 <p>The following window will appear. Select <strong>“Open File…”</strong> and choose disk1.dd found in <a class="reference internal" href="#./disks1.7z"><span class="xref myst">disks1.7z</span></a>.</p>
-<p><img alt="alt text" src="../../_images/image2.png" /></p>
+<p><img alt="alt text" src="../../_images/image3.png" /></p>
 <p>Once the file is loaded, a new disk will appear in the interface. Double click on it to open the explorer.</p>
-<p><img alt="alt text" src="../../_images/image-113.png" /></p>
+<p><img alt="alt text" src="../../_images/image-114.png" /></p>
 <p>Change the <strong>template</strong> in order to start analyzing it correctly. To start with, as we don’t know the correct partition, select “Master Boot</p>
-<p><img alt="alt text" src="../../_images/image-412.png" /></p>
+<p><img alt="alt text" src="../../_images/image-413.png" /></p>
 <p>When trying to analyze the first disk, it is impossible to interpret it, if we attempt to read it as a standard MBR, the data shown will be meaningless or inconsistent.</p>
 <p><img alt="alt text" src="../../_images/image-511.png" />
 <img alt="alt text" src="../../_images/image-612.png" /></p>
@@ -387,7 +386,7 @@ Then, assign the proper template in the right panel.</p>
 <li><p><strong>Ending LBA:</strong> 104,447</p></li>
 <li><p><strong>Name:</strong> EFI System Partition</p></li>
 </ul>
-<p><img alt="alt text" src="../../_images/image-114.png" /></p>
+<p><img alt="alt text" src="../../_images/image-115.png" /></p>
 </section>
 <section id="second-partition">
 <h5>Second Partition<a class="headerlink" href="#second-partition" title="Link to this heading">¶</a></h5>
@@ -442,7 +441,7 @@ Then, assign the proper template in the right panel.</p>
 sudo<span class="w"> </span>mmls<span class="w"> </span>&lt;disk_image&gt;
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-211.png" /></p>
+<p><img alt="alt text" src="../../_images/image-212.png" /></p>
 <p>The tool outputs information similar to what we obtained manually, including:</p>
 <ul class="simple">
 <li><p>The same empty/corrupted third entry</p></li>
@@ -464,7 +463,7 @@ The colored segmentation in Active Disk Editor also visually confirmed inconsist
 <p>Now, select disk2.dd found in <a class="reference internal" href="#./disks1.7z"><span class="xref myst">disks1.7z</span></a>.</p>
 <p><img alt="alt text" src="windows-file-system/exercise1/images/image-21.png" /></p>
 <p>Select “Master Boot Record” template again.</p>
-<p><img alt="alt text" src="../../_images/image-412.png" />
+<p><img alt="alt text" src="../../_images/image-413.png" />
 <img alt="alt text" src="../../_images/image-162.png" /></p>
 <p>Inspecting the disk we can confirm that it is <strong>MBR</strong> by checking the first bytes of the disk.</p>
 </section>
@@ -518,7 +517,7 @@ The partition table is located within the last 66 bytes of sector 0, containing 
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>mmls<span class="w"> </span>&lt;disk_image&gt;
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-312.png" /></p>
+<p><img alt="alt text" src="../../_images/image-313.png" /></p>
 <p>Additional logical volumes inside the extended partition were displayed, providing more detail than Active Disk Editor alone.</p>
 </section>
 <hr class="docutils" />
