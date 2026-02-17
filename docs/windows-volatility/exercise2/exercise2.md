@@ -1,6 +1,6 @@
 # Advanced analysis Volatility
 
-In this practice, you will learn how to use the basic functionalities of Volatility to analyze memory dumps. Volatility is a powerful memory analysis tool that allows the identification of processes, network connections, Windows registry information, open files, and more. During this activity, you will work with a real memory dump and will be required to use various plugins and command modifiers to solve the 16 questions posed.
+In this practice, you will learn how to use the basic functionalities of Volatility to analyze memory dumps. Volatility is a powerful memory analysis tool that allows the identification of processes, network connections, Windows registry information, open files, and more. During this activity, you will work with a real [memory dump](https://drive.usercontent.google.com/download?id=1qfU9Ixqx1YqNgZFWOz548lbvK4A80md-&export=download&authuser=1) and will be required to use various plugins and command modifiers to solve the 16 questions posed.
 
 The required steps are described below:
 
@@ -26,6 +26,8 @@ Submit a detailed report containing the answers to the 16 questions, accompanied
 
 1. **Operating System Profile**  
    Use the memory dump to identify the operating system profile compatible with this dump.
+
+![alt text](image.png)
 
 2. **Running Processes**  
    How many processes were active on the system at the time the memory capture was taken?
