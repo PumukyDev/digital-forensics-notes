@@ -260,14 +260,158 @@
 </ul>
 <p>Detail the process (command used and screenshot of the command output) to obtain this information.</p>
 <p>We are required to obtain the following information:</p>
+<p>git clone https://github.com/volatilityfoundation/volatility3.git
+cd volatility3
+python3 -m venv venv
+source venv/bin/activate
+pip install -e [dev]</p>
 <ul class="simple">
 <li><p>Operating system profile</p></li>
-<li><p>Process list</p></li>
-<li><p>Command history</p></li>
-<li><p>Detailed operating system information</p></li>
-<li><p>Files loaded into memory</p></li>
-<li><p>Active connections</p></li>
 </ul>
+<p>vol -f practica1.raw windows.info</p>
+<p><img alt="alt text" src="../../_images/image4.png" /></p>
+<ul class="simple">
+<li><p>Process list</p></li>
+</ul>
+<p>vol -f practica1.raw windows.pslist</p>
+<p><img alt="alt text" src="../../_images/image-116.png" /></p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>TreeDepth</p></th>
+<th class="head"><p>Variable</p></th>
+<th class="head"><p>Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Kernel Base</p></td>
+<td><p>0x8284f000</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>DTB</p></td>
+<td><p>0x185000</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>Symbols</p></td>
+<td><p>file:///home/kali/tools/volatility3/volatility3/symbols/windows/ntkrpamp.pdb/5B308B4ED6464159B87117C711E7340C-2.json.xz</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>Is64Bit</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>IsPAE</p></td>
+<td><p>True</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>layer_name</p></td>
+<td><p>0 WindowsIntelPAE</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>memory_layer</p></td>
+<td><p>1 FileLayer</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>KdDebuggerDataBlock</p></td>
+<td><p>0x82977be8</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>NTBuildLab</p></td>
+<td><p>7600.16385.x86fre.win7_rtm.09071</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>CSDVersion</p></td>
+<td><p>0</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>KdVersionBlock</p></td>
+<td><p>0x82977bc0</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>Major/Minor</p></td>
+<td><p>15.7600</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>MachineType</p></td>
+<td><p>332</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>KeNumberProcessors</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>SystemTime</p></td>
+<td><p>2019-11-07 12:52:54+00:00</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>NtSystemRoot</p></td>
+<td><p>C:\Windows</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>NtProductType</p></td>
+<td><p>NtProductWinNt</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>NtMajorVersion</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>NtMinorVersion</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>PE MajorOperatingSystemVersion</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>PE MinorOperatingSystemVersion</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>PE Machine</p></td>
+<td><p>332</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>PE TimeDateStamp</p></td>
+<td><p>Mon Jul 13 23:15:19 2009</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>vol -f practica1.raw windows.pstree</p>
+<p><img alt="alt text" src="../../_images/image-315.png" /></p>
+<p>vol -f practica1.raw windows.psscan</p>
+<p><img alt="alt text" src="../../_images/image-415.png" /></p>
+<ul class="simple">
+<li><p>Command history</p></li>
+</ul>
+<p>vol -f practica1.raw windows.cmdscan</p>
+<p><img alt="alt text" src="../../_images/image-513.png" /></p>
+<p>vol -f practica1.raw windows.consoles</p>
+<p><img alt="alt text" src="../../_images/image-614.png" /></p>
+<ul class="simple">
+<li><p>Detailed operating system information</p></li>
+</ul>
+<p>vol -f practica1.raw windows.info</p>
+<p><img alt="alt text" src="../../_images/image-710.png" /></p>
+<p>vol -f practica1.raw windows.registry.hivelist</p>
+<p><img alt="alt text" src="../../_images/image-814.png" /></p>
+<p>vol -f practica1.raw windows.registry.printkey</p>
+<p><img alt="alt text" src="../../_images/image-912.png" /></p>
+<ul class="simple">
+<li><p>Files loaded into memory</p></li>
+</ul>
+<p>vol -f practica1.raw windows.filescan</p>
+<p><img alt="alt text" src="../../_images/image-105.png" /></p>
+<p>vol -f practica1.raw windows.dlllist</p>
+<p><img alt="alt text" src="../../_images/image-117.png" /></p>
+<ul class="simple">
+<li><p>Active connections<br />
+w
+vol -f practica1.raw windows.netscan</p></li>
+</ul>
+<p><img alt="alt text" src="../../_images/image-123.png" /></p>
 </section>
 </section>
 
