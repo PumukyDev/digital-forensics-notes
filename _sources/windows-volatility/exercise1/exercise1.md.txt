@@ -6,10 +6,9 @@ The first occurs when the system is still active during the analysis. In this sc
 
 The analyst should also not trust any tools provided by the system itself, as they may have been deliberately manipulated.
 
-
 We have been provided with a [RAM capture](ram.7z) that must be subjected to a complete forensic analysis.
 
-### Main Objectives of the Practice
+## Main Objectives of the Practice
 
 - Analyze RAM memory  
 - Install and learn how to use the VOLATILITY tool  
@@ -18,13 +17,29 @@ Detail the process (command used and screenshot of the command output) to obtain
 
 We are required to obtain the following information:
 
+- Operating system profile  
+- Process list  
+- Command history  
+- Detailed operating system information  
+- Files loaded into memory  
+- Active connections  
+
+## Solution
+
+### Install volatility 3
+
+Just run the following commands on a terminal:
+
+```bash
 git clone https://github.com/volatilityfoundation/volatility3.git
 cd volatility3
 python3 -m venv venv
 source venv/bin/activate
 pip install -e [dev]
+```
+If a future use of the tool is needed, it can be reactivated using the `source venv/bin/activate` command on th volatility3 directory. Once activated, you can navigate to any other directory and still use the tool.
 
-- Operating system profile  
+### Operating system profile  
 
 ```bash
 vol -f practica1.raw windows.info
@@ -32,7 +47,7 @@ vol -f practica1.raw windows.info
 
 ![alt text](image.png)
 
-Note: Columns are not well formated, so they will be displayed as csv below the image too for a better visualization. It can be possible using the `-r csv` flag after the file.
+**Note**: Columns are not well formated, so they will be displayed as csv below the image too for a better visualization. It can be possible using the `-r csv` flag after the file. The entire table will be shown ONLY for this practice. It is just to have a place to store complete examples of the output.
 
 | TreeDepth | Variable                       | Value                                                                                                                   |
 |-----------|--------------------------------|-------------------------------------------------------------------------------------------------------------------------|
@@ -61,9 +76,11 @@ Note: Columns are not well formated, so they will be displayed as csv below the 
 | 0         | PE TimeDateStamp               | Mon Jul 13 23:15:19 2009                                                                                                |
 
 
-- Process list  
+### Process list  
 
+```bash
 vol -f practica1.raw windows.pslist
+```
 
 ![alt text](image-1.png)
 
@@ -112,8 +129,9 @@ vol -f practica1.raw windows.pslist
 |0        |3316|1408|MagnetRAMCaptu|0x92549d40|13     |296    |1        |False|2019-11-07 12:52:15.000000 UTC|N/A     |Disabled   |
 |0        |3624|492 |WmiApSrv.exe  |0x85602030|7      |117    |0        |False|2019-11-07 12:52:23.000000 UTC|N/A     |Disabled   |
 
-
+```bash
 vol -f practica1.raw windows.pstree
+```
 
 ![alt text](image-3.png)
 
@@ -167,64 +185,71 @@ vol -f practica1.raw windows.psscan
 
 ![alt text](image-4.png)
 
-TreeDepth,PID,PPID,ImageFileName,Offset(V),Threads,Handles,SessionId,Wow64,CreateTime,ExitTime,Audit,Cmd,Path
-0,4,0,System,0x84f4a8e8,85,507,N/A,False,2019-11-07 12:51:57.000000 UTC,N/A,-,-,-
-1,248,4,smss.exe,0x85aa8128,4,29,N/A,False,2019-11-07 12:51:57.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\smss.exe,\\SystemRoot\\System32\\smss.exe,\\SystemRoot\\System32\\smss.exe
-0,336,320,csrss.exe,0x85a7a030,9,639,0,False,2019-11-07 12:51:57.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\csrss.exe,"%SystemRoot%\\system32\\csrss.exe ObjectDirectory=\\Windows SharedSection=1024,12288,512 Windows=On SubSystemType=Windows ServerDll=basesrv,1 ServerDll=winsrv:UserServerDllInitialization,3 ServerDll=winsrv:ConServerDllInitialization,2 ServerDll=sxssrv,4 ProfileControl=Off MaxRequestThreads=16",C:\\Windows\\system32\\csrss.exe
-0,388,320,wininit.exe,0x86398148,7,90,0,False,2019-11-07 12:51:57.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\wininit.exe,wininit.exe,C:\\Windows\\system32\\wininit.exe
-1,508,388,lsm.exe,0x86407030,11,153,0,False,2019-11-07 12:51:57.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\lsm.exe,C:\\Windows\\system32\\lsm.exe,C:\\Windows\\system32\\lsm.exe
-1,492,388,services.exe,0x863fe230,21,248,0,False,2019-11-07 12:51:57.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\services.exe,C:\\Windows\\system32\\services.exe,C:\\Windows\\system32\\services.exe
-2,644,492,msdtc.exe,0x87d094c0,15,155,0,False,2019-11-07 12:52:03.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\msdtc.exe,C:\\Windows\\System32\\msdtc.exe,C:\\Windows\\System32\\msdtc.exe
-2,776,492,svchost.exe,0x86479790,25,528,0,False,2019-11-07 12:51:58.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\svchost.exe,C:\\Windows\\System32\\svchost.exe -k LocalServiceNetworkRestricted,C:\\Windows\\System32\\svchost.exe
-3,976,776,audiodg.exe,0x864cd5c0,6,125,0,False,2019-11-07 12:51:58.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\audiodg.exe,C:\\Windows\\system32\\AUDIODG.EXE 0x2cc,C:\\Windows\\system32\\AUDIODG.EXE
-2,1420,492,taskhost.exe,0x8657c348,10,210,1,False,2019-11-07 12:51:59.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\taskhost.exe,"""taskhost.exe""",C:\\Windows\\system32\\taskhost.exe
-2,2192,492,VSSVC.exe,0x87d11d40,7,119,0,False,2019-11-07 12:52:04.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\VSSVC.exe,C:\\Windows\\system32\\vssvc.exe,C:\\Windows\\system32\\vssvc.exe
-2,1052,492,svchost.exe,0x864f4510,37,783,0,False,2019-11-07 12:51:58.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\svchost.exe,C:\\Windows\\system32\\svchost.exe -k LocalService,C:\\Windows\\system32\\svchost.exe
-2,672,492,vmacthlp.exe,0x86444d40,5,55,0,False,2019-11-07 12:51:58.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Program Files\\VMware\\VMware Tools\\vmacthlp.exe,"""C:\\Program Files\\VMware\\VMware Tools\\vmacthlp.exe""",C:\\Program Files\\VMware\\VMware Tools\\vmacthlp.exe
-2,1824,492,vmtoolsd.exe,0x865f2140,9,293,0,False,2019-11-07 12:52:00.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Program Files\\VMware\\VMware Tools\\vmtoolsd.exe,"""C:\\Program Files\\VMware\\VMware Tools\\vmtoolsd.exe""",C:\\Program Files\\VMware\\VMware Tools\\vmtoolsd.exe
-2,2468,492,wmpnetwk.exe,0x87dadd40,17,482,0,False,2019-11-07 12:52:06.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Program Files\\Windows Media Player\\wmpnetwk.exe,"""C:\\Program Files\\Windows Media Player\\wmpnetwk.exe""",C:\\Program Files\\Windows Media Player\\wmpnetwk.exe
-2,2552,492,svchost.exe,0x87de8a88,29,333,0,False,2019-11-07 12:52:06.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\svchost.exe,C:\\Windows\\system32\\svchost.exe -k LocalServiceAndNoImpersonation,C:\\Windows\\system32\\svchost.exe
-2,3624,492,WmiApSrv.exe,0x85602030,7,117,0,False,2019-11-07 12:52:23.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\wbem\\WmiApSrv.exe,C:\\Windows\\system32\\wbem\\WmiApSrv.exe,C:\\Windows\\system32\\wbem\\WmiApSrv.exe
-2,560,492,dllhost.exe,0x87c73b38,21,202,0,False,2019-11-07 12:52:01.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\dllhost.exe,C:\\Windows\\system32\\dllhost.exe /Processid:{3F001838-1624-40D9-8AFB-DBEBFBFF9AC2},C:\\Windows\\system32\\dllhost.exe
-2,1724,492,dllhost.exe,0x87c7a548,18,207,0,False,2019-11-07 12:52:01.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\dllhost.exe,C:\\Windows\\system32\\dllhost.exe /Processid:{02D4B3F1-FD88-11D1-960D-00805FC79235},C:\\Windows\\system32\\dllhost.exe
-2,1348,492,spoolsv.exe,0x86563030,15,322,0,False,2019-11-07 12:51:59.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\spoolsv.exe,C:\\Windows\\System32\\spoolsv.exe,C:\\Windows\\System32\\spoolsv.exe
-2,716,492,svchost.exe,0x864595e8,11,314,0,False,2019-11-07 12:51:58.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\svchost.exe,C:\\Windows\\system32\\svchost.exe -k RPCSS,C:\\Windows\\system32\\svchost.exe
-2,848,492,svchost.exe,0x8649eb90,32,518,0,False,2019-11-07 12:51:58.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\svchost.exe,C:\\Windows\\System32\\svchost.exe -k LocalSystemNetworkRestricted,C:\\Windows\\System32\\svchost.exe
-3,1364,848,dwm.exe,0x8656c7e0,5,72,1,False,2019-11-07 12:51:59.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\dwm.exe,"""C:\\Windows\\system32\\Dwm.exe""",C:\\Windows\\system32\\Dwm.exe
-2,2268,492,SearchIndexer.,0x87ce9d10,14,586,0,False,2019-11-07 12:52:05.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\SearchIndexer.exe,C:\\Windows\\system32\\SearchIndexer.exe /Embedding,C:\\Windows\\system32\\SearchIndexer.exe
-3,2336,2268,SearchProtocol,0x87c08400,8,312,0,False,2019-11-07 12:52:05.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\SearchProtocolHost.exe,"""C:\\Windows\\system32\\SearchProtocolHost.exe"" Global\\UsGthrFltPipeMssGthrPipe1_ Global\\UsGthrCtrlFltPipeMssGthrPipe1 1 -2147483646 ""Software\\Microsoft\\Windows Search"" ""Mozilla/4.0 (compatible; MSIE 6.0; Windows NT; MS Search 4.0 Robot)"" ""C:\\ProgramData\\Microsoft\\Search\\Data\\Temp\\usgthrsvc"" ""DownLevelDaemon"" ",C:\\Windows\\system32\\SearchProtocolHost.exe
-3,2356,2268,SearchFilterHo,0x87cfdc98,6,82,0,False,2019-11-07 12:52:05.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\SearchFilterHost.exe,"""C:\\Windows\\system32\\SearchFilterHost.exe"" 0 512 516 524 65536 520 ",C:\\Windows\\system32\\SearchFilterHost.exe
-2,2780,492,svchost.exe,0x925198d8,11,356,0,False,2019-11-07 12:52:07.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\svchost.exe,C:\\Windows\\System32\\svchost.exe -k LocalServicePeerNet,C:\\Windows\\System32\\svchost.exe
-2,1764,492,VGAuthService.,0x87d09878,4,88,0,False,2019-11-07 12:52:00.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Program Files\\VMware\\VMware Tools\\VMware VGAuth\\VGAuthService.exe,-,-
-2,616,492,svchost.exe,0x86429c40,16,366,0,False,2019-11-07 12:51:58.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\svchost.exe,C:\\Windows\\system32\\svchost.exe -k DcomLaunch,C:\\Windows\\system32\\svchost.exe
-3,1176,616,WmiPrvSE.exe,0x87c79a60,10,186,0,False,2019-11-07 12:52:01.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\wbem\\WmiPrvSE.exe,C:\\Windows\\system32\\wbem\\wmiprvse.exe,C:\\Windows\\system32\\wbem\\wmiprvse.exe
-3,2904,616,WmiPrvSE.exe,0x87dc0618,13,298,0,False,2019-11-07 12:52:08.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\wbem\\WmiPrvSE.exe,C:\\Windows\\system32\\wbem\\wmiprvse.exe,C:\\Windows\\system32\\wbem\\wmiprvse.exe
-2,1136,492,svchost.exe,0x865054d8,22,414,0,False,2019-11-07 12:51:58.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\svchost.exe,C:\\Windows\\system32\\svchost.exe -k NetworkService,C:\\Windows\\system32\\svchost.exe
-2,1400,492,svchost.exe,0x8657cc88,24,324,0,False,2019-11-07 12:51:59.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\svchost.exe,C:\\Windows\\system32\\svchost.exe -k LocalServiceNoNetwork,C:\\Windows\\system32\\svchost.exe
-2,892,492,svchost.exe,0x864a84e8,47,857,0,False,2019-11-07 12:51:58.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\svchost.exe,C:\\Windows\\system32\\svchost.exe -k netsvcs,C:\\Windows\\system32\\svchost.exe
-3,1676,892,taskeng.exe,0x87d03d40,6,81,0,False,2019-11-07 12:52:00.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\taskeng.exe,taskeng.exe {DDA1A96D-6506-43B5-B1E5-2B42A93E0E29},C:\\Windows\\system32\\taskeng.exe
-1,500,388,lsass.exe,0x86404840,10,792,0,False,2019-11-07 12:51:57.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\lsass.exe,C:\\Windows\\system32\\lsass.exe,C:\\Windows\\system32\\lsass.exe
-0,396,380,csrss.exe,0x863c3d40,10,228,1,False,2019-11-07 12:51:57.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\csrss.exe,"%SystemRoot%\\system32\\csrss.exe ObjectDirectory=\\Windows SharedSection=1024,12288,512 Windows=On SubSystemType=Windows ServerDll=basesrv,1 ServerDll=winsrv:UserServerDllInitialization,3 ServerDll=winsrv:ConServerDllInitialization,2 ServerDll=sxssrv,4 ProfileControl=Off MaxRequestThreads=16",C:\\Windows\\system32\\csrss.exe
-0,432,380,winlogon.exe,0x863d1030,6,119,1,False,2019-11-07 12:51:57.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\winlogon.exe,winlogon.exe,C:\\Windows\\system32\\winlogon.exe
-0,1408,1356,explorer.exe,0x8657a400,39,804,1,False,2019-11-07 12:51:59.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\explorer.exe,C:\\Windows\\Explorer.EXE,C:\\Windows\\Explorer.EXE
-1,1648,1408,vmtoolsd.exe,0x865fdc28,10,196,1,False,2019-11-07 12:51:59.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Program Files\\VMware\\VMware Tools\\vmtoolsd.exe,"""C:\\Program Files\\VMware\\VMware Tools\\vmtoolsd.exe"" -n vmusr",C:\\Program Files\\VMware\\VMware Tools\\vmtoolsd.exe
-1,3112,1408,notepad.exe,0x87cc79b8,12,293,1,False,2019-11-07 12:52:11.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Windows\\System32\\notepad.exe,"""C:\\Windows\\system32\\notepad.exe"" ",C:\\Windows\\system32\\notepad.exe
-1,3316,1408,MagnetRAMCaptu,0x92549d40,13,296,1,False,2019-11-07 12:52:15.000000 UTC,N/A,\\Device\\HarddiskVolume1\\Users\\Pepe\\Desktop\\MagnetRAMCapture.exe,"""C:\\Users\\Pepe\\Desktop\\MagnetRAMCapture.exe"" ",C:\\Users\\Pepe\\Desktop\\MagnetRAMCapture.exe
+|TreeDepth|PID |PPID|ImageFileName |Offset(V)|Threads|Handles|SessionId|Wow64|CreateTime                    |ExitTime|File output|
+|---------|----|----|--------------|---------|-------|-------|---------|-----|------------------------------|--------|-----------|
+|0        |1724|492 |dllhost.exe   |0x5fc548 |18     |207    |0        |False|2019-11-07 12:52:01.000000 UTC|N/A     |Disabled   |
+|0        |2192|492 |VSSVC.exe     |0xb2ed40 |7      |119    |0        |False|2019-11-07 12:52:04.000000 UTC|N/A     |Disabled   |
+|0        |560 |492 |dllhost.exe   |0xe8eb38 |21     |202    |0        |False|2019-11-07 12:52:01.000000 UTC|N/A     |Disabled   |
+|0        |2268|492 |SearchIndexer.|0x1093d10|14     |586    |0        |False|2019-11-07 12:52:05.000000 UTC|N/A     |Disabled   |
+|0        |3112|1408|notepad.exe   |0x11da9b8|12     |293    |1        |False|2019-11-07 12:52:11.000000 UTC|N/A     |Disabled   |
+|0        |2468|492 |wmpnetwk.exe  |0x19d1d40|17     |482    |0        |False|2019-11-07 12:52:06.000000 UTC|N/A     |Disabled   |
+|0        |3316|1408|MagnetRAMCaptu|0x3ac8d40|13     |296    |1        |False|2019-11-07 12:52:15.000000 UTC|N/A     |Disabled   |
+|0        |1676|892 |taskeng.exe   |0x4eadd40|6      |81     |0        |False|2019-11-07 12:52:00.000000 UTC|N/A     |Disabled   |
+|0        |1176|616 |WmiPrvSE.exe  |0x7a37a60|10     |186    |0        |False|2019-11-07 12:52:01.000000 UTC|N/A     |Disabled   |
+|0        |2356|2268|SearchFilterHo|0x7ed5c98|6      |82     |0        |False|2019-11-07 12:52:05.000000 UTC|N/A     |Disabled   |
+|0        |2904|616 |WmiPrvSE.exe  |0xa14d618|13     |298    |0        |False|2019-11-07 12:52:08.000000 UTC|N/A     |Disabled   |
+|0        |644 |492 |msdtc.exe     |0xbb9d4c0|15     |155    |0        |False|2019-11-07 12:52:03.000000 UTC|N/A     |Disabled   |
+|0        |1764|492 |VGAuthService.|0xbb9d878|4      |88     |0        |False|2019-11-07 12:52:00.000000 UTC|N/A     |Disabled   |
+|0        |2552|492 |svchost.exe   |0xd982a88|29     |333    |0        |False|2019-11-07 12:52:06.000000 UTC|N/A     |Disabled   |
+|0        |2780|492 |svchost.exe   |0xdbbb8d8|11     |356    |0        |False|2019-11-07 12:52:07.000000 UTC|N/A     |Disabled   |
+|0        |2336|2268|SearchProtocol|0xe5cd400|8      |312    |0        |False|2019-11-07 12:52:05.000000 UTC|N/A     |Disabled   |
+|0        |500 |388 |lsass.exe     |0xe804840|10     |792    |0        |False|2019-11-07 12:51:57.000000 UTC|N/A     |Disabled   |
+|0        |508 |388 |lsm.exe       |0xe807030|11     |153    |0        |False|2019-11-07 12:51:57.000000 UTC|N/A     |Disabled   |
+|0        |616 |492 |svchost.exe   |0xe829c40|16     |366    |0        |False|2019-11-07 12:51:58.000000 UTC|N/A     |Disabled   |
+|0        |672 |492 |vmacthlp.exe  |0xe844d40|5      |55     |0        |False|2019-11-07 12:51:58.000000 UTC|N/A     |Disabled   |
+|0        |716 |492 |svchost.exe   |0xe8595e8|11     |314    |0        |False|2019-11-07 12:51:58.000000 UTC|N/A     |Disabled   |
+|0        |776 |492 |svchost.exe   |0xe879790|25     |528    |0        |False|2019-11-07 12:51:58.000000 UTC|N/A     |Disabled   |
+|0        |848 |492 |svchost.exe   |0xe89eb90|32     |518    |0        |False|2019-11-07 12:51:58.000000 UTC|N/A     |Disabled   |
+|0        |892 |492 |svchost.exe   |0xe8a84e8|47     |857    |0        |False|2019-11-07 12:51:58.000000 UTC|N/A     |Disabled   |
+|0        |976 |776 |audiodg.exe   |0xe8cd5c0|6      |125    |0        |False|2019-11-07 12:51:58.000000 UTC|N/A     |Disabled   |
+|0        |1052|492 |svchost.exe   |0xe8f4510|37     |783    |0        |False|2019-11-07 12:51:58.000000 UTC|N/A     |Disabled   |
+|0        |1136|492 |svchost.exe   |0xe9054d8|22     |414    |0        |False|2019-11-07 12:51:58.000000 UTC|N/A     |Disabled   |
+|0        |1348|492 |spoolsv.exe   |0xe963030|15     |322    |0        |False|2019-11-07 12:51:59.000000 UTC|N/A     |Disabled   |
+|0        |1364|848 |dwm.exe       |0xe96c7e0|5      |72     |1        |False|2019-11-07 12:51:59.000000 UTC|N/A     |Disabled   |
+|0        |1408|1356|explorer.exe  |0xe97a400|39     |804    |1        |False|2019-11-07 12:51:59.000000 UTC|N/A     |Disabled   |
+|0        |1420|492 |taskhost.exe  |0xe97c348|10     |210    |1        |False|2019-11-07 12:51:59.000000 UTC|N/A     |Disabled   |
+|0        |1400|492 |svchost.exe   |0xe97cc88|24     |324    |0        |False|2019-11-07 12:51:59.000000 UTC|N/A     |Disabled   |
+|0        |1824|492 |vmtoolsd.exe  |0xe9f2140|9      |293    |0        |False|2019-11-07 12:52:00.000000 UTC|N/A     |Disabled   |
+|0        |1648|1408|vmtoolsd.exe  |0xe9fdc28|10     |196    |1        |False|2019-11-07 12:51:59.000000 UTC|N/A     |Disabled   |
+|0        |388 |320 |wininit.exe   |0xeb98148|7      |90     |0        |False|2019-11-07 12:51:57.000000 UTC|N/A     |Disabled   |
+|0        |396 |380 |csrss.exe     |0xebc3d40|10     |228    |1        |False|2019-11-07 12:51:57.000000 UTC|N/A     |Disabled   |
+|0        |432 |380 |winlogon.exe  |0xebd1030|6      |119    |1        |False|2019-11-07 12:51:57.000000 UTC|N/A     |Disabled   |
+|0        |492 |388 |services.exe  |0xebfe230|21     |248    |0        |False|2019-11-07 12:51:57.000000 UTC|N/A     |Disabled   |
+|0        |336 |320 |csrss.exe     |0xf27a030|9      |639    |0        |False|2019-11-07 12:51:57.000000 UTC|N/A     |Disabled   |
+|0        |248 |4   |smss.exe      |0xf2a8128|4      |29     |N/A      |False|2019-11-07 12:51:57.000000 UTC|N/A     |Disabled   |
+|0        |3624|492 |WmiApSrv.exe  |0xf602030|7      |117    |0        |False|2019-11-07 12:52:23.000000 UTC|N/A     |Disabled   |
+|0        |4   |0   |System        |0xff8a8e8|85     |507    |N/A      |False|2019-11-07 12:51:57.000000 UTC|N/A     |Disabled   |
 
 
-- Command history  
+### Command history  
 
+```bash
 vol -f practica1.raw windows.cmdscan
+```
 
 ![alt text](image-5.png)
 
+```bash
 vol -f practica1.raw windows.consoles
+```
 
 ![alt text](image-6.png)
 
-- Detailed operating system information  
+### Detailed operating system information  
 
+```bash
 vol -f practica1.raw windows.info
+```
 
 ![alt text](image-7.png)
 
@@ -334,9 +359,11 @@ vol -f practica1.raw windows.registry.printkey
 |0        |2019-11-04 17:38:05.000000 UTC|0x906065e0 |Key     |\\??\\C:\\Users\\Pepe\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat|VirtualStore          |N/A |False   |
 
 
-- Files loaded into memory  
+### Files loaded into memory  
 
+```bash
 vol -f practica1.raw windows.filescan
+```
 
 ![alt text](image-10.png)
 
@@ -1666,7 +1693,9 @@ vol -f practica1.raw windows.filescan
 
 vol -f practica1.raw windows.dlllist
 
+```bash
 ![alt text](image-11.png)
+```
 
 |TreeDepth|PID |Process|Base      |Size    |Name                        |Path                                                                                                                           |LoadCount|LoadTime                      |File output|
 |---------|----|-------|----------|--------|----------------------------|-------------------------------------------------------------------------------------------------------------------------------|---------|------------------------------|-----------|
@@ -4045,9 +4074,12 @@ vol -f practica1.raw windows.dlllist
 |0        |3624|WmiApSrv.exe|0x69810000|0x28000 |wmiprov.dll                 |C:\\Windows\\system32\\wbem\\wmiprov.dll                                                                                       |1        |2019-11-07 12:52:23.000000 UTC|Disabled   |
 
 
-- Active connections  
-w
+### Active connections  
+
+
+```bash
 vol -f practica1.raw windows.netscan
+```
 
 ![alt text](image-12.png)
 
