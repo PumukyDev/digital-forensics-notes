@@ -16,7 +16,13 @@
 
 The idea is to create a USB stick containing the tools and a batch processing file. The BATCH file will be executed on the system to be examined. This BAT file will perform functions such as copying logs to the external USB drive and collecting information such as date, time, registered users, process tree, system uptime, etc.
 
-![alt text](image.png)
+```powershell
+.\dfir-collector.bat
+```
+
+![alt text](./images/usb-stick.gif)
+
+![alt text](./images/image.png)
 
 
 ## Wintriage
@@ -36,7 +42,10 @@ Prepare the tool, learn how to configure it, and perform a test of live digital 
 https://cursos.securizame.com/extra/wintriage.7z
 
 
-![alt text](image-2.png)
-![alt text](image-1.png)
-![alt text](image-3.png)
-![alt text](image-4.png)
+![alt text](./images/image-2.png)
+![alt text](./images/image-5.png)
+![alt text](./images/image-6.png)
+![alt text](./images/image-7.png)
+![alt text](./images/image-8.png)
+![alt text](./images/image-9.png)
+![alt text](./images/image-10.png)
