@@ -215,15 +215,15 @@ Before accessing the cookie files, it is necessary to completely terminate the b
 
 ## Form values
 
-[Web Browser pass view - password (wbpv28821@)](https://www.nirsoft.net/toolsdownload/webbrowserpassview.zip)
-
 [Browser AutoFill view](https://www.nirsoft.net/utils/browserautofillview.zip)
 
 ![alt text](./images/image-17.png)
-_BrowserAutoFillView_
 
-![alt text](./images/image-18.png)
-_WebBrowserPassView_
+[Web Browser pass view - password (wbpv28821@)](https://www.nirsoft.net/toolsdownload/webbrowserpassview.zip)
+
+![alt text](./images/image-22.png)
+
+**Note:** Emails and passwords have been censored, they are displayed in plain text.
 
 ## Searches
 
