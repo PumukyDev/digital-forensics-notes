@@ -25,7 +25,8 @@ Submit a detailed report containing the answers to the 16 questions, accompanied
 ## Questions
 
 ### **Operating System Profile**  
-   Use the memory dump to identify the operating system profile compatible with this dump.
+
+**Use the memory dump to identify the operating system profile compatible with this dump.**
 
 ```bash
 vol -f dump.raw -r csv windows.info
@@ -59,7 +60,8 @@ vol -f dump.raw -r csv windows.info
 
 
 ### **Running Processes**  
-   How many processes were active on the system at the time the memory capture was taken?
+
+**How many processes were active on the system at the time the memory capture was taken?**
 
 ```bash
 vol -f dump.raw -r csv windows.pslist
@@ -121,7 +123,8 @@ The result is `43`
 
 
 ### **Parent Process**  
-   What is the PID of the parent process of the program `7zFM.exe`?
+
+**What is the PID of the parent process of the program `7zFM.exe`?**
 
 In the previous exercise we can see the following line:
 
@@ -134,7 +137,8 @@ In the previous exercise we can see the following line:
 So the parent process is `1184`
 
 ### **Windows Registry**  
-   Determine how many registry hives are present in the memory dump. This information is critical because there are suspicions that the system is infected.
+
+**Determine how many registry hives are present in the memory dump. This information is critical because there are suspicions that the system is infected.**
 
 ```bash
 vol -f dump.raw -r csv windows.registry.hivelist
@@ -164,7 +168,8 @@ vol -f dump.raw -r csv windows.registry.hivelist | grep '^[0-9]' | wc -l
 The result is `12`
 
 ### **Registry Keys**  
-   How many registry keys exist at the root of the `SYSTEM` hive, including volatile keys?
+
+**How many registry keys exist at the root of the `SYSTEM` hive, including volatile keys?**
 
 ```bash
 vol -f dump.raw windows.registry.printkey --key "\\REGISTRY\\MACHINE\\SYSTEM"
@@ -189,8 +194,8 @@ vol -f dump.raw windows.registry.printkey --key "\\REGISTRY\\MACHINE\\SYSTEM"
 There are `12`:
 
 ### **ImagePath Key**  
-   Identify the value of `ImagePath` in the following key:  
-   `ControlSet001\services\Smb`
+
+**Identify the value of `ImagePath` in the following key: `ControlSet001\services\Smb`**
 
 ```bash
 vol -f dump.raw -r csv windows.registry.printkey --key "ControlSet001\\Services\\Smb"
@@ -221,7 +226,8 @@ vol -f dump.raw -r csv windows.registry.printkey --key "ControlSet001\\Services\
 |0        |-              |0xf8a00118d410|Key           |\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat\\ControlSet001\\Services\\Smb|-              |-                                           |-       |
 
 ### **User Password**  
-   Recover the login password of the user `Admin`.
+
+**Recover the login password of the user `Admin`.**
 
 With the following command we can extract the password hashes of each user:
 
@@ -247,7 +253,8 @@ After cracking the password, the password for admin is `administrador`
 ![alt text](./images/image-1.png)
 
 ### **External Connections**  
-   Determine how many connections to external IP addresses were established at the time of the memory capture.
+
+**Determine how many connections to external IP addresses were established at the time of the memory capture.**
 
 ```bash
 vol -f dump.raw -r csv windows.netscan
@@ -349,7 +356,8 @@ vol -f dump.raw -r csv windows.netscan
 
 
 ### **FILE_OBJECT Structures**  
-   How many `FILE_OBJECT` structures appear in memory?
+
+**How many `FILE_OBJECT` structures appear in memory?**
 
 ```bash
 vol -f dump.raw -r csv windows.filescan
@@ -375,7 +383,8 @@ vol -f dump.raw -r csv windows.filescan
 The result is `3414`
 
 ### **Compressed File**  
-    One of the open files is compressed using 7z. What default name does Volatility assign to it when exporting it as a `.dat` file?
+
+**One of the open files is compressed using 7z. What default name does Volatility assign to it when exporting it as a `.dat` file?**
 
 Previouly we saw this table containing a .7z file:
 
@@ -404,7 +413,8 @@ cd ..
 ![alt text](./images/image-2.png)
 
 ### **File Path**  
-    What is the on-disk path of the compressed 7z file, as shown by the `filescan` plugin?
+
+**What is the on-disk path of the compressed 7z file, as shown by the `filescan` plugin?**
 
 ```bash
 vol -f dump.raw -r csv windows.filescan | grep ficheroSecreto.7z
@@ -417,8 +427,8 @@ vol -f dump.raw -r csv windows.filescan | grep ficheroSecreto.7z
 
 
 ### **File Creation Date**  
-    When was the compressed file created?  
-    Expected format: `DD/MM/YYYY`
+
+**When was the compressed file created? Expected format: `DD/MM/YYYY`**
 
 ```bash
 vol -f dump.raw -r csv windows.mftscan.MFTScan | grep ficheroSecreto.7z
@@ -432,8 +442,8 @@ vol -f dump.raw -r csv windows.mftscan.MFTScan | grep ficheroSecreto.7z
 `It was created on 12 June 2020 at 16:17:12 (UTC).`
 
 ### **Visited Website**  
-    Find the address of a science-related website visited using Firefox.  
-    Expected format: `https://xxxxxxx.xx`
+
+**Find the address of a science-related website visited using Firefox. Expected format: `https://xxxxxxx.xx`**
 
 ```bash
 strings -a dump.raw | grep -E "https://[a-zA-Z0-9\-]{7}\.[a-z]{2}"
@@ -478,8 +488,8 @@ select datetime(1591971503557000/1000000,'unixepoch');
 The date is `2020-06-12 at 14:18:23`
 
 ### **Notepad**  
-    The Notepad application contained a password that we want to recover. Can you identify it?  
-    Hint: the user reuses part of their passwords.
+
+**The Notepad application contained a password that we want to recover. Can you identify it? Hint: the user reuses part of their passwords.**
 
 Previously we saw:
 
@@ -505,7 +515,8 @@ strings -e l pid.3060.dmp | less
 The password could be `admnistradorFicheroDescifrado`
 
 ### **Encrypted File**  
-    Analyze the contents of the compressed and encrypted 7z file. What does it contain?
+
+**Analyze the contents of the compressed and encrypted 7z file. What does it contain?**
 
 Extract the content of the zip using the password `admnistradorFicheroDescifrado`
 
