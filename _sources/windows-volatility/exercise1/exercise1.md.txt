@@ -1,4 +1,4 @@
-# Volatility
+# Volatility introduction
 
 As we know, there are two types of forensic analysis: live and post-mortem.
 
@@ -28,7 +28,7 @@ We are required to obtain the following information:
 
 ### Install volatility 3
 
-Just run the following commands on a terminal:
+In order to install volatility 3, run the following commands on a terminal:
 
 ```bash
 git clone https://github.com/volatilityfoundation/volatility3.git
@@ -37,6 +37,7 @@ python3 -m venv venv
 source venv/bin/activate
 pip install -e [dev]
 ```
+
 If a future use of the tool is needed, it can be reactivated using the `source venv/bin/activate` command on th volatility3 directory. Once activated, you can navigate to any other directory and still use the tool.
 
 ### Operating system profile  
@@ -45,7 +46,7 @@ If a future use of the tool is needed, it can be reactivated using the `source v
 vol -f practica1.raw windows.info
 ```
 
-![alt text](image.png)
+![alt text](./images/image.png)
 
 **Note**: Columns are not well formated, so they will be displayed as csv below the image too for a better visualization. It can be possible using the `-r csv` flag after the file. The entire table will be shown ONLY for this practice. It is just to have a place to store complete examples of the output.
 
@@ -75,6 +76,7 @@ vol -f practica1.raw windows.info
 | 0         | PE Machine                     | 332                                                                                                                     |
 | 0         | PE TimeDateStamp               | Mon Jul 13 23:15:19 2009                                                                                                |
 
+Volatility 3 does not have a system profile as such, however it should be `Win7SP0x86`
 
 ### Process list  
 
@@ -82,7 +84,7 @@ vol -f practica1.raw windows.info
 vol -f practica1.raw windows.pslist
 ```
 
-![alt text](image-1.png)
+![alt text](./images/image-1.png)
 
 |TreeDepth|PID |PPID|ImageFileName |Offset(V) |Threads|Handles|SessionId|Wow64|CreateTime                    |ExitTime|File output|
 |---------|----|----|--------------|----------|-------|-------|---------|-----|------------------------------|--------|-----------|
@@ -133,7 +135,7 @@ vol -f practica1.raw windows.pslist
 vol -f practica1.raw windows.pstree
 ```
 
-![alt text](image-3.png)
+![alt text](./images/image-3.png)
 
 |TreeDepth|PID |PPID|ImageFileName |Offset(V) |Threads|Handles|SessionId|Wow64|CreateTime                    |ExitTime|Audit   |Cmd                                                                                                                                                                                                                                                                                                                              |Path                                                 |
 |---------|----|----|--------------|----------|-------|-------|---------|-----|------------------------------|--------|--------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|
@@ -180,10 +182,11 @@ vol -f practica1.raw windows.pstree
 |1        |3112|1408|notepad.exe   |0x87cc79b8|12     |293    |1        |False|2019-11-07 12:52:11.000000 UTC|N/A     |\\Device\\HarddiskVolume1\\Windows\\System32\\notepad.exe|"C:\\Windows\\system32\\notepad.exe"                                                                                                                                                                                                                                                                                             |C:\\Windows\\system32\\notepad.exe                   |
 |1        |3316|1408|MagnetRAMCaptu|0x92549d40|13     |296    |1        |False|2019-11-07 12:52:15.000000 UTC|N/A     |\\Device\\HarddiskVolume1\\Users\\Pepe\\Desktop\\MagnetRAMCapture.exe|"C:\\Users\\Pepe\\Desktop\\MagnetRAMCapture.exe"                                                                                                                                                                                                                                                                                 |C:\\Users\\Pepe\\Desktop\\MagnetRAMCapture.exe       |
 
-
+```bash
 vol -f practica1.raw windows.psscan
+```
 
-![alt text](image-4.png)
+![alt text](./images/image-4.png)
 
 |TreeDepth|PID |PPID|ImageFileName |Offset(V)|Threads|Handles|SessionId|Wow64|CreateTime                    |ExitTime|File output|
 |---------|----|----|--------------|---------|-------|-------|---------|-----|------------------------------|--------|-----------|
@@ -237,13 +240,15 @@ vol -f practica1.raw windows.psscan
 vol -f practica1.raw windows.cmdscan
 ```
 
-![alt text](image-5.png)
+![alt text](./images/image-5.png)
 
 ```bash
 vol -f practica1.raw windows.consoles
 ```
 
-![alt text](image-6.png)
+![alt text](./images/image-6.png)
+
+`No information could be retrieved`
 
 ### Detailed operating system information  
 
@@ -251,7 +256,7 @@ vol -f practica1.raw windows.consoles
 vol -f practica1.raw windows.info
 ```
 
-![alt text](image-7.png)
+![alt text](./images/image-7.png)
 
 |TreeDepth|Variable|Value        PDB scanning finished|
 |---------|--------|----------------------------------|
@@ -279,10 +284,17 @@ vol -f practica1.raw windows.info
 |0        |PE Machine|332                               |
 |0        |PE TimeDateStamp|Mon Jul 13 23:15:19 2009          |
 
+The operating system is a `Windows 7 x86 RTM`
 
+### In-memory registry
+
+Registry hives used by the operating system are stored in RAM, usually they are the most important and useful information can be extracted from them:
+
+```bash
 vol -f practica1.raw windows.registry.hivelist
+```
 
-![alt text](image-8.png)
+![alt text](./images/image-8.png)
 
 |TreeDepth|Offset|FileFullPath|File outputing finished|
 |---------|------|------------|-----------------------|
@@ -299,10 +311,11 @@ vol -f practica1.raw windows.registry.hivelist
 |0        |0x8e980008|\\??\\C:\\Users\\Pepe\\ntuser.dat|Disabled               |
 |0        |0x906065e0|\\??\\C:\\Users\\Pepe\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat|Disabled               |
 
-
+```bash
 vol -f practica1.raw windows.registry.printkey
+```
 
-![alt text](image-9.png)
+![alt text](./images/image-9.png)
 
 |TreeDepth|Last Write Time|Hive Offset|Type    |Key                                                                    |Name                  |Data|Volatile|
 |---------|---------------|-----------|--------|-----------------------------------------------------------------------|----------------------|----|--------|
@@ -358,14 +371,15 @@ vol -f practica1.raw windows.registry.printkey
 |0        |2019-11-04 17:35:35.000000 UTC|0x906065e0 |Key     |\\??\\C:\\Users\\Pepe\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat|Local Settings        |N/A |False   |
 |0        |2019-11-04 17:38:05.000000 UTC|0x906065e0 |Key     |\\??\\C:\\Users\\Pepe\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat|VirtualStore          |N/A |False   |
 
-
 ### Files loaded into memory  
+
+Files loaded into memory can be listed with the following command:
 
 ```bash
 vol -f practica1.raw windows.filescan
 ```
 
-![alt text](image-10.png)
+![alt text](./images/image-10.png)
 
 |TreeDepth|Offset|Name           PDB scanning finished|
 |---------|------|------------------------------------|
@@ -1690,12 +1704,13 @@ vol -f practica1.raw windows.filescan
 |0  |0xff24380|\\Windows\\System32\\wbem\\WmiApSrv.exe|
 |0  |0xff24490|\\Windows\\System32|
 
-
-vol -f practica1.raw windows.dlllist
+It is possible to list what libraties each process was running at the moment of the capture.
 
 ```bash
-![alt text](image-11.png)
+vol -f practica1.raw windows.dlllist
 ```
+
+![alt text](./images/image-11.png)
 
 |TreeDepth|PID |Process|Base      |Size    |Name                        |Path                                                                                                                           |LoadCount|LoadTime                      |File output|
 |---------|----|-------|----------|--------|----------------------------|-------------------------------------------------------------------------------------------------------------------------------|---------|------------------------------|-----------|
@@ -4076,12 +4091,13 @@ vol -f practica1.raw windows.dlllist
 
 ### Active connections  
 
+With the following command it is possible to see all the active connections:
 
 ```bash
 vol -f practica1.raw windows.netscan
 ```
 
-![alt text](image-12.png)
+![alt text](./images/image-12.png)
 
 |TreeDepth|Offset|Proto|LocalAddr |LocalPort|ForeignAddr                 |ForeignPort                                                                                                                    |State|PID                           |Owner   |Created                       |
 |---------|------|-----|----------|---------|----------------------------|-------------------------------------------------------------------------------------------------------------------------------|-----|------------------------------|--------|------------------------------|

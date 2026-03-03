@@ -1,4 +1,4 @@
-# Advanced analysis Volatility
+# Volatility advanced
 
 In this practice, you will learn how to use the basic functionalities of Volatility to analyze memory dumps. Volatility is a powerful memory analysis tool that allows the identification of processes, network connections, Windows registry information, open files, and more. During this activity, you will work with a real [memory dump](https://drive.usercontent.google.com/download?id=1qfU9Ixqx1YqNgZFWOz548lbvK4A80md-&export=download&authuser=1) and will be required to use various plugins and command modifiers to solve the 16 questions posed.
 
@@ -166,119 +166,34 @@ The result is `12`
 5. **Registry Keys**  
    How many registry keys exist at the root of the `SYSTEM` hive, including volatile keys?
 
-TBD esto me ha dicho ignacio
+```bash
+vol -f dump.raw windows.registry.printkey --key "\\REGISTRY\\MACHINE\\SYSTEM"
+```
 
-┌──(venv)─(kali㉿kali)-[~/exercise]
-└─$ vol -f dump.raw -r csv windows.registry.printkey
-/home/kali/tools/volatility3/volatility3/framework/deprecation.py:105: FutureWarning: This plugin (PluginRequirement) has been renamed and will be removed in the first release after 2026-06-01. PluginRequirement is to be deprecated. Use VersionRequirement instead.
-  warnings.warn(
-Volatility 3 Framework 2.28.0
-TreeDepth,Last Write Time,Hive Offset,Type,Key,Name,Data,Volatile            
-0,2020-06-12 16:15:02.000000 UTC,0xf8a00000f010,Key,[NONAME],A,N/A,False
-0,2020-06-12 16:15:12.000000 UTC,0xf8a00000f010,Key,[NONAME],MACHINE,N/A,False
-0,2020-06-12 16:15:16.000000 UTC,0xf8a00000f010,Key,[NONAME],USER,N/A,False
-0,2020-06-12 16:14:10.000000 UTC,0xf8a000024010,Key,\\REGISTRY\\MACHINE\\SYSTEM,ControlSet001,N/A,False
-0,2009-07-14 05:08:21.000000 UTC,0xf8a000024010,Key,\\REGISTRY\\MACHINE\\SYSTEM,ControlSet002,N/A,False
-0,2020-06-11 17:31:45.000000 UTC,0xf8a000024010,Key,\\REGISTRY\\MACHINE\\SYSTEM,MountedDevices,N/A,False
-0,2020-06-12 16:15:09.000000 UTC,0xf8a000024010,Key,\\REGISTRY\\MACHINE\\SYSTEM,RNG,N/A,False
-0,2009-07-14 05:08:22.000000 UTC,0xf8a000024010,Key,\\REGISTRY\\MACHINE\\SYSTEM,Select,N/A,False
-0,2020-06-12 16:13:56.000000 UTC,0xf8a000024010,Key,\\REGISTRY\\MACHINE\\SYSTEM,Setup,N/A,False
-0,2010-11-21 03:33:56.000000 UTC,0xf8a000024010,Key,\\REGISTRY\\MACHINE\\SYSTEM,Software,N/A,False
-0,2020-06-11 17:33:50.000000 UTC,0xf8a000024010,Key,\\REGISTRY\\MACHINE\\SYSTEM,WPA,N/A,False
-0,2020-06-12 16:15:02.000000 UTC,0xf8a000024010,Key,\\REGISTRY\\MACHINE\\SYSTEM,CurrentControlSet,N/A,True
-0,2020-06-12 16:15:02.000000 UTC,0xf8a000066010,Key,\\REGISTRY\\MACHINE\\HARDWARE,ACPI,N/A,False
-0,2020-06-12 16:15:02.000000 UTC,0xf8a000066010,Key,\\REGISTRY\\MACHINE\\HARDWARE,DESCRIPTION,N/A,False
-0,2020-06-12 16:15:11.000000 UTC,0xf8a000066010,Key,\\REGISTRY\\MACHINE\\HARDWARE,DEVICEMAP,N/A,False
-0,2020-06-12 16:15:02.000000 UTC,0xf8a000066010,Key,\\REGISTRY\\MACHINE\\HARDWARE,RESOURCEMAP,N/A,True
-0,2020-06-12 16:15:10.000000 UTC,0xf8a000586010,Key,\\Device\\HarddiskVolume1\\Boot\\BCD,Description,N/A,False
-0,2020-06-12 16:15:10.000000 UTC,0xf8a000586010,Key,\\Device\\HarddiskVolume1\\Boot\\BCD,Objects,N/A,False
-0,2020-06-12 14:11:40.000000 UTC,0xf8a0008fa010,Key,\\SystemRoot\\System32\\Config\\SOFTWARE,7-Zip,N/A,False
-0,2009-07-14 04:48:57.000000 UTC,0xf8a0008fa010,Key,\\SystemRoot\\System32\\Config\\SOFTWARE,ATI Technologies,N/A,False
-0,2020-06-11 17:31:46.000000 UTC,0xf8a0008fa010,Key,\\SystemRoot\\System32\\Config\\SOFTWARE,CBSTEST,N/A,False
-0,2020-06-12 16:14:47.000000 UTC,0xf8a0008fa010,Key,\\SystemRoot\\System32\\Config\\SOFTWARE,Classes,N/A,False
-0,2009-07-14 04:55:00.000000 UTC,0xf8a0008fa010,Key,\\SystemRoot\\System32\\Config\\SOFTWARE,Clients,N/A,False
-0,2009-07-14 04:48:57.000000 UTC,0xf8a0008fa010,Key,\\SystemRoot\\System32\\Config\\SOFTWARE,Intel,N/A,False
-0,2020-06-12 16:15:23.000000 UTC,0xf8a0008fa010,Key,\\SystemRoot\\System32\\Config\\SOFTWARE,Microsoft,N/A,False
-0,2020-06-12 14:11:31.000000 UTC,0xf8a0008fa010,Key,\\SystemRoot\\System32\\Config\\SOFTWARE,Mozilla,N/A,False
-0,2009-07-14 04:48:57.000000 UTC,0xf8a0008fa010,Key,\\SystemRoot\\System32\\Config\\SOFTWARE,ODBC,N/A,False
-0,2009-07-14 04:49:20.000000 UTC,0xf8a0008fa010,Key,\\SystemRoot\\System32\\Config\\SOFTWARE,Policies,N/A,False
-0,2020-06-12 16:14:47.000000 UTC,0xf8a0008fa010,Key,\\SystemRoot\\System32\\Config\\SOFTWARE,RegisteredApplications,N/A,False
-0,2011-04-12 09:21:16.000000 UTC,0xf8a0008fa010,Key,\\SystemRoot\\System32\\Config\\SOFTWARE,Sonic,N/A,False
-0,2020-06-12 16:14:47.000000 UTC,0xf8a0008fa010,Key,\\SystemRoot\\System32\\Config\\SOFTWARE,"VMware, Inc.",N/A,False
-0,2020-06-12 16:15:11.000000 UTC,0xf8a0008fa010,Key,\\SystemRoot\\System32\\Config\\SOFTWARE,Wow6432Node,N/A,False
-0,2009-07-14 04:49:37.000000 UTC,0xf8a000a1f170,Key,\\SystemRoot\\System32\\Config\\DEFAULT,Control Panel,N/A,False
-0,2009-07-14 04:48:57.000000 UTC,0xf8a000a1f170,Key,\\SystemRoot\\System32\\Config\\DEFAULT,Environment,N/A,False
-0,2009-07-14 04:48:57.000000 UTC,0xf8a000a1f170,Key,\\SystemRoot\\System32\\Config\\DEFAULT,EUDC,N/A,False
-0,2020-06-12 14:10:01.000000 UTC,0xf8a000a1f170,Key,\\SystemRoot\\System32\\Config\\DEFAULT,Keyboard Layout,N/A,False
-0,2010-11-21 03:39:35.000000 UTC,0xf8a000a1f170,Key,\\SystemRoot\\System32\\Config\\DEFAULT,Printers,N/A,False
-0,2020-06-11 17:35:25.000000 UTC,0xf8a000a1f170,Key,\\SystemRoot\\System32\\Config\\DEFAULT,Software,N/A,False
-0,2009-07-14 04:49:18.000000 UTC,0xf8a000a1f170,Key,\\SystemRoot\\System32\\Config\\DEFAULT,SYSTEM,N/A,False
-0,2010-11-21 02:43:10.000000 UTC,0xf8a000bb8010,Key,\\SystemRoot\\System32\\Config\\SECURITY,Policy,N/A,False
-0,2020-06-11 17:34:25.000000 UTC,0xf8a000bb8010,Key,\\SystemRoot\\System32\\Config\\SECURITY,RXACT,N/A,False
-0,2020-06-12 16:15:12.000000 UTC,0xf8a000bb8010,Key,\\SystemRoot\\System32\\Config\\SECURITY,SAM,N/A,True
-0,2020-06-11 17:31:50.000000 UTC,0xf8a000c3b010,Key,\\SystemRoot\\System32\\Config\\SAM,SAM,N/A,False
-0,2009-07-14 04:45:47.000000 UTC,0xf8a000d5c410,Key,\\??\\C:\\Windows\\ServiceProfiles\\NetworkService\\NTUSER.DAT,AppEvents,N/A,False
-0,2009-07-14 04:45:47.000000 UTC,0xf8a000d5c410,Key,\\??\\C:\\Windows\\ServiceProfiles\\NetworkService\\NTUSER.DAT,Console,N/A,False
-0,2009-07-14 04:45:47.000000 UTC,0xf8a000d5c410,Key,\\??\\C:\\Windows\\ServiceProfiles\\NetworkService\\NTUSER.DAT,Control Panel,N/A,False
-0,2009-07-14 04:45:47.000000 UTC,0xf8a000d5c410,Key,\\??\\C:\\Windows\\ServiceProfiles\\NetworkService\\NTUSER.DAT,Environment,N/A,False
-0,2009-07-14 04:45:47.000000 UTC,0xf8a000d5c410,Key,\\??\\C:\\Windows\\ServiceProfiles\\NetworkService\\NTUSER.DAT,EUDC,N/A,False
-0,2009-07-14 04:45:47.000000 UTC,0xf8a000d5c410,Key,\\??\\C:\\Windows\\ServiceProfiles\\NetworkService\\NTUSER.DAT,Keyboard Layout,N/A,False
-0,2009-07-14 04:45:47.000000 UTC,0xf8a000d5c410,Key,\\??\\C:\\Windows\\ServiceProfiles\\NetworkService\\NTUSER.DAT,Network,N/A,False
-0,2009-07-14 04:45:47.000000 UTC,0xf8a000d5c410,Key,\\??\\C:\\Windows\\ServiceProfiles\\NetworkService\\NTUSER.DAT,Printers,N/A,False
-0,2020-06-11 17:35:25.000000 UTC,0xf8a000d5c410,Key,\\??\\C:\\Windows\\ServiceProfiles\\NetworkService\\NTUSER.DAT,Software,N/A,False
-0,2009-07-14 04:45:47.000000 UTC,0xf8a000d5c410,Key,\\??\\C:\\Windows\\ServiceProfiles\\NetworkService\\NTUSER.DAT,System,N/A,False
-0,2009-07-14 04:45:48.000000 UTC,0xf8a000dec010,Key,\\??\\C:\\Windows\\ServiceProfiles\\LocalService\\NTUSER.DAT,AppEvents,N/A,False
-0,2009-07-14 04:45:48.000000 UTC,0xf8a000dec010,Key,\\??\\C:\\Windows\\ServiceProfiles\\LocalService\\NTUSER.DAT,Console,N/A,False
-0,2009-07-14 04:45:48.000000 UTC,0xf8a000dec010,Key,\\??\\C:\\Windows\\ServiceProfiles\\LocalService\\NTUSER.DAT,Control Panel,N/A,False
-0,2009-07-14 04:45:48.000000 UTC,0xf8a000dec010,Key,\\??\\C:\\Windows\\ServiceProfiles\\LocalService\\NTUSER.DAT,Environment,N/A,False
-0,2009-07-14 04:45:48.000000 UTC,0xf8a000dec010,Key,\\??\\C:\\Windows\\ServiceProfiles\\LocalService\\NTUSER.DAT,EUDC,N/A,False
-0,2009-07-14 04:45:48.000000 UTC,0xf8a000dec010,Key,\\??\\C:\\Windows\\ServiceProfiles\\LocalService\\NTUSER.DAT,Keyboard Layout,N/A,False
-0,2009-07-14 04:45:48.000000 UTC,0xf8a000dec010,Key,\\??\\C:\\Windows\\ServiceProfiles\\LocalService\\NTUSER.DAT,Network,N/A,False
-0,2009-07-14 04:45:48.000000 UTC,0xf8a000dec010,Key,\\??\\C:\\Windows\\ServiceProfiles\\LocalService\\NTUSER.DAT,Printers,N/A,False
-0,2020-06-11 17:35:25.000000 UTC,0xf8a000dec010,Key,\\??\\C:\\Windows\\ServiceProfiles\\LocalService\\NTUSER.DAT,Software,N/A,False
-0,2009-07-14 04:45:48.000000 UTC,0xf8a000dec010,Key,\\??\\C:\\Windows\\ServiceProfiles\\LocalService\\NTUSER.DAT,System,N/A,False
-0,2020-06-11 17:34:37.000000 UTC,0xf8a00101b010,Key,\\??\\C:\\Users\\Admin\\ntuser.dat,AppEvents,N/A,False
-0,2020-06-11 17:34:37.000000 UTC,0xf8a00101b010,Key,\\??\\C:\\Users\\Admin\\ntuser.dat,Console,N/A,False
-0,2020-06-11 17:34:42.000000 UTC,0xf8a00101b010,Key,\\??\\C:\\Users\\Admin\\ntuser.dat,Control Panel,N/A,False
-0,2020-06-11 17:34:37.000000 UTC,0xf8a00101b010,Key,\\??\\C:\\Users\\Admin\\ntuser.dat,Environment,N/A,False
-0,2020-06-11 17:34:37.000000 UTC,0xf8a00101b010,Key,\\??\\C:\\Users\\Admin\\ntuser.dat,EUDC,N/A,False
-0,2020-06-11 17:34:43.000000 UTC,0xf8a00101b010,Key,\\??\\C:\\Users\\Admin\\ntuser.dat,Identities,N/A,False
-0,2020-06-11 17:34:38.000000 UTC,0xf8a00101b010,Key,\\??\\C:\\Users\\Admin\\ntuser.dat,Keyboard Layout,N/A,False
-0,2020-06-11 17:34:37.000000 UTC,0xf8a00101b010,Key,\\??\\C:\\Users\\Admin\\ntuser.dat,Network,N/A,False
-0,2020-06-11 17:34:37.000000 UTC,0xf8a00101b010,Key,\\??\\C:\\Users\\Admin\\ntuser.dat,Printers,N/A,False
-0,2020-06-12 16:15:16.000000 UTC,0xf8a00101b010,Key,\\??\\C:\\Users\\Admin\\ntuser.dat,Software,N/A,False
-0,2020-06-11 17:34:37.000000 UTC,0xf8a00101b010,Key,\\??\\C:\\Users\\Admin\\ntuser.dat,System,N/A,False
-0,2020-06-12 16:15:16.000000 UTC,0xf8a00101b010,Key,\\??\\C:\\Users\\Admin\\ntuser.dat,Volatile Environment,N/A,True
-0,2020-06-12 16:17:32.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,.7z,N/A,False
-0,2020-06-12 14:17:12.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,.htm,N/A,False
-0,2020-06-12 14:17:12.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,.html,N/A,False
-0,2020-06-12 14:17:12.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,.oga,N/A,False
-0,2020-06-12 14:17:12.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,.ogg,N/A,False
-0,2020-06-12 14:17:12.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,.ogv,N/A,False
-0,2020-06-12 14:17:12.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,.pdf,N/A,False
-0,2020-06-12 14:17:12.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,.shtml,N/A,False
-0,2020-06-12 14:17:12.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,.svg,N/A,False
-0,2020-06-12 14:17:12.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,.webm,N/A,False
-0,2020-06-12 14:17:12.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,.webp,N/A,False
-0,2020-06-12 14:17:12.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,.xht,N/A,False
-0,2020-06-12 14:17:12.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,.xhtml,N/A,False
-0,2020-06-12 16:17:32.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,7z_auto_file,N/A,False
-0,2020-06-12 16:17:31.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,Applications,N/A,False
-0,2020-06-12 14:17:12.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,FirefoxHTML-E7CF176E110C211B,N/A,False
-0,2020-06-12 14:17:12.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,FirefoxURL-E7CF176E110C211B,N/A,False
-0,2020-06-12 14:17:12.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,ftp,N/A,False
-0,2020-06-12 14:17:12.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,http,N/A,False
-0,2020-06-12 14:17:12.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,https,N/A,False
-0,2020-06-11 17:34:52.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,Local Settings,N/A,False
-0,2020-06-12 14:17:12.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,mailto,N/A,False
-0,2020-06-12 14:07:20.000000 UTC,0xf8a00118d410,Key,\\??\\C:\\Users\\Admin\\AppData\\Local\\Microsoft\\Windows\\UsrClass.dat,VirtualStore,N/A,False
+| Last Write Time Hive Offset     Type    Key     Name    Data    Volatile                                          |                                                                                                             |
+|-------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+|                                                                                                                   |                                                                                                             |
+| -       0xf8a00000f010  Key     [NONAME]\\REGISTRY\MACHINE\SYSTEM       -       -       -                         |                                                                                                             |
+| -       0xf8a000024010  Key     \REGISTRY\MACHINE\SYSTEM\\REGISTRY\MACHINE\SYSTEM       -       -       -         |                                                                                                             |
+| -       0xf8a000066010  Key     \REGISTRY\MACHINE\HARDWARE\\REGISTRY\MACHINE\SYSTEM     -       -       -         |                                                                                                             |
+| -       0xf8a000586010  Key     \Device\HarddiskVolume1\Boot\BCD\\REGISTRY\MACHINE\SYSTEM       -       -       - |                                                                                                             |
+| -       0xf8a0008fa010  Key     \SystemRoot\System32\Config\SOFTWARE\\REGISTRY\MACHINE\SYSTEM   -       -       - |                                                                                                             |
+| -       0xf8a000a1f170  Key     \SystemRoot\System32\Config\DEFAULT\\REGISTRY\MACHINE\SYSTEM    -       -       - |                                                                                                             |
+| -       0xf8a000bb8010  Key     \SystemRoot\System32\Config\SECURITY\\REGISTRY\MACHINE\SYSTEM   -       -       - |                                                                                                             |
+| -       0xf8a000c3b010  Key     \SystemRoot\System32\Config\SAM\\REGISTRY\MACHINE\SYSTEM        -       -       - |                                                                                                             |
+| -       0xf8a000d5c410  Key     \??\C                                                                             | \Windows\ServiceProfiles\NetworkService\NTUSER.DAT\\REGISTRY\MACHINE\SYSTEM       -       -       -         |
+| -       0xf8a000dec010  Key     \??\C                                                                             | \Windows\ServiceProfiles\LocalService\NTUSER.DAT\\REGISTRY\MACHINE\SYSTEM -       -       -                 |
+| -       0xf8a00101b010  Key     \??\C                                                                             | \Users\Admin\ntuser.dat\\REGISTRY\MACHINE\SYSTEM  -       -       -                                         |
+| -       0xf8a00118d410  Key     \??\C                                                                             | \Users\Admin\AppData\Local\Microsoft\Windows\UsrClass.dat\\REGISTRY\MACHINE\SYSTEM        -       -       - |
 
+There are `12`:
 
-contarlos y ponerlo en csv
+TBD
 
 6. **ImagePath Key**  
    Identify the value of `ImagePath` in the following key:  
    `ControlSet001\services\Smb`
+
 ```bash
 vol -f dump.raw -r csv windows.registry.printkey --key "ControlSet001\\Services\\Smb"
 ```
@@ -310,6 +225,8 @@ vol -f dump.raw -r csv windows.registry.printkey --key "ControlSet001\\Services\
 7. **User Password**  
    Recover the login password of the user `Admin`.
 
+With the following command we can extract the password hashes of each user:
+
 ```bash
 vol -f dump.raw -r csv windows.registry.hashdump
 ```
@@ -320,6 +237,8 @@ vol -f dump.raw -r csv windows.registry.hashdump
 |0        |Invitado|501 |aad3b435b51404eeaad3b435b51404ee|31d6cfe0d16ae931b73c59d7e0c089c0|
 |0        |Admin|1000|aad3b435b51404eeaad3b435b51404ee|62234517c6b66dc7839f0da943bd29ee|
 
+Admin hashed password is `62234517c6b66dc7839f0da943bd29ee`. So we can try to crack it using hashcat as follows:
+
 ```bash
 echo 62234517c6b66dc7839f0da943bd29ee > hash.txt
 hashcat -m 1000 -a 0 hash.txt /usr/share/wordlists/rockyou.txt 
@@ -327,12 +246,12 @@ hashcat -m 1000 -a 0 hash.txt /usr/share/wordlists/rockyou.txt
 
 After cracking the password, the password for admin is `administrador`
 
-![alt text](image-1.png)
+![alt text](./images/image-1.png)
 
 8. **External Connections**  
    Determine how many connections to external IP addresses were established at the time of the memory capture.
 
-```
+```bash
 vol -f dump.raw -r csv windows.netscan
 ```
 
@@ -455,11 +374,12 @@ vol -f dump.raw -r csv windows.filescan
 ```bash
  vol -f dump.raw -r csv windows.filescan | grep '^[0-9]' | wc -l
 ```
-
-`3414`
+The result is `3414`
 
 10. **Compressed File**  
     One of the open files is compressed using 7z. What default name does Volatility assign to it when exporting it as a `.dat` file?
+
+Previouly we saw this table containing a .7z file:
 
 |TreeDepth|Offset|Name           PDB scanning finished|
 |---|---------|------------------------------------------------------------------------------------------------------|
@@ -467,10 +387,14 @@ vol -f dump.raw -r csv windows.filescan
 |0  |0x7dcaa620|\\Users\\Admin\\Desktop\\ficheroSecreto.7z                                                            |
 |...|...|...|
 
+So we can try to recover it by dumping the ram content to a directory called `dump`:
+
 ```bash
 mkdir dump
 vol -f dump.raw  -o "dump" windows.dumpfile
 ```
+
+Then, search for the extracted file and rename it with the original name. If we try to extract its content we can see that it is password protected.
 
 ```bash
 ls | grep fichero
@@ -479,7 +403,7 @@ cd ..
 7z x ficheroSecreto.7z
 ```
 
-![alt text](image-2.png)
+![alt text](./images/image-2.png)
 
 11. **File Path**  
     What is the on-disk path of the compressed 7z file, as shown by the `filescan` plugin?
@@ -507,6 +431,7 @@ vol -f dump.raw -r csv windows.mftscan.MFTScan | grep ficheroSecreto.7z
 |1        |0x24202120|FILE       |22880        |2         |File    |Archive    |FILE_NAME     |2020-06-12 16:17:12.000000 UTC|2020-06-12 16:17:12.000000 UTC|2020-06-12 16:17:12.000000 UTC|2020-06-12 16:17:12.000000 UTC|ficheroSecreto.7z    |
 |1        |0x6a9fce40|FILE       |22880        |2         |File    |Archive    |FILE_NAME     |2020-06-12 16:17:12.000000 UTC|2020-06-12 16:17:12.000000 UTC|2020-06-12 16:17:12.000000 UTC|2020-06-12 16:17:12.000000 UTC|ficheroSecreto.7z.tmp|
 
+`It was created on 12 June 2020 at 16:17:12 (UTC).`
 
 13. **Visited Website**  
     Find the address of a science-related website visited using Firefox.  
@@ -516,20 +441,24 @@ vol -f dump.raw -r csv windows.mftscan.MFTScan | grep ficheroSecreto.7z
 strings -a dump.raw | grep -E "https://[a-zA-Z0-9\-]{7}\.[a-z]{2}"
 ```
 
-![alt text](image-3.png)
+![alt text](./images/image-3.png)
+
+The page is `https://sci-hub.tw`
 
 14. **Date and Time of Visit**  
     When was the website mentioned in the previous question visited?  
     Expected format: `DD/MM/YYYY HH:MM:SS (UTC)`
 
-Go to the directory dumped in exercise 10 and search for the places.sqlite file where firefox stores...
+Go to the directory dumped in exercise 10 and search for the places.sqlite file where firefox stores some cache information.
 
 ```bash
 cd dump
 ls -lah | grep places.sqlite
 ```
 
-![alt text](image-8.png)
+![alt text](./images/image-8.png)
+
+Open one big file and open moz_places and moz_historyvisits, trying to obtain the ID of the request (in this case 8) and the timestamp
 
 ```bash
 sqlite3 file.0xfa801ac41f20.0xfa801acb9b40.DataSectionObject.places.sqlite.dat
@@ -538,15 +467,23 @@ select * from moz_places;
 select * from moz_historyvisits;
 ```
 
-![alt text](image-11.png)
+![alt text](./images/image-11.png)
 
+Transform the date to a human redeable time format:
+
+```bash
 select datetime(1591971503557000/1000000,'unixepoch');
+```
 
-![alt text](image-12.png)
+![alt text](./images/image-12.png)
+
+The date is `2020-06-12 at 14:18:23`
 
 15. **Notepad**  
     The Notepad application contained a password that we want to recover. Can you identify it?  
     Hint: the user reuses part of their passwords.
+
+Previously we saw:
 
 |TreeDepth|PID |PPID|ImageFileName |Offset(V)     |Threads|Handles|SessionId|Wow64|CreateTime                    |ExitTime|File output|
 |---------|----|----|--------------|--------------|-------|-------|---------|-----|------------------------------|--------|-----------|
@@ -554,30 +491,36 @@ select datetime(1591971503557000/1000000,'unixepoch');
 |0        |3060|1928|notepad.exe   |0xfa801aa10270|2      |58     |1        |False|2020-06-12 16:16:34.000000 UTC|N/A     |Disabled   |
 |...|...|...|...|...|...|...|...|...|...|...|...|
 
+As the PID is 3060, we can dump this process specifically:
+
 ```bash
 vol -f dump.raw windows.memmap --pid 3060 --dump
 ```
+And then strings the file, searching for some useful information as "columna" as the user has the operating system in espanish:
 
 ```bash
 strings -e l pid.3060.dmp | less 
 ```
 
-buscamos por columna
+![alt text](./images/image-7.png)
 
-![alt text](image-7.png)
-
+The password could be `admnistradorFicheroDescifrado`
 
 16. **Encrypted File**  
     Analyze the contents of the compressed and encrypted 7z file. What does it contain?
+
+Extract the content of the zip using the password `admnistradorFicheroDescifrado`
 
 ```bash
 7z x ficheroSecreto.7z
 ```
 
-![alt text](image-9.png)
+![alt text](./images/image-9.png)
+
+Open the file to show the flag
 
 ```bash
  cat ficheroSecreto.txt
 ```
 
-![alt text](image-10.png)
+![alt text](./images/image-10.png)

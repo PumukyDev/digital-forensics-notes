@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Advanced analysis Volatility" href="../exercise2/exercise2.html"><link rel="prev" title="Automatic forensics tools" href="../../windows-artifacts/exercise6/automatic-tools.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Volatility advanced" href="../exercise2/exercise2.html"><link rel="prev" title="Automatic forensics tools" href="../../windows-artifacts/exercise6/automatic-tools.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
-        <title>Volatility - Digital Forensics Notes documentation</title>
+        <title>Volatility introduction - Digital Forensics Notes documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -206,8 +206,8 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Windows volatility:</span></p>
 <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Volatility</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../exercise2/exercise2.html">Advanced analysis Volatility</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Volatility introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise2/exercise2.html">Volatility advanced</a></li>
 </ul>
 
 </div>
@@ -246,12 +246,12 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="volatility">
-<h1>Volatility<a class="headerlink" href="#volatility" title="Link to this heading">¶</a></h1>
+          <section id="volatility-introduction">
+<h1>Volatility introduction<a class="headerlink" href="#volatility-introduction" title="Link to this heading">¶</a></h1>
 <p>As we know, there are two types of forensic analysis: live and post-mortem.</p>
 <p>The first occurs when the system is still active during the analysis. In this scenario, it is possible to acquire volatile data such as RAM, running processes, Internet connections, and temporary files. If disk encryption is used, this type of analysis allows the file system to be decrypted using the cached key. On the other hand, this type of analysis requires greater expertise, and the system constantly modifies its data, which may affect judicial admissibility.</p>
 <p>The analyst should also not trust any tools provided by the system itself, as they may have been deliberately manipulated.</p>
-<p>We have been provided with a <a class="reference download internal" download="" href="../../_downloads/05d820926b2be0ac1f3810c469f21f47/ram.7z"><span class="xref download myst">RAM capture</span></a> that must be subjected to a complete forensic analysis.</p>
+<p>We have been provided with a <a class="reference internal" href="#ram.7z"><span class="xref myst">RAM capture</span></a> that must be subjected to a complete forensic analysis.</p>
 <section id="main-objectives-of-the-practice">
 <h2>Main Objectives of the Practice<a class="headerlink" href="#main-objectives-of-the-practice" title="Link to this heading">¶</a></h2>
 <ul class="simple">
@@ -273,7 +273,7 @@
 <h2>Solution<a class="headerlink" href="#solution" title="Link to this heading">¶</a></h2>
 <section id="install-volatility-3">
 <h3>Install volatility 3<a class="headerlink" href="#install-volatility-3" title="Link to this heading">¶</a></h3>
-<p>Just run the following commands on a terminal:</p>
+<p>In order to install volatility 3, run the following commands on a terminal:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/volatilityfoundation/volatility3.git
 <span class="nb">cd</span><span class="w"> </span>volatility3
 python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
@@ -394,6 +394,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 </tbody>
 </table>
 </div>
+<p>Volatility 3 does not have a system profile as such, however it should be <code class="docutils literal notranslate"><span class="pre">Win7SP0x86</span></code></p>
 </section>
 <section id="process-list">
 <h3>Process list<a class="headerlink" href="#process-list" title="Link to this heading">¶</a></h3>
@@ -1625,7 +1626,9 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 </tbody>
 </table>
 </div>
-<p>vol -f practica1.raw windows.psscan</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol<span class="w"> </span>-f<span class="w"> </span>practica1.raw<span class="w"> </span>windows.psscan
+</pre></div>
+</div>
 <p><img alt="alt text" src="../../_images/image-414.png" /></p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
@@ -2205,6 +2208,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-615.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">No</span> <span class="pre">information</span> <span class="pre">could</span> <span class="pre">be</span> <span class="pre">retrieved</span></code></p>
 </section>
 <section id="detailed-operating-system-information">
 <h3>Detailed operating system information<a class="headerlink" href="#detailed-operating-system-information" title="Link to this heading">¶</a></h3>
@@ -2316,7 +2320,14 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 </tbody>
 </table>
 </div>
-<p>vol -f practica1.raw windows.registry.hivelist</p>
+<p>The operating system is a <code class="docutils literal notranslate"><span class="pre">Windows</span> <span class="pre">7</span> <span class="pre">x86</span> <span class="pre">RTM</span></code></p>
+</section>
+<section id="in-memory-registry">
+<h3>In-memory registry<a class="headerlink" href="#in-memory-registry" title="Link to this heading">¶</a></h3>
+<p>Registry hives used by the operating system are stored in RAM, usually they are the most important and useful information can be extracted from them:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol<span class="w"> </span>-f<span class="w"> </span>practica1.raw<span class="w"> </span>windows.registry.hivelist
+</pre></div>
+</div>
 <p><img alt="alt text" src="../../_images/image-815.png" /></p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
@@ -2391,7 +2402,9 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 </tbody>
 </table>
 </div>
-<p>vol -f practica1.raw windows.registry.printkey</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol<span class="w"> </span>-f<span class="w"> </span>practica1.raw<span class="w"> </span>windows.registry.printkey
+</pre></div>
+</div>
 <p><img alt="alt text" src="../../_images/image-913.png" /></p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
@@ -2872,6 +2885,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 </section>
 <section id="files-loaded-into-memory">
 <h3>Files loaded into memory<a class="headerlink" href="#files-loaded-into-memory" title="Link to this heading">¶</a></h3>
+<p>Files loaded into memory can be listed with the following command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol<span class="w"> </span>-f<span class="w"> </span>practica1.raw<span class="w"> </span>windows.filescan
 </pre></div>
 </div>
@@ -8168,10 +8182,11 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 </tbody>
 </table>
 </div>
-<p>vol -f practica1.raw windows.dlllist</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!<span class="o">[</span>alt<span class="w"> </span>text<span class="o">](</span>image-11.png<span class="o">)</span>
+<p>It is possible to list what libraties each process was running at the moment of the capture.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol<span class="w"> </span>-f<span class="w"> </span>practica1.raw<span class="w"> </span>windows.dlllist
 </pre></div>
 </div>
+<p><img alt="alt text" src="../../_images/image-116.png" /></p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
@@ -34297,6 +34312,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 </section>
 <section id="active-connections">
 <h3>Active connections<a class="headerlink" href="#active-connections" title="Link to this heading">¶</a></h3>
+<p>With the following command it is possible to see all the active connections:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol<span class="w"> </span>-f<span class="w"> </span>practica1.raw<span class="w"> </span>windows.netscan
 </pre></div>
 </div>
@@ -35391,7 +35407,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Advanced analysis Volatility</div>
+                <div class="title">Volatility advanced</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -35436,7 +35452,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Volatility</a><ul>
+<li><a class="reference internal" href="#">Volatility introduction</a><ul>
 <li><a class="reference internal" href="#main-objectives-of-the-practice">Main Objectives of the Practice</a></li>
 <li><a class="reference internal" href="#solution">Solution</a><ul>
 <li><a class="reference internal" href="#install-volatility-3">Install volatility 3</a></li>
@@ -35444,6 +35460,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 <li><a class="reference internal" href="#process-list">Process list</a></li>
 <li><a class="reference internal" href="#command-history">Command history</a></li>
 <li><a class="reference internal" href="#detailed-operating-system-information">Detailed operating system information</a></li>
+<li><a class="reference internal" href="#in-memory-registry">In-memory registry</a></li>
 <li><a class="reference internal" href="#files-loaded-into-memory">Files loaded into memory</a></li>
 <li><a class="reference internal" href="#active-connections">Active connections</a></li>
 </ul>
