@@ -188,8 +188,6 @@ vol -f dump.raw windows.registry.printkey --key "\\REGISTRY\\MACHINE\\SYSTEM"
 
 There are `12`:
 
-TBD
-
 6. **ImagePath Key**  
    Identify the value of `ImagePath` in the following key:  
    `ControlSet001\services\Smb`
