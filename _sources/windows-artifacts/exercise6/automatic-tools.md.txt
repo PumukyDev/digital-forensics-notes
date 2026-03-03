@@ -34,7 +34,7 @@ Then, run the following command:
 The tools has two modes:
 
 - Automatic (1): Runs all the tools and scripts, showing multiple useful GUIs and saving the results into .txt files
-- Manuel (2): Allows the user to select one specific tool instead of running all of them.
+- Manual (2): Allows the user to select one specific tool instead of running all of them.
 
 ![alt text](./images/usb-stick.gif)
 
