@@ -271,7 +271,7 @@
 <h2>Questions<a class="headerlink" href="#questions" title="Link to this heading">¶</a></h2>
 <section id="operating-system-profile">
 <h3><strong>Operating System Profile</strong><a class="headerlink" href="#operating-system-profile" title="Link to this heading">¶</a></h3>
-<p>Use the memory dump to identify the operating system profile compatible with this dump.</p>
+<p><strong>Use the memory dump to identify the operating system profile compatible with this dump.</strong></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol<span class="w"> </span>-f<span class="w"> </span>dump.raw<span class="w"> </span>-r<span class="w"> </span>csv<span class="w"> </span>windows.info
 </pre></div>
 </div>
@@ -382,7 +382,7 @@
 </section>
 <section id="running-processes">
 <h3><strong>Running Processes</strong><a class="headerlink" href="#running-processes" title="Link to this heading">¶</a></h3>
-<p>How many processes were active on the system at the time the memory capture was taken?</p>
+<p><strong>How many processes were active on the system at the time the memory capture was taken?</strong></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol<span class="w"> </span>-f<span class="w"> </span>dump.raw<span class="w"> </span>-r<span class="w"> </span>csv<span class="w"> </span>windows.pslist
 </pre></div>
 </div>
@@ -974,7 +974,7 @@
 </section>
 <section id="parent-process">
 <h3><strong>Parent Process</strong><a class="headerlink" href="#parent-process" title="Link to this heading">¶</a></h3>
-<p>What is the PID of the parent process of the program <code class="docutils literal notranslate"><span class="pre">7zFM.exe</span></code>?</p>
+<p><strong>What is the PID of the parent process of the program <code class="docutils literal notranslate"><span class="pre">7zFM.exe</span></code>?</strong></p>
 <p>In the previous exercise we can see the following line:</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
@@ -1040,7 +1040,7 @@
 </section>
 <section id="windows-registry">
 <h3><strong>Windows Registry</strong><a class="headerlink" href="#windows-registry" title="Link to this heading">¶</a></h3>
-<p>Determine how many registry hives are present in the memory dump. This information is critical because there are suspicions that the system is infected.</p>
+<p><strong>Determine how many registry hives are present in the memory dump. This information is critical because there are suspicions that the system is infected.</strong></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol<span class="w"> </span>-f<span class="w"> </span>dump.raw<span class="w"> </span>-r<span class="w"> </span>csv<span class="w"> </span>windows.registry.hivelist
 </pre></div>
 </div>
@@ -1125,7 +1125,7 @@
 </section>
 <section id="registry-keys">
 <h3><strong>Registry Keys</strong><a class="headerlink" href="#registry-keys" title="Link to this heading">¶</a></h3>
-<p>How many registry keys exist at the root of the <code class="docutils literal notranslate"><span class="pre">SYSTEM</span></code> hive, including volatile keys?</p>
+<p><strong>How many registry keys exist at the root of the <code class="docutils literal notranslate"><span class="pre">SYSTEM</span></code> hive, including volatile keys?</strong></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol<span class="w"> </span>-f<span class="w"> </span>dump.raw<span class="w"> </span>windows.registry.printkey<span class="w"> </span>--key<span class="w"> </span><span class="s2">&quot;\\REGISTRY\\MACHINE\\SYSTEM&quot;</span>
 </pre></div>
 </div>
@@ -1183,8 +1183,7 @@
 </section>
 <section id="imagepath-key">
 <h3><strong>ImagePath Key</strong><a class="headerlink" href="#imagepath-key" title="Link to this heading">¶</a></h3>
-<p>Identify the value of <code class="docutils literal notranslate"><span class="pre">ImagePath</span></code> in the following key:<br />
-<code class="docutils literal notranslate"><span class="pre">ControlSet001\services\Smb</span></code></p>
+<p><strong>Identify the value of <code class="docutils literal notranslate"><span class="pre">ImagePath</span></code> in the following key: <code class="docutils literal notranslate"><span class="pre">ControlSet001\services\Smb</span></code></strong></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol<span class="w"> </span>-f<span class="w"> </span>dump.raw<span class="w"> </span>-r<span class="w"> </span>csv<span class="w"> </span>windows.registry.printkey<span class="w"> </span>--key<span class="w"> </span><span class="s2">&quot;ControlSet001\\Services\\Smb&quot;</span>
 </pre></div>
 </div>
@@ -1397,7 +1396,7 @@
 </section>
 <section id="user-password">
 <h3><strong>User Password</strong><a class="headerlink" href="#user-password" title="Link to this heading">¶</a></h3>
-<p>Recover the login password of the user <code class="docutils literal notranslate"><span class="pre">Admin</span></code>.</p>
+<p><strong>Recover the login password of the user <code class="docutils literal notranslate"><span class="pre">Admin</span></code>.</strong></p>
 <p>With the following command we can extract the password hashes of each user:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol<span class="w"> </span>-f<span class="w"> </span>dump.raw<span class="w"> </span>-r<span class="w"> </span>csv<span class="w"> </span>windows.registry.hashdump
 </pre></div>
@@ -1444,7 +1443,7 @@ hashcat<span class="w"> </span>-m<span class="w"> </span><span class="m">1000</s
 </section>
 <section id="external-connections">
 <h3><strong>External Connections</strong><a class="headerlink" href="#external-connections" title="Link to this heading">¶</a></h3>
-<p>Determine how many connections to external IP addresses were established at the time of the memory capture.</p>
+<p><strong>Determine how many connections to external IP addresses were established at the time of the memory capture.</strong></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol<span class="w"> </span>-f<span class="w"> </span>dump.raw<span class="w"> </span>-r<span class="w"> </span>csv<span class="w"> </span>windows.netscan
 </pre></div>
 </div>
@@ -2563,7 +2562,7 @@ hashcat<span class="w"> </span>-m<span class="w"> </span><span class="m">1000</s
 </section>
 <section id="file-object-structures">
 <h3><strong>FILE_OBJECT Structures</strong><a class="headerlink" href="#file-object-structures" title="Link to this heading">¶</a></h3>
-<p>How many <code class="docutils literal notranslate"><span class="pre">FILE_OBJECT</span></code> structures appear in memory?</p>
+<p><strong>How many <code class="docutils literal notranslate"><span class="pre">FILE_OBJECT</span></code> structures appear in memory?</strong></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol<span class="w"> </span>-f<span class="w"> </span>dump.raw<span class="w"> </span>-r<span class="w"> </span>csv<span class="w"> </span>windows.filescan
 </pre></div>
 </div>
@@ -2630,9 +2629,7 @@ hashcat<span class="w"> </span>-m<span class="w"> </span><span class="m">1000</s
 </section>
 <section id="compressed-file">
 <h3><strong>Compressed File</strong><a class="headerlink" href="#compressed-file" title="Link to this heading">¶</a></h3>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>One of the open files is compressed using 7z. What default name does Volatility assign to it when exporting it as a `.dat` file?
-</pre></div>
-</div>
+<p><strong>One of the open files is compressed using 7z. What default name does Volatility assign to it when exporting it as a <code class="docutils literal notranslate"><span class="pre">.dat</span></code> file?</strong></p>
 <p>Previouly we saw this table containing a .7z file:</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
@@ -2674,9 +2671,7 @@ cp<span class="w"> </span>file.0xfa801aeaa620.0xfa801b02d460.DataSectionObject.f
 </section>
 <section id="file-path">
 <h3><strong>File Path</strong><a class="headerlink" href="#file-path" title="Link to this heading">¶</a></h3>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>What is the on-disk path of the compressed 7z file, as shown by the `filescan` plugin?
-</pre></div>
-</div>
+<p><strong>What is the on-disk path of the compressed 7z file, as shown by the <code class="docutils literal notranslate"><span class="pre">filescan</span></code> plugin?</strong></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol<span class="w"> </span>-f<span class="w"> </span>dump.raw<span class="w"> </span>-r<span class="w"> </span>csv<span class="w"> </span>windows.filescan<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ficheroSecreto.7z
 </pre></div>
 </div>
@@ -2703,10 +2698,7 @@ cp<span class="w"> </span>file.0xfa801aeaa620.0xfa801b02d460.DataSectionObject.f
 </section>
 <section id="file-creation-date">
 <h3><strong>File Creation Date</strong><a class="headerlink" href="#file-creation-date" title="Link to this heading">¶</a></h3>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>When was the compressed file created?  
-Expected format: `DD/MM/YYYY`
-</pre></div>
-</div>
+<p><strong>When was the compressed file created? Expected format: <code class="docutils literal notranslate"><span class="pre">DD/MM/YYYY</span></code></strong></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol<span class="w"> </span>-f<span class="w"> </span>dump.raw<span class="w"> </span>-r<span class="w"> </span>csv<span class="w"> </span>windows.mftscan.MFTScan<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>ficheroSecreto.7z
 </pre></div>
 </div>
@@ -2764,10 +2756,7 @@ Expected format: `DD/MM/YYYY`
 </section>
 <section id="visited-website">
 <h3><strong>Visited Website</strong><a class="headerlink" href="#visited-website" title="Link to this heading">¶</a></h3>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Find the address of a science-related website visited using Firefox.  
-Expected format: `https://xxxxxxx.xx`
-</pre></div>
-</div>
+<p><strong>Find the address of a science-related website visited using Firefox. Expected format: <code class="docutils literal notranslate"><span class="pre">https://xxxxxxx.xx</span></code></strong></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>strings<span class="w"> </span>-a<span class="w"> </span>dump.raw<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;https://[a-zA-Z0-9\-]{7}\.[a-z]{2}&quot;</span>
 </pre></div>
 </div>
@@ -2803,10 +2792,7 @@ ls<span class="w"> </span>-lah<span class="w"> </span><span class="p">|</span><s
 </section>
 <section id="notepad">
 <h3><strong>Notepad</strong><a class="headerlink" href="#notepad" title="Link to this heading">¶</a></h3>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The Notepad application contained a password that we want to recover. Can you identify it?  
-Hint: the user reuses part of their passwords.
-</pre></div>
-</div>
+<p><strong>The Notepad application contained a password that we want to recover. Can you identify it? Hint: the user reuses part of their passwords.</strong></p>
 <p>Previously we saw:</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
@@ -2881,9 +2867,7 @@ Hint: the user reuses part of their passwords.
 </section>
 <section id="encrypted-file">
 <h3><strong>Encrypted File</strong><a class="headerlink" href="#encrypted-file" title="Link to this heading">¶</a></h3>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Analyze the contents of the compressed and encrypted 7z file. What does it contain?
-</pre></div>
-</div>
+<p><strong>Analyze the contents of the compressed and encrypted 7z file. What does it contain?</strong></p>
 <p>Extract the content of the zip using the password <code class="docutils literal notranslate"><span class="pre">admnistradorFicheroDescifrado</span></code></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>7z<span class="w"> </span>x<span class="w"> </span>ficheroSecreto.7z
 </pre></div>
