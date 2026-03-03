@@ -83,83 +83,61 @@ The practice consists of extracting all the evidence mentioned above in the intr
 2. Investigate the directory paths where each browser stores its evidence.
 3. Download and test the different tools offered by NirSoft to analyze and process the evidence obtained in section 2.
 
-
+## Solution
 
 ### Microsoft Edge
 
-```plaintext
-Browsing history - %localappdata%\Microsoft\Edge\User Data\Default\History
-
-Cache - %localappdata%\Microsoft\Edge\User Data\Default\Cache
-
-Cookies - %localappdata%\Microsoft\Edge\User Data\Default\Cookies
-
-Thumbnails - %localappdata%\Microsoft\Edge\User Data\Default\Cache\Cache_Data
-
-Sessions - %localappdata%\Microsoft\Edge\User Data\Default\Sessions
-
-Form values - %localappdata%\Microsoft\Edge\User Data\Default\Web Data
-
-Download history - %localappdata%\Microsoft\Edge\User Data\Default\History
-
-Bookmarks - %localappdata%\Microsoft\Edge\User Data\Default\Bookmarks
-```
+- **Browsing history:** %localappdata%\Microsoft\Edge\User Data\Default\History
+- **Cache:** %localappdata%\Microsoft\Edge\User Data\Default\Cache
+- **Cookies:** %localappdata%\Microsoft\Edge\User Data\Default\Cookies
+- **Thumbnails:** %localappdata%\Microsoft\Edge\User Data\Default\Cache\Cache_Data
+- **Sessions:** %localappdata%\Microsoft\Edge\User Data\Default\Sessions
+- **Form values:** %localappdata%\Microsoft\Edge\User Data\Default\Web Data
+- **Download history:** %localappdata%\Microsoft\Edge\User Data\Default\History
+- **Bookmarks:** %localappdata%\Microsoft\Edge\User Data\Default\Bookmarks
 
 ### Firefox
 
-```plaintext
-Browsing history - %appdata%\Mozilla\Firefox\Profiles\[Perfil]\places.sqlite
-
-Files in the cache directory - %localappdata%\Mozilla\Firefox\Profiles\[Perfil]\cache2
-
-Cookies - %appdata%\Mozilla\Firefox\Profiles\[Perfil]\cookies.sqlite
-
-Thumbnails - %appdata%\Local\Mozilla\Firefox\Profiles\eqainsr.default-release\cache2\entries
-
-Sessions - %appdata%\Roaming\Mozilla\Firefox\Profiles\[profile name]\
-
-Form values - %appdata%\Mozilla\Firefox\Profiles\[Perfil]\formhistory.sqlite
-
-Downloaded files (Downloads) - %appdata%\Mozilla\Firefox\Profiles\[Perfil]\places.sqlite
-
-Bookmarks - %appdata%\Mozilla\Firefox\Profiles\[Perfil]\places.sqlite
-```
+- **Browsing history:** %appdata%\Mozilla\Firefox\Profiles\\[Profile]\places.sqlite
+- **Files in the cache directory:** %localappdata%\Mozilla\Firefox\Profiles\\[Profile]\cache2
+- **Cookies:** %appdata%\Mozilla\Firefox\Profiles\\[Profile]\cookies.sqlite
+- **Thumbnails:** %appdata%\Local\Mozilla\Firefox\Profiles\\[eqainsr.default-release]\cache2\entries
+- **Sessions:** %appdata%\Roaming\Mozilla\Firefox\Profiles\\[profile name]\
+- **Form values:** %appdata%\Mozilla\Firefox\Profiles\\[Profile]\formhistory.sqlite
+- **Downloaded files (Downloads):** %appdata%\Mozilla\Firefox\Profiles\\[Profile]\places.sqlite
+- **Bookmarks:** %appdata%\Mozilla\Firefox\Profiles\\[Profile]\places.sqlite
 
 ### Google Chrome
 
-```plaintext
-Browsing history - %localappdata%\Google\Chrome\User Data\Default\History
-
-Files in the cache directory - %localappdata%\Google\Chrome\User Data\Default\Cache
-
-Cookies - %localappdata%\Google\Chrome\User Data\Default\Cookies
-
-Sessions - %localappdata%\Google\Chrome\User Data\Default\Sessions
-
-Thumbnails - %localappdata%\Google\Chrome\User Data\Default\Cache\Cache_Data
-
-Form values - %localappdata%\Google\Chrome\User Data\Default\Web Data
-
-Downloaded files (Downloads) - %localappdata%\Google\Chrome\User Data\Default\History
-
-Bookmarks - %localappdata%\Google\Chrome\User Data\Default\Bookmarks
-```
+- **Browsing history:** %localappdata%\Google\Chrome\User Data\Default\History
+- **Files in the cache directory:** %localappdata%\Google\Chrome\User Data\Default\Cache
+- **Cookies:** %localappdata%\Google\Chrome\User Data\Default\Cookies
+- **Sessions:** %localappdata%\Google\Chrome\User Data\Default\Sessions
+- **Thumbnails:** %localappdata%\Google\Chrome\User Data\Default\Cache\Cache_Data
+- **Form values:** %localappdata%\Google\Chrome\User Data\Default\Web Data
+- **Downloaded files (Downloads):** %localappdata%\Google\Chrome\User Data\Default\History
+- **Bookmarks:** %localappdata%\Google\Chrome\User Data\Default\Bookmarks
 
 ### Note
 
-In both Chrome and Firefox we can have multiple users.
+Both Firefox and Chromium-based browsers can have multiple user profiles.
 
-The name of the folder that contains the data varies depending on this, for example:
+The name of the folder that contains the profile data varies depending on the browser and the user:
 
-Firefox - profiles are stored in folders with names generated like name.default, etc.
+- **Firefox:** Profiles are stored in folders with names generated like `name.default`, `name.default-release`, etc.
+- **Chromium-based browsers (Chrome, Edge, Opera, Brave, etc.):** Profiles are stored in folders according to the profile number; if no additional profiles have been created, the folder is usually named `Default`.
 
-Chrome - profiles are stored in folders according to the profile number; if no new profile has been created it will be Default.
+```txt
+about:profiles
+```
 
-![Firefox](/assets/img/posts/artefactos_en_los_navegadores/20241220_164956_2024-12-20_17-49.png)
-_Firefox_
+![alt text](./images/image-20.png)
 
-![Chrome](/assets/img/posts/artefactos_en_los_navegadores/20241220_165007_2024-12-20_17-49_1.png)
-_Chrome_
+```txt
+chrome://profile-internals/
+```
+
+![alt text](./images/image-21.png)
 
 ## Browsing history
 
@@ -167,9 +145,9 @@ _Chrome_
 
 ### Edge, Chrome and Firefox
 
-![alt text](image.png)
+![alt text](./images/image.png)
 
-![alt text](image-1.png)
+![alt text](./images/image-1.png)
 
 ## Cache
 
@@ -179,17 +157,17 @@ _Chrome_
 
 ### Chrome
 
-![alt text](image-3.png)
+![alt text](./images/image-3.png)
 
 ### Edge
 
-![alt text](image-5.png)
-![alt text](image-6.png)
-![alt text](image-7.png)
+![alt text](./images/image-5.png)
+![alt text](./images/image-6.png)
+![alt text](./images/image-7.png)
 
 ### Firefox
 
-![alt text](image-4.png)
+![alt text](./images/image-4.png)
 
 ## Cookies
 
@@ -203,38 +181,37 @@ Before accessing the cookie files, it is necessary to completely terminate the b
 
 ### Chrome
 
-![alt text](image-9.png)
+![alt text](./images/image-9.png)
 
 ### Edge
 
-![alt text](image-10.png)
-![alt text](image-11.png)
-![alt text](image-12.png)
-![alt text](image-13.png)
-![alt text](image-14.png)
+![alt text](./images/image-10.png)
+![alt text](./images/image-11.png)
+![alt text](./images/image-12.png)
+![alt text](./images/image-13.png)
+![alt text](./images/image-14.png)
 
 ### Firefox
 
-![alt text](image-8.png)
+![alt text](./images/image-8.png)
 
 ## Thumbnails
 
 [ImageCaché viewer](https://www.nirsoft.net/utils/imagecacheviewer.zip)
 
-![alt text](./videos/thumbnails.mp4)
-![alt text](./videos/thumbnails.gif)
+![alt text](./images/thumbnails.gif)
 
 ## Bookmarks
 
 [WebBookmarks view](https://www.nirsoft.net/utils/webbrowserbookmarksview.zip)
 
-![alt text](image-15.png)
+![alt text](./images/image-15.png)
 
 ## Downloaded files
 
 [BrowserDownloads viewer](https://www.nirsoft.net/utils/browserdownloadsview.zip)
 
-![alt text](image-16.png)
+![alt text](./images/image-16.png)
 
 ## Form values
 
@@ -242,14 +219,14 @@ Before accessing the cookie files, it is necessary to completely terminate the b
 
 [Browser AutoFill view](https://www.nirsoft.net/utils/browserautofillview.zip)
 
-![alt text](image-17.png)
+![alt text](./images/image-17.png)
 _BrowserAutoFillView_
 
-![alt text](image-18.png)
+![alt text](./images/image-18.png)
 _WebBrowserPassView_
 
-## Bonus - Searches
+## Searches
 
 [MyLastSearch](https://www.nirsoft.net/utils/mylastsearch.zip)
 
-![alt text](image-19.png)
+![alt text](./images/image-19.png)
