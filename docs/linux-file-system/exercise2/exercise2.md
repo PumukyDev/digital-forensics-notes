@@ -1,4 +1,3 @@
-
 # Memory Dump
 
 When in our forensic practice we face a “live” operating system,  
