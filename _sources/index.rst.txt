@@ -30,3 +30,13 @@ Welcome to the Digital Forensics Notes documentation!
 
    windows-volatility/exercise1/exercise1
    windows-volatility/exercise2/exercise2
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Linux file system and volatility:
+   :hidden:
+
+   linux-file-system/exercise1/exercise1
+   linux-file-system/exercise2/exercise2
+   linux-file-system/exercise3/exercise3
+   linux-file-system/exercise4/exercise4

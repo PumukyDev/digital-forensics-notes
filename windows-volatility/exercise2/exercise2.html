@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="prev" title="Volatility introduction" href="../exercise1/exercise1.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Linux File system" href="../../linux-file-system/exercise1/exercise1.html"><link rel="prev" title="Volatility introduction" href="../exercise1/exercise1.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
         <title>Volatility advanced - Digital Forensics Notes documentation</title>
@@ -208,6 +208,13 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../exercise1/exercise1.html">Volatility introduction</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Volatility advanced</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Linux file system and volatility:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise1/exercise1.html">Linux File system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise2/exercise2.html">Memory Dump</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise3/exercise3.html">Compile tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise4/exercise4.html">Volatility Linux</a></li>
 </ul>
 
 </div>
@@ -1439,7 +1446,7 @@ hashcat<span class="w"> </span>-m<span class="w"> </span><span class="m">1000</s
 </pre></div>
 </div>
 <p>After cracking the password, the password for admin is <code class="docutils literal notranslate"><span class="pre">administrador</span></code></p>
-<p><img alt="alt text" src="../../_images/image-117.png" /></p>
+<p><img alt="alt text" src="../../_images/image-126.png" /></p>
 </section>
 <section id="external-connections">
 <h3><strong>External Connections</strong><a class="headerlink" href="#external-connections" title="Link to this heading">¶</a></h3>
@@ -2667,7 +2674,7 @@ cp<span class="w"> </span>file.0xfa801aeaa620.0xfa801b02d460.DataSectionObject.f
 7z<span class="w"> </span>x<span class="w"> </span>ficheroSecreto.7z
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-214.png" /></p>
+<p><img alt="alt text" src="../../_images/image-218.png" /></p>
 </section>
 <section id="file-path">
 <h3><strong>File Path</strong><a class="headerlink" href="#file-path" title="Link to this heading">¶</a></h3>
@@ -2760,7 +2767,7 @@ cp<span class="w"> </span>file.0xfa801aeaa620.0xfa801b02d460.DataSectionObject.f
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>strings<span class="w"> </span>-a<span class="w"> </span>dump.raw<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;https://[a-zA-Z0-9\-]{7}\.[a-z]{2}&quot;</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-315.png" /></p>
+<p><img alt="alt text" src="../../_images/image-319.png" /></p>
 <p>The page is <code class="docutils literal notranslate"><span class="pre">https://sci-hub.tw</span></code></p>
 </section>
 <section id="date-and-time-of-visit">
@@ -2774,7 +2781,7 @@ Expected format: `DD/MM/YYYY HH:MM:SS (UTC)`
 ls<span class="w"> </span>-lah<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>places.sqlite
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-816.png" /></p>
+<p><img alt="alt text" src="../../_images/image-817.png" /></p>
 <p>Open one big file and open moz_places and moz_historyvisits, trying to obtain the ID of the request (in this case 8) and the timestamp</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sqlite3<span class="w"> </span>file.0xfa801ac41f20.0xfa801acb9b40.DataSectionObject.places.sqlite.dat
 .tables
@@ -2782,12 +2789,12 @@ ls<span class="w"> </span>-lah<span class="w"> </span><span class="p">|</span><s
 <span class="k">select</span><span class="w"> </span>*<span class="w"> </span>from<span class="w"> </span>moz_historyvisits<span class="p">;</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-118.png" /></p>
+<p><img alt="alt text" src="../../_images/image-1111.png" /></p>
 <p>Transform the date to a human redeable time format:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">select</span><span class="w"> </span>datetime<span class="o">(</span><span class="m">1591971503557000</span>/1000000,<span class="s1">&#39;unixepoch&#39;</span><span class="o">)</span><span class="p">;</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-124.png" /></p>
+<p><img alt="alt text" src="../../_images/image-127.png" /></p>
 <p>The date is <code class="docutils literal notranslate"><span class="pre">2020-06-12</span> <span class="pre">at</span> <span class="pre">14:18:23</span></code></p>
 </section>
 <section id="notepad">
@@ -2862,7 +2869,7 @@ ls<span class="w"> </span>-lah<span class="w"> </span><span class="p">|</span><s
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>strings<span class="w"> </span>-e<span class="w"> </span>l<span class="w"> </span>pid.3060.dmp<span class="w"> </span><span class="p">|</span><span class="w"> </span>less<span class="w"> </span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-713.png" /></p>
+<p><img alt="alt text" src="../../_images/image-715.png" /></p>
 <p>The password could be <code class="docutils literal notranslate"><span class="pre">admnistradorFicheroDescifrado</span></code></p>
 </section>
 <section id="encrypted-file">
@@ -2872,12 +2879,12 @@ ls<span class="w"> </span>-lah<span class="w"> </span><span class="p">|</span><s
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>7z<span class="w"> </span>x<span class="w"> </span>ficheroSecreto.7z
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-914.png" /></p>
+<p><img alt="alt text" src="../../_images/image-915.png" /></p>
 <p>Open the file to show the flag</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>cat<span class="w"> </span>ficheroSecreto.txt
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-107.png" /></p>
+<p><img alt="alt text" src="../../_images/image-108.png" /></p>
 </section>
 </section>
 </section>
@@ -2887,7 +2894,15 @@ ls<span class="w"> </span>-lah<span class="w"> </span><span class="p">|</span><s
       <footer>
         
         <div class="related-pages">
-          
+          <a class="next-page" href="../../linux-file-system/exercise1/exercise1.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Linux File system</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
           <a class="prev-page" href="../exercise1/exercise1.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">

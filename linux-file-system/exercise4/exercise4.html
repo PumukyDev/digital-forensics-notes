@@ -1,0 +1,847 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="prev" title="Compile tools" href="../exercise3/exercise3.html">
+
+    <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+        <title>Volatility Linux - Digital Forensics Notes documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #254F6D;
+  --color-brand-content: #254F6D;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Digital Forensics Notes  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Windows file system:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise1/exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise2/exercise2.html">Exercise 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise3/exercise3.html">Exercise 3</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Windows artifacts:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise1/post-mortem-analysis.html">Post-mortem analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise3/sysmon.html">Sysmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise4/web-browsers.html">Evidence in Web Browsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise6/automatic-tools.html">Automatic forensics tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Windows volatility:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-volatility/exercise1/exercise1.html">Volatility introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-volatility/exercise2/exercise2.html">Volatility advanced</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Linux file system and volatility:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../exercise1/exercise1.html">Linux File system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise2/exercise2.html">Memory Dump</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise3/exercise3.html">Compile tools</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Volatility Linux</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../_sources/linux-file-system/exercise4/exercise4.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="volatility-linux">
+<h1>Volatility Linux<a class="headerlink" href="#volatility-linux" title="Link to this heading">¶</a></h1>
+<section id="memory-volatility-in-linux">
+<h2>Memory Volatility in Linux<a class="headerlink" href="#memory-volatility-in-linux" title="Link to this heading">¶</a></h2>
+<p>Summarizing what was studied in class and what was experienced in the previous Practice 2, there are several ways to obtain a memory image from a Linux system. In addition to dumping memory from a virtual machine (VMware, VirtualBox, KVM, etc.) or capturing images through the FireWire interface, there are two ways to dump memory from a running system using live acquisition tools:</p>
+<section id="copying-dev-mem-directly-using-userspace-tools">
+<h3>1. Copying /dev/mem directly using user‑space tools<a class="headerlink" href="#copying-dev-mem-directly-using-userspace-tools" title="Link to this heading">¶</a></h3>
+<p>The typical command could be:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>/dev/mem<span class="w"> </span><span class="nv">of</span><span class="o">=</span>test.dump<span class="w"> </span><span class="nv">bs</span><span class="o">=</span><span class="m">512</span><span class="w"> </span><span class="nv">conv</span><span class="o">=</span>noerror
+</pre></div>
+</div>
+<p>However, this only works if the kernel option <code class="docutils literal notranslate"><span class="pre">CONFIG_STRICT_DEVMEM</span></code> is not enabled.<br />
+You can check whether this feature is enabled by searching in:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/boot/config-<span class="k">$(</span>uname<span class="w"> </span>-r<span class="k">)</span>
+</pre></div>
+</div>
+<p>If it is enabled, user‑space reads from <code class="docutils literal notranslate"><span class="pre">/dev/mem</span></code> or <code class="docutils literal notranslate"><span class="pre">/dev/kmem</span></code> cannot go beyond the first megabyte.<br />
+If it is not enabled, LiME (see below) is not necessary and a kernel dump can be obtained as shown above.</p>
+<p>Using LiME has two additional advantages:</p>
+<ul class="simple">
+<li><p>It can be used on Android systems.</p></li>
+<li><p>It allows dumping memory in a format compatible with standard kernel debuggers.</p></li>
+</ul>
+</section>
+<section id="using-a-special-kernel-module-lime-or-fmem">
+<h3>2. Using a special kernel module (LiME or fmem)<a class="headerlink" href="#using-a-special-kernel-module-lime-or-fmem" title="Link to this heading">¶</a></h3>
+<p>These are Loadable Kernel Modules (LKM) that allow volatile memory acquisition from Linux and Linux‑based devices such as Android.</p>
+<p>LiME is the first tool that allows full memory capture on Android devices.<br />
+It also minimizes interaction between the user and kernel space processes during acquisition, producing memory dumps that are more forensically reliable than those generated by other Linux memory acquisition tools.</p>
+</section>
+</section>
+<section id="tools-used-in-this-exercise">
+<h2>Tools used in this exercise<a class="headerlink" href="#tools-used-in-this-exercise" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Volatility</strong><br />
+Open‑source software used to extract digital artifacts from volatile memory (RAM).<br />
+Developed and maintained by The Volatility Foundation.</p></li>
+<li><p><strong>Python</strong><br />
+Interpreted programming language required to run Volatility.<br />
+Version 2.6 minimum is required (2.7 recommended).<br />
+Current Volatility 2 versions do not support Python 3, therefore Volatility 3 has been developed to support Python 3.<br />
+Volatility requires several Python libraries that are not always installed automatically.</p></li>
+<li><p><strong>Distorm3</strong><br />
+Disassembler library for x86 / AMD64 architectures.<br />
+Converts binary data streams into assembly instructions represented as Python data structures.<br />
+Required for the Volatility plugins:</p>
+<ul>
+<li><p>apihooks</p></li>
+<li><p>impscan</p></li>
+<li><p>callbacks</p></li>
+<li><p>volshell</p></li>
+<li><p>linux_volshell</p></li>
+<li><p>mac_volshell</p></li>
+</ul>
+</li>
+<li><p><strong>Yara</strong><br />
+Tool used to classify malware by creating malware signatures.<br />
+Required for the <code class="docutils literal notranslate"><span class="pre">yarascan</span></code> option in Volatility.</p></li>
+</ul>
+</section>
+<section id="objective">
+<h2>Objective<a class="headerlink" href="#objective" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Learn how to perform basic memory dump analysis in Linux.</p></li>
+</ul>
+</section>
+<section id="materials">
+<h2>Materials<a class="headerlink" href="#materials" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Any Linux distribution</p></li>
+<li><p>Volatility 2</p></li>
+<li><p>Volatility 3</p></li>
+</ul>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Link to this heading">¶</a></h2>
+<p>Create or use a Linux virtual machine where the following tasks will be performed:</p>
+<section id="download-the-memory-dump-of-a-linux-machine">
+<h3>1. Download the memory dump of a Linux machine<a class="headerlink" href="#download-the-memory-dump-of-a-linux-machine" title="Link to this heading">¶</a></h3>
+<p>Download this Linux <a class="reference external" href="https://drive.google.com/file/d/1CyqiIkxw4tHdL6OB38frX6idKMluitct/view?usp=share_link">memory dump</a>.</p>
+</section>
+<section id="volatility-2">
+<h3>2. Volatility 2<a class="headerlink" href="#volatility-2" title="Link to this heading">¶</a></h3>
+<section id="a-install-volatility-2">
+<h4>a. Install Volatility 2<a class="headerlink" href="#a-install-volatility-2" title="Link to this heading">¶</a></h4>
+<p>This are all the steps that I followed, probably there is an efficient way, but this is what worked for me</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/volatilityfoundation/volatility.git
+mv<span class="w"> </span>volatility<span class="w"> </span>volatility2
+<span class="nb">cd</span><span class="w"> </span>volatility2
+sudo<span class="w"> </span>nano<span class="w"> </span>/etc/apt/sources.list<span class="w"> </span><span class="c1"># Paste deb http://archive.debian.org/debian/ stretch contrib main non-free</span>
+sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w">  </span>python2.7<span class="w"> </span>setup.py<span class="w"> </span>install
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python2.7-dev
+curl<span class="w"> </span>https://bootstrap.pypa.io/pip/2.7/get-pip.py<span class="w"> </span>-o<span class="w"> </span>get-pip.py
+sudo<span class="w"> </span>python2<span class="w"> </span>get-pip.py
+sudo<span class="w"> </span>python2<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>setuptools<span class="w"> </span>wheel
+sudo<span class="w"> </span>pip2<span class="w"> </span>install<span class="w"> </span>virtualenv
+python2<span class="w"> </span>-m<span class="w"> </span>virtualenv<span class="w"> </span>venv
+<span class="nb">source</span><span class="w"> </span>venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>distorm3<span class="w"> </span>pycrypto<span class="w"> </span>openpyxl
+pip2<span class="w"> </span>install<span class="w"> </span>distorm3<span class="w"> </span>yara-python<span class="w"> </span>pycrypto
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image3.png" /></p>
+<p>I want to execute volatility2 everywhere. It could be as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano<span class="w"> </span>/usr/local/bin/vol2
+</pre></div>
+</div>
+<p>Paste this script:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1"># Launcher for Volatility 2 on Kali with Python 2 virtualenv</span>
+<span class="c1"># Adjust paths if your Volatility 2 folder is elsewhere</span>
+
+<span class="nv">VENV_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/desktop/tools/volatility2/venv&quot;</span>
+<span class="nv">VOL_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/desktop/tools/volatility2&quot;</span>
+
+<span class="c1"># Check that virtualenv exists</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VENV_DIR</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[ERROR] Virtual environment not found at </span><span class="nv">$VENV_DIR</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="c1"># Activate virtualenv</span>
+<span class="nb">source</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VENV_DIR</span><span class="s2">/bin/activate&quot;</span>
+
+<span class="c1"># Run Volatility 2 with any arguments passed to this script</span>
+python<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VOL_DIR</span><span class="s2">/vol.py&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+
+<span class="c1"># Deactivate virtualenv</span>
+deactivate
+</pre></div>
+</div>
+<p>Deactivate the virtual environment created previously:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>deactivate
+</pre></div>
+</div>
+<p>Adjust the permissions:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>chmod<span class="w"> </span>+x<span class="w"> </span>/usr/local/bin/vol2
+</pre></div>
+</div>
+<p>And feel free to use volatility2 everywhere:</p>
+<p><img alt="alt text" src="../../_images/image-111.png" /></p>
+</section>
+<section id="b-prepare-volatility-2-to-work-with-linux-profiles-linux-overlays">
+<h4>b. Prepare Volatility 2 to work with Linux profiles (linux overlays)<a class="headerlink" href="#b-prepare-volatility-2-to-work-with-linux-profiles-linux-overlays" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Download this <a class="reference external" href="https://drive.google.com/file/d/1bMbvUi50zUsxfeNgt5jT50eduAl7N5es/view?usp=share_link">volatility memory profile</a>and copy it into the correct directory (overlays/linux) so it can be used with Volatility 2.</p></li>
+</ul>
+<p>Question:<br />
+If you only had the memory dump, how could you determine the operating system version it belongs to?<br />
+(Hint: banner modifier)</p>
+<p>Move the volatility memory profile into the oeverlays/linux directory</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>debian10-4.19.0-23-686.zip<span class="w"> </span>~/desktop/tools/volatility2/volatility/plugins/overlays/linux
+</pre></div>
+</div>
+<p>Verify that volatility detects the profile correctly:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>--info<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>Linuxdebian
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-310.png" /></p>
+<p>If we don’t know the operating system version, we can use the following command to determine it:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>strings<span class="w"> </span>ram.lime<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;Linux version&quot;</span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-43.png" /></p>
+</section>
+<section id="c-perform-basic-analysis-of-linux-memory-dumps">
+<h4>c. Perform basic analysis of Linux memory dumps<a class="headerlink" href="#c-perform-basic-analysis-of-linux-memory-dumps" title="Link to this heading">¶</a></h4>
+<section id="process-analysis">
+<h5>Process analysis<a class="headerlink" href="#process-analysis" title="Link to this heading">¶</a></h5>
+<ul class="simple">
+<li><p>linux_pslist</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_pslist
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-53.png" /></p>
+<ul class="simple">
+<li><p>linux_psaux</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_psaux
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-62.png" /></p>
+<ul class="simple">
+<li><p>linux_pstree</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_pstree
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-72.png" /></p>
+<ul class="simple">
+<li><p>linux_cpuinfo</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_cpuinfo
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-81.png" /></p>
+</section>
+<section id="network-analysis">
+<h5>Network analysis<a class="headerlink" href="#network-analysis" title="Link to this heading">¶</a></h5>
+<ul class="simple">
+<li><p>linux_arp</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_arp<span class="w"> </span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-91.png" /></p>
+<ul class="simple">
+<li><p>linux_ifconfig</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_ifconfig
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-101.png" /></p>
+<ul class="simple">
+<li><p>linux_route_cache</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_route_cache
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-112.png" /></p>
+<ul class="simple">
+<li><p>linux_netstat</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_netstat
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-121.png" /></p>
+</section>
+<section id="files-and-kernel-analysis">
+<h5>Files and kernel analysis<a class="headerlink" href="#files-and-kernel-analysis" title="Link to this heading">¶</a></h5>
+<ul class="simple">
+<li><p>linux_enumerate_files</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_enumerate_files
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-131.png" /></p>
+<ul class="simple">
+<li><p>linux_find_file</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_find_file<span class="w"> </span>-F<span class="w"> </span><span class="s2">&quot;/file&quot;</span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-141.png" /></p>
+<ul class="simple">
+<li><p>linux_recover_filesystem</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir<span class="w"> </span>dump
+sudo<span class="w"> </span>-E<span class="w"> </span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_recover_filesystem<span class="w"> </span>--dump-dir<span class="o">=</span>dump
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-151.png" /></p>
+<p><img alt="alt text" src="../../_images/image-161.png" /></p>
+<ul class="simple">
+<li><p>linux_mount</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_mount
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-171.png" /></p>
+<ul class="simple">
+<li><p>linux_mount_cache</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_mount_cache
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-181.png" /></p>
+<ul class="simple">
+<li><p>linux_bash</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_bash
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-191.png" /></p>
+<ul class="simple">
+<li><p>linux_dmesg</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_dmesg
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-201.png" /></p>
+</section>
+</section>
+<section id="d-generate-specific-profiles-for-volatility">
+<h4>d. Generate specific profiles for Volatility<a class="headerlink" href="#d-generate-specific-profiles-for-volatility" title="Link to this heading">¶</a></h4>
+<p>Follow the steps explained in class to generate a specific Volatility profile for the Linux system used in this practice using:</p>
+<ul class="simple">
+<li><p>module.dwarf</p></li>
+<li><p>/boot/config</p></li>
+<li><p>System.map</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>dwarfdump<span class="w"> </span>build-essential<span class="w"> </span>linux-./images/image-<span class="o">(</span><span class="nv">$uname</span><span class="w"> </span>-a<span class="o">)</span><span class="w"> </span>linux-headers-<span class="k">$(</span>uname<span class="w"> </span>-r<span class="k">)</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>volatility2/tools/linux
+make
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-211.png" /></p>
+<p>The previous error is due we have to accept the GLP license before compiling. Edit <code class="docutils literal notranslate"><span class="pre">module.c</span></code> to acept said license.</p>
+<p><img alt="alt text" src="../../_images/image-251.png" /></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make
+</pre></div>
+</div>
+<p>Note: After performing the following steps using my Kali I had problems, so that I decided to use another machine using an older kernel and it works correctly:</p>
+<p><img alt="alt text" src="../../_images/image-221.png" /></p>
+<p>Make the zip file Debian-6.1.0-31-amd64</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zip<span class="w"> </span>Debian-6.1.0-31-amd64<span class="w"> </span>module.dwarf<span class="w"> </span>/usr/lib/debug/boot/System.map-6.1.0-31-amd64
+</pre></div>
+</div>
+<p>Move it inside plugins/linux</p>
+<p><img alt="alt text" src="../../_images/image-231.png" /></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mv<span class="w"> </span>Debian-6.1.0-31-amd64<span class="w"> </span>volatility2/volatility/plugins/linux/
+</pre></div>
+</div>
+<p>Verify that volatility 2 correctly identifies it.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>--info<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>Linux
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-271.png" /></p>
+</section>
+</section>
+<section id="volatility-3">
+<h3>3. Volatility 3<a class="headerlink" href="#volatility-3" title="Link to this heading">¶</a></h3>
+<section id="a-install-volatility-3">
+<h4>a. Install Volatility 3<a class="headerlink" href="#a-install-volatility-3" title="Link to this heading">¶</a></h4>
+<p>Run the following commands:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>htts://github.com/volatilityfoundation/volatility3.git
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python3-pip<span class="w"> </span>python3-setuptools<span class="w"> </span>python3-wheel<span class="w"> </span>python3-distorm3<span class="w"> </span>python3-construct<span class="w"> </span>python3-yara<span class="w"> </span>libsqlite3-dev<span class="w"> </span>tk-dev<span class="w"> </span>libc6-dev<span class="w"> </span>libbz2-dev
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>nano<span class="w"> </span>/usr/local/bin/vol3
+</pre></div>
+</div>
+<p>Paste this script.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1"># Launcher for Volatility 3 on Kali with Python 3 virtualenv</span>
+<span class="c1"># Adjust paths if your Volatility 3 folder is elsewhere</span>
+
+<span class="nv">VENV_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/desktop/tools/volatility3/venv&quot;</span>
+<span class="nv">VOL_DIR</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/desktop/tools/volatility3&quot;</span>
+
+<span class="c1"># Check that virtualenv exists</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span>!<span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VENV_DIR</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;[ERROR] Virtual environment not found at </span><span class="nv">$VENV_DIR</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="c1"># Activate virtualenv</span>
+<span class="nb">source</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VENV_DIR</span><span class="s2">/bin/activate&quot;</span>
+
+<span class="c1"># Run Volatility 3 with any arguments passed to this script</span>
+python<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$VOL_DIR</span><span class="s2">/vol.py&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+
+<span class="c1"># Deactivate virtualenv</span>
+deactivate
+</pre></div>
+</div>
+<p>Change the permissions:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>chmod<span class="w"> </span>+x<span class="w"> </span>/usr/local/bin/vol3
+</pre></div>
+</div>
+<p>Run volatility3 everywhere</p>
+<p><img alt="alt text" src="../../_images/image-210.png" /></p>
+</section>
+<section id="b-prepare-volatility-3-to-work-with-linux-profiles">
+<h4>b. Prepare Volatility 3 to work with Linux profiles<a class="headerlink" href="#b-prepare-volatility-3-to-work-with-linux-profiles" title="Link to this heading">¶</a></h4>
+<ul class="simple">
+<li><p>Download the profile that matches the dump from section (1).</p></li>
+<li><p>Copy it into the SYMBOLS directory of Volatility 3.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cp<span class="w"> </span>debian10-4.19.0-23-686.zip<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h4>c. Perform basic analysis of Linux memory dumps<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
+<p>Note: I had some problems again with some commands in my personal Kali, I’m still investigating why, then, I will use the same Debian I used with volatility2</p>
+<p>Use the following plugins:</p>
+<ul class="simple">
+<li><p>banners.Banners</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>banners.Banner
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-281.png" /></p>
+<ul class="simple">
+<li><p>linux.bash.Bash</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.bash.Bash
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-291.png" /></p>
+<ul class="simple">
+<li><p>linux.kmsg.Kmsg</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.kmsg.Kmsg
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-301.png" /></p>
+<ul class="simple">
+<li><p>linux.lsmod.Lsmod</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.lsmod.Lsmod
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-311.png" /></p>
+<ul class="simple">
+<li><p>linux.lsof.Lsof</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.lsof.Lsof
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-321.png" /></p>
+<ul class="simple">
+<li><p>linux.malfind.Malfind</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.malfind.Malfind
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-331.png" /></p>
+<ul class="simple">
+<li><p>linux.mountinfo.MountInfo</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.mountinfo.MountInfo
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-341.png" /></p>
+<ul class="simple">
+<li><p>linux.proc.Maps</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.proc.Maps
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-351.png" /></p>
+<ul class="simple">
+<li><p>linux.psaux.PsAux</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.psaux.PsAux
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-361.png" /></p>
+<ul class="simple">
+<li><p>linux.pslist.PsList</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.pslist.PsList
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-371.png" /></p>
+<ul class="simple">
+<li><p>linux.psscan.PsScan</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.psscan.PsScan
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-381.png" /></p>
+<ul class="simple">
+<li><p>linux.pstree.PsTree</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.pstree.PsTree
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-391.png" /></p>
+<ul class="simple">
+<li><p>linux.sockstat.Sockstat</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.sockstat.Sockstat
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-40.png" /></p>
+</section>
+<section id="id2">
+<h4>d. Generate specific profiles for Volatility<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
+<p>Follow the steps explained in class to generate a specific Volatility profile for the Linux system used in this practice using:</p>
+<ul class="simple">
+<li><p>dwarf2json</p></li>
+<li><p>vmlinux</p></li>
+<li><p>System.map</p></li>
+</ul>
+<p>Generating a profile in volatility 3 is really easy. Run the following commands changing the kernel module from your real kernel version.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/volatilityfoundation/dwarf2json.git
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>golang-go
+<span class="nb">cd</span><span class="w"> </span>dwarf2json
+sudo<span class="w"> </span>go<span class="w"> </span>build<span class="w"> </span>.
+./dwarf2json<span class="w"> </span>linux<span class="w"> </span>--elf<span class="w"> </span>/usr/lib/debug/lib/modules/6.1.0-31-amd64/vmlinux<span class="w"> </span>&gt;<span class="w"> </span>debian12-kernel.json
+</pre></div>
+</div>
+<p>Then, verify that it has been compiled correctly:</p>
+<p><img alt="alt text" src="../../_images/image-411.png" /></p>
+</section>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          <a class="prev-page" href="../exercise3/exercise3.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Compile tools</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, PumukyDev
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Volatility Linux</a><ul>
+<li><a class="reference internal" href="#memory-volatility-in-linux">Memory Volatility in Linux</a><ul>
+<li><a class="reference internal" href="#copying-dev-mem-directly-using-userspace-tools">1. Copying /dev/mem directly using user‑space tools</a></li>
+<li><a class="reference internal" href="#using-a-special-kernel-module-lime-or-fmem">2. Using a special kernel module (LiME or fmem)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tools-used-in-this-exercise">Tools used in this exercise</a></li>
+<li><a class="reference internal" href="#objective">Objective</a></li>
+<li><a class="reference internal" href="#materials">Materials</a></li>
+<li><a class="reference internal" href="#tasks">Tasks</a><ul>
+<li><a class="reference internal" href="#download-the-memory-dump-of-a-linux-machine">1. Download the memory dump of a Linux machine</a></li>
+<li><a class="reference internal" href="#volatility-2">2. Volatility 2</a><ul>
+<li><a class="reference internal" href="#a-install-volatility-2">a. Install Volatility 2</a></li>
+<li><a class="reference internal" href="#b-prepare-volatility-2-to-work-with-linux-profiles-linux-overlays">b. Prepare Volatility 2 to work with Linux profiles (linux overlays)</a></li>
+<li><a class="reference internal" href="#c-perform-basic-analysis-of-linux-memory-dumps">c. Perform basic analysis of Linux memory dumps</a><ul>
+<li><a class="reference internal" href="#process-analysis">Process analysis</a></li>
+<li><a class="reference internal" href="#network-analysis">Network analysis</a></li>
+<li><a class="reference internal" href="#files-and-kernel-analysis">Files and kernel analysis</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#d-generate-specific-profiles-for-volatility">d. Generate specific profiles for Volatility</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#volatility-3">3. Volatility 3</a><ul>
+<li><a class="reference internal" href="#a-install-volatility-3">a. Install Volatility 3</a></li>
+<li><a class="reference internal" href="#b-prepare-volatility-3-to-work-with-linux-profiles">b. Prepare Volatility 3 to work with Linux profiles</a></li>
+<li><a class="reference internal" href="#id1">c. Perform basic analysis of Linux memory dumps</a></li>
+<li><a class="reference internal" href="#id2">d. Generate specific profiles for Volatility</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

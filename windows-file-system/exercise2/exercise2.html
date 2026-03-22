@@ -209,6 +209,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../windows-volatility/exercise1/exercise1.html">Volatility introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../windows-volatility/exercise2/exercise2.html">Volatility advanced</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Linux file system and volatility:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise1/exercise1.html">Linux File system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise2/exercise2.html">Memory Dump</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise3/exercise3.html">Compile tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise4/exercise4.html">Volatility Linux</a></li>
+</ul>
 
 </div>
 </div>
@@ -281,31 +288,31 @@ b. Recover the file using FTK Imager (found in the Recycle Bin folder).</p>
 <section id="solution">
 <h3>Solution<a class="headerlink" href="#solution" title="Link to this heading">¶</a></h3>
 <p>If we open Active Disk Editor and go to offset 03397XXXX as stated in the statement, we can see a file called “texto - copia.txt”</p>
-<p><img alt="alt text" src="../../_images/image-351.png" /></p>
+<p><img alt="alt text" src="../../_images/image-353.png" /></p>
 <p>Once the file is identified, we simply need to look at the “Flags” on the left and check if it is in use (Exists).</p>
 <p>In this case we can certify that the file has been deleted since it is not in use.</p>
-<p><img alt="alt text" src="../../_images/image-361.png" /></p>
+<p><img alt="alt text" src="../../_images/image-363.png" /></p>
 <p>Now we proceed to recover the file data, for this we can close the Active Disk Editor program and open FTK Imager.</p>
 <p>Then, click on the icon of the image to start mounting the disk.</p>
-<p><img alt="alt text" src="../../_images/image-231.png" /></p>
+<p><img alt="alt text" src="../../_images/image-233.png" /></p>
 <p>Select the disk, click on “Mount” and verify that the partition appears on the “Mapped Image List”.</p>
-<p><img alt="alt text" src="../../_images/image-241.png" /></p>
+<p><img alt="alt text" src="../../_images/image-242.png" /></p>
 <p>Then, click on the icon of the image to start make an evidence tree.</p>
-<p><img alt="alt text" src="../../_images/image-251.png" /></p>
+<p><img alt="alt text" src="../../_images/image-253.png" /></p>
 <p>Click on “Physical Drive” and continue.</p>
-<p><img alt="alt text" src="../../_images/image-261.png" /></p>
+<p><img alt="alt text" src="../../_images/image-262.png" /></p>
 <p>Select the previously mounted image and finish.</p>
-<p><img alt="alt text" src="../../_images/image-271.png" /></p>
+<p><img alt="alt text" src="../../_images/image-273.png" /></p>
 <p>Verify that and evidence tree appears.</p>
-<p><img alt="alt text" src="../../_images/image-281.png" /></p>
+<p><img alt="alt text" src="../../_images/image-283.png" /></p>
 <p>Click on the folder “carpeta” and find out the filed called “texto - copia.txt” marked with a red cross.
-<img alt="alt text" src="../../_images/image-291.png" /></p>
+<img alt="alt text" src="../../_images/image-293.png" /></p>
 <p>Click on said file and click on “Export Files…”</p>
-<p><img alt="alt text" src="../../_images/image-301.png" />
-<img alt="alt text" src="../../_images/image-313.png" />
-<img alt="alt text" src="../../_images/image-321.png" /></p>
+<p><img alt="alt text" src="../../_images/image-303.png" />
+<img alt="alt text" src="../../_images/image-317.png" />
+<img alt="alt text" src="../../_images/image-323.png" /></p>
 <p>Verify that the file has been recovered successfully.</p>
-<p><img alt="alt text" src="../../_images/image-331.png" /></p>
+<p><img alt="alt text" src="../../_images/image-333.png" /></p>
 </section>
 </section>
 <hr class="docutils" />
@@ -326,7 +333,7 @@ b. What does the <strong>non-resident</strong> property mean, and what are the v
 <li><p>The permissions of: owner, security.</p></li>
 <li><p>Etc…</p></li>
 </ul>
-<p><img alt="alt text" src="../../_images/image-371.png" /></p>
+<p><img alt="alt text" src="../../_images/image-373.png" /></p>
 <p>The <strong>$30</strong> attribute is regarding File Name, therefore there will be information about:</p>
 <ul class="simple">
 <li><p>The file name</p></li>
@@ -334,12 +341,12 @@ b. What does the <strong>non-resident</strong> property mean, and what are the v
 <li><p>It is a system file.</p></li>
 <li><p>Etc…</p></li>
 </ul>
-<p><img alt="alt text" src="../../_images/image-381.png" /></p>
+<p><img alt="alt text" src="../../_images/image-383.png" /></p>
 <p>The <strong>$80</strong> attribute has Data information and we can see:</p>
 <ul class="simple">
 <li><p>The direct information in the MFT, as long as it is Non-resident (The “Non-resident flag” parameter must be set to 1)</p></li>
 </ul>
-<p><img alt="alt text" src="../../_images/image-391.png" /></p>
+<p><img alt="alt text" src="../../_images/image-393.png" /></p>
 <p>Answering the activity, we can find creation, update and file opening information in the $10 attribute. And in case the file is resident, its content can be read directly in the MFT, otherwise it would not be possible.</p>
 </section>
 </section>
@@ -353,12 +360,12 @@ b. What does the <strong>non-resident</strong> property mean, and what are the v
 <section id="id4">
 <h3>Solution<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <p>To analyze the MFT, download <a class="reference external" href="https://github.com/jschicht/Mft2Csv">MTF2csv</a>. Once we have it open, we must indicate the path of the volume (explained on <a class="reference internal" href="#section-1"><span class="xref myst">section 1</span></a>) and hard drive from which we extracted the MFT, we will also have to change the separator to be able to read it more comfortably. We must also select the output where it will send the files ourselves.</p>
-<p><img alt="alt text" src="../../_images/image-401.png" /></p>
+<p><img alt="alt text" src="../../_images/image-402.png" /></p>
 <p>Once finished, go to the output area and verify that many files appear there. Open the file inside the red box.</p>
-<p><img alt="alt text" src="../../_images/image-413.png" /></p>
+<p><img alt="alt text" src="../../_images/image-415.png" /></p>
 <p>Open the file using OpenOffice.</p>
 <p>Activate some filters by doing the following: Data &gt; Filter &gt; Auto filters. This will let us to analyze the spreadsheet more comfortably. Once this is done, go to column M and select “Deleted”, verify that this two files appear:</p>
-<p><img alt="alt text" src="../../_images/image-421.png" /></p>
+<p><img alt="alt text" src="../../_images/image-422.png" /></p>
 </section>
 </section>
 <hr class="docutils" />
@@ -375,9 +382,9 @@ b. What does the <strong>non-resident</strong> property mean, and what are the v
 <h3>Solution<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
 <p>This time, we are going to analyze the $LogFile, in order to do that, select the file and also select the excel sheet that we obtained previously with the MFT extraction. Remember to change the separator to <code class="docutils literal notranslate"><span class="pre">;</span></code>.</p>
 <p>After all this, we can click on “Start”.</p>
-<p><img alt="alt text" src="../../_images/image-431.png" /></p>
+<p><img alt="alt text" src="../../_images/image-432.png" /></p>
 <p>Once finished, we can see something like that:</p>
-<p><img alt="alt text" src="../../_images/image-441.png" /></p>
+<p><img alt="alt text" src="../../_images/image-442.png" /></p>
 <p>Now we will analyze the LogFile.csv file, open it using Open Office.</p>
 <p><img alt="alt text" src="../../_images/image-451.png" /></p>
 <p>After establishing some filters, these are the files which have been deleted.</p>
@@ -428,7 +435,7 @@ You will see that it processes the same information as the previous sections but
 <p>Once the process is finished, we can go to “Reports”, and view the data obtained from the documents.</p>
 <p><img alt="alt text" src="../../_images/image-501.png" /></p>
 <p>For example, if we access LogFile &gt; File Interactions, we can find relevant information about “texto - copia.txt”</p>
-<p><img alt="alt text" src="../../_images/image-513.png" /></p>
+<p><img alt="alt text" src="../../_images/image-514.png" /></p>
 </section>
 </section>
 <hr class="docutils" />
@@ -444,9 +451,9 @@ You will see that it processes the same information as the previous sections but
 <section id="id12">
 <h3>Solution<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h3>
 <p>In FTK Imager, deploy the entire Evidence Tree.</p>
-<p><img alt="alt text" src="../../_images/image-521.png" /></p>
+<p><img alt="alt text" src="../../_images/image-522.png" /></p>
 <p>Click over a file as “Proyecto Educativo.pdf”. And study the “Zone.Identifier”.</p>
-<p><img alt="alt text" src="../../_images/image-531.png" /></p>
+<p><img alt="alt text" src="../../_images/image-532.png" /></p>
 <p>If we click tie “Zone.Identifier”, it will show us in plain text a ZoneID, in this example the zone ZoneID is 3, which means that the file has been downloaded from the internet.</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
@@ -480,7 +487,7 @@ You will see that it processes the same information as the previous sections but
 </tbody>
 </table>
 </div>
-<p><img alt="alt text" src="../../_images/image-541.png" /></p>
+<p><img alt="alt text" src="../../_images/image-542.png" /></p>
 <p>Opening AlternateStreamView will look like this:</p>
 <p><img alt="alt text" src="../../_images/image-551.png" /></p>
 <p>As we can see, there are several files and we can analyze their Zone.Identifier, in my case it will be the “ProyectoEducativo.pdf” file. If we double-click on the file, we can obtain the following properties:</p>
@@ -511,10 +518,10 @@ Process these files with <strong>Indx2Csv</strong>.</p></li>
 <h3>Solution<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h3>
 <p>To extract the files, we must open FTK Imager and mount the evidence tree. Once we have the file located, we will right-click on it and we can extract it wherever we want.</p>
 <p><img alt="alt text" src="../../_images/image-601.png" />
-<img alt="alt text" src="../../_images/image-614.png" /></p>
+<img alt="alt text" src="../../_images/image-615.png" /></p>
 <p>Repeat it with root and the recycle bin folders.</p>
-<p><img alt="alt text" src="../../_images/image-621.png" />
-<img alt="alt text" src="../../_images/image-631.png" /></p>
+<p><img alt="alt text" src="../../_images/image-622.png" />
+<img alt="alt text" src="../../_images/image-632.png" /></p>
 <p>Once we have done this with the three files, we will start using the other tool.</p>
 <p>We must configure the launcher with the following parameters:</p>
 <p><img alt="alt text" src="../../_images/image-641.png" /></p>
@@ -557,9 +564,9 @@ Mount the <code class="docutils literal notranslate"><span class="pre">datos.dd<
 <p>Delect all the files and click on “Recover”.</p>
 <p><img alt="alt text" src="../../_images/image-701.png" /></p>
 <p>Then it will ask us where we want to leave the files.</p>
-<p><img alt="alt text" src="../../_images/image-711.png" /></p>
+<p><img alt="alt text" src="../../_images/image-713.png" /></p>
 <p>And as we can see, we have been able to recover all these files.</p>
-<p><img alt="alt text" src="../../_images/image-721.png" /></p>
+<p><img alt="alt text" src="../../_images/image-722.png" /></p>
 <p>When comparing the results obtained with Recuva to those obtained using FTK Imager, we can confirm the recovery of the file “calendarioSept2018.pdf” from the root directory and the file “texto - copia.txt” from the “carpeta” directory. For the remaining recovered files, it was not possible to determine their original locations based on the available information.</p>
 </section>
 </section>

@@ -209,6 +209,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../../windows-volatility/exercise1/exercise1.html">Volatility introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../windows-volatility/exercise2/exercise2.html">Volatility advanced</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Linux file system and volatility:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise1/exercise1.html">Linux File system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise2/exercise2.html">Memory Dump</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise3/exercise3.html">Compile tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise4/exercise4.html">Volatility Linux</a></li>
+</ul>
 
 </div>
 </div>
@@ -305,22 +312,22 @@
 <ol class="arabic simple">
 <li><p>Download and save all the tools and configuration files on the same folder</p></li>
 </ol>
-<p><img alt="alt text" src="../../_images/image.png" /></p>
+<p><img alt="alt text" src="../../_images/image5.png" /></p>
 <ol class="arabic simple" start="2">
 <li><p>Open a powershel terminal as administrator and locate into the previous folder. Then, execute Sysmon using the following command:</p></li>
 </ol>
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">SysinternalsSuite</span><span class="p">/</span><span class="n">Sysmon64</span><span class="p">.</span><span class="n">exe</span> <span class="n">-i</span> <span class="n">sysmon-config-master</span><span class="p">\</span><span class="n">sysmon-config-master</span><span class="p">\</span><span class="n">sysmonconfig-export</span><span class="p">.</span><span class="n">xml</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-110.png" /></p>
+<p><img alt="alt text" src="../../_images/image-115.png" /></p>
 <ol class="arabic simple" start="3">
 <li><p>Sysmon should start running.</p></li>
 </ol>
-<p><img alt="alt text" src="../../_images/image-210.png" /></p>
+<p><img alt="alt text" src="../../_images/image-214.png" /></p>
 <ol class="arabic simple" start="4">
 <li><p>Download and install any application. In this case notepad++ will be installed.</p></li>
 </ol>
-<p><img alt="alt text" src="../../_images/image-310.png" /></p>
+<p><img alt="alt text" src="../../_images/image-314.png" /></p>
 <ol class="arabic simple" start="5">
 <li><p>In powershell, run the following command:</p></li>
 </ol>
@@ -342,7 +349,7 @@
 <ol class="arabic simple" start="9">
 <li><p>Select the file exported previouly.</p></li>
 </ol>
-<p><img alt="alt text" src="../../_images/image-7.png" /></p>
+<p><img alt="alt text" src="../../_images/image-78.png" /></p>
 <ol class="arabic simple" start="10">
 <li><p>If the import is succesful, a message will appear. Then, click on “Ok”.</p></li>
 </ol>
@@ -354,7 +361,7 @@
 <ol class="arabic simple" start="12">
 <li><p>On the left side, there is another event related to Notepad++. In the schema, we can see two events: one corresponds to the application launching automatically after the installation was completed, and the other corresponds to the instance that I launched manually from the windows explorer.</p></li>
 </ol>
-<p><img alt="alt text" src="../../_images/image-102.png" /></p>
+<p><img alt="alt text" src="../../_images/image-103.png" /></p>
 </section>
 </section>
 
