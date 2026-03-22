@@ -379,8 +379,6 @@
 </section>
 <section id="using-active-disk-editor-display-the-superblock-information-of-partitions-1-and-3-focus-on-explaining-the-fields-that-are-most-relevant-from-a-forensic-perspective">
 <h4>Using Active Disk Editor, display the superblock information of partitions 1 and 3. Focus on explaining the fields that are most relevant from a forensic perspective.<a class="headerlink" href="#using-active-disk-editor-display-the-superblock-information-of-partitions-1-and-3-focus-on-explaining-the-fields-that-are-most-relevant-from-a-forensic-perspective" title="Link to this heading">¶</a></h4>
-<section id="partition-1">
-<h5>Partition 1<a class="headerlink" href="#partition-1" title="Link to this heading">¶</a></h5>
 <p><img alt="alt text" src="../../_images/image-6.png" />
 <img alt="alt text" src="../../_images/image-8.png" /></p>
 <p>These fields indicate how many blocks and inodes are free in the filesystem. From a forensic perspective, they help estimate how much data could have been deleted or how active the filesystem has been.</p>
@@ -393,7 +391,6 @@
 <p><img alt="alt text" src="../../_images/image-4.png" />
 <img alt="alt text" src="../../_images/image-11.png" /></p>
 <p>Important for verifying filesystem integrity and identifying the correct filesystem type during forensic analysis.</p>
-</section>
 </section>
 <section id="use-the-command-losetup-f-p-to-mount-the-image-file-in-linux-as-if-it-were-a-device-attempt-to-mount-partitions-1-and-3-and-examine-their-contents">
 <h4>Use the command <code class="docutils literal notranslate"><span class="pre">losetup</span> <span class="pre">-f</span> <span class="pre">-P</span></code> to mount the image file in Linux as if it were a device. Attempt to mount partitions 1 and 3 and examine their contents.<a class="headerlink" href="#use-the-command-losetup-f-p-to-mount-the-image-file-in-linux-as-if-it-were-a-device-attempt-to-mount-partitions-1-and-3-and-examine-their-contents" title="Link to this heading">¶</a></h4>
@@ -666,10 +663,7 @@ sudo<span class="w"> </span>./script.sh
 <li><a class="reference internal" href="#practical-questions">Practical questions</a><ul>
 <li><a class="reference internal" href="#using-appropriate-linux-commands-fdisk-mmls-determine-how-many-disk-partitions-appear-in-the-image">Using appropriate Linux commands (fdisk, mmls), determine how many disk partitions appear in the image.</a></li>
 <li><a class="reference internal" href="#open-the-same-image-with-active-disk-editor-and-verify-that-the-same-partitions-appear-as-in-the-previous-step">Open the same image with Active Disk Editor and verify that the same partitions appear as in the previous step.</a></li>
-<li><a class="reference internal" href="#using-active-disk-editor-display-the-superblock-information-of-partitions-1-and-3-focus-on-explaining-the-fields-that-are-most-relevant-from-a-forensic-perspective">Using Active Disk Editor, display the superblock information of partitions 1 and 3. Focus on explaining the fields that are most relevant from a forensic perspective.</a><ul>
-<li><a class="reference internal" href="#partition-1">Partition 1</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#using-active-disk-editor-display-the-superblock-information-of-partitions-1-and-3-focus-on-explaining-the-fields-that-are-most-relevant-from-a-forensic-perspective">Using Active Disk Editor, display the superblock information of partitions 1 and 3. Focus on explaining the fields that are most relevant from a forensic perspective.</a></li>
 <li><a class="reference internal" href="#use-the-command-losetup-f-p-to-mount-the-image-file-in-linux-as-if-it-were-a-device-attempt-to-mount-partitions-1-and-3-and-examine-their-contents">Use the command <code class="docutils literal notranslate"><span class="pre">losetup</span> <span class="pre">-f</span> <span class="pre">-P</span></code> to mount the image file in Linux as if it were a device. Attempt to mount partitions 1 and 3 and examine their contents.</a></li>
 <li><a class="reference internal" href="#use-the-fls-command-from-the-sleuth-kit-to-list-files-and-directories-in-partition-1-of-the-image-investigate-the-meaning-of-the-columns-shown-in-the-command-output">Use the <code class="docutils literal notranslate"><span class="pre">fls</span></code> command (from The Sleuth Kit) to list files and directories in partition 1 of the image. Investigate the meaning of the columns shown in the command output.</a></li>
 <li><a class="reference internal" href="#explain-why-the-command-icat-dev-loop0p1-690-does-not-produce-output-while-icat-dev-loop0p1-12-does">Explain why the command <code class="docutils literal notranslate"><span class="pre">icat</span> <span class="pre">/dev/loop0p1</span> <span class="pre">690</span></code> does not produce output, while <code class="docutils literal notranslate"><span class="pre">icat</span> <span class="pre">/dev/loop0p1</span> <span class="pre">12</span></code> does.</a></li>
