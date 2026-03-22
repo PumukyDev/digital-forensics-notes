@@ -138,8 +138,6 @@ Download the disk image from the provided [link](https://drive.google.com/file/d
 
 #### Using Active Disk Editor, display the superblock information of partitions 1 and 3. Focus on explaining the fields that are most relevant from a forensic perspective.
 
-##### Partition 1
-
 ![alt text](./images/image-6.png)
 ![alt text](./images/image-8.png)
 
