@@ -312,22 +312,22 @@
 <ol class="arabic simple">
 <li><p>Download and save all the tools and configuration files on the same folder</p></li>
 </ol>
-<p><img alt="alt text" src="../../_images/image5.png" /></p>
+<p><img alt="alt text" src="../../_images/image12.png" /></p>
 <ol class="arabic simple" start="2">
 <li><p>Open a powershel terminal as administrator and locate into the previous folder. Then, execute Sysmon using the following command:</p></li>
 </ol>
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">SysinternalsSuite</span><span class="p">/</span><span class="n">Sysmon64</span><span class="p">.</span><span class="n">exe</span> <span class="n">-i</span> <span class="n">sysmon-config-master</span><span class="p">\</span><span class="n">sysmon-config-master</span><span class="p">\</span><span class="n">sysmonconfig-export</span><span class="p">.</span><span class="n">xml</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-115.png" /></p>
+<p><img alt="alt text" src="../../_images/image-139.png" /></p>
 <ol class="arabic simple" start="3">
 <li><p>Sysmon should start running.</p></li>
 </ol>
-<p><img alt="alt text" src="../../_images/image-214.png" /></p>
+<p><img alt="alt text" src="../../_images/image-230.png" /></p>
 <ol class="arabic simple" start="4">
 <li><p>Download and install any application. In this case notepad++ will be installed.</p></li>
 </ol>
-<p><img alt="alt text" src="../../_images/image-314.png" /></p>
+<p><img alt="alt text" src="../../_images/image-326.png" /></p>
 <ol class="arabic simple" start="5">
 <li><p>In powershell, run the following command:</p></li>
 </ol>
@@ -337,19 +337,19 @@
 <ol class="arabic simple" start="6">
 <li><p>Navigate to <code class="docutils literal notranslate"><span class="pre">Event</span> <span class="pre">Viewer\Applications</span> <span class="pre">and</span> <span class="pre">Services</span> <span class="pre">Logs\Microsoft\Windows\Sysmon</span></code> and verify that some logs have been saved. Then, click on “Action” –&gt; “Save All Events As…”</p></li>
 </ol>
-<p><img alt="alt text" src="../../_images/image-410.png" /></p>
+<p><img alt="alt text" src="../../_images/image-417.png" /></p>
 <ol class="arabic simple" start="7">
 <li><p>Export the file as an xml file and click on “Save”.</p></li>
 </ol>
-<p><img alt="alt text" src="../../_images/image-56.png" /></p>
+<p><img alt="alt text" src="../../_images/image-513.png" /></p>
 <ol class="arabic simple" start="8">
 <li><p>Open Sysmon View anc click on “File” –&gt; “Import Sysmon Event logs…”.</p></li>
 </ol>
-<p><img alt="alt text" src="../../_images/image-610.png" /></p>
+<p><img alt="alt text" src="../../_images/image-612.png" /></p>
 <ol class="arabic simple" start="9">
 <li><p>Select the file exported previouly.</p></li>
 </ol>
-<p><img alt="alt text" src="../../_images/image-78.png" /></p>
+<p><img alt="alt text" src="../../_images/image-710.png" /></p>
 <ol class="arabic simple" start="10">
 <li><p>If the import is succesful, a message will appear. Then, click on “Ok”.</p></li>
 </ol>
@@ -357,11 +357,11 @@
 <ol class="arabic simple" start="11">
 <li><p>On the left side, the most recent events will appear. Select the one related to the installation of Notepad++. Then, a complete schema containing all the logs will be generated. There, we can see how the entire process started with the download from Firefox and continued with the creation of .dll files after executing the installer.</p></li>
 </ol>
-<p><img alt="alt text" src="../../_images/image-93.png" /></p>
+<p><img alt="alt text" src="../../_images/image-910.png" /></p>
 <ol class="arabic simple" start="12">
 <li><p>On the left side, there is another event related to Notepad++. In the schema, we can see two events: one corresponds to the application launching automatically after the installation was completed, and the other corresponds to the instance that I launched manually from the windows explorer.</p></li>
 </ol>
-<p><img alt="alt text" src="../../_images/image-103.png" /></p>
+<p><img alt="alt text" src="../../_images/image-1010.png" /></p>
 </section>
 </section>
 

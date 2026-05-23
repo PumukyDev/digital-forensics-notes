@@ -1,0 +1,878 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
+
+    <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+        <title>Android Forensics Analysis - Digital Forensics Notes documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #254F6D;
+  --color-brand-content: #254F6D;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Digital Forensics Notes  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Windows file system:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise1/exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise2/exercise2.html">Exercise 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise3/exercise3.html">Exercise 3</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Windows artifacts:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise1/post-mortem-analysis.html">Post-mortem analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise3/sysmon.html">Sysmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise4/web-browsers.html">Evidence in Web Browsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise6/automatic-tools.html">Automatic forensics tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Windows volatility:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-volatility/exercise1/exercise1.html">Volatility introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-volatility/exercise2/exercise2.html">Volatility advanced</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Linux file system and volatility:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise1/exercise1.html">Linux File system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise2/exercise2.html">Memory Dump</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise3/exercise3.html">Compile tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise4/exercise4.html">Volatility Linux</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../_sources/android/exercise1/exercise1.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="android-forensics-analysis">
+<h1>Android Forensics Analysis<a class="headerlink" href="#android-forensics-analysis" title="Link to this heading">¶</a></h1>
+<section id="evidence-extraction">
+<h2>Evidence Extraction<a class="headerlink" href="#evidence-extraction" title="Link to this heading">¶</a></h2>
+<p>Smartphones have become an essential tool across all sectors of modern society: from regular consumers to high-ranking government officials and the business sector.</p>
+<p>Smartphones are well known for their versatility. In a single day, a smartphone can function as:</p>
+<ul class="simple">
+<li><p>A wallet</p></li>
+<li><p>A barcode reader</p></li>
+<li><p>A satellite navigation system</p></li>
+<li><p>An email or social media client</p></li>
+<li><p>A WiFi hotspot</p></li>
+<li><p>A telephone</p></li>
+</ul>
+<p>Recently, smartphones have also been increasingly used as smart health sensors, allowing cardiac patients to safely remain at home while medical staff remotely monitor and supervise their heart conditions.</p>
+<p>Mobile forensics refers to digital forensic analysis related to the recovery of data or digital evidence from mobile devices such as smartphones, tablets, and GPS devices.</p>
+<p>It is important that this recovery process is performed under forensic conditions.</p>
+<p>Several aspects must be considered during mobile forensic investigations:</p>
+<ul class="simple">
+<li><p>Data acquisition often requires collecting evidence from a powered-on device because hardware or software interfaces to access internal memory may intentionally be unavailable.</p></li>
+<li><p>External storage such as SD cards may contain valuable evidence and must also be acquired.</p></li>
+<li><p>Maintaining the Chain of Custody (CoC) and preserving integrity is difficult because many forensic tools require installing applications on the analyzed device.</p></li>
+<li><p>Mobile file systems usually cannot be mounted as read-only.</p></li>
+<li><p>Malware may detect analysis environments and destroy evidence.</p></li>
+<li><p>The acquisition process itself may alter evidence integrity, potentially affecting admissibility in court.</p></li>
+</ul>
+</section>
+<section id="objectives">
+<h2>Objectives<a class="headerlink" href="#objectives" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Become aware of the difficulties involved in obtaining forensic evidence from Android devices.</p></li>
+<li><p>Learn how to extract forensic evidence from Android devices.</p></li>
+</ul>
+</section>
+<section id="materials">
+<h2>Materials<a class="headerlink" href="#materials" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Android Studio</p></li>
+<li><p>VirtualBox</p></li>
+<li><p>SDK Platform Tools</p></li>
+<li><p>Andriller</p></li>
+<li><p>AFLogical OSE</p></li>
+</ul>
+</section>
+<section id="familiarization-with-android">
+<h2>1) Familiarization with Android<a class="headerlink" href="#familiarization-with-android" title="Link to this heading">¶</a></h2>
+<section id="a-install-android-studio">
+<h3><strong>a) Install Android Studio</strong><a class="headerlink" href="#a-install-android-studio" title="Link to this heading">¶</a></h3>
+<p>Android Studio can be downloaded from the official website:</p>
+<p>https://developer.android.com/studio</p>
+<p>Installation on Debian/Ubuntu:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>openjdk-17-jdk<span class="w"> </span>-y
+</pre></div>
+</div>
+<p>Download Android Studio:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>https://redirector.gvt1.com/edgedl/android/studio/ide-zips/latest/android-studio-linux.tar.gz
+</pre></div>
+</div>
+<p>Extract the package:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>-xvf<span class="w"> </span>android-studio-linux.tar.gz
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image.png" /></p>
+<p><img alt="alt text" src="../../_images/image-1.png" /></p>
+<p><img alt="alt text" src="../../_images/image-3.png" /></p>
+<p><img alt="alt text" src="../../_images/image-2.png" /></p>
+</section>
+<hr class="docutils" />
+<section id="b-run-an-android-virtual-device-avd">
+<h3><strong>b) Run an Android Virtual Device (AVD)</strong><a class="headerlink" href="#b-run-an-android-virtual-device-avd" title="Link to this heading">¶</a></h3>
+<p>Once Android Studio is installed:</p>
+<ol class="arabic simple">
+<li><p>Create any project.</p></li>
+<li><p>Open <code class="docutils literal notranslate"><span class="pre">Device</span> <span class="pre">Manager</span></code>.</p></li>
+<li><p>Create a virtual device.</p></li>
+<li><p>Select a Google Pixel image.</p></li>
+<li><p>Download the Android system image.</p></li>
+<li><p>Start the emulator using the Play button.</p></li>
+</ol>
+<p>Alternative command-line execution:</p>
+<p>To install the <code class="docutils literal notranslate"><span class="pre">.apk</span></code>, an emulator is required. Create an emulator using the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>avdmanager<span class="w"> </span>create<span class="w"> </span>avd<span class="w"> </span>-n<span class="w"> </span>Android26<span class="w"> </span>-k<span class="w"> </span><span class="s2">&quot;system-images;android-26;default;x86_64&quot;</span><span class="w"> </span>-c<span class="w"> </span>10M
+</pre></div>
+</div>
+<p>Verify that the device has been installed correctly:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>avdmanager<span class="w"> </span>list<span class="w"> </span>avd
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-5.png" /></p>
+<p>Start the emulator as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>emulator<span class="w"> </span>-avd<span class="w"> </span>Android26
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-6.png" /></p>
+</section>
+<hr class="docutils" />
+<section id="c-install-android-debug-bridge-adb-platform-tools">
+<h3><strong>c) Install Android Debug Bridge (ADB Platform Tools)</strong><a class="headerlink" href="#c-install-android-debug-bridge-adb-platform-tools" title="Link to this heading">¶</a></h3>
+<p>Installation on Debian/Ubuntu:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>adb<span class="w"> </span>fastboot<span class="w"> </span>-y
+</pre></div>
+</div>
+<p>Verify installation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>version
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-7.png" /></p>
+<p>Start ADB server:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>start-server
+</pre></div>
+</div>
+<p>Stop ADB server:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>kill-server
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="d-enable-debugging-and-practice-adb-commands">
+<h3><strong>d) Enable debugging and practice ADB commands</strong><a class="headerlink" href="#d-enable-debugging-and-practice-adb-commands" title="Link to this heading">¶</a></h3>
+<p>Inside the emulator:</p>
+<ol class="arabic simple">
+<li><p>Open <code class="docutils literal notranslate"><span class="pre">Settings</span></code>.</p></li>
+<li><p>Go to <code class="docutils literal notranslate"><span class="pre">About</span> <span class="pre">phone</span></code>.</p></li>
+<li><p>Tap <code class="docutils literal notranslate"><span class="pre">Build</span> <span class="pre">number</span></code> 7 times.</p></li>
+<li><p>Developer options will be enabled.</p></li>
+<li><p>Go to <code class="docutils literal notranslate"><span class="pre">Developer</span> <span class="pre">Options</span></code>.</p></li>
+<li><p>Enable <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">debugging</span></code>.</p></li>
+</ol>
+<section id="adb-commands">
+<h4>ADB Commands<a class="headerlink" href="#adb-commands" title="Link to this heading">¶</a></h4>
+<p>List devices:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>devices
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-8.png" /></p>
+<p>Open shell:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>shell
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-9.png" /></p>
+<p>Restart ADB as root:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>root
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-10.png" /></p>
+<p>Pull files from device:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>pull<span class="w"> </span>/sdcard/Download/
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-11.png" /></p>
+<p>Push files to device:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">echo</span><span class="w"> </span>hello<span class="w"> </span>&gt;<span class="w"> </span>hello.txt
+adb<span class="w"> </span>push<span class="w"> </span>hello.txt<span class="w"> </span>/sdcard/Download
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-12.png" /></p>
+<p>Reboot device:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>reboot
+</pre></div>
+</div>
+<p>Install APK:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>install<span class="w"> </span>app.apk
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-13.png" /></p>
+<p>Uninstall application:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>uninstall<span class="w"> </span>owasp.mstg.uncrackable2
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-14.png" /></p>
+<p>List installed packages:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>shell<span class="w"> </span>pm<span class="w"> </span>list<span class="w"> </span>packages
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-15.png" /></p>
+<p>Capture screenshots:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>exec-out<span class="w"> </span>screencap<span class="w"> </span>-p<span class="w"> </span>&gt;<span class="w"> </span>screenshot.png
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-16.png" /></p>
+<p>Record screen:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>shell<span class="w"> </span>screenrecord<span class="w"> </span>/sdcard/demo.mp4
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-17.png" /></p>
+<p>Pull recorded video:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>pull<span class="w"> </span>/sdcard/demo.mp4
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-18.png" /></p>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="android-virtualization-close-to-real-conditions">
+<h2>2) Android Virtualization Close to Real Conditions<a class="headerlink" href="#android-virtualization-close-to-real-conditions" title="Link to this heading">¶</a></h2>
+<section id="a-download-android-x86">
+<h3><strong>a) Download Android x86</strong><a class="headerlink" href="#a-download-android-x86" title="Link to this heading">¶</a></h3>
+<p>Official website:</p>
+<p>https://www.android-x86.org/</p>
+<p>Download ISO using wget:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>https://sourceforge.net/projects/android-x86/files/latest/download<span class="w"> </span>-O<span class="w"> </span>android-x86.iso
+</pre></div>
+</div>
+<p>Verify ISO:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sha256sum<span class="w"> </span>android-x86.iso
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="b-create-a-32-bit-linux-vm">
+<h3><strong>b) Create a 32-bit Linux VM</strong><a class="headerlink" href="#b-create-a-32-bit-linux-vm" title="Link to this heading">¶</a></h3>
+<p>Recommended VirtualBox configuration:</p>
+<ul class="simple">
+<li><p>2GB RAM</p></li>
+<li><p>8GB Hard Disk</p></li>
+<li><p>256MB Video Memory</p></li>
+</ul>
+<p>Create VM using VBoxManage:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>VBoxManage<span class="w"> </span>createvm<span class="w"> </span>--name<span class="w"> </span>AndroidVM<span class="w"> </span>--ostype<span class="w"> </span>Linux_64<span class="w"> </span>--register
+</pre></div>
+</div>
+<p>Create disk:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>VBoxManage<span class="w"> </span>createmedium<span class="w"> </span>disk<span class="w"> </span>--filename<span class="w"> </span>AndroidVM.vdi<span class="w"> </span>--size<span class="w"> </span><span class="m">8192</span>
+</pre></div>
+</div>
+<p>Set RAM:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>VBoxManage<span class="w"> </span>modifyvm<span class="w"> </span>AndroidVM<span class="w"> </span>--memory<span class="w"> </span><span class="m">2048</span><span class="w"> </span>--vram<span class="w"> </span><span class="m">256</span>
+</pre></div>
+</div>
+<p>Attach disk:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>VBoxManage<span class="w"> </span>storagectl<span class="w"> </span>AndroidVM<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;SATA Controller&quot;</span><span class="w"> </span>--add<span class="w"> </span>sata
+</pre></div>
+</div>
+<p>Attach ISO:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>VBoxManage<span class="w"> </span>storageattach<span class="w"> </span>AndroidVM<span class="w"> </span>--storagectl<span class="w"> </span><span class="s2">&quot;SATA Controller&quot;</span><span class="w"> </span>--port<span class="w"> </span><span class="m">0</span><span class="w"> </span>--device<span class="w"> </span><span class="m">0</span><span class="w"> </span>--type<span class="w"> </span>dvddrive<span class="w"> </span>--medium<span class="w"> </span>android-x86.iso
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="c-install-android-in-the-vm">
+<h3><strong>c) Install Android in the VM</strong><a class="headerlink" href="#c-install-android-in-the-vm" title="Link to this heading">¶</a></h3>
+<p>Boot the VM and select:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Installation - Install Android-x86 to harddisk
+</pre></div>
+</div>
+<p>Create partitions.</p>
+<p>Select filesystem:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ext4
+</pre></div>
+</div>
+<p>After installation:</p>
+<p>Remove ISO from the VM.</p>
+<p>Edit GRUB boot parameters:</p>
+<p>Replace:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>quiet
+</pre></div>
+</div>
+<p>With:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>nomodeset xforcevesa
+</pre></div>
+</div>
+<p>Boot the system.</p>
+<p>Configure Android normally.</p>
+<p>Add Google account:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Settings -&gt; Accounts -&gt; Add account
+</pre></div>
+</div>
+<p>Enable synchronization:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Automatically sync data
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="d-install-aflogical-ose-and-perform-forensic-extraction">
+<h3><strong>d) Install AFLogical OSE and perform forensic extraction</strong><a class="headerlink" href="#d-install-aflogical-ose-and-perform-forensic-extraction" title="Link to this heading">¶</a></h3>
+<p>Connect to the Android VM:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>connect<span class="w"> </span><span class="m">10</span>.206.8.1
+</pre></div>
+</div>
+<p>Verify connection:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>devices
+</pre></div>
+</div>
+<p>Install AFLogical OSE:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>install<span class="w"> </span>AFLogical-OSE_1.5.2.apk
+</pre></div>
+</div>
+<p>Launch the application.</p>
+<p>Select:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Select All -&gt; Capture
+</pre></div>
+</div>
+<p>Evidence will be stored inside:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/sdcard/forensics/
+</pre></div>
+</div>
+<p>Extract evidence:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>pull<span class="w"> </span>/sdcard/forensics/<span class="w"> </span>.
+</pre></div>
+</div>
+<p>List extracted files:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>forensics/
+</pre></div>
+</div>
+<p>Generate hashes:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sha256sum<span class="w"> </span>forensics/*
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="e-install-andriller-and-perform-evidence-extraction">
+<h3><strong>e) Install Andriller and perform evidence extraction</strong><a class="headerlink" href="#e-install-andriller-and-perform-evidence-extraction" title="Link to this heading">¶</a></h3>
+<p>Create virtual environment:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>env
+</pre></div>
+</div>
+<p>Activate environment:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>env/bin/activate
+</pre></div>
+</div>
+<p>Install Andriller:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>andriller<span class="w"> </span>-U
+</pre></div>
+</div>
+<p>Launch Andriller:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>andriller
+</pre></div>
+</div>
+<p>Select:</p>
+<ul class="simple">
+<li><p>Output directory</p></li>
+<li><p>ADB-connected device</p></li>
+</ul>
+<p>Start extraction.</p>
+<p>The final report will be generated as HTML.</p>
+<p>Useful commands:</p>
+<p>Verify ADB connection:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>devices
+</pre></div>
+</div>
+<p>Generate Android backup:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>backup<span class="w"> </span>-all
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="whatsapp-forensic-analysis">
+<h2>3) WhatsApp Forensic Analysis<a class="headerlink" href="#whatsapp-forensic-analysis" title="Link to this heading">¶</a></h2>
+<section id="a-what-are-consensual-and-non-consensual-forensic-analyses">
+<h3><strong>a) What are consensual and non-consensual forensic analyses?</strong><a class="headerlink" href="#a-what-are-consensual-and-non-consensual-forensic-analyses" title="Link to this heading">¶</a></h3>
+<section id="consensual-analysis">
+<h4>Consensual Analysis<a class="headerlink" href="#consensual-analysis" title="Link to this heading">¶</a></h4>
+<p>A forensic analyst has authorization from the device owner to perform the analysis.</p>
+<p>This means:</p>
+<ul class="simple">
+<li><p>The owner provides passwords and credentials.</p></li>
+<li><p>The investigator can access the device legally and directly.</p></li>
+</ul>
+</section>
+<section id="non-consensual-analysis">
+<h4>Non-Consensual Analysis<a class="headerlink" href="#non-consensual-analysis" title="Link to this heading">¶</a></h4>
+<p>The analysis is performed under judicial authorization.</p>
+<p>In these situations:</p>
+<ul class="simple">
+<li><p>Credentials are usually unavailable.</p></li>
+<li><p>Advanced forensic methods may be required.</p></li>
+<li><p>Physical acquisition may become necessary.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="b-what-techniques-can-be-used-to-analyze-whatsapp-conversations">
+<h3><strong>b) What techniques can be used to analyze WhatsApp conversations?</strong><a class="headerlink" href="#b-what-techniques-can-be-used-to-analyze-whatsapp-conversations" title="Link to this heading">¶</a></h3>
+<section id="screenshot-analysis">
+<h4>Screenshot Analysis<a class="headerlink" href="#screenshot-analysis" title="Link to this heading">¶</a></h4>
+<p>Conversations can be analyzed using screenshots.</p>
+<p>However:</p>
+<ul class="simple">
+<li><p>Screenshots are easy to manipulate.</p></li>
+<li><p>Device integrity must be verified.</p></li>
+</ul>
+</section>
+<section id="token-based-database-extraction">
+<h4>Token-Based Database Extraction<a class="headerlink" href="#token-based-database-extraction" title="Link to this heading">¶</a></h4>
+<p>WhatsApp Web sessions may expose authentication tokens.</p>
+<p>This can allow forensic extraction of synchronized conversations.</p>
+</section>
+<section id="database-extraction-from-the-device">
+<h4>Database Extraction from the Device<a class="headerlink" href="#database-extraction-from-the-device" title="Link to this heading">¶</a></h4>
+<p>This is the most reliable method.</p>
+<p>Requirements:</p>
+<ul class="simple">
+<li><p>Root access</p></li>
+<li><p>Physical or logical acquisition</p></li>
+</ul>
+<p>Useful commands:</p>
+<p>Locate databases:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>shell
+find<span class="w"> </span>/data/data/com.whatsapp<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*.db&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="c-where-does-whatsapp-store-encryption-keys-and-databases">
+<h3><strong>c) Where does WhatsApp store encryption keys and databases?</strong><a class="headerlink" href="#c-where-does-whatsapp-store-encryption-keys-and-databases" title="Link to this heading">¶</a></h3>
+<section id="encryption-key">
+<h4>Encryption Key<a class="headerlink" href="#encryption-key" title="Link to this heading">¶</a></h4>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/data/data/com.whatsapp/files/key
+</pre></div>
+</div>
+</section>
+<section id="databases">
+<h4>Databases<a class="headerlink" href="#databases" title="Link to this heading">¶</a></h4>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/data/data/com.whatsapp/databases/
+</pre></div>
+</div>
+<p>Important database files:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>msgstore.db
+wa.db
+</pre></div>
+</div>
+<p>Extract directories:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>pull<span class="w"> </span>/data/data/com.whatsapp/files/key
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>pull<span class="w"> </span>/data/data/com.whatsapp/databases/
+</pre></div>
+</div>
+<p>Root shell may be required:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>root
+adb<span class="w"> </span>shell
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="install-whatsapp-and-extract-databases">
+<h2>4) Install WhatsApp and Extract Databases<a class="headerlink" href="#install-whatsapp-and-extract-databases" title="Link to this heading">¶</a></h2>
+<p>Install WhatsApp from Google Play.</p>
+<p>Alternatively:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>install<span class="w"> </span>WhatsApp.apk
+</pre></div>
+</div>
+<p>Verify installation:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>shell<span class="w"> </span>pm<span class="w"> </span>list<span class="w"> </span>packages<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>whatsapp
+</pre></div>
+</div>
+<p>After receiving messages:</p>
+<p>Open root shell:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>root
+adb<span class="w"> </span>shell
+</pre></div>
+</div>
+<p>Navigate to databases:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/data/data/com.whatsapp/databases
+</pre></div>
+</div>
+<p>List files:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls
+</pre></div>
+</div>
+<p>Extract databases:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>pull<span class="w"> </span>/data/data/com.whatsapp/databases
+</pre></div>
+</div>
+<p>Extract encryption key:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>pull<span class="w"> </span>/data/data/com.whatsapp/files/key
+</pre></div>
+</div>
+<p>Analyze SQLite database:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sqlite3<span class="w"> </span>msgstore.db
+</pre></div>
+</div>
+<p>View messages:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">timestamp</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>List tables:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="p">.</span><span class="n">tables</span>
+</pre></div>
+</div>
+<p>Exit SQLite:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="p">.</span><span class="n">exit</span>
+</pre></div>
+</div>
+<p>Decrypt crypt databases using Andriller.</p>
+<p>Useful forensic commands:</p>
+<p>Generate hashes:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sha256sum<span class="w"> </span>msgstore.db
+</pre></div>
+</div>
+<p>Check file metadata:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>stat<span class="w"> </span>msgstore.db
+</pre></div>
+</div>
+<p>Analyze APK information:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>aapt<span class="w"> </span>dump<span class="w"> </span>badging<span class="w"> </span>WhatsApp.apk
+</pre></div>
+</div>
+<p>Extract APK from device:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>shell<span class="w"> </span>pm<span class="w"> </span>path<span class="w"> </span>com.whatsapp
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>pull<span class="w"> </span>/data/app/com.whatsapp/base.apk
+</pre></div>
+</div>
+<p>Generate complete Android backup:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>backup<span class="w"> </span>-apk<span class="w"> </span>-shared<span class="w"> </span>-all
+</pre></div>
+</div>
+<p>Inspect logs:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>logcat
+</pre></div>
+</div>
+<p>Capture device filesystem:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>shell<span class="w"> </span>ls<span class="w"> </span>-R<span class="w"> </span>/sdcard/
+</pre></div>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, PumukyDev
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Android Forensics Analysis</a><ul>
+<li><a class="reference internal" href="#evidence-extraction">Evidence Extraction</a></li>
+<li><a class="reference internal" href="#objectives">Objectives</a></li>
+<li><a class="reference internal" href="#materials">Materials</a></li>
+<li><a class="reference internal" href="#familiarization-with-android">1) Familiarization with Android</a><ul>
+<li><a class="reference internal" href="#a-install-android-studio"><strong>a) Install Android Studio</strong></a></li>
+<li><a class="reference internal" href="#b-run-an-android-virtual-device-avd"><strong>b) Run an Android Virtual Device (AVD)</strong></a></li>
+<li><a class="reference internal" href="#c-install-android-debug-bridge-adb-platform-tools"><strong>c) Install Android Debug Bridge (ADB Platform Tools)</strong></a></li>
+<li><a class="reference internal" href="#d-enable-debugging-and-practice-adb-commands"><strong>d) Enable debugging and practice ADB commands</strong></a><ul>
+<li><a class="reference internal" href="#adb-commands">ADB Commands</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#android-virtualization-close-to-real-conditions">2) Android Virtualization Close to Real Conditions</a><ul>
+<li><a class="reference internal" href="#a-download-android-x86"><strong>a) Download Android x86</strong></a></li>
+<li><a class="reference internal" href="#b-create-a-32-bit-linux-vm"><strong>b) Create a 32-bit Linux VM</strong></a></li>
+<li><a class="reference internal" href="#c-install-android-in-the-vm"><strong>c) Install Android in the VM</strong></a></li>
+<li><a class="reference internal" href="#d-install-aflogical-ose-and-perform-forensic-extraction"><strong>d) Install AFLogical OSE and perform forensic extraction</strong></a></li>
+<li><a class="reference internal" href="#e-install-andriller-and-perform-evidence-extraction"><strong>e) Install Andriller and perform evidence extraction</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#whatsapp-forensic-analysis">3) WhatsApp Forensic Analysis</a><ul>
+<li><a class="reference internal" href="#a-what-are-consensual-and-non-consensual-forensic-analyses"><strong>a) What are consensual and non-consensual forensic analyses?</strong></a><ul>
+<li><a class="reference internal" href="#consensual-analysis">Consensual Analysis</a></li>
+<li><a class="reference internal" href="#non-consensual-analysis">Non-Consensual Analysis</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#b-what-techniques-can-be-used-to-analyze-whatsapp-conversations"><strong>b) What techniques can be used to analyze WhatsApp conversations?</strong></a><ul>
+<li><a class="reference internal" href="#screenshot-analysis">Screenshot Analysis</a></li>
+<li><a class="reference internal" href="#token-based-database-extraction">Token-Based Database Extraction</a></li>
+<li><a class="reference internal" href="#database-extraction-from-the-device">Database Extraction from the Device</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#c-where-does-whatsapp-store-encryption-keys-and-databases"><strong>c) Where does WhatsApp store encryption keys and databases?</strong></a><ul>
+<li><a class="reference internal" href="#encryption-key">Encryption Key</a></li>
+<li><a class="reference internal" href="#databases">Databases</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#install-whatsapp-and-extract-databases">4) Install WhatsApp and Extract Databases</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

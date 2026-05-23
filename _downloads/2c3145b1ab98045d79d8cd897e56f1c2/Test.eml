@@ -1,0 +1,113 @@
+Delivered-To: abergom0504@ieszaidinvergeles.org
+Received: by 2002:ab3:1006:0:b0:2fe:ed70:5cd6 with SMTP id k6csp2558546ltk;
+        Tue, 19 May 2026 08:18:12 -0700 (PDT)
+X-Received: by 2002:a05:6000:26c3:b0:45d:7fdc:2e99 with SMTP id ffacd0b85a97d-45e5b87880amr32578370f8f.12.1779203891885;
+        Tue, 19 May 2026 08:18:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1779203891; cv=none;
+        d=google.com; s=arc-20240605;
+        b=FKte/7CC8a61916jG684+OXGEaXJjUrIBxPxfb3DZs3HvqnzSJfDdBabV4u05G/CVx
+         /nAu/5c2y3NyfRsh0YdLojFRpRwxKJhm7Toj5DTsDUpsFIgohPpMgzpG4mPYhRleoDcy
+         mnJc8Gt8+OqxINonrRtgTmPbqE61HdbQDjdBmYBfYzGM76IrcjJ9WSJBV8eEwpkAn4aF
+         JE1fWmbdbgYtfoYdADINa03Mi5HzK4Ef09oyQ4h54LpiOzb3oNZf+elL+ipJCTPiZXq3
+         JDI/NAYLPWS23QVmts538L3j9mvvvydRXD1PBSMV+7blbuBGdNI0nHLKU1qDN1xeA3xa
+         f6pA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=ui-outboundreport:message-id:subject:date:mime-version:user-agent
+         :to:from:dkim-signature;
+        bh=efTBu2sxNNAQgVpiCVpzTmx+8LyOJpKpJpkTeu4tR7I=;
+        fh=FT0zILc7/d6U3THWqWm8ZAb3Oxv4k6ayddqLT4N4RTU=;
+        b=D5sIe6JB+JW315qSgNwsrX053C5338UuYmINsl/vRA9lHvLnSBSwErUR9dStlarzfA
+         qZIUJxQFQOkPULRyWiecS5piYnI4tiMW62XR0fLxywVWdsarVE39KN1ZqtEEDm+jVmdd
+         qyF3sZomagfYosWICw4EXEM7Duaf4/Nmga2T47OajqEumKkrVlzPce2PM69nQ4rMFAxl
+         7r7dEvjiNzdXhb5e7VppgRI4oQXiIBr840hZrKLyb82dFnf+1PyMXwzx1ScmpEE+RiEo
+         GO9OiGa1wqGZKvIY/R0iXZQUOCbsrOmsWMXCvbuGhvNNz9sRUk9iFOKrnqodU9XNN7hg
+         U7Dg==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@pumukydev.com header.s=dkim header.b=RUkG978J;
+       spf=softfail (google.com: domain of transitioning admin@pumukydev.com does not designate 217.72.192.74 as permitted sender) smtp.mailfrom=admin@pumukydev.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=pumukydev.com
+Return-Path: <admin@pumukydev.com>
+Received: from mout.kundenserver.de (mout.kundenserver.de. [217.72.192.74])
+        by mx.google.com with ESMTPS id ffacd0b85a97d-45da1a7adaesi33908448f8f.234.2026.05.19.08.18.11
+        for <abergom0504@ieszaidinvergeles.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 May 2026 08:18:11 -0700 (PDT)
+Received-SPF: softfail (google.com: domain of transitioning admin@pumukydev.com does not designate 217.72.192.74 as permitted sender) client-ip=217.72.192.74;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@pumukydev.com header.s=dkim header.b=RUkG978J;
+       spf=softfail (google.com: domain of transitioning admin@pumukydev.com does not designate 217.72.192.74 as permitted sender) smtp.mailfrom=admin@pumukydev.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=pumukydev.com
+Received: from client.hidden.invalid by mrelayeu.kundenserver.de (mreue107
+ [212.227.15.152]) with ESMTPSA (Nemesis) id 1MYvLi-1wu2EN161Y-00SjGq for
+ <abergom0504@ieszaidinvergeles.org>; Tue, 19 May 2026 17:18:11 +0200
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPA id 4CFFE218EA0
+	for <abergom0504@ieszaidinvergeles.org>; Tue, 19 May 2026 17:18:08 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pumukydev.com;
+	s=dkim; t=1779203889; h=from:subject:date:message-id:to:mime-version:content-type;
+	bh=efTBu2sxNNAQgVpiCVpzTmx+8LyOJpKpJpkTeu4tR7I=;
+	b=RUkG978JPBIM12az1an9aapWq7v0t0LR51s9c7wXuXRERwE/O052x8Fz6uzouuyh/dw5zj
+	hQIlkpIGFHYVl5ZaZh9Ws5idpQdstNEFfMYO7CzpdF6qMd/fzY4VuOIl/9OW9R1Skvz/A/
+	abb2Zuagr/2SLUX/G3qa43QqwU5iZL28eWWW5vGBwlhNkErlHnaJY2DuMoN2NxJYIvac4x
+	aig4v6Osz0Mxu3PBvj3O5K3ICHFtEfT+U6/4Xb4ZuqvGjJlVC4lM5oWdlhVHhAWzazpwJ6
+	FiPtCdwn3ZqFGr5gB9EcluzEtuoYtnZhfdAFdN55CvFUA1TkgW/SdFEGOTxeJA==
+From: "admin" <admin@pumukydev.com>
+To: abergom0504@ieszaidinvergeles.org
+User-Agent: SOGoMail 5.12.8
+MIME-Version: 1.0
+Date: Tue, 19 May 2026 17:18:08 +0200
+Subject: Test
+Message-ID: <e39a95cc-2706-7f0f-6e2b-d90538e1fbf3@pumukydev.com>
+Content-Type: multipart/alternative; boundary="----=_=-_OpenGroupware_org_NGMime-60-1779203888.471017-6------"
+X-Last-TLS-Session-Version: None
+X-Provags-ID: V03:K1:pGZCSXkmaC5oXYJmoeXcUFTIV2/tvcX1y7nCPO1hxVi8uEmFd5D
+ +t6Jhanb81DRS6hW/BlkQTtKR9IMBfKXMTdhfofVPdobp04j2qGjBinRWo/LaeFJNFNm6Rk
+ EWs+Ms/2rBoqfJiVlUM2OiUdztUx4cKjV25Q3DRPNVA5+i4h/NVENPX/nc7D/I2lTVfpyAZ
+ 9WpuAMm6Rvx5WzswTtEeg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:cDTbEMNH+SY=;72Abii5AcJUQi15vY+AN2gsCb2E
+ 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
+ yuWBMA+GpeP3/bsR9Ls0=
+
+------=_=-_OpenGroupware_org_NGMime-60-1779203888.471017-6------
+Content-Type: text/plain; charset=utf-8
+Content-Length: 16
+
+
+This is a test!
+
+------=_=-_OpenGroupware_org_NGMime-60-1779203888.471017-6------
+Content-Type: text/html; charset=utf-8
+Content-Length: 35
+
+<html><p>This is a test!</p></html>
+
+------=_=-_OpenGroupware_org_NGMime-60-1779203888.471017-6--------
+
