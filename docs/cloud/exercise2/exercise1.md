@@ -462,33 +462,33 @@ ignacio
 
 enccendemos hacemos snapshot
 
-![alt text](image-5.png)
+![alt text](./images/image-5.png)
 
-![alt text](image-6.png)
+![alt text](./images/image-6.png)
 
 
 vol3 -f DC-1-Snapshot3.vmem -s ~/desktop/tools/volatility3/volatility3/symbols/ banners.Banner
 
 con esto demostramos que volatility pude leer el volcado de memoria e identificar el perfil del volcado
 
-![alt text](image-7.png)
+![alt text](./images/image-7.png)
 
 ----
 
 
 
 
-![alt text](image.png)
+![alt text](./images/image.png)
 
-![alt text](image-1.png)
+![alt text](./images/image-1.png)
 
-![alt text](image-2.png)
+![alt text](./images/image-2.png)
 
-![alt text](image-3.png)
+![alt text](./images/image-3.png)
 
 ssh -i <private-key-file-path> azureuser@9.223.178.153
 
-![alt text](image-4.png)
+![alt text](./images/image-4.png)
 
 ```bash
 wget https://github.com/microsoft/avml/releases/latest/download/avml
@@ -501,30 +501,30 @@ sudo ./avml memdump.raw
 sudo chown azureuser:azureuser memdump.raw 
 ```
 
-![alt text](image-8.png)
+![alt text](./images/image-8.png)
 
 ```
 scp -i azure-forensics-key.pem azureuser@9.223.178.153:~/memdump.raw .
 ```
 
-![alt text](image-21.png)
+![alt text](./images/image-21.png)
 
 ```bash
 vol3 -f memdump.raw -s ~/desktop/tools/volatility3/volatility3/symbols/ banners.Banner
 ```
 
-![alt text](image-22.png)
+![alt text](./images/image-22.png)
 
 
-![alt text](image-9.png)
+![alt text](./images/image-9.png)
 
-![alt text](image-10.png)
+![alt text](./images/image-10.png)
 
-![alt text](image-11.png)
+![alt text](./images/image-11.png)
 
-![alt text](image-12.png)
+![alt text](./images/image-12.png)
 
-![alt text](image-14.png)
+![alt text](./images/image-14.png)
 
 
 
@@ -533,15 +533,15 @@ docker run -it mcr.microsoft.com/azure-cli
 az login
 ```
 
-![alt text](image-16.png)
+![alt text](./images/image-16.png)
 
-![alt text](image-15.png)
+![alt text](./images/image-15.png)
 
-![alt text](image-17.png)
+![alt text](./images/image-17.png)
 
-![alt text](image-18.png)
+![alt text](./images/image-18.png)
 
-![alt text](image-19.png)
+![alt text](./images/image-19.png)
 
 ```bash
 az snapshot grant-access \
@@ -550,7 +550,7 @@ az snapshot grant-access \
   --duration-in-seconds 3600
 ```
 
-![alt text](image-20.png)
+![alt text](./images/image-20.png)
 
 ```json
 {
@@ -558,7 +558,7 @@ az snapshot grant-access \
 }
 ```
 
-![alt text](image-23.png)
+![alt text](./images/image-23.png)
 
 
 
@@ -571,14 +571,14 @@ az snapshot grant-access \
 az account show
 ```
 
-![alt text](image-24.png)
+![alt text](./images/image-24.png)
 
 
 ```bash
 az ad sp create-for-rbac --name "forensics-sp"
 ```
 
-![alt text](image-25.png)
+![alt text](./images/image-25.png)
 
 TBD BROTHEL HAY UNA PUTA CONTRASEÑA EN TEXTO PLANO QUITALA ANDA!!!
 
@@ -590,7 +590,7 @@ az role assignment create \
   --scope /subscriptions/<id>
 ```
 
-![alt text](image-26.png)
+![alt text](./images/image-26.png)
 
 
 ```bash
@@ -606,15 +606,15 @@ export AZURE_CLIENT_ID="<app-id>"
 export AZURE_CLIENT_SECRET="<client-secret>"
 ```
 
-![alt text](image-30.png)
+![alt text](./images/image-30.png)
 
 crea este archivo con el grupo y el nombre del archivo
 
-![alt text](image-28.png)
+![alt text](./images/image-28.png)
 
 
 ```bash
 python3 forensics.py
 ```
 
-![alt text](image-31.png)
+![alt text](./images/image-31.png)

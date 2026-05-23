@@ -48,7 +48,7 @@ sudo sh get-docker.sh
 docker version
 ```
 
-![alt text](image.png)
+![alt text](./images/image.png)
 
 ### **3. Run a Docker command that shows information about the host system**
 
@@ -56,7 +56,7 @@ docker version
 docker info
 ```
 
-![alt text](image-1.png)
+![alt text](./images/image-1.png)
 
 ### **4. Execute the Docker command required to download the image `nginx:latest` from Docker Hub**
 
@@ -64,7 +64,7 @@ docker info
 docker pull nginx:latest
 ```
 
-![alt text](image-2.png)
+![alt text](./images/image-2.png)
 
 ### **5. Execute the Docker command required to list locally stored images**
 
@@ -72,7 +72,7 @@ docker pull nginx:latest
 docker image ls
 ```
 
-![alt text](image-3.png)
+![alt text](./images/image-3.png)
 
 ### **6. Run a container in detached mode using the image `nginx:latest`**
 
@@ -80,7 +80,7 @@ docker image ls
 docker run -d --name nginx-detached nginx:latest
 ```
 
-![alt text](image-4.png)
+![alt text](./images/image-4.png)
 
 ### **7. Run a container in interactive mode using the image `nginx:latest`**
 
@@ -88,7 +88,7 @@ docker run -d --name nginx-detached nginx:latest
 docker run -it --name nginx-interactive nginx:latest /bin/bash
 ```
 
-![alt text](image-5.png)
+![alt text](./images/image-5.png)
 
 NOTE: You can exit from the container with `exit`
 
@@ -98,7 +98,7 @@ NOTE: You can exit from the container with `exit`
 docker ps
 ```
 
-![alt text](image-6.png)
+![alt text](./images/image-6.png)
 
 ### **9. Inspect all the properties of one of the containers**
 
@@ -106,7 +106,7 @@ docker ps
 docker inspect nginx-detached
 ```
 
-![alt text](image-7.png)
+![alt text](./images/image-7.png)
 
 ### **10. Execute the Docker command required to list the networks configured for Docker**
 
@@ -114,7 +114,7 @@ docker inspect nginx-detached
 docker network ls
 ```
 
-![alt text](image-8.png)
+![alt text](./images/image-8.png)
 
 ### **11. Attach the console to one of your containers**
 
@@ -122,7 +122,7 @@ docker network ls
 docker attach nginx-detached
 ```
 
-![alt text](image-9.png)
+![alt text](./images/image-9.png)
 
 ### **12. Execute a `/bin/bash` command inside one of your containers in interactive mode**
 
@@ -130,7 +130,7 @@ docker attach nginx-detached
 docker exec -it nginx-detached /bin/bash
 ```
 
-![alt text](image-10.png)
+![alt text](./images/image-10.png)
 
 ### **13. Stop one of your containers**
 
@@ -138,7 +138,7 @@ docker exec -it nginx-detached /bin/bash
 docker stop nginx-detached
 ```
 
-![alt text](image-11.png)
+![alt text](./images/image-11.png)
 
 ### **14. Start the previous container again**
 
@@ -146,7 +146,7 @@ docker stop nginx-detached
 docker start nginx-detached
 ```
 
-![alt text](image-12.png)
+![alt text](./images/image-12.png)
 
 ### **15. Delete one of your containers**
 
@@ -154,7 +154,7 @@ docker start nginx-detached
 docker rm -f nginx-detached
 ```
 
-![alt text](image-13.png)
+![alt text](./images/image-13.png)
 
 note: the -f parameter is necessaty as the container is starrted, otherwhise we had to stop the conteiner and remove it
 
@@ -177,7 +177,7 @@ Build the image:
 docker build -t myubuntu .
 ```
 
-![alt text](image-14.png)
+![alt text](./images/image-14.png)
 
 Run the container:
 
@@ -185,7 +185,7 @@ Run the container:
 docker run -d --name mycontainer myubuntu
 ```
 
-![alt text](image-15.png)
+![alt text](./images/image-15.png)
 
 ### **17. Convert the previous container into an image called `mydebian`**
 
@@ -193,13 +193,13 @@ docker run -d --name mycontainer myubuntu
 docker commit mycontainer mydebian
 ```
 
-![alt text](image-16.png)
+![alt text](./images/image-16.png)
 
 ```bash
 docker image ls
 ```
 
-![alt text](image-20.png)
+![alt text](./images/image-20.png)
 
 ### **18. Export the image `mydebian` as a file**
 
@@ -207,13 +207,13 @@ docker image ls
 docker save -o mydebian.tar mydebian
 ```
 
-![alt text](image-18.png)
+![alt text](./images/image-18.png)
 
 ```bash
 ls mydebian.tar
 ```
 
-![alt text](image-19.png)
+![alt text](./images/image-19.png)
 
 ### **19. Export the `nginx` container as a file**
 
@@ -221,14 +221,14 @@ ls mydebian.tar
 docker export nginx-detached -o nginx-container.tar
 ```
 
-![alt text](image-21.png)
+![alt text](./images/image-21.png)
 
 ```bash
 ls nginx-container.tar
 ```
 
 
-![alt text](image-22.png)
+![alt text](./images/image-22.png)
 
 ### **20. Delete one of your containers**
 
@@ -236,7 +236,7 @@ ls nginx-container.tar
 docker rm -f mycontainer
 ```
 
-![alt text](image-23.png)
+![alt text](./images/image-23.png)
 
 ### **21. Delete the image `mydebian`**
 
@@ -244,7 +244,7 @@ docker rm -f mycontainer
 docker image rm mydebian
 ```
 
-![alt text](image-24.png)
+![alt text](./images/image-24.png)
 
 ## PART B: Docker Forensics
 
@@ -273,7 +273,7 @@ Cirtas configuraciones hacen posible que un atacante escape del docker, si vemos
 docker diff nginx-detached
 ```
 
-![alt text](image-25.png)
+![alt text](./images/image-25.png)
 
 #### SAVE
 
@@ -281,7 +281,7 @@ docker diff nginx-detached
 docker save -o nginx-image.tar nginx:latest
 ```
 
-![alt text](image-26.png)
+![alt text](./images/image-26.png)
 
 #### EXPORT
 
@@ -289,7 +289,7 @@ docker save -o nginx-image.tar nginx:latest
 docker export nginx-detached -o nginx-container.tar
 ```
 
-![alt text](image-27.png)
+![alt text](./images/image-27.png)
 
 #### LOAD
 
@@ -297,7 +297,7 @@ docker export nginx-detached -o nginx-container.tar
 docker load -i nginx-image.tar
 ```
 
-![alt text](image-28.png)
+![alt text](./images/image-28.png)
 
 #### IMPORT
 
@@ -305,7 +305,7 @@ docker load -i nginx-image.tar
 docker import nginx-container.tar imported-nginx
 ```
 
-![alt text](image-29.png)
+![alt text](./images/image-29.png)
 
 Run the imported image:
 
@@ -313,7 +313,7 @@ Run the imported image:
 docker run -it imported-nginx /bin/bash
 ```
 
-![alt text](image-30.png)
+![alt text](./images/image-30.png)
 
 ### **3. Review the documentation for the utility [docker-diff](https://github.com/GoogleContainerTools/container-diff), which is used to compare local Docker images against those hosted in Docker Hub. Download the utility and perform a test.**
 
@@ -331,7 +331,7 @@ Verify installation:
 container-diff version
 ```
 
-![alt text](image-31.png)
+![alt text](./images/image-31.png)
 
 Analyze an image:
 
@@ -339,7 +339,7 @@ Analyze an image:
 container-diff analyze daemon://nginx:latest
 ```
 
-![alt text](image-32.png)
+![alt text](./images/image-32.png)
 
 Analyze filesystem contents:
 
@@ -347,7 +347,7 @@ Analyze filesystem contents:
 container-diff analyze daemon://nginx:latest --type=file
 ```
 
-![alt text](image-33.png)
+![alt text](./images/image-33.png)
 
 Analyze installed packages:
 
@@ -355,7 +355,7 @@ Analyze installed packages:
 container-diff analyze daemon://nginx:latest --type=apt
 ```
 
-![alt text](image-34.png)
+![alt text](./images/image-34.png)
 
 Analyze image history:
 
@@ -363,7 +363,7 @@ Analyze image history:
 container-diff analyze daemon://nginx:latest --type=history
 ```
 
-![alt text](image-35.png)
+![alt text](./images/image-35.png)
 
 Compare two images:
 
@@ -371,7 +371,7 @@ Compare two images:
 container-diff diff daemon://nginx:latest daemon://<other-container>
 ```
 
-![alt text](image-36.png)
+![alt text](./images/image-36.png)
 
 Compare filesystem differences:
 
@@ -379,7 +379,7 @@ Compare filesystem differences:
 container-diff diff daemon://nginx:latest daemon://<other-container> --type=file
 ```
 
-![alt text](image-37.png)
+![alt text](./images/image-37.png)
 
 Compare installed packages:
 
@@ -387,7 +387,7 @@ Compare installed packages:
 container-diff diff daemon://nginx:latest daemon://<other-container> --type=apt
 ```
 
-![alt text](image-38.png)
+![alt text](./images/image-38.png)
 
 Compare image history:
 
@@ -395,7 +395,7 @@ Compare image history:
 container-diff diff daemon://nginx:latest daemon://<other-container> --type=history
 ```
 
-![alt text](image-39.png)
+![alt text](./images/image-39.png)
 
 ### **4. Within the context of an ongoing investigation, a logical image corresponding to a Docker installation from a suspicious computer system has been obtained. It is suspected that this installation may have been used to conceal activities.**
 
@@ -421,7 +421,7 @@ List all containers:
 sudo de-env/bin/de.py -r /var/lib/docker list all_containers
 ```
 
-![alt text](image-40.png)
+![alt text](./images/image-40.png)
 
 from this json we can get these results:
 
@@ -441,7 +441,7 @@ Login to Docker:
 docker login
 ```
 
-![alt text](image-41.png)
+![alt text](./images/image-41.png)
 
 Install Docker Scout:
 
@@ -463,7 +463,7 @@ Verify installation:
 docker scout version
 ```
 
-![alt text](image-42.png)
+![alt text](./images/image-42.png)
 
 Analyze an image:
 
@@ -471,7 +471,7 @@ Analyze an image:
 docker scout quickview nginx:latest
 ```
 
-![alt text](image-43.png)
+![alt text](./images/image-43.png)
 
 Detailed CVE analysis:
 
@@ -479,7 +479,7 @@ Detailed CVE analysis:
 docker scout cves nginx:latest
 ```
 
-![alt text](image-44.png)
+![alt text](./images/image-44.png)
 
 Recommendations:
 
@@ -487,7 +487,7 @@ Recommendations:
 docker scout recommendations nginx:latest
 ```
 
-![alt text](image-45.png)
+![alt text](./images/image-45.png)
 
 ### **6. Read the following [article](https://tbhaxor.com/analyzing-docker-image-for-hunting-secrets/). From a forensic perspective, what are checkpoints useful for?**
 

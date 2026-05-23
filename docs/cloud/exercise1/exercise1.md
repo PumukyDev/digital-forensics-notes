@@ -183,7 +183,7 @@ OneDrive service and configuration files are typically located at:
 ```text
 C:\Users\<user>\AppData\Local\Microsoft\OneDrive
 ```
-![alt text](image.png)
+![alt text](./images/image.png)
 
 Settings directory:
 
@@ -191,7 +191,7 @@ Settings directory:
 C:\Users\<user>\AppData\Local\Microsoft\OneDrive\seDttings
 ```
 
-![alt text](image-1.png)
+![alt text](./images/image-1.png)
 
 ##### **Google Drive**
 
@@ -201,7 +201,7 @@ Google Drive service and configuration location is here:
 C:\Program Files\Google\Drive File Stream\
 ```
 
-![alt text](image-2.png)
+![alt text](./images/image-2.png)
 
 ##### **Dropbox**
 
@@ -211,7 +211,7 @@ Dropbox service location:
 C:\Program Files (x86)\Dropbox\Client
 ```
 
-![alt text](image-4.png)
+![alt text](./images/image-4.png)
 
 Configuration files:
 
@@ -219,7 +219,7 @@ Configuration files:
 C:\Users\<user>\AppData\Roaming\Dropbox\
 ```
 
-![alt text](image-3.png)
+![alt text](./images/image-3.png)
 
 ### **3. Analyze the previous clients and determine**
 
@@ -231,13 +231,13 @@ Nextcloud service location:
 
 C:\Program Files\Nextcloud\
 
-![alt text](image-19.png)
+![alt text](./images/image-19.png)
 
 Configuration files:
 
 C:\Users\<user>\AppData\Roaming\Nextcloud\logs\
 
-![alt text](image-20.png)
+![alt text](./images/image-20.png)
 
 #### **b) Locate where the cloud synchronized folders are stored**
 
@@ -249,7 +249,7 @@ The synchronized OneDrive directory is usually located inside the user's profile
 C:\Users\<user>\OneDrive
 ```
 
-![alt text](image-5.png)
+![alt text](./images/image-5.png)
 
 ##### **Google Drive**
 
@@ -261,7 +261,7 @@ The local cache and synchronization data are located at:
 %UserProfile%\AppData\Local\Google\DriveFS\
 ```
 
-![alt text](image-6.png)
+![alt text](./images/image-6.png)
 
 ##### **Dropbox**
 
@@ -271,7 +271,7 @@ The synchronized Dropbox folder is usually located at:
 C:\Users\<user>\Dropbox\DropsyncFiles
 ```
 
-![alt text](image-7.png)
+![alt text](./images/image-7.png)
 
 ##### **Nextcloud**
 
@@ -279,7 +279,7 @@ The synchronized Nextcloud folder is usually located at:
 
 C:\Users\<user>\Desktop\Nextcloud\
 
-![alt text](image-21.png)
+![alt text](./images/image-21.png)
 
 #### **c) Find the generated metadata and determine what information can be extracted from it**
 
@@ -291,11 +291,11 @@ Metadata and logs can be found in:
 C:\Users\<user>\AppData\Local\Microsoft\OneDrive\logs\
 ```
 
-![alt text](image-8.png)
+![alt text](./images/image-8.png)
 
 Inside the `Personal` directory, forensic artifacts and synchronization logs can be found.
 
-![alt text](image-9.png)
+![alt text](./images/image-9.png)
 
 Read the log:
 
@@ -303,7 +303,7 @@ Read the log:
 Get-Content "$env:LOCALAPPDATA\Microsoft\OneDrive\logs\Personal\SyncDiagnostics.log"
 ```
 
-![alt text](image-10.png)
+![alt text](./images/image-10.png)
 
 From these logs we can extract:
 
@@ -321,17 +321,17 @@ Metadata is stored inside SQLite databases located at:
 ```text
 C:\Users\<user>\AppData\Local\Google\DriveFS
 ```
-![alt text](image-11.png)
+![alt text](./images/image-11.png)
 
 Databases can be analyzed using SQLiteStudio.
 
 - experiment.db
 
-![alt text](image-12.png)
+![alt text](./images/image-12.png)
 
 - metrics_store_sqlite.db
 
-![alt text](image-13.png)
+![alt text](./images/image-13.png)
 
 is empty as I did not use it
 
@@ -339,11 +339,11 @@ is empty as I did not use it
 
 rutas de sincronización
 
-![alt text](image-15.png)
+![alt text](./images/image-15.png)
 
 here we can see all the disks and their names
 
-![alt text](image-14.png)
+![alt text](./images/image-14.png)
 
 Inside these databases we can find:
 
@@ -359,7 +359,7 @@ Logs directory:
 C:\Users\<user>\AppData\Local\Google\DriveFS\logs
 ```
 
-![alt text](image-16.png)
+![alt text](./images/image-16.png)
 
 
 ##### **Dropbox**
@@ -369,7 +369,7 @@ Dropbox stores forensic artifacts and databases inside:
 ```text
 C:\Users\<user>\AppData\Local\Dropbox
 ```
-![alt text](image-17.png)
+![alt text](./images/image-17.png)
 
 The most important file is
 
@@ -380,7 +380,7 @@ host.db
 
 However there are unredeable / uncrypted and we cannot get anything
 
-![alt text](image-18.png)
+![alt text](./images/image-18.png)
 
 Possible information extracted:
 
@@ -397,13 +397,13 @@ Nextcloud stores forensic artifacts, logs, and client metadata inside:
 
 C:\Users\<user>\AppData\Local\Nextcloud\
 
-![alt text](image-22.png)
+![alt text](./images/image-22.png)
 
 Additional configuration and synchronization data can also be found in:
 
 C:\Users\<user>\AppData\Roaming\Nextcloud\
 
-![alt text](image-23.png)
+![alt text](./images/image-23.png)
 
 Inside these directories we can find log files, cache information, synchronization metadata, and configuration files.
 
@@ -411,7 +411,7 @@ The most important file is:
 
 <date>_nextcloud.log
 
-![alt text](image-24.png)
+![alt text](./images/image-24.png)
 
 Possible information extracted:
 
