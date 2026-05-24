@@ -162,7 +162,7 @@ Both Thunderbird and Outlook were installed and configured.
 
 On Windows, Thunderbird stores profile data under:
 
-```txt
+```
 C:\Users\<USER>\AppData\Roaming\Thunderbird\Profiles\
 ```
 
@@ -173,7 +173,7 @@ From a forensic perspective, the profile may hold mailbox folders (Inbox, Sent, 
 
 Outlook keeps much of its local state here:
 
-```txt
+```
 C:\Users\<USER>\AppData\Local\Microsoft\Olk\
 ```
 
