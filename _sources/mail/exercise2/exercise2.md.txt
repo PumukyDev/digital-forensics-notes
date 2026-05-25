@@ -1,4 +1,4 @@
-# Email Postmortem Analysis
+# Email Medium
 
 ## Introduction
 

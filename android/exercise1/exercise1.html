@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Practice 2. Android Forensics Analysis" href="../exercise2/exercise2.html"><link rel="prev" title="&lt;no title&gt;" href="../../linux-file-system/exercise5/exercise5.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Android forensics medium" href="../exercise2/exercise2.html"><link rel="prev" title="&lt;no title&gt;" href="../../linux-file-system/exercise5/exercise5.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
-        <title>Android Forensics Analysis - Digital Forensics Notes documentation</title>
+        <title>Android forensics basics - Digital Forensics Notes documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -193,9 +193,9 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Windows file system:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise1/exercise1.html">Exercise 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise2/exercise2.html">Exercise 2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise3/exercise3.html">Exercise 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise1/exercise1.html">MBR and GPT partition tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise2/exercise2.html">NTFS metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise3/exercise3.html">Dara recovery</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Windows artifacts:</span></p>
 <ul>
@@ -218,19 +218,20 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Android:</span></p>
 <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Android Forensics Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../exercise2/exercise2.html">Practice 2. Android Forensics Analysis</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Android forensics basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise2/exercise2.html">Android forensics medium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise3/exercise3.html">Android forensics advanced</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Cloud:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../cloud/exercise1/exercise1.html">Cloud Forensics Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../cloud/exercise2/exercise2.html">Cloud Forensics Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../cloud/exercise3/exercise3.html">docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cloud/exercise1/exercise1.html">Google Drive, Onedrive, Dropbox and Nextcloud.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cloud/exercise2/exercise2.html">VMWare and Azure Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cloud/exercise3/exercise3.html">Docker</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Mail:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../mail/exercise1/exercise1.html">Email Forensic Analysis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../mail/exercise2/exercise2.html">Email Postmortem Analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mail/exercise1/exercise1.html">Email Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mail/exercise2/exercise2.html">Email Medium</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../mail/exercise3/exercise3.html">Secure Mail Server</a></li>
 </ul>
 
@@ -270,8 +271,8 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="android-forensics-analysis">
-<h1>Android Forensics Analysis<a class="headerlink" href="#android-forensics-analysis" title="Link to this heading">¶</a></h1>
+          <section id="android-forensics-basics">
+<h1>Android forensics basics<a class="headerlink" href="#android-forensics-basics" title="Link to this heading">¶</a></h1>
 <section id="evidence-extraction">
 <h2>Evidence Extraction<a class="headerlink" href="#evidence-extraction" title="Link to this heading">¶</a></h2>
 <p>Smartphones have become an essential tool across all sectors of modern society: from regular consumers to high-ranking government officials and the business sector.</p>
@@ -807,7 +808,7 @@ adb<span class="w"> </span>shell
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Practice 2. Android Forensics Analysis</div>
+                <div class="title">Android forensics medium</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -852,7 +853,7 @@ adb<span class="w"> </span>shell
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Android Forensics Analysis</a><ul>
+<li><a class="reference internal" href="#">Android forensics basics</a><ul>
 <li><a class="reference internal" href="#evidence-extraction">Evidence Extraction</a></li>
 <li><a class="reference internal" href="#objectives">Objectives</a></li>
 <li><a class="reference internal" href="#materials">Materials</a></li>

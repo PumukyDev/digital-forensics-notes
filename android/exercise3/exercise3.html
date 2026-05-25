@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Docker" href="../exercise3/exercise3.html"><link rel="prev" title="Google Drive, Onedrive, Dropbox and Nextcloud." href="../exercise1/exercise1.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Google Drive, Onedrive, Dropbox and Nextcloud." href="../../cloud/exercise1/exercise1.html"><link rel="prev" title="Android forensics medium" href="../exercise2/exercise2.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
-        <title>VMWare and Azure Cloud - Digital Forensics Notes documentation</title>
+        <title>Android forensics advanced - Digital Forensics Notes documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -217,16 +217,16 @@
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise4/exercise4.html">Volatility Linux</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Android:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../android/exercise1/exercise1.html">Android forensics basics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../android/exercise2/exercise2.html">Android forensics medium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../android/exercise3/exercise3.html">Android forensics advanced</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../exercise1/exercise1.html">Android forensics basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise2/exercise2.html">Android forensics medium</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Android forensics advanced</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Cloud:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../exercise1/exercise1.html">Google Drive, Onedrive, Dropbox and Nextcloud.</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">VMWare and Azure Cloud</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../exercise3/exercise3.html">Docker</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../cloud/exercise1/exercise1.html">Google Drive, Onedrive, Dropbox and Nextcloud.</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cloud/exercise2/exercise2.html">VMWare and Azure Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cloud/exercise3/exercise3.html">Docker</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Mail:</span></p>
 <ul>
@@ -253,7 +253,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="../../_sources/cloud/exercise2/exercise2.md.txt" title="View this page">
+  <a class="muted-link" href="../../_sources/android/exercise3/exercise3.md.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -271,164 +271,10 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="vmware-and-azure-cloud">
-<h1>VMWare and Azure Cloud<a class="headerlink" href="#vmware-and-azure-cloud" title="Link to this heading">¶</a></h1>
-<section id="extraction-of-evidence-from-on-premise-iaas-virtual-machines">
-<h2>Extraction of Evidence from On-Premise / IaaS Virtual Machines<a class="headerlink" href="#extraction-of-evidence-from-on-premise-iaas-virtual-machines" title="Link to this heading">¶</a></h2>
-<p>One of the situations we may face as future forensic professionals is dealing with virtual machines, either in local installations (our own or a client’s) or in third-party infrastructures.</p>
-<p>In local installations, we have more possibilities for forensic acquisition. We can operate from inside the virtual machine itself or directly from the hypervisor. The first scenario is very similar to the forensic procedures already studied in class: we can use DumpIt or similar tools to perform a memory dump, execute scripts to collect forensic artifacts, and also clone the hard drive or obtain a logical image.</p>
-<p>The second scenario is the one covered in Part A of this practice.</p>
-<p>Part B focuses on extracting forensic evidence when the virtual machines are hosted by third-party providers, such as Azure Cloud. In this case, memory dumps can be obtained using the same methods previously studied in class. Additionally, scripts may be executed to collect relevant forensic artifacts for later analysis. Virtual hard drives can also be downloaded or cloned directly in the cloud for analysis from another virtual machine.</p>
-</section>
-<section id="objectives">
-<h2>Objectives<a class="headerlink" href="#objectives" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p>Become aware of the forensic acquisition possibilities offered by cloud environments and virtualized systems.</p></li>
-<li><p>Extract forensic evidence from some of the most widely used cloud systems.</p></li>
-</ul>
-</section>
-<section id="materials">
-<h2>Materials<a class="headerlink" href="#materials" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p>Any Windows distribution virtualized on your system.</p></li>
-<li><p>Azure Cloud.</p></li>
-<li><p>Libcloudforensics.</p></li>
-</ul>
-</section>
-<section id="part-a-extraction-of-on-premise-evidence">
-<h2>PART A: Extraction of On-Premise Evidence<a class="headerlink" href="#part-a-extraction-of-on-premise-evidence" title="Link to this heading">¶</a></h2>
-<p>In this practical exercise we will learn how to perform a forensic analysis of a system virtualized with VMware</p>
-<p><strong>List all the running machines</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vmrun<span class="w"> </span>list
-</pre></div>
-</div>
-<p><img alt="alt text" src="../../_images/image-32.png" /></p>
-<p><strong>Take a snapshot of the machine</strong></p>
-<p>It can be done through the Vmware GUI:</p>
-<p><img alt="alt text" src="../../_images/image-52.png" /></p>
-<p>Or using a CLI command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vmrun<span class="w"> </span>snapshot<span class="w"> </span><span class="s2">&quot;/home/adrian/desktop/vmware/DC-1/DC-1.vmx&quot;</span><span class="w"> </span><span class="s2">&quot;Snapshot 3&quot;</span>
-</pre></div>
-</div>
-<p>As shown, the snapshot is stored correctly. Move it to Kali in order to analyze it correctly.</p>
-<p><img alt="alt text" src="../../_images/image-62.png" /></p>
-<p><strong>Analyze the memory dump</strong></p>
-<p>Once the dump is taken, we can analyze it using volatily as shown below</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>DC-1-Snapshot3.vmem<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>banners.Banner
-</pre></div>
-</div>
-<p><img alt="alt text" src="../../_images/image-72.png" /></p>
-</section>
-<section id="part-b-extraction-of-evidence-from-azure-cloud">
-<h2>PART B: Extraction of Evidence from Azure Cloud<a class="headerlink" href="#part-b-extraction-of-evidence-from-azure-cloud" title="Link to this heading">¶</a></h2>
-<p>Sign in Azure CLoud and click on “Virtual machines”</p>
-<p><img alt="alt text" src="../../_images/image2.png" /></p>
-<p>Clik con “Create” and select “Virtual machine”</p>
-<p><img alt="alt text" src="../../_images/image-110.png" /></p>
-<p>There, create a machine of your preferences</p>
-<p><img alt="alt text" src="../../_images/image-25.png" /></p>
-<p>Once finished, a menu like the image below should appear.</p>
-<p><img alt="alt text" src="../../_images/image-33.png" /></p>
-<p>Connect to the deployed machine via ssh</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh<span class="w"> </span>-i<span class="w"> </span>&lt;private-key&gt;<span class="w"> </span>azureuser@9.223.178.153
-</pre></div>
-</div>
-<p><img alt="alt text" src="../../_images/image-41.png" /></p>
-<p>Download avml and make a memory dump</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>https://github.com/microsoft/avml/releases/latest/download/avml
-chmod<span class="w"> </span>+x<span class="w"> </span>avml
-sudo<span class="w"> </span>./avml<span class="w"> </span>memdump.raw
-sudo<span class="w"> </span>chown<span class="w"> </span>azureuser:azureuser<span class="w"> </span>memdump.raw<span class="w"> </span>
-</pre></div>
-</div>
-<p><img alt="alt text" src="../../_images/image-82.png" /></p>
-<p>Copyy the memory dump into your local machine</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scp</span> <span class="o">-</span><span class="n">i</span> <span class="n">azure</span><span class="o">-</span><span class="n">forensics</span><span class="o">-</span><span class="n">key</span><span class="o">.</span><span class="n">pem</span> <span class="n">azureuser</span><span class="o">@</span><span class="mf">9.223.178.153</span><span class="p">:</span><span class="o">~/</span><span class="n">memdump</span><span class="o">.</span><span class="n">raw</span> <span class="o">.</span>
-</pre></div>
-</div>
-<p><img alt="alt text" src="../../_images/image-212.png" /></p>
-<p>Analyze the memory dump using volatility.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>memdump.raw<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>banners.Banner
-</pre></div>
-</div>
-<p><img alt="alt text" src="../../_images/image-221.png" /></p>
-<p>In order to make the disk clone in Azure, click over the disk name</p>
-<p><img alt="alt text" src="../../_images/image-92.png" /></p>
-<p>Then click on “Create snapshot”.</p>
-<p><img alt="alt text" src="../../_images/image-102.png" /></p>
-<p>Type a name for the snapshot and click on “Review + create”.</p>
-<p><img alt="alt text" src="../../_images/image-112.png" /></p>
-<p>Verify that the validation is passed and click on “Create”</p>
-<p><img alt="alt text" src="../../_images/image-122.png" /></p>
-<p>Lastly, verigy that th edeplyment is completed and the snapshot is done.</p>
-<p><img alt="alt text" src="../../_images/image-142.png" /></p>
-<p>In order to use Azure Cli, run the following docker container and execute the login command.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>mcr.microsoft.com/azure-cli
-az<span class="w"> </span>login
-</pre></div>
-</div>
-<p><img alt="alt text" src="../../_images/image-162.png" /></p>
-<p>Pasete en the browser the code displayed in the command line</p>
-<p><img alt="alt text" src="../../_images/image-152.png" /></p>
-<p>Write yout azure account mail and click on “Next”</p>
-<p><img alt="alt text" src="../../_images/image-172.png" /></p>
-<p>Once signed, you can close the window</p>
-<p><img alt="alt text" src="../../_images/image-182.png" /></p>
-<p>A command line will appear in the terminal</p>
-<p><img alt="alt text" src="../../_images/image-192.png" /></p>
-<p>Using the following command, a temporal URL can be created with access to te snapshot that we have generated previously.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>snapshot<span class="w"> </span>grant-access<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--resource-group<span class="w"> </span>forensics<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--name<span class="w"> </span>snapshot-1<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--duration-in-seconds<span class="w"> </span><span class="m">3600</span>
-</pre></div>
-</div>
-<p><img alt="alt text" src="../../_images/image-201.png" /></p>
-<p>Copy the URL, which in this case is:</p>
-<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;accessSAS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://md-d3hcbtldht5q.z31.blob.storage.azure.net/mmjzwc4ms50k/abcd?snapshot=2026-05-16T20%3A11%3A11.0777366Z&amp;sv=2018-11-09&amp;sr=bs&amp;si=ac513c6f073b4bf0ae1dbe1708e749d33e75b39012e740e1832fe1c1e332dd67&amp;sig=1GPN32p0qzTJJLwQx46zwOh%2FLxw8Jrez2BDSWQVTffM%3D&quot;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>And paste it in your browser, the download should start automatically.</p>
-<p><img alt="alt text" src="../../_images/image-231.png" /></p>
-<p>In order to create a disk clone of the VM retrieve some important data with the following commands:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>account<span class="w"> </span>show
-</pre></div>
-</div>
-<p><img alt="alt text" src="../../_images/image-241.png" /></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>ad<span class="w"> </span>sp<span class="w"> </span>create-for-rbac<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;forensics-sp&quot;</span>
-</pre></div>
-</div>
-<p><img alt="alt text" src="../../_images/image-251.png" /></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--assignee<span class="w"> </span>&lt;appId&gt;<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--role<span class="w"> </span><span class="s2">&quot;Contributor&quot;</span><span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--scope<span class="w"> </span>/subscriptions/&lt;id&gt;
-</pre></div>
-</div>
-<p><img alt="alt text" src="../../_images/image-26.png" /></p>
-<p>Once all the information is retrieved, activate a python venv and install libcloudforensics</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv<span class="w">  </span>
-<span class="nb">source</span><span class="w"> </span>venv/bin/activate
-pip<span class="w"> </span>install<span class="w"> </span>libcloudforensics
-</pre></div>
-</div>
-<p>Export some the previously retrieved data</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">AZURE_SUBSCRIPTION_ID</span><span class="o">=</span><span class="s2">&quot;&lt;subscription-id&gt;&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">AZURE_TENANT_ID</span><span class="o">=</span><span class="s2">&quot;&lt;tenant-id&gt;&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">AZURE_CLIENT_ID</span><span class="o">=</span><span class="s2">&quot;&lt;app-id&gt;&quot;</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">AZURE_CLIENT_SECRET</span><span class="o">=</span><span class="s2">&quot;&lt;client-secret&gt;&quot;</span>
-</pre></div>
-</div>
-<p><img alt="alt text" src="../../_images/image-30.png" /></p>
-<p>And create a python script with the following content</p>
-<p><img alt="alt text" src="../../_images/image-28.png" /></p>
-<p>Execute it and the clone will be generated inmmediately.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>forensics.py
-</pre></div>
-</div>
-<p><img alt="alt text" src="../../_images/image-311.png" /></p>
+          <section id="android-forensics-advanced">
+<h1>Android forensics advanced<a class="headerlink" href="#android-forensics-advanced" title="Link to this heading">¶</a></h1>
+<section id="tbd">
+<h2>TBD<a class="headerlink" href="#tbd" title="Link to this heading">¶</a></h2>
 </section>
 </section>
 
@@ -437,23 +283,23 @@ pip<span class="w"> </span>install<span class="w"> </span>libcloudforensics
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../exercise3/exercise3.html">
+          <a class="next-page" href="../../cloud/exercise1/exercise1.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Docker</div>
+                <div class="title">Google Drive, Onedrive, Dropbox and Nextcloud.</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../exercise1/exercise1.html">
+          <a class="prev-page" href="../exercise2/exercise2.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Google Drive, Onedrive, Dropbox and Nextcloud.</div>
+                <div class="title">Android forensics medium</div>
                 
               </div>
             </a>
@@ -487,12 +333,8 @@ pip<span class="w"> </span>install<span class="w"> </span>libcloudforensics
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">VMWare and Azure Cloud</a><ul>
-<li><a class="reference internal" href="#extraction-of-evidence-from-on-premise-iaas-virtual-machines">Extraction of Evidence from On-Premise / IaaS Virtual Machines</a></li>
-<li><a class="reference internal" href="#objectives">Objectives</a></li>
-<li><a class="reference internal" href="#materials">Materials</a></li>
-<li><a class="reference internal" href="#part-a-extraction-of-on-premise-evidence">PART A: Extraction of On-Premise Evidence</a></li>
-<li><a class="reference internal" href="#part-b-extraction-of-evidence-from-azure-cloud">PART B: Extraction of Evidence from Azure Cloud</a></li>
+<li><a class="reference internal" href="#">Android forensics advanced</a><ul>
+<li><a class="reference internal" href="#tbd">TBD</a></li>
 </ul>
 </li>
 </ul>

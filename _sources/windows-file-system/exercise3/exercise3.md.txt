@@ -1,4 +1,4 @@
-# Exercise 3
+# Dara recovery
 
 File systems such as FAT, NTFS, ext2/ext3/ext4 store files in data blocks or clusters. The block or cluster size remains constant after being defined during the file system formatting process. In general, most operating systems attempt to store data contiguously to minimize fragmentation. When a file is deleted, its metadata (name, timestamp, size, first block or cluster location, etc.) is lost. This means that the data is still present, but only until it is partially or completely overwritten by new data.
 

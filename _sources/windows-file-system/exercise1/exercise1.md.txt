@@ -1,4 +1,4 @@
-# Exercise 1
+# MBR and GPT partition tables
 
 ## Statement
 
