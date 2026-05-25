@@ -40,3 +40,31 @@ Welcome to the Digital Forensics Notes documentation!
    linux-file-system/exercise2/exercise2
    linux-file-system/exercise3/exercise3
    linux-file-system/exercise4/exercise4
+   linux-file-system/exercise5/exercise5
+   linux-file-system/exercise6/exercise6
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Android:
+   :hidden:
+
+   android/exercise1/exercise1
+   android/exercise2/exercise2
+   android/exercise3/exercise3
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Cloud:
+   :hidden:
+
+   cloud/exercise1/exercise1
+   cloud/exercise2/exercise2
+   cloud/exercise3/exercise3
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Reports:
+   :hidden:
+
+   reports/exercise2/exercise2
+   reports/exercise3/exercise3
