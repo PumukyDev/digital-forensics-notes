@@ -93,7 +93,7 @@ From a professional perspective, I would prioritize purchasing:
 
 ---
 
-# PART B: Feasibility of Android Forensic Analysis
+## PART B: Feasibility of Android Forensic Analysis
 
 In general, RAM memory analysis and persistent storage analysis are considered essential parts of digital forensic investigations.
 
@@ -211,7 +211,7 @@ Because of this, investigators must:
 
 ---
 
-# PART C: Chat Analysis
+## PART C: Chat Analysis
 
 In the context of a police investigation involving a murder connected to drug trafficking, three smartphones belonging to members of a criminal organization were seized.
 
@@ -225,7 +225,7 @@ The extracted logical acquisitions and downgraded applications were analyzed in 
 
 ---
 
-# Capo
+## Capo
 
 ## 1. Vehicle pickup location
 
@@ -265,7 +265,7 @@ This matches the name mentioned in the recovered voice message.
 
 ---
 
-# Mule
+## Mule
 
 ## 1. Birthday party location
 
@@ -280,7 +280,7 @@ exiftool image.jpg
 
 TBD FALTAN COSAS!!
 
-# Hitman
+## Hitman
 
 ## 1. Telegram location recovery
 

@@ -63,6 +63,15 @@ Welcome to the Digital Forensics Notes documentation!
 
 .. toctree::
    :maxdepth: 2
+   :caption: Mail:
+   :hidden:
+
+   mail/exercise1/exercise1
+   mail/exercise2/exercise2
+   mail/exercise3/exercise3
+
+.. toctree::
+   :maxdepth: 2
    :caption: Reports:
    :hidden:
 
