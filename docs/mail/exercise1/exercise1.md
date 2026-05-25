@@ -1,4 +1,4 @@
-# Email Forensic Analysis
+# Email Basics
 
 ## Introduction
 

@@ -1,4 +1,4 @@
-# Exercise 2
+# NTFS metadata
 
 The file system on any storage device is essential for the overall organization, storage mechanisms, and data control of the device. Understanding how these file systems work, as well as the design of key structures, storage mechanisms, associated metadata, and file system features, is crucial for conducting forensic investigations on a computer or other device.
 

@@ -1,4 +1,4 @@
-# Cloud Forensics Analysis
+# VMWare and Azure Cloud
 
 ## Extraction of Evidence from On-Premise / IaaS Virtual Machines
 
