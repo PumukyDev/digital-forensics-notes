@@ -1,0 +1,500 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
+
+    <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+        <title>Secure Mail Server - Digital Forensics Notes documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #254F6D;
+  --color-brand-content: #254F6D;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Digital Forensics Notes  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Windows file system:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise1/exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise2/exercise2.html">Exercise 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise3/exercise3.html">Exercise 3</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Windows artifacts:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise1/post-mortem-analysis.html">Post-mortem analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise3/sysmon.html">Sysmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise4/web-browsers.html">Evidence in Web Browsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise6/automatic-tools.html">Automatic forensics tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Windows volatility:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-volatility/exercise1/exercise1.html">Volatility introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-volatility/exercise2/exercise2.html">Volatility advanced</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Linux file system and volatility:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise1/exercise1.html">Linux File system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise2/exercise2.html">Memory Dump</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise3/exercise3.html">Compile tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise4/exercise4.html">Volatility Linux</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../_sources/mail/exercise3/exercise3.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="secure-mail-server">
+<h1>Secure Mail Server<a class="headerlink" href="#secure-mail-server" title="Link to this heading">¶</a></h1>
+<p>Running a reasonably secure mail server requires a domain where you can publish SPF, DKIM, and DMARC records, plus a host that runs the mail stack (typically Postfix and related services). In this exercise I use <strong>mailcow</strong>, a Docker-based all-in-one mail suite.</p>
+<p>Incoming mail is straightforward once DNS and the container are correct: forward the usual ports on the router (25 for SMTP, 587 for submission, 993 for IMAPS, and any others your setup needs). Outbound delivery is often harder at home: many ISPs block port 25, and residential IP addresses tend to have poor sender reputation. A common workaround is an external <strong>SMTP relay</strong> (here, IONOS) so outbound mail leaves through a provider with better deliverability. I still run mailcow locally for mailboxes and administration; IONOS handles relay authentication and outbound transport.</p>
+<section id="ionos-relay-account">
+<h2>IONOS relay account<a class="headerlink" href="#ionos-relay-account" title="Link to this heading">¶</a></h2>
+<p>The first step on the provider side is to create a mailbox used only for relay authentication. I created <code class="docutils literal notranslate"><span class="pre">relay&#64;pumukydev.com</span></code> in the IONOS control panel.</p>
+<p><img alt="alt text" src="../../_images/image11.png" /></p>
+<p><img alt="alt text" src="../../_images/image-129.png" /></p>
+</section>
+<section id="dns-configuration">
+<h2>DNS configuration<a class="headerlink" href="#dns-configuration" title="Link to this heading">¶</a></h2>
+<p>Create the hostname <code class="docutils literal notranslate"><span class="pre">mail.pumukydev.com</span></code> and point an <strong>A record</strong> at your public IP (VPS or home connection). Because I self-host at home, a DynDNS script keeps the domain and subdomains aligned with my changing public IP. For a similar setup, see <a class="reference external" href="https://github.com/PumukyDev/self-hosting">self-hosting</a>.</p>
+<p>Add an <strong>MX record</strong> so other servers know where to deliver mail for the domain.</p>
+<p><img alt="alt text" src="../../_images/image-220.png" /></p>
+<p>Publish <strong>SPF</strong> so receivers know which hosts may send mail for the domain. This record authorizes both the mailcow host and IONOS (<code class="docutils literal notranslate"><span class="pre">kundenserver.de</span></code>):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>v=spf1 a:mail.pumukydev.com include:kundenserver.de ~all
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-275.png" /></p>
+</section>
+<section id="mailcow-installation">
+<h2>Mailcow installation<a class="headerlink" href="#mailcow-installation" title="Link to this heading">¶</a></h2>
+<p>Clone the mailcow repository and generate the initial configuration:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/mailcow/mailcow-dockerized.git
+<span class="nb">cd</span><span class="w"> </span>mailcow-dockerized/
+./generate_config.sh
+</pre></div>
+</div>
+<p>The script asks for the mail server hostname; I used <code class="docutils literal notranslate"><span class="pre">mail.pumukydev.com</span></code>. I chose branch <strong>1</strong> (stable). Mailcow then generates TLS certificates automatically.</p>
+<p><img alt="alt text" src="../../_images/image-413.png" /></p>
+<p>By default, the mailcow <code class="docutils literal notranslate"><span class="pre">docker-compose</span></code> exposes ports <strong>443</strong> and <strong>80</strong> for the web UI when nothing else is set in <code class="docutils literal notranslate"><span class="pre">mailcow.conf</span></code>. I already run a reverse proxy on those ports for other self-hosted services, so I remapped the HTTP/HTTPS bindings in the compose file and in <code class="docutils literal notranslate"><span class="pre">mailcow.conf</span></code>.</p>
+<p><img alt="alt text" src="../../_images/image-510.png" /></p>
+<p><img alt="alt text" src="../../_images/image-68.png" /></p>
+<p>I also changed the Docker <strong>network</strong> name because the default network collides with other stacks on the same host.</p>
+<p><img alt="alt text" src="../../_images/image-88.png" /></p>
+<p>Start the stack:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--build
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-79.png" /></p>
+<p>Open the mailcow URL in a browser (using the ports you configured).</p>
+<p><img alt="alt text" src="../../_images/image-98.png" /></p>
+<p>Log in with the default credentials <code class="docutils literal notranslate"><span class="pre">admin</span></code> / <code class="docutils literal notranslate"><span class="pre">moohoo</span></code> and change the password when prompted.</p>
+<p><img alt="alt text" src="../../_images/image-108.png" /></p>
+<p>The admin dashboard appears (in my case, on a Raspberry Pi).</p>
+<p><img alt="alt text" src="../../_images/image-1112.png" /></p>
+</section>
+<section id="domain-and-mailbox">
+<h2>Domain and mailbox<a class="headerlink" href="#domain-and-mailbox" title="Link to this heading">¶</a></h2>
+<p>Add your domain in the mailcow UI:</p>
+<p><img alt="alt text" src="../../_images/image-1210.png" /></p>
+<p><img alt="alt text" src="../../_images/image-137.png" /></p>
+<p><img alt="alt text" src="../../_images/image-148.png" /></p>
+<p><img alt="alt text" src="../../_images/image-157.png" /></p>
+<p><img alt="alt text" src="../../_images/image-167.png" /></p>
+<p>Create at least one mailbox for day-to-day testing.</p>
+<p><img alt="alt text" src="../../_images/image-206.png" /></p>
+<p><img alt="alt text" src="../../_images/image-2110.png" /></p>
+<p><img alt="alt text" src="../../_images/image-226.png" /></p>
+</section>
+<section id="outbound-relay-through-ionos">
+<h2>Outbound relay through IONOS<a class="headerlink" href="#outbound-relay-through-ionos" title="Link to this heading">¶</a></h2>
+<p>To send outbound mail via IONOS, configure a transport map in mailcow (host, port, and credentials for <code class="docutils literal notranslate"><span class="pre">smtp.ionos.es</span></code>).</p>
+<p><img alt="alt text" src="../../_images/image-177.png" /></p>
+<p><img alt="alt text" src="../../_images/image-187.png" /></p>
+<p>Scroll down to <strong>Transport Maps</strong> and enter the relay settings.</p>
+<p><img alt="alt text" src="../../_images/image-197.png" /></p>
+<p><img alt="alt text" src="../../_images/image-245.png" /></p>
+<p><img alt="alt text" src="../../_images/image-256.png" /></p>
+<p>A successful SMTP test from the mailcow UI shows TLS negotiation, authentication, and delivery. The full session log looked like this:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>No MX records for smtp.ionos.es:587 were found in DNS, skipping and using hostname as next-hop.
+Connection: opening to smtp.ionos.es:587, timeout=15, options=array (
+    ↪ &#39;ssl&#39; =&gt;
+    ↪ array (
+    ↪ &#39;verify_peer&#39; =&gt; false,
+    ↪ &#39;verify_peer_name&#39; =&gt; false,
+    ↪ &#39;allow_self_signed&#39; =&gt; true,
+    ↪ ),
+)
+Connection: opened
+SERVER -&gt; CLIENT: 220 smtp.ionos.es ESMTP RZmta (P6 -)
+CLIENT -&gt; SERVER: EHLO mail.pumukydev.com
+SERVER -&gt; CLIENT: 250-smtp.ionos.es greets 79.145.185.221
+    ↪ 250-ENHANCEDSTATUSCODES
+    ↪ 250-PIPELINING
+    ↪ 250-8BITMIME
+    ↪ 250-DELIVERBY
+    ↪ 250-SIZE 104857600
+    ↪ 250-LIMITS RCPTMAX=1000 MAILMAX=1000
+    ↪ 250-STARTTLS
+    ↪ 250 HELP
+CLIENT -&gt; SERVER: STARTTLS
+SERVER -&gt; CLIENT: 220 Ready to start TLS
+CLIENT -&gt; SERVER: EHLO mail.pumukydev.com
+SERVER -&gt; CLIENT: 250-smtp.ionos.es greets 79.145.185.221
+    ↪ 250-ENHANCEDSTATUSCODES
+    ↪ 250-PIPELINING
+    ↪ 250-8BITMIME
+    ↪ 250-DELIVERBY
+    ↪ 250-SIZE 104857600
+    ↪ 250-LIMITS RCPTMAX=1000 MAILMAX=1000
+    ↪ 250-AUTH PLAIN LOGIN
+    ↪ 250 HELP
+CLIENT -&gt; SERVER: AUTH LOGIN
+SERVER -&gt; CLIENT: 334 VXNlcm5hbWU6
+CLIENT -&gt; SERVER: [credentials hidden]
+SERVER -&gt; CLIENT: 334 UGFzc3dvcmQ6
+CLIENT -&gt; SERVER: [credentials hidden]
+SERVER -&gt; CLIENT: 235 Authentication succeeded
+CLIENT -&gt; SERVER: MAIL FROM:&lt;admin@pumukydev.com&gt;
+SERVER -&gt; CLIENT: 250 Requested mail action okay, completed
+CLIENT -&gt; SERVER: RCPT TO:&lt;abergom0504@ieszaidinvergeles.org&gt;
+SERVER -&gt; CLIENT: 250 OK
+CLIENT -&gt; SERVER: DATA
+SERVER -&gt; CLIENT: 354 Start mail input; end with &lt;CRLF&gt;.&lt;CRLF&gt;
+CLIENT -&gt; SERVER: Date: Sat, 16 May 2026 13:19:33 +0200
+CLIENT -&gt; SERVER: To: Joe Null &lt;abergom0504@ieszaidinvergeles.org&gt;
+CLIENT -&gt; SERVER: From: Mailer &lt;admin@pumukydev.com&gt;
+CLIENT -&gt; SERVER: Subject: A subject for a SMTP test
+CLIENT -&gt; SERVER: Message-ID: &lt;V25lE8PncaJTuZ8bJC7yu5a8LFUdpHQqKCHXACn2dts@mail.pumukydev.com&gt;
+CLIENT -&gt; SERVER: X-Mailer: PHPMailer 6.6.0 (https://github.com/PHPMailer/PHPMailer)
+CLIENT -&gt; SERVER: MIME-Version: 1.0
+CLIENT -&gt; SERVER: Content-Type: text/plain; charset=iso-8859-1
+CLIENT -&gt; SERVER:
+CLIENT -&gt; SERVER: This is our test body
+CLIENT -&gt; SERVER:
+CLIENT -&gt; SERVER: .
+SERVER -&gt; CLIENT: 250 Requested mail action okay, completed: id=1MKsaz-1wevcp3BHR-00M7kH
+CLIENT -&gt; SERVER: QUIT
+SERVER -&gt; CLIENT: 221 kundenserver.de Service closing transmission channel
+Connection: closed
+</pre></div>
+</div>
+<p>The message reached my Gmail inbox. The complete message is saved as <a class="reference download internal" download="" href="../../_downloads/60b4bba6539e781fec2f50a8f9daa44b/smtp-test.eml"><span class="xref download myst">smtp-test.eml</span></a>.</p>
+<p><img alt="alt text" src="../../_images/image-293.png" /></p>
+<p>At this stage the setup was <strong>not</strong> fully aligned with modern authentication expectations: the message could be delivered, but without DKIM signing and a clear DMARC policy, receivers have less reason to trust it. The next steps harden outbound identity.</p>
+</section>
+<section id="dkim-and-dmarc">
+<h2>DKIM and DMARC<a class="headerlink" href="#dkim-and-dmarc" title="Link to this heading">¶</a></h2>
+<p>Generate a DKIM key pair in mailcow and note the selector and public key for DNS.</p>
+<p><img alt="alt text" src="../../_images/image-284.png" /></p>
+<p><img alt="alt text" src="../../_images/image-304.png" /></p>
+<p>Add the public key as a <strong>text</strong> record at IONOS (selector host name plus <code class="docutils literal notranslate"><span class="pre">v=DKIM1;</span> <span class="pre">...</span></code> value).</p>
+<p><img alt="alt text" src="../../_images/image-319.png" /></p>
+<p>Define <strong>DMARC</strong> as well. I used the <a class="reference external" href="https://easydmarc.com/tools/dmarc-record-generator">EasyDMARC record generator</a> to draft a policy record (monitoring or quarantine, depending on what you choose in the tool).</p>
+<p><img alt="alt text" src="../../_images/image-324.png" /></p>
+<p>Copy the generated record.</p>
+<p><img alt="alt text" src="../../_images/image-334.png" /></p>
+<p>Publish it in the IONOS DNS zone for <code class="docutils literal notranslate"><span class="pre">_dmarc.pumukydev.com</span></code> (or your domain).</p>
+<p><img alt="alt text" src="../../_images/image-344.png" /></p>
+<p>After DNS propagates, new outbound mail should include a valid DKIM signature and align with SPF and DMARC checks at major providers.</p>
+</section>
+<section id="webmail-test-send">
+<h2>Webmail test (send)<a class="headerlink" href="#webmail-test-send" title="Link to this heading">¶</a></h2>
+<p>From the mailcow login page, use <strong>Log in as user</strong> to open SOGo or the web client as a mailbox user.</p>
+<p><img alt="alt text" src="../../_images/image-363.png" /></p>
+<p>Enter the mailbox credentials.</p>
+<p><img alt="alt text" src="../../_images/image-373.png" /></p>
+<p>Send a test message to an external address.</p>
+<p><img alt="alt text" src="../../_images/image-383.png" /></p>
+<p><img alt="alt text" src="../../_images/image-392.png" /></p>
+<p>Delivery succeeded; the received message is archived as <a class="reference download internal" download="" href="../../_downloads/a85ed7c186aae0eea9632d49b98bc0f4/test.eml"><span class="xref download myst">test.eml</span></a>.</p>
+<p><img alt="alt text" src="../../_images/image-353.png" /></p>
+</section>
+<section id="inbound-mail-and-port-forwarding">
+<h2>Inbound mail and port forwarding<a class="headerlink" href="#inbound-mail-and-port-forwarding" title="Link to this heading">¶</a></h2>
+<p>Receiving mail from the Internet requires the same SMTP and IMAP ports to reach mailcow on the LAN. On the home router, forward at least <strong>25</strong> (SMTP), <strong>587</strong> (submission, if used), and <strong>993</strong> (IMAPS) to the host running Docker.</p>
+<p><img alt="alt text" src="../../_images/image-414.png" /></p>
+<p>From Gmail (or another provider), send a message to a mailbox on your domain.</p>
+<p><img alt="alt text" src="../../_images/image-431.png" /></p>
+<p>Initially <strong>no inbound mail</strong> arrived. After checking logs and transport settings, the problem was the IONOS relay configuration: it was affecting inbound paths as well as outbound. Disabling or narrowing the relay restored both sending and receiving on mailcow.</p>
+<p><img alt="alt text" src="../../_images/image-422.png" /></p>
+</section>
+<section id="notes-and-next-steps">
+<h2>Notes and next steps<a class="headerlink" href="#notes-and-next-steps" title="Link to this heading">¶</a></h2>
+<p>This configuration works for lab and personal use, but it is not ideal for production. Residential IPs and ISP filtering can still block or downgrade direct SMTP. The relay should be used <strong>only for outbound</strong> submission, not as the MX target for inbound mail—otherwise messages may be accepted by IONOS and never land in the mailcow mailbox.</p>
+<p>A cleaner design keeps MX pointing at <code class="docutils literal notranslate"><span class="pre">mail.pumukydev.com</span></code>, delivers inbound directly to mailcow, and uses IONOS solely as an authenticated smarthost on port 587 for outbound mail. That separation avoids the forwarding loop I hit and matches how most small self-hosted setups combine local mail storage with a reputable outbound relay.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, PumukyDev
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Secure Mail Server</a><ul>
+<li><a class="reference internal" href="#ionos-relay-account">IONOS relay account</a></li>
+<li><a class="reference internal" href="#dns-configuration">DNS configuration</a></li>
+<li><a class="reference internal" href="#mailcow-installation">Mailcow installation</a></li>
+<li><a class="reference internal" href="#domain-and-mailbox">Domain and mailbox</a></li>
+<li><a class="reference internal" href="#outbound-relay-through-ionos">Outbound relay through IONOS</a></li>
+<li><a class="reference internal" href="#dkim-and-dmarc">DKIM and DMARC</a></li>
+<li><a class="reference internal" href="#webmail-test-send">Webmail test (send)</a></li>
+<li><a class="reference internal" href="#inbound-mail-and-port-forwarding">Inbound mail and port forwarding</a></li>
+<li><a class="reference internal" href="#notes-and-next-steps">Notes and next steps</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

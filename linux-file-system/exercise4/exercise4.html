@@ -356,7 +356,7 @@ pip<span class="w"> </span>install<span class="w"> </span>distorm3<span class="w
 pip2<span class="w"> </span>install<span class="w"> </span>distorm3<span class="w"> </span>yara-python<span class="w"> </span>pycrypto
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image10.png" /></p>
+<p><img alt="alt text" src="../../_images/image7.png" /></p>
 <p>I want to execute volatility2 everywhere. It could be as follows:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano<span class="w"> </span>/usr/local/bin/vol2
 </pre></div>
@@ -394,7 +394,7 @@ deactivate
 </pre></div>
 </div>
 <p>And feel free to use volatility2 everywhere:</p>
-<p><img alt="alt text" src="../../_images/image-129.png" /></p>
+<p><img alt="alt text" src="../../_images/image-118.png" /></p>
 </section>
 <section id="b-prepare-volatility-2-to-work-with-linux-profiles-linux-overlays">
 <h4>b. Prepare Volatility 2 to work with Linux profiles (linux overlays)<a class="headerlink" href="#b-prepare-volatility-2-to-work-with-linux-profiles-linux-overlays" title="Link to this heading">¶</a></h4>
@@ -412,12 +412,12 @@ If you only had the memory dump, how could you determine the operating system ve
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>--info<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>Linuxdebian
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-318.png" /></p>
+<p><img alt="alt text" src="../../_images/image-315.png" /></p>
 <p>If we don’t know the operating system version, we can use the following command to determine it:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>strings<span class="w"> </span>ram.lime<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;Linux version&quot;</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-413.png" /></p>
+<p><img alt="alt text" src="../../_images/image-49.png" /></p>
 </section>
 <section id="c-perform-basic-analysis-of-linux-memory-dumps">
 <h4>c. Perform basic analysis of Linux memory dumps<a class="headerlink" href="#c-perform-basic-analysis-of-linux-memory-dumps" title="Link to this heading">¶</a></h4>
@@ -429,28 +429,28 @@ If you only had the memory dump, how could you determine the operating system ve
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_pslist
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-510.png" /></p>
+<p><img alt="alt text" src="../../_images/image-57.png" /></p>
 <ul class="simple">
 <li><p>linux_psaux</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_psaux
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-69.png" /></p>
+<p><img alt="alt text" src="../../_images/image-66.png" /></p>
 <ul class="simple">
 <li><p>linux_pstree</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_pstree
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-79.png" /></p>
+<p><img alt="alt text" src="../../_images/image-76.png" /></p>
 <ul class="simple">
 <li><p>linux_cpuinfo</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_cpuinfo
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-88.png" /></p>
+<p><img alt="alt text" src="../../_images/image-85.png" /></p>
 </section>
 <section id="network-analysis">
 <h5>Network analysis<a class="headerlink" href="#network-analysis" title="Link to this heading">¶</a></h5>
@@ -460,28 +460,28 @@ If you only had the memory dump, how could you determine the operating system ve
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_arp<span class="w"> </span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-98.png" /></p>
+<p><img alt="alt text" src="../../_images/image-95.png" /></p>
 <ul class="simple">
 <li><p>linux_ifconfig</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_ifconfig
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-108.png" /></p>
+<p><img alt="alt text" src="../../_images/image-105.png" /></p>
 <ul class="simple">
 <li><p>linux_route_cache</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_route_cache
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-1112.png" /></p>
+<p><img alt="alt text" src="../../_images/image-119.png" /></p>
 <ul class="simple">
 <li><p>linux_netstat</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_netstat
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-1210.png" /></p>
+<p><img alt="alt text" src="../../_images/image-125.png" /></p>
 </section>
 <section id="files-and-kernel-analysis">
 <h5>Files and kernel analysis<a class="headerlink" href="#files-and-kernel-analysis" title="Link to this heading">¶</a></h5>
@@ -491,14 +491,14 @@ If you only had the memory dump, how could you determine the operating system ve
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_enumerate_files
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-137.png" /></p>
+<p><img alt="alt text" src="../../_images/image-134.png" /></p>
 <ul class="simple">
 <li><p>linux_find_file</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_find_file<span class="w"> </span>-F<span class="w"> </span><span class="s2">&quot;/file&quot;</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-148.png" /></p>
+<p><img alt="alt text" src="../../_images/image-145.png" /></p>
 <ul class="simple">
 <li><p>linux_recover_filesystem</p></li>
 </ul>
@@ -506,36 +506,36 @@ If you only had the memory dump, how could you determine the operating system ve
 sudo<span class="w"> </span>-E<span class="w"> </span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_recover_filesystem<span class="w"> </span>--dump-dir<span class="o">=</span>dump
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-158.png" /></p>
-<p><img alt="alt text" src="../../_images/image-168.png" /></p>
+<p><img alt="alt text" src="../../_images/image-155.png" /></p>
+<p><img alt="alt text" src="../../_images/image-165.png" /></p>
 <ul class="simple">
 <li><p>linux_mount</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_mount
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-177.png" /></p>
+<p><img alt="alt text" src="../../_images/image-174.png" /></p>
 <ul class="simple">
 <li><p>linux_mount_cache</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_mount_cache
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-187.png" /></p>
+<p><img alt="alt text" src="../../_images/image-185.png" /></p>
 <ul class="simple">
 <li><p>linux_bash</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_bash
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-197.png" /></p>
+<p><img alt="alt text" src="../../_images/image-195.png" /></p>
 <ul class="simple">
 <li><p>linux_dmesg</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>--profile<span class="o">=</span>Linuxdebian10-4_19_0-23-686x86<span class="w"> </span>linux_dmesg
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-206.png" /></p>
+<p><img alt="alt text" src="../../_images/image-204.png" /></p>
 </section>
 </section>
 <section id="d-generate-specific-profiles-for-volatility">
@@ -553,20 +553,20 @@ sudo<span class="w"> </span>-E<span class="w"> </span>vol2<span class="w"> </spa
 make
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-2110.png" /></p>
+<p><img alt="alt text" src="../../_images/image-216.png" /></p>
 <p>The previous error is due we have to accept the GLP license before compiling. Edit <code class="docutils literal notranslate"><span class="pre">module.c</span></code> to acept said license.</p>
-<p><img alt="alt text" src="../../_images/image-256.png" /></p>
+<p><img alt="alt text" src="../../_images/image-254.png" /></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make
 </pre></div>
 </div>
 <p>Note: After performing the following steps using my Kali I had problems, so that I decided to use another machine using an older kernel and it works correctly:</p>
-<p><img alt="alt text" src="../../_images/image-226.png" /></p>
+<p><img alt="alt text" src="../../_images/image-224.png" /></p>
 <p>Make the zip file Debian-6.1.0-31-amd64</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>zip<span class="w"> </span>Debian-6.1.0-31-amd64<span class="w"> </span>module.dwarf<span class="w"> </span>/usr/lib/debug/boot/System.map-6.1.0-31-amd64
 </pre></div>
 </div>
 <p>Move it inside plugins/linux</p>
-<p><img alt="alt text" src="../../_images/image-235.png" /></p>
+<p><img alt="alt text" src="../../_images/image-234.png" /></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mv<span class="w"> </span>Debian-6.1.0-31-amd64<span class="w"> </span>volatility2/volatility/plugins/linux/
 </pre></div>
 </div>
@@ -574,7 +574,7 @@ make
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>--info<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>Linux
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-275.png" /></p>
+<p><img alt="alt text" src="../../_images/image-273.png" /></p>
 </section>
 </section>
 <section id="volatility-3">
@@ -618,7 +618,7 @@ deactivate
 </pre></div>
 </div>
 <p>Run volatility3 everywhere</p>
-<p><img alt="alt text" src="../../_images/image-227.png" /></p>
+<p><img alt="alt text" src="../../_images/image-217.png" /></p>
 </section>
 <section id="b-prepare-volatility-3-to-work-with-linux-profiles">
 <h4>b. Prepare Volatility 3 to work with Linux profiles<a class="headerlink" href="#b-prepare-volatility-3-to-work-with-linux-profiles" title="Link to this heading">¶</a></h4>
@@ -640,42 +640,42 @@ deactivate
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>banners.Banner
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-284.png" /></p>
+<p><img alt="alt text" src="../../_images/image-283.png" /></p>
 <ul class="simple">
 <li><p>linux.bash.Bash</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.bash.Bash
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-293.png" /></p>
+<p><img alt="alt text" src="../../_images/image-292.png" /></p>
 <ul class="simple">
 <li><p>linux.kmsg.Kmsg</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.kmsg.Kmsg
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-304.png" /></p>
+<p><img alt="alt text" src="../../_images/image-303.png" /></p>
 <ul class="simple">
 <li><p>linux.lsmod.Lsmod</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.lsmod.Lsmod
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-319.png" /></p>
+<p><img alt="alt text" src="../../_images/image-316.png" /></p>
 <ul class="simple">
 <li><p>linux.lsof.Lsof</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.lsof.Lsof
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-324.png" /></p>
+<p><img alt="alt text" src="../../_images/image-323.png" /></p>
 <ul class="simple">
 <li><p>linux.malfind.Malfind</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.malfind.Malfind
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-334.png" /></p>
+<p><img alt="alt text" src="../../_images/image-333.png" /></p>
 <ul class="simple">
 <li><p>linux.mountinfo.MountInfo</p></li>
 </ul>
@@ -689,42 +689,42 @@ deactivate
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.proc.Maps
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-353.png" /></p>
+<p><img alt="alt text" src="../../_images/image-352.png" /></p>
 <ul class="simple">
 <li><p>linux.psaux.PsAux</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.psaux.PsAux
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-363.png" /></p>
+<p><img alt="alt text" src="../../_images/image-362.png" /></p>
 <ul class="simple">
 <li><p>linux.pslist.PsList</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.pslist.PsList
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-373.png" /></p>
+<p><img alt="alt text" src="../../_images/image-372.png" /></p>
 <ul class="simple">
 <li><p>linux.psscan.PsScan</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.psscan.PsScan
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-383.png" /></p>
+<p><img alt="alt text" src="../../_images/image-382.png" /></p>
 <ul class="simple">
 <li><p>linux.pstree.PsTree</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.pstree.PsTree
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-392.png" /></p>
+<p><img alt="alt text" src="../../_images/image-391.png" /></p>
 <ul class="simple">
 <li><p>linux.sockstat.Sockstat</p></li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>ram.lime<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>linux.sockstat.Sockstat
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-402.png" /></p>
+<p><img alt="alt text" src="../../_images/image-401.png" /></p>
 </section>
 <section id="id2">
 <h4>d. Generate specific profiles for Volatility<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
@@ -743,7 +743,7 @@ sudo<span class="w"> </span>go<span class="w"> </span>build<span class="w"> </sp
 </pre></div>
 </div>
 <p>Then, verify that it has been compiled correctly:</p>
-<p><img alt="alt text" src="../../_images/image-414.png" /></p>
+<p><img alt="alt text" src="../../_images/image-412.png" /></p>
 </section>
 </section>
 </section>

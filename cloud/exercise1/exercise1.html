@@ -338,68 +338,27 @@
 <h3><strong>2. Install and configure OneDrive, Google Drive, and Dropbox clients</strong><a class="headerlink" href="#install-and-configure-onedrive-google-drive-and-dropbox-clients" title="Link to this heading">¶</a></h3>
 <section id="onedrive">
 <h4><strong>OneDrive</strong><a class="headerlink" href="#onedrive" title="Link to this heading">¶</a></h4>
-<p>On Windows, OneDrive is usually installed by default. If it is not installed, it can be downloaded from the official Microsoft website.</p>
-<p>Official website:<br />
-https://www.microsoft.com/en-us/microsoft-365/onedrive/download</p>
-<p>Check if OneDrive is installed:</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">Get-Process</span> <span class="n">OneDrive</span>
-</pre></div>
-</div>
-<p>Launch OneDrive:</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="k">%</span><span class="n">localappdata</span><span class="p">%\</span><span class="n">Microsoft</span><span class="p">\</span><span class="n">OneDrive</span><span class="p">\</span><span class="n">OneDrive</span><span class="p">.</span><span class="n">exe</span>
-</pre></div>
-</div>
+<p>On Windows, OneDrive is usually installed by default. If it is not installed, it can be downloaded from the <a class="reference external" href="https://www.microsoft.com/en-us/microsoft-365/onedrive/download">official Microsoft website</a>.</p>
 <p>Once installed, users can log in with their Microsoft account and access synchronized files directly from Windows File Explorer.</p>
 </section>
 <section id="google-drive">
 <h4><strong>Google Drive</strong><a class="headerlink" href="#google-drive" title="Link to this heading">¶</a></h4>
-<p>Download the installer from the official Google Drive website.</p>
-<p>Official website:<br />
-https://www.google.com/drive/download/</p>
+<p>Download the installer from the <a class="reference external" href="https://www.google.com/drive/download/">official Google Drive website.</a>.</p>
 <p>Once downloaded, execute the installer and follow the setup process.</p>
-<p>Check if Google Drive is running:</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">Get-Process</span> <span class="p">|</span> <span class="n">findstr</span> <span class="n">DriveFS</span>
-</pre></div>
-</div>
-<p>Default installation path:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:\Program Files\Google\Drive File Stream\
-</pre></div>
-</div>
 <p>After authentication, synchronized files become accessible from Windows File Explorer.</p>
 </section>
 <section id="dropbox">
 <h4><strong>Dropbox</strong><a class="headerlink" href="#dropbox" title="Link to this heading">¶</a></h4>
-<p>Download the installer from the official Dropbox website.</p>
-<p>Official website:<br />
-https://www.dropbox.com/install</p>
+<p>Download the installer from the <a class="reference external" href="https://www.dropbox.com/install">official Dropbox website</a>.</p>
 <p>After installation, log in with a Dropbox account.</p>
-<p>Check if Dropbox is running:</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">Get-Process</span> <span class="n">Dropbox</span>
-</pre></div>
-</div>
-<p>Default installation path:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:\Program Files (x86)\Dropbox\Client
-</pre></div>
-</div>
 <p>The synchronized cloud directory will become available from Windows File Explorer.</p>
 </section>
 <section id="nextcloud">
 <h4><strong>Nextcloud</strong><a class="headerlink" href="#nextcloud" title="Link to this heading">¶</a></h4>
-<p>Nextcloud uses the <strong>Nextcloud Desktop Client</strong> to synchronize files between local system and a self-hosted or provider-hosted Nextcloud server.</p>
-<p>Official website:<br />
-https://nextcloud.com/install/</p>
+<p>Nextcloud uses the <strong>Nextcloud Desktop Client</strong> to synchronize files between local system and a self-hosted or provider-hosted Nextcloud server. <a class="reference external" href="https://nextcloud.com/install/">Official website</a></p>
 <p>Download and install the desktop client from the official site, then follow the installation wizard.</p>
-<p>After installation, launch Nextcloud and connect it to your server by entering your Nextcloud instance URL (for example: <code class="docutils literal notranslate"><span class="pre">https://cloud.yourdomain.com</span></code>) and your credentials.</p>
-<p>Launch Nextcloud manually:</p>
-<p>Default installation path:</p>
-<p>C:\Program Files\Nextcloud\</p>
-<p>After configuration, the synchronized folder will be available in Windows File Explorer, typically under:</p>
-<p>C:\Users&lt;YourUser&gt;\Nextcloud\</p>
-<p>From this folder, any files added, modified, or deleted will automatically sync with your Nextcloud server.</p>
-<p>Check if Nextcloud is running:</p>
-<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">Get-Process</span> <span class="n">Nextcloud</span><span class="p">*</span>
-</pre></div>
-</div>
+<p>After installation, launch Nextcloud and connect it to your server by entering your Nextcloud instance URL (for example: <code class="docutils literal notranslate"><span class="pre">https://nextcloud.yourdomain.com</span></code>) and your credentials.</p>
+<p>After configuration, the synchronized folder will be available in Windows File Explorer.</p>
 </section>
 </section>
 <section id="analyze-the-previous-clients-and-determine">
@@ -409,12 +368,12 @@ https://nextcloud.com/install/</p>
 <section id="id1">
 <h5><strong>OneDrive</strong><a class="headerlink" href="#id1" title="Link to this heading">¶</a></h5>
 <p>OneDrive service and configuration files are typically located at:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:\Users\&lt;user&gt;\AppData\Local\Microsoft\OneDrive
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">user</span><span class="o">&gt;</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Microsoft</span>\<span class="n">OneDrive</span>
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image1.png" /></p>
 <p>Settings directory:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:\Users\&lt;user&gt;\AppData\Local\Microsoft\OneDrive\seDttings
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">user</span><span class="o">&gt;</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Microsoft</span>\<span class="n">OneDrive</span>\<span class="n">seDttings</span>
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-19.png" /></p>
@@ -422,7 +381,7 @@ https://nextcloud.com/install/</p>
 <section id="id2">
 <h5><strong>Google Drive</strong><a class="headerlink" href="#id2" title="Link to this heading">¶</a></h5>
 <p>Google Drive service and configuration location is here:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:\Program Files\Google\Drive File Stream\
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Program</span> <span class="n">Files</span>\<span class="n">Google</span>\<span class="n">Drive</span> <span class="n">File</span> <span class="n">Stream</span>\
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-21.png" /></p>
@@ -430,72 +389,72 @@ https://nextcloud.com/install/</p>
 <section id="id3">
 <h5><strong>Dropbox</strong><a class="headerlink" href="#id3" title="Link to this heading">¶</a></h5>
 <p>Dropbox service location:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:\Program Files (x86)\Dropbox\Client
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Program</span> <span class="n">Files</span> <span class="p">(</span><span class="n">x86</span><span class="p">)</span>\<span class="n">Dropbox</span>\<span class="n">Client</span>
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-4.png" /></p>
 <p>Configuration files:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:\Users\&lt;user&gt;\AppData\Roaming\Dropbox\
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">user</span><span class="o">&gt;</span>\<span class="n">AppData</span>\<span class="n">Roaming</span>\<span class="n">Dropbox</span>\
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-31.png" /></p>
 </section>
-</section>
-</section>
 <section id="id4">
-<h3><strong>3. Analyze the previous clients and determine</strong><a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
-<section id="id5">
-<h4><strong>a) Identify where the services and their configuration files are installed</strong><a class="headerlink" href="#id5" title="Link to this heading">¶</a></h4>
-<section id="id6">
-<h5><strong>Nextcloud</strong><a class="headerlink" href="#id6" title="Link to this heading">¶</a></h5>
+<h5><strong>Nextcloud</strong><a class="headerlink" href="#id4" title="Link to this heading">¶</a></h5>
 <p>Nextcloud service location:</p>
-<p>C:\Program Files\Nextcloud\</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Program</span> <span class="n">Files</span>\<span class="n">Nextcloud</span>\
+</pre></div>
+</div>
 <p><img alt="alt text" src="../../_images/image-191.png" /></p>
 <p>Configuration files:</p>
-<p>C:\Users&lt;user&gt;\AppData\Roaming\Nextcloud\logs\</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">user</span><span class="o">&gt;</span>\<span class="n">AppData</span>\<span class="n">Roaming</span>\<span class="n">Nextcloud</span>\<span class="n">logs</span>\
+</pre></div>
+</div>
 <p><img alt="alt text" src="../../_images/image-20.png" /></p>
 </section>
 </section>
 <section id="b-locate-where-the-cloud-synchronized-folders-are-stored">
 <h4><strong>b) Locate where the cloud synchronized folders are stored</strong><a class="headerlink" href="#b-locate-where-the-cloud-synchronized-folders-are-stored" title="Link to this heading">¶</a></h4>
-<section id="id7">
-<h5><strong>OneDrive</strong><a class="headerlink" href="#id7" title="Link to this heading">¶</a></h5>
+<section id="id5">
+<h5><strong>OneDrive</strong><a class="headerlink" href="#id5" title="Link to this heading">¶</a></h5>
 <p>The synchronized OneDrive directory is usually located inside the user’s profile:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:\Users\&lt;user&gt;\OneDrive
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">user</span><span class="o">&gt;</span>\<span class="n">OneDrive</span>
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-51.png" /></p>
 </section>
-<section id="id8">
-<h5><strong>Google Drive</strong><a class="headerlink" href="#id8" title="Link to this heading">¶</a></h5>
+<section id="id6">
+<h5><strong>Google Drive</strong><a class="headerlink" href="#id6" title="Link to this heading">¶</a></h5>
 <p>Google Drive mounts the synchronized files as a virtual drive.</p>
 <p>The local cache and synchronization data are located at:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>%UserProfile%\AppData\Local\Google\DriveFS\
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">UserProfile</span><span class="o">%</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Google</span>\<span class="n">DriveFS</span>\
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-61.png" /></p>
 </section>
-<section id="id9">
-<h5><strong>Dropbox</strong><a class="headerlink" href="#id9" title="Link to this heading">¶</a></h5>
+<section id="id7">
+<h5><strong>Dropbox</strong><a class="headerlink" href="#id7" title="Link to this heading">¶</a></h5>
 <p>The synchronized Dropbox folder is usually located at:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:\Users\&lt;user&gt;\Dropbox\DropsyncFiles
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">user</span><span class="o">&gt;</span>\<span class="n">Dropbox</span>\<span class="n">DropsyncFiles</span>
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-71.png" /></p>
 </section>
-<section id="id10">
-<h5><strong>Nextcloud</strong><a class="headerlink" href="#id10" title="Link to this heading">¶</a></h5>
+<section id="id8">
+<h5><strong>Nextcloud</strong><a class="headerlink" href="#id8" title="Link to this heading">¶</a></h5>
 <p>The synchronized Nextcloud folder is usually located at:</p>
-<p>C:\Users&lt;user&gt;\Desktop\Nextcloud\</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">user</span><span class="o">&gt;</span>\<span class="n">Desktop</span>\<span class="n">Nextcloud</span>\
+</pre></div>
+</div>
 <p><img alt="alt text" src="../../_images/image-211.png" /></p>
 </section>
 </section>
 <section id="c-find-the-generated-metadata-and-determine-what-information-can-be-extracted-from-it">
 <h4><strong>c) Find the generated metadata and determine what information can be extracted from it</strong><a class="headerlink" href="#c-find-the-generated-metadata-and-determine-what-information-can-be-extracted-from-it" title="Link to this heading">¶</a></h4>
-<section id="id11">
-<h5><strong>OneDrive</strong><a class="headerlink" href="#id11" title="Link to this heading">¶</a></h5>
+<section id="id9">
+<h5><strong>OneDrive</strong><a class="headerlink" href="#id9" title="Link to this heading">¶</a></h5>
 <p>Metadata and logs can be found in:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:\Users\&lt;user&gt;\AppData\Local\Microsoft\OneDrive\logs\
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">user</span><span class="o">&gt;</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Microsoft</span>\<span class="n">OneDrive</span>\<span class="n">logs</span>\
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-81.png" /></p>
@@ -516,10 +475,10 @@ https://nextcloud.com/install/</p>
 <li><p>Device identifiers.</p></li>
 </ul>
 </section>
-<section id="id12">
-<h5><strong>Google Drive</strong><a class="headerlink" href="#id12" title="Link to this heading">¶</a></h5>
+<section id="id10">
+<h5><strong>Google Drive</strong><a class="headerlink" href="#id10" title="Link to this heading">¶</a></h5>
 <p>Metadata is stored inside SQLite databases located at:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:\Users\&lt;user&gt;\AppData\Local\Google\DriveFS
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">user</span><span class="o">&gt;</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Google</span>\<span class="n">DriveFS</span>
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-111.png" /></p>
@@ -549,21 +508,21 @@ https://nextcloud.com/install/</p>
 <li><p>Client behavior information.</p></li>
 </ul>
 <p>Logs directory:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:\Users\&lt;user&gt;\AppData\Local\Google\DriveFS\logs
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">user</span><span class="o">&gt;</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Google</span>\<span class="n">DriveFS</span>\<span class="n">logs</span>
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-161.png" /></p>
 </section>
-<section id="id13">
-<h5><strong>Dropbox</strong><a class="headerlink" href="#id13" title="Link to this heading">¶</a></h5>
+<section id="id11">
+<h5><strong>Dropbox</strong><a class="headerlink" href="#id11" title="Link to this heading">¶</a></h5>
 <p>Dropbox stores forensic artifacts and databases inside:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>C:\Users\&lt;user&gt;\AppData\Local\Dropbox
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">user</span><span class="o">&gt;</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Dropbox</span>
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-171.png" /></p>
-<p>The most important file is</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>apex.sqlite3
-host.db
+<p>The most important file are</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apex</span><span class="o">.</span><span class="n">sqlite3</span>
+<span class="n">host</span><span class="o">.</span><span class="n">db</span>
 </pre></div>
 </div>
 <p>However there are unredeable / uncrypted and we cannot get anything</p>
@@ -578,8 +537,8 @@ host.db
 <li><p>Authentication artifacts.</p></li>
 </ul>
 </section>
-<section id="id14">
-<h5><strong>Nextcloud</strong><a class="headerlink" href="#id14" title="Link to this heading">¶</a></h5>
+<section id="id12">
+<h5><strong>Nextcloud</strong><a class="headerlink" href="#id12" title="Link to this heading">¶</a></h5>
 <p>Nextcloud stores forensic artifacts, logs, and client metadata inside:</p>
 <p>C:\Users&lt;user&gt;\AppData\Local\Nextcloud\</p>
 <p><img alt="alt text" src="../../_images/image-22.png" /></p>
@@ -669,27 +628,21 @@ host.db
 <li><a class="reference internal" href="#id1"><strong>OneDrive</strong></a></li>
 <li><a class="reference internal" href="#id2"><strong>Google Drive</strong></a></li>
 <li><a class="reference internal" href="#id3"><strong>Dropbox</strong></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a class="reference internal" href="#id4"><strong>3. Analyze the previous clients and determine</strong></a><ul>
-<li><a class="reference internal" href="#id5"><strong>a) Identify where the services and their configuration files are installed</strong></a><ul>
-<li><a class="reference internal" href="#id6"><strong>Nextcloud</strong></a></li>
+<li><a class="reference internal" href="#id4"><strong>Nextcloud</strong></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#b-locate-where-the-cloud-synchronized-folders-are-stored"><strong>b) Locate where the cloud synchronized folders are stored</strong></a><ul>
-<li><a class="reference internal" href="#id7"><strong>OneDrive</strong></a></li>
-<li><a class="reference internal" href="#id8"><strong>Google Drive</strong></a></li>
-<li><a class="reference internal" href="#id9"><strong>Dropbox</strong></a></li>
-<li><a class="reference internal" href="#id10"><strong>Nextcloud</strong></a></li>
+<li><a class="reference internal" href="#id5"><strong>OneDrive</strong></a></li>
+<li><a class="reference internal" href="#id6"><strong>Google Drive</strong></a></li>
+<li><a class="reference internal" href="#id7"><strong>Dropbox</strong></a></li>
+<li><a class="reference internal" href="#id8"><strong>Nextcloud</strong></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#c-find-the-generated-metadata-and-determine-what-information-can-be-extracted-from-it"><strong>c) Find the generated metadata and determine what information can be extracted from it</strong></a><ul>
-<li><a class="reference internal" href="#id11"><strong>OneDrive</strong></a></li>
-<li><a class="reference internal" href="#id12"><strong>Google Drive</strong></a></li>
-<li><a class="reference internal" href="#id13"><strong>Dropbox</strong></a></li>
-<li><a class="reference internal" href="#id14"><strong>Nextcloud</strong></a></li>
+<li><a class="reference internal" href="#id9"><strong>OneDrive</strong></a></li>
+<li><a class="reference internal" href="#id10"><strong>Google Drive</strong></a></li>
+<li><a class="reference internal" href="#id11"><strong>Dropbox</strong></a></li>
+<li><a class="reference internal" href="#id12"><strong>Nextcloud</strong></a></li>
 </ul>
 </li>
 </ul>

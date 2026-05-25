@@ -1,0 +1,514 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
+
+    <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
+        <title>Email Forensic Analysis - Digital Forensics Notes documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  --color-brand-primary: #254F6D;
+  --color-brand-content: #254F6D;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Digital Forensics Notes  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Windows file system:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise1/exercise1.html">Exercise 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise2/exercise2.html">Exercise 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-file-system/exercise3/exercise3.html">Exercise 3</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Windows artifacts:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise1/post-mortem-analysis.html">Post-mortem analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise3/sysmon.html">Sysmon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise4/web-browsers.html">Evidence in Web Browsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-artifacts/exercise6/automatic-tools.html">Automatic forensics tools</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Windows volatility:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-volatility/exercise1/exercise1.html">Volatility introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-volatility/exercise2/exercise2.html">Volatility advanced</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Linux file system and volatility:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise1/exercise1.html">Linux File system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise2/exercise2.html">Memory Dump</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise3/exercise3.html">Compile tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise4/exercise4.html">Volatility Linux</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../_sources/mail/exercise1/exercise1.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="email-forensic-analysis">
+<h1>Email Forensic Analysis<a class="headerlink" href="#email-forensic-analysis" title="Link to this heading">¶</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>Email is one of the most common communication methods nowadays. Social networking sites have recently started to surpass email, but social networks are still mainly used for private communications.</p>
+<p>Companies use email to communicate with future, current, and past customers. They rely on it for customer service, product support, and ongoing communication about product or policy changes. Help desk applications receive emails to create support tickets, and computers and applications send email alerts to administrators.</p>
+<p>For a moment, think about how it would affect you if email stopped working for a day.</p>
+<p>Email was not originally designed with security in mind. It was originally created to send text messages to designated people on a single machine and later through simple networks. The design allows malicious users to redirect email messages. It also allows anyone with access to a system that processes email to modify an email message.</p>
+<p>Anyone with access to networks where emails are transmitted or to computers where emails are processed can read the emails stored there.</p>
+<p>There is no built-in mechanism to make email confidential (such as encryption), to verify that the content of an email has not been modified (such as hashing), or to verify who sent the email (such as a digital signature).</p>
+<p>Email does not have a built-in method to verify the identity of a sender. Although we are trusted to enter our correct identity into our email programs, nothing prevents us from using fraudulent addresses.</p>
+<p>Someone can configure an email program to send emails with fake addresses, and even without an email client, it is quite trivial to use simple tools such as Telnet to create fraudulent emails with forged sender addresses. Some email providers try to solve this issue with special configurations on their mail servers, but many others do not.</p>
+<p>Email was never created to maintain the confidentiality and privacy of email content. The text of a message is transmitted in plain text, meaning that anyone with a tool capable of monitoring the network can read the email.</p>
+<p>Basic tools such as network monitoring utilities or packet sniffers can view emails. Common tools such as regular email clients and Telnet can also be used to create fraudulent emails.</p>
+<p>The good news is that there are tools available that can overcome these challenges.</p>
+</section>
+<section id="objectives">
+<h2>Objectives<a class="headerlink" href="#objectives" title="Link to this heading">¶</a></h2>
+<p>The aim of this practice is to become aware of the main security aspects related to email and to learn how to study forensic evidence provided by email headers.</p>
+</section>
+<section id="materials">
+<h2>Materials<a class="headerlink" href="#materials" title="Link to this heading">¶</a></h2>
+<p>This exercise uses webmail, online analysis tools, and the email clients Thunderbird and Outlook.</p>
+</section>
+<section id="tasks">
+<h2>Tasks<a class="headerlink" href="#tasks" title="Link to this heading">¶</a></h2>
+<section id="familiarization-with-email-headers">
+<h3>1) Familiarization with Email Headers<a class="headerlink" href="#familiarization-with-email-headers" title="Link to this heading">¶</a></h3>
+<p><strong>a) Open your personal webmail account.</strong></p>
+<p>In this practice I use Gmail as my email provider and webmail client.</p>
+<p><img alt="alt text" src="../../_images/image9.png" /></p>
+<p><strong>b) Access the full format of one of your emails.</strong></p>
+<p>To access the original email source code, I open the selected email, click the three-dots menu, and choose “Show original”. Once opened, the complete raw email becomes visible, including all the headers generated during the delivery process.</p>
+<p><img alt="alt text" src="../../_images/image-120.png" /></p>
+<p><img alt="alt text" src="../../_images/image-218.png" /></p>
+<p><strong>c) Copy the complete format and use a tool to analyze the email headers.</strong></p>
+<p>For the analysis of the email headers, I used the Google Message Header Analyzer:</p>
+<p>https://toolbox.googleapps.com/apps/messageheader/analyzeheader</p>
+<p>I copied the full raw email, pasted the content into the analysis tool, and reviewed the forensic information it produced. The tool reports details about message routing, origin servers, authentication mechanisms, delivery timestamps, and SPF, DKIM, and DMARC validation.</p>
+<p><img alt="alt text" src="../../_images/image-317.png" /></p>
+<p><img alt="alt text" src="../../_images/image-410.png" /></p>
+<p><strong>d) Comment on the meaning of the headers.</strong></p>
+<p>The headers of an email contain metadata generated during the transmission process between servers. These headers are essential in forensic investigations because they help identify the origin of a message, the route it followed, and whether authentication mechanisms were correctly applied.</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Header</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Message-ID</p></td>
+<td><p>Unique identifier generated by the sending server.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Date</p></td>
+<td><p>Date and time when the message was sent.</p></td>
+</tr>
+<tr class="row-even"><td><p>From</p></td>
+<td><p>Sender email address.</p></td>
+</tr>
+<tr class="row-odd"><td><p>To</p></td>
+<td><p>Recipient email address.</p></td>
+</tr>
+<tr class="row-even"><td><p>Subject</p></td>
+<td><p>Subject of the email.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Return-Path</p></td>
+<td><p>Address where delivery errors are returned.</p></td>
+</tr>
+<tr class="row-even"><td><p>Received</p></td>
+<td><p>Shows the route followed between mail servers.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SPF</p></td>
+<td><p>Verifies whether the sending server is authorized to send emails for the domain.</p></td>
+</tr>
+<tr class="row-even"><td><p>DKIM</p></td>
+<td><p>Verifies message integrity using digital signatures.</p></td>
+</tr>
+<tr class="row-odd"><td><p>DMARC</p></td>
+<td><p>Defines policies for SPF and DKIM validation failures.</p></td>
+</tr>
+<tr class="row-even"><td><p>MIME-Version</p></td>
+<td><p>Indicates the MIME version used in the message.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Content-Type</p></td>
+<td><p>Indicates the content format of the message.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>e) Learn how to verify the DKIM information (selector, domain, and public DKIM key) that appears in the header: https://dkimcore.org/tools/</strong></p>
+<p>To verify DKIM information, the first step is to locate the <code class="docutils literal notranslate"><span class="pre">DKIM-Signature</span></code> header inside the raw email source. Within that header, the signing domain (<code class="docutils literal notranslate"><span class="pre">d=</span></code>) and the DKIM selector (<code class="docutils literal notranslate"><span class="pre">s=</span></code>) are the fields that matter most. Those values can be entered into the DKIMCore tool, which retrieves the public DKIM key published in DNS and checks whether the signature is legitimate.</p>
+<p>In practice, I located the <code class="docutils literal notranslate"><span class="pre">DKIM-Signature</span></code> line in the raw message, noted the selector and domain, ran the lookup in DKIMCore, and confirmed that the signature matched the published key.</p>
+<p><img alt="alt text" src="../../_images/image-58.png" /></p>
+<p><img alt="alt text" src="../../_images/image-67.png" /></p>
+<p><img alt="alt text" src="../../_images/image-77.png" /></p>
+</section>
+<section id="spoofing">
+<h3>2) Spoofing<a class="headerlink" href="#spoofing" title="Link to this heading">¶</a></h3>
+<p><strong>a) Use an online tool to send yourself an email using identity spoofing techniques. For example, send yourself an email with the sender address: billgates&#64;microsoft.com and your own email address as the recipient.</strong></p>
+<p>For this test I used the online spoofing platform at https://emkei.cz/. The goal was to simulate a spoofed email, see whether the message reached the inbox, and observe how modern mail systems react to spoofed messages. After sending the message, I waited for the delivery result and checked both the inbox and spam folders.</p>
+<p><img alt="alt text" src="../../_images/image-156.png" />
+<img alt="alt text" src="../../_images/image-146.png" /></p>
+<p>The message never arrived in my mailbox. SPF checks on the receiving side rejected or filtered it; on a server that does not enforce SPF, the same spoofed message might still be delivered.</p>
+<p><strong>b) Explain which tools or protections prevent the email from reaching your inbox.</strong></p>
+<p>Modern email providers implement several protection technologies designed to detect spoofed or malicious emails.</p>
+<p><strong>SPF (Sender Policy Framework)</strong> verifies whether the sending server is authorized to send mail on behalf of a domain. The domain owner publishes authorized mail servers in DNS, and the receiving server compares the sender IP against that record. If the source is not authorized, the message may be rejected or marked as spam.</p>
+<p><strong>DKIM (DomainKeys Identified Mail)</strong> adds a cryptographic signature to the email. The sending server signs the message with a private key, and the recipient verifies the signature using the public key in DNS. If the message was altered or never signed, verification fails.</p>
+<p><strong>DMARC (Domain-based Message Authentication, Reporting and Conformance)</strong> combines SPF and DKIM results and applies policies defined by the domain owner. Depending on that policy, a failed check can lead to rejection, quarantine in spam, or—in rare cases—delivery anyway.</p>
+<p><strong>c) Repeat the sending process from section a), but this time use: billgates&#64;microsoft.com as the sender and use the email address provided by: https://dkimvalidator.com/ as the recipient.</strong></p>
+<p>For this second test, the spoofed email was sent to a temporary address generated by DKIMValidator.</p>
+<p><img alt="alt text" src="../../_images/image-86.png" />
+<img alt="alt text" src="../../_images/image-96.png" /></p>
+<p><strong>d) Analyze the received email.</strong></p>
+<p>Once the message was received, I examined the raw source and the validation results from the service.</p>
+<p>The most noticeable finding is that the message carries no DKIM (or related) signature. That absence is exactly what keeps many spoofed messages from reaching well-known providers such as Gmail or IONOS. A second warning sign appears in the <code class="docutils literal notranslate"><span class="pre">Received</span></code> chain: the hostname of the server that handed off the mail does not match a legitimate Microsoft infrastructure and looks like an unrelated or disposable host.</p>
+<p><img alt="alt text" src="../../_images/image-106.png" />
+<img alt="alt text" src="../../_images/image-1110.png" />
+<img alt="alt text" src="../../_images/image-126.png" />
+<img alt="alt text" src="../../_images/image-135.png" /></p>
+<p><strong>e) Explain the conclusions you reached and the role that SPF, DKIM, and DMARC technologies play in preventing spoofing attacks.</strong></p>
+<p>After completing the spoofing tests, several conclusions stand out about how email security works today.</p>
+<p>Forging the visible sender address is technically easy, but large providers stack several verification layers on top of that weak default. SPF answers whether the delivering IP is allowed to send for the claimed domain. DKIM proves that the message body and selected headers were not changed in transit and were signed by someone who controls the domain’s key. DMARC tells the receiver what to do when SPF or DKIM (or both) fail, which is why most spoofed mail either never arrives or lands in spam rather than the inbox.</p>
+</section>
+<section id="install-the-most-common-email-clients">
+<h3>3) Install the Most Common Email Clients<a class="headerlink" href="#install-the-most-common-email-clients" title="Link to this heading">¶</a></h3>
+<p><strong>Install Mozilla Thunderbird and Outlook.</strong></p>
+<p>Both Thunderbird and Outlook were installed and configured.</p>
+<p><strong>Learn how to configure your email account in both clients. It is recommended to use IMAP.</strong></p>
+<section id="thunderbird">
+<h4>Thunderbird<a class="headerlink" href="#thunderbird" title="Link to this heading">¶</a></h4>
+<p><img alt="alt text" src="../../_images/image-166.png" />
+<img alt="alt text" src="../../_images/image-175.png" />
+<img alt="alt text" src="../../_images/image-186.png" />
+<img alt="alt text" src="../../_images/image-196.png" /></p>
+</section>
+<section id="outlook">
+<h4>Outlook<a class="headerlink" href="#outlook" title="Link to this heading">¶</a></h4>
+<p><img alt="alt text" src="../../_images/image-205.png" />
+<img alt="alt text" src="../../_images/image-219.png" /></p>
+<p><strong>Investigate the files they use for storage and which ones may contain forensic evidence.</strong></p>
+<p>On Windows, Thunderbird stores profile data under:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">USER</span><span class="o">&gt;</span>\<span class="n">AppData</span>\<span class="n">Roaming</span>\<span class="n">Thunderbird</span>\<span class="n">Profiles</span>\
+</pre></div>
+</div>
+<p>From a forensic perspective, the profile may hold mailbox folders (Inbox, Sent, Drafts, Trash), mbox files, SQLite databases, and account configuration files that reveal how the client was set up and used.</p>
+<p><img alt="alt text" src="../../_images/image-225.png" />
+<img alt="alt text" src="../../_images/image-235.png" /></p>
+<p>Outlook keeps much of its local state here:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">USER</span><span class="o">&gt;</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Microsoft</span>\<span class="n">Olk</span>\
+</pre></div>
+</div>
+<p>Artifacts of interest include PST and OST files, logs, cached attachments, and account metadata that can support timeline reconstruction or user identification.</p>
+<p><img alt="alt text" src="../../_images/image-244.png" />
+<img alt="alt text" src="../../_images/image-255.png" /></p>
+<p><strong>Imagine that, during a disk clone analysis in a forensic investigation, we locate a Thunderbird profile directory. It would be interesting to access those emails, right? Search for “generic” tools capable of visualizing or interpreting the information stored in Thunderbird’s storage directory.</strong></p>
+<p>During a forensic investigation, recovering email evidence from a Thunderbird profile can provide valuable information. Investigators can mount the profile in Thunderbird itself, open mbox files with an Mbox viewer, or use dedicated utilities such as 4n6 Thunderbird Forensics Wizard. Broader platforms like Autopsy or FTK Imager can also surface mailbox files and related artifacts from a disk image.</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Tool</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Thunderbird</p></td>
+<td><p>Directly loads profile folders and emails.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Mbox Viewer</p></td>
+<td><p>Reads Thunderbird mbox email files.</p></td>
+</tr>
+<tr class="row-even"><td><p>4n6 Thunderbird Forensics Wizard</p></td>
+<td><p>Specialized forensic analysis tool.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Autopsy</p></td>
+<td><p>Digital forensics platform capable of analyzing email artifacts.</p></td>
+</tr>
+<tr class="row-even"><td><p>FTK Imager</p></td>
+<td><p>Used to inspect files extracted from disk images.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Such analysis may recover sent and deleted messages, attachments, metadata, contacts, account settings, and traces of client use.</p>
+<p><img alt="alt text" src="../../_images/image-262.png" />
+<img alt="alt text" src="../../_images/image-274.png" /></p>
+</section>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026, PumukyDev
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Email Forensic Analysis</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#objectives">Objectives</a></li>
+<li><a class="reference internal" href="#materials">Materials</a></li>
+<li><a class="reference internal" href="#tasks">Tasks</a><ul>
+<li><a class="reference internal" href="#familiarization-with-email-headers">1) Familiarization with Email Headers</a></li>
+<li><a class="reference internal" href="#spoofing">2) Spoofing</a></li>
+<li><a class="reference internal" href="#install-the-most-common-email-clients">3) Install the Most Common Email Clients</a><ul>
+<li><a class="reference internal" href="#thunderbird">Thunderbird</a></li>
+<li><a class="reference internal" href="#outlook">Outlook</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
+    </body>
+</html>

@@ -76,101 +76,35 @@ Most commonly used cloud clients include:
 
 #### **OneDrive**
 
-On Windows, OneDrive is usually installed by default. If it is not installed, it can be downloaded from the official Microsoft website.
-
-Official website:  
-https://www.microsoft.com/en-us/microsoft-365/onedrive/download
-
-Check if OneDrive is installed:
-
-```powershell
-Get-Process OneDrive
-```
-
-Launch OneDrive:
-
-```powershell
-%localappdata%\Microsoft\OneDrive\OneDrive.exe
-```
+On Windows, OneDrive is usually installed by default. If it is not installed, it can be downloaded from the [official Microsoft website](https://www.microsoft.com/en-us/microsoft-365/onedrive/download).
 
 Once installed, users can log in with their Microsoft account and access synchronized files directly from Windows File Explorer.
 
 #### **Google Drive**
 
-Download the installer from the official Google Drive website.
-
-Official website:  
-https://www.google.com/drive/download/
+Download the installer from the [official Google Drive website.](https://www.google.com/drive/download/).
 
 Once downloaded, execute the installer and follow the setup process.
-
-Check if Google Drive is running:
-
-```powershell
-Get-Process | findstr DriveFS
-```
-
-Default installation path:
-
-```text
-C:\Program Files\Google\Drive File Stream\
-```
 
 After authentication, synchronized files become accessible from Windows File Explorer.
 
 #### **Dropbox**
 
-Download the installer from the official Dropbox website.
-
-Official website:  
-https://www.dropbox.com/install
+Download the installer from the [official Dropbox website](https://www.dropbox.com/install).
 
 After installation, log in with a Dropbox account.
-
-Check if Dropbox is running:
-
-```powershell
-Get-Process Dropbox
-```
-
-Default installation path:
-
-```text
-C:\Program Files (x86)\Dropbox\Client
-```
 
 The synchronized cloud directory will become available from Windows File Explorer.
 
 #### **Nextcloud**
 
-Nextcloud uses the **Nextcloud Desktop Client** to synchronize files between local system and a self-hosted or provider-hosted Nextcloud server.
-
-Official website:  
-https://nextcloud.com/install/
+Nextcloud uses the **Nextcloud Desktop Client** to synchronize files between local system and a self-hosted or provider-hosted Nextcloud server. [Official website](https://nextcloud.com/install/)
 
 Download and install the desktop client from the official site, then follow the installation wizard.
 
-After installation, launch Nextcloud and connect it to your server by entering your Nextcloud instance URL (for example: `https://cloud.yourdomain.com`) and your credentials.
+After installation, launch Nextcloud and connect it to your server by entering your Nextcloud instance URL (for example: `https://nextcloud.yourdomain.com`) and your credentials.
 
-Launch Nextcloud manually:
-
-%localappdata%\Programs\Nextcloud\nextcloud.exe
-
-Default installation path:
-
-C:\Program Files\Nextcloud\
-
-After configuration, the synchronized folder will be available in Windows File Explorer, typically under:
-
-C:\Users\<YourUser>\Nextcloud\
-
-From this folder, any files added, modified, or deleted will automatically sync with your Nextcloud server.
-
-Check if Nextcloud is running:
-
-```powershell
-Get-Process Nextcloud*
-```
+After configuration, the synchronized folder will be available in Windows File Explorer.
 
 ### **3. Analyze the previous clients and determine**
 
@@ -180,64 +114,64 @@ Get-Process Nextcloud*
 
 OneDrive service and configuration files are typically located at:
 
-```text
+```
 C:\Users\<user>\AppData\Local\Microsoft\OneDrive
 ```
-![alt text](image.png)
+![alt text](./images/image.png)
 
 Settings directory:
 
-```text
+```
 C:\Users\<user>\AppData\Local\Microsoft\OneDrive\seDttings
 ```
 
-![alt text](image-1.png)
+![alt text](./images/image-1.png)
 
 ##### **Google Drive**
 
 Google Drive service and configuration location is here:
 
-```text
+```
 C:\Program Files\Google\Drive File Stream\
 ```
 
-![alt text](image-2.png)
+![alt text](./images/image-2.png)
 
 ##### **Dropbox**
 
 Dropbox service location:
 
-```text
+```
 C:\Program Files (x86)\Dropbox\Client
 ```
 
-![alt text](image-4.png)
+![alt text](./images/image-4.png)
 
 Configuration files:
 
-```text
+```
 C:\Users\<user>\AppData\Roaming\Dropbox\
 ```
 
-![alt text](image-3.png)
-
-### **3. Analyze the previous clients and determine**
-
-#### **a) Identify where the services and their configuration files are installed**
+![alt text](./images/image-3.png)
 
 ##### **Nextcloud**
 
 Nextcloud service location:
 
+```
 C:\Program Files\Nextcloud\
+```
 
-![alt text](image-19.png)
+![alt text](./images/image-19.png)
 
 Configuration files:
 
+```
 C:\Users\<user>\AppData\Roaming\Nextcloud\logs\
+```
 
-![alt text](image-20.png)
+![alt text](./images/image-20.png)
 
 #### **b) Locate where the cloud synchronized folders are stored**
 
@@ -245,11 +179,11 @@ C:\Users\<user>\AppData\Roaming\Nextcloud\logs\
 
 The synchronized OneDrive directory is usually located inside the user's profile:
 
-```text
+```
 C:\Users\<user>\OneDrive
 ```
 
-![alt text](image-5.png)
+![alt text](./images/image-5.png)
 
 ##### **Google Drive**
 
@@ -257,29 +191,31 @@ Google Drive mounts the synchronized files as a virtual drive.
 
 The local cache and synchronization data are located at:
 
-```text
+```
 %UserProfile%\AppData\Local\Google\DriveFS\
 ```
 
-![alt text](image-6.png)
+![alt text](./images/image-6.png)
 
 ##### **Dropbox**
 
 The synchronized Dropbox folder is usually located at:
 
-```text
+```
 C:\Users\<user>\Dropbox\DropsyncFiles
 ```
 
-![alt text](image-7.png)
+![alt text](./images/image-7.png)
 
 ##### **Nextcloud**
 
 The synchronized Nextcloud folder is usually located at:
 
+```
 C:\Users\<user>\Desktop\Nextcloud\
+```
 
-![alt text](image-21.png)
+![alt text](./images/image-21.png)
 
 #### **c) Find the generated metadata and determine what information can be extracted from it**
 
@@ -287,15 +223,15 @@ C:\Users\<user>\Desktop\Nextcloud\
 
 Metadata and logs can be found in:
 
-```text
+```
 C:\Users\<user>\AppData\Local\Microsoft\OneDrive\logs\
 ```
 
-![alt text](image-8.png)
+![alt text](./images/image-8.png)
 
 Inside the `Personal` directory, forensic artifacts and synchronization logs can be found.
 
-![alt text](image-9.png)
+![alt text](./images/image-9.png)
 
 Read the log:
 
@@ -303,7 +239,7 @@ Read the log:
 Get-Content "$env:LOCALAPPDATA\Microsoft\OneDrive\logs\Personal\SyncDiagnostics.log"
 ```
 
-![alt text](image-10.png)
+![alt text](./images/image-10.png)
 
 From these logs we can extract:
 
@@ -318,20 +254,20 @@ From these logs we can extract:
 
 Metadata is stored inside SQLite databases located at:
 
-```text
+```
 C:\Users\<user>\AppData\Local\Google\DriveFS
 ```
-![alt text](image-11.png)
+![alt text](./images/image-11.png)
 
 Databases can be analyzed using SQLiteStudio.
 
 - experiment.db
 
-![alt text](image-12.png)
+![alt text](./images/image-12.png)
 
 - metrics_store_sqlite.db
 
-![alt text](image-13.png)
+![alt text](./images/image-13.png)
 
 is empty as I did not use it
 
@@ -339,11 +275,11 @@ is empty as I did not use it
 
 rutas de sincronización
 
-![alt text](image-15.png)
+![alt text](./images/image-15.png)
 
 here we can see all the disks and their names
 
-![alt text](image-14.png)
+![alt text](./images/image-14.png)
 
 Inside these databases we can find:
 
@@ -355,32 +291,32 @@ Inside these databases we can find:
 
 Logs directory:
 
-```text
+```
 C:\Users\<user>\AppData\Local\Google\DriveFS\logs
 ```
 
-![alt text](image-16.png)
+![alt text](./images/image-16.png)
 
 
 ##### **Dropbox**
 
 Dropbox stores forensic artifacts and databases inside:
 
-```text
+```
 C:\Users\<user>\AppData\Local\Dropbox
 ```
-![alt text](image-17.png)
+![alt text](./images/image-17.png)
 
-The most important file is
+The most important file are
 
-```text
+```
 apex.sqlite3
 host.db
 ```
 
 However there are unredeable / uncrypted and we cannot get anything
 
-![alt text](image-18.png)
+![alt text](./images/image-18.png)
 
 Possible information extracted:
 
@@ -397,13 +333,13 @@ Nextcloud stores forensic artifacts, logs, and client metadata inside:
 
 C:\Users\<user>\AppData\Local\Nextcloud\
 
-![alt text](image-22.png)
+![alt text](./images/image-22.png)
 
 Additional configuration and synchronization data can also be found in:
 
 C:\Users\<user>\AppData\Roaming\Nextcloud\
 
-![alt text](image-23.png)
+![alt text](./images/image-23.png)
 
 Inside these directories we can find log files, cache information, synchronization metadata, and configuration files.
 
@@ -411,7 +347,7 @@ The most important file is:
 
 <date>_nextcloud.log
 
-![alt text](image-24.png)
+![alt text](./images/image-24.png)
 
 Possible information extracted:
 

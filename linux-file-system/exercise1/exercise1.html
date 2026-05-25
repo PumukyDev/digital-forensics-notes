@@ -312,7 +312,7 @@
 <li><p><strong>ctime (change time):</strong> Last time the inode metadata changed (permissions, ownership, etc.).</p></li>
 <li><p><strong>crtime (creation time or bith, in EXT4):</strong> File creation time (not available in older file systems).</p></li>
 </ul>
-<p><img alt="alt text" src="../../_images/image7.png" /></p>
+<p><img alt="alt text" src="../../_images/image4.png" /></p>
 </section>
 <section id="explain-the-relationship-between-a-directory-directory-entries-dentries-and-inodes-how-does-this-structure-allow-the-system-to-locate-a-file-within-the-file-system">
 <h4>Explain the relationship between a directory, directory entries (dentries), and inodes. How does this structure allow the system to locate a file within the file system?<a class="headerlink" href="#explain-the-relationship-between-a-directory-directory-entries-dentries-and-inodes-how-does-this-structure-allow-the-system-to-locate-a-file-within-the-file-system" title="Link to this heading">¶</a></h4>
@@ -371,25 +371,25 @@
 <p>Download the disk image from the provided <a class="reference external" href="https://drive.google.com/file/d/1eN9oT3m66BphGWj5T-eEdU4GOpory-xm/view">link</a> and complete the following tasks:</p>
 <section id="using-appropriate-linux-commands-fdisk-mmls-determine-how-many-disk-partitions-appear-in-the-image">
 <h4>Using appropriate Linux commands (fdisk, mmls), determine how many disk partitions appear in the image.<a class="headerlink" href="#using-appropriate-linux-commands-fdisk-mmls-determine-how-many-disk-partitions-appear-in-the-image" title="Link to this heading">¶</a></h4>
-<p><img alt="alt text" src="../../_images/image-120.png" /></p>
+<p><img alt="alt text" src="../../_images/image-115.png" /></p>
 </section>
 <section id="open-the-same-image-with-active-disk-editor-and-verify-that-the-same-partitions-appear-as-in-the-previous-step">
 <h4>Open the same image with Active Disk Editor and verify that the same partitions appear as in the previous step.<a class="headerlink" href="#open-the-same-image-with-active-disk-editor-and-verify-that-the-same-partitions-appear-as-in-the-previous-step" title="Link to this heading">¶</a></h4>
-<p><img alt="alt text" src="../../_images/image-218.png" /></p>
+<p><img alt="alt text" src="../../_images/image-210.png" /></p>
 </section>
 <section id="using-active-disk-editor-display-the-superblock-information-of-partitions-1-and-3-focus-on-explaining-the-fields-that-are-most-relevant-from-a-forensic-perspective">
 <h4>Using Active Disk Editor, display the superblock information of partitions 1 and 3. Focus on explaining the fields that are most relevant from a forensic perspective.<a class="headerlink" href="#using-active-disk-editor-display-the-superblock-information-of-partitions-1-and-3-focus-on-explaining-the-fields-that-are-most-relevant-from-a-forensic-perspective" title="Link to this heading">¶</a></h4>
-<p><img alt="alt text" src="../../_images/image-67.png" />
-<img alt="alt text" src="../../_images/image-87.png" /></p>
+<p><img alt="alt text" src="../../_images/image-64.png" />
+<img alt="alt text" src="../../_images/image-84.png" /></p>
 <p>These fields indicate how many blocks and inodes are free in the filesystem. From a forensic perspective, they help estimate how much data could have been deleted or how active the filesystem has been.</p>
-<p><img alt="alt text" src="../../_images/image-77.png" />
-<img alt="alt text" src="../../_images/image-97.png" /></p>
+<p><img alt="alt text" src="../../_images/image-74.png" />
+<img alt="alt text" src="../../_images/image-94.png" /></p>
 <p>Specifies the size of each block. Important in forensics because it is needed to calculate offsets and locate data accurately within the partition.</p>
-<p><img alt="alt text" src="../../_images/image-57.png" />
-<img alt="alt text" src="../../_images/image-107.png" /></p>
+<p><img alt="alt text" src="../../_images/image-54.png" />
+<img alt="alt text" src="../../_images/image-104.png" /></p>
 <p>Shows the last mount and write times, as well as how many times the filesystem has been mounted. Useful for reconstructing a timeline of filesystem usage and identifying potential improper shutdowns or crashes.</p>
-<p><img alt="alt text" src="../../_images/image-49.png" />
-<img alt="alt text" src="../../_images/image-1111.png" /></p>
+<p><img alt="alt text" src="../../_images/image-46.png" />
+<img alt="alt text" src="../../_images/image-116.png" /></p>
 <p>Important for verifying filesystem integrity and identifying the correct filesystem type during forensic analysis.</p>
 </section>
 <section id="use-the-command-losetup-f-p-to-mount-the-image-file-in-linux-as-if-it-were-a-device-attempt-to-mount-partitions-1-and-3-and-examine-their-contents">
@@ -398,11 +398,11 @@
 sudo<span class="w"> </span>losetup<span class="w"> </span>-a
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-127.png" /></p>
+<p><img alt="alt text" src="../../_images/image-124.png" /></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>/dev/loop0*
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-136.png" /></p>
+<p><img alt="alt text" src="../../_images/image-133.png" /></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/mnt/part1
 sudo<span class="w"> </span>mkdir<span class="w"> </span>-p<span class="w"> </span>/mnt/part3
 sudo<span class="w"> </span>mount<span class="w"> </span>/dev/loop0p1<span class="w"> </span>/mnt/part1
@@ -410,16 +410,16 @@ sudo<span class="w"> </span>mount<span class="w"> </span>/dev/loop0p3<span class
 </pre></div>
 </div>
 <p>In part 1, many files have been recovered.</p>
-<p><img alt="alt text" src="../../_images/image-147.png" /></p>
+<p><img alt="alt text" src="../../_images/image-144.png" /></p>
 <p>However, in part 2 there are no files.</p>
-<p><img alt="alt text" src="../../_images/image-157.png" /></p>
+<p><img alt="alt text" src="../../_images/image-154.png" /></p>
 </section>
 <section id="use-the-fls-command-from-the-sleuth-kit-to-list-files-and-directories-in-partition-1-of-the-image-investigate-the-meaning-of-the-columns-shown-in-the-command-output">
 <h4>Use the <code class="docutils literal notranslate"><span class="pre">fls</span></code> command (from The Sleuth Kit) to list files and directories in partition 1 of the image. Investigate the meaning of the columns shown in the command output.<a class="headerlink" href="#use-the-fls-command-from-the-sleuth-kit-to-list-files-and-directories-in-partition-1-of-the-image-investigate-the-meaning-of-the-columns-shown-in-the-command-output" title="Link to this heading">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>fls<span class="w"> </span>-r<span class="w"> </span>/dev/loop0p1
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-167.png" /></p>
+<p><img alt="alt text" src="../../_images/image-164.png" /></p>
 <p>The The Sleuth Kit command we used allows us to view the file structure, even if files have been deleted.</p>
 <ul class="simple">
 <li><p><strong>Type (r/r, d/d, +):</strong> The first part indicates whether it is a regular file (r) or a directory (d). The <code class="docutils literal notranslate"><span class="pre">+</span></code> symbol shows that the file is located inside a subdirectory (nested depth).</p></li>
@@ -429,12 +429,12 @@ sudo<span class="w"> </span>mount<span class="w"> </span>/dev/loop0p3<span class
 </section>
 <section id="explain-why-the-command-icat-dev-loop0p1-690-does-not-produce-output-while-icat-dev-loop0p1-12-does">
 <h4>Explain why the command <code class="docutils literal notranslate"><span class="pre">icat</span> <span class="pre">/dev/loop0p1</span> <span class="pre">690</span></code> does not produce output, while <code class="docutils literal notranslate"><span class="pre">icat</span> <span class="pre">/dev/loop0p1</span> <span class="pre">12</span></code> does.<a class="headerlink" href="#explain-why-the-command-icat-dev-loop0p1-690-does-not-produce-output-while-icat-dev-loop0p1-12-does" title="Link to this heading">¶</a></h4>
-<p><img alt="alt text" src="../../_images/image-176.png" /></p>
+<p><img alt="alt text" src="../../_images/image-173.png" /></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>fls<span class="w"> </span>-r<span class="w"> </span>/dev/loop0p1<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;\b690\b&#39;</span>
 sudo<span class="w"> </span>fls<span class="w"> </span>-r<span class="w"> </span>/dev/loop0p1<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;\b12\b&#39;</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-186.png" /></p>
+<p><img alt="alt text" src="../../_images/image-184.png" /></p>
 <p>The inode 690 is marked with * which means it has been <strong>deleted</strong> (unallocated). Since <code class="docutils literal notranslate"><span class="pre">icat</span></code> only retrieves data from <strong>allocated files</strong>, there is no output.</p>
 <p>The inode 12 has two entries: the first (<code class="docutils literal notranslate"><span class="pre">12(realloc)</span></code>) shows the inode was <strong>reused</strong> by a new file (<code class="docutils literal notranslate"><span class="pre">adduser.conf</span></code>), so the original data may not be accessible. The second (<code class="docutils literal notranslate"><span class="pre">12</span></code>) is an <strong>allocated file</strong> (<code class="docutils literal notranslate"><span class="pre">report.xml</span></code>) that still exists. Because it is allocated, <code class="docutils literal notranslate"><span class="pre">icat</span></code> retrieves its content successfully.</p>
 </section>
@@ -443,23 +443,23 @@ sudo<span class="w"> </span>fls<span class="w"> </span>-r<span class="w"> </span
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>istat<span class="w"> </span>/dev/loop0p1<span class="w"> </span><span class="m">20</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-196.png" /></p>
+<p><img alt="alt text" src="../../_images/image-194.png" /></p>
 <p>It show the inode metadata</p>
 <p>In order to know the the name of the file referenced by inode 20:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>fls<span class="w"> </span>-r<span class="w"> </span>/dev/loop0p1<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">&#39;\b20\b&#39;</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-205.png" /></p>
+<p><img alt="alt text" src="../../_images/image-203.png" /></p>
 <p>It is <code class="docutils literal notranslate"><span class="pre">f0109188.txt</span></code>.</p>
 </section>
 <section id="using-active-disk-editor-locate-the-inode-20-information-of-the-previous-file-why-do-the-direct-block-pointers-not-match">
 <h4>Using Active Disk Editor, locate the inode 20 information of the previous file. Why do the direct block pointers not match?<a class="headerlink" href="#using-active-disk-editor-locate-the-inode-20-information-of-the-previous-file-why-do-the-direct-block-pointers-not-match" title="Link to this heading">¶</a></h4>
 <p>Open Active Disk Editor, right click over the fist ext4 partition and click on “Open in File Browser”.</p>
-<p><img alt="alt text" src="../../_images/image-362.png" /></p>
+<p><img alt="alt text" src="../../_images/image-361.png" /></p>
 <p>Right click over the the with id 20 and click on “Inspect File Record”.</p>
-<p><img alt="alt text" src="../../_images/image-372.png" /></p>
+<p><img alt="alt text" src="../../_images/image-371.png" /></p>
 <p>Deploy the menu “Direct block pointers” and check that there are 12 pointers. Pointer 6 shows 8833, which is the first direct block shown by the istat command.</p>
-<p><img alt="alt text" src="../../_images/image-382.png" /></p>
+<p><img alt="alt text" src="../../_images/image-381.png" /></p>
 <p>Although this is the block indicated by the inode, it is not necessarily the block where the actual data is stored. This is because EXT4 does not always use traditional direct blocks anymore; most likely, this block is part of an extent, which stores the starting block and a sequence of consecutive blocks that are not directly visible in the inode.
 Therefore, the information shown by Active Disk Editor does not necessarily match the actual location of the data blocks.</p>
 </section>
@@ -469,8 +469,8 @@ Therefore, the information shown by Active Disk Editor does not necessarily matc
 sudo<span class="w"> </span>tsk_recover<span class="w"> </span>-e<span class="w"> </span>/dev/loop0p3<span class="w"> </span>./recovered-p3/
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-219.png" />
-<img alt="alt text" src="../../_images/image-225.png" /></p>
+<p><img alt="alt text" src="../../_images/image-214.png" />
+<img alt="alt text" src="../../_images/image-223.png" /></p>
 </section>
 <section id="use-the-photorec-command-to-recover-as-many-files-as-possible-from-partitions-1-and-3-explain-why-the-recovered-files-do-not-match-those-obtained-in-the-previous-step">
 <h4>Use the <code class="docutils literal notranslate"><span class="pre">photorec</span></code> command to recover as many files as possible from partitions 1 and 3. Explain why the recovered files do not match those obtained in the previous step.<a class="headerlink" href="#use-the-photorec-command-to-recover-as-many-files-as-possible-from-partitions-1-and-3-explain-why-the-recovered-files-do-not-match-those-obtained-in-the-previous-step" title="Link to this heading">¶</a></h4>
@@ -479,24 +479,24 @@ sudo<span class="w"> </span>photorec<span class="w"> </span>/dev/loop0p1
 </pre></div>
 </div>
 <p>Click on “Proceed”.</p>
-<p><img alt="alt text" src="../../_images/image-234.png" /></p>
+<p><img alt="alt text" src="../../_images/image-233.png" /></p>
 <p>Click on “Search”.</p>
-<p><img alt="alt text" src="../../_images/image-245.png" /></p>
+<p><img alt="alt text" src="../../_images/image-243.png" /></p>
 <p>Click on “ext2/ext3”.</p>
-<p><img alt="alt text" src="../../_images/image-255.png" /></p>
+<p><img alt="alt text" src="../../_images/image-253.png" /></p>
 <p>Click on “Whole”.</p>
-<p><img alt="alt text" src="../../_images/image-292.png" /></p>
+<p><img alt="alt text" src="../../_images/image-291.png" /></p>
 <p>Click on “photorec”, which is the directory created at the beginning.</p>
-<p><img alt="alt text" src="../../_images/image-274.png" /></p>
+<p><img alt="alt text" src="../../_images/image-272.png" /></p>
 <p>Press “C” to finish.</p>
-<p><img alt="alt text" src="../../_images/image-283.png" /></p>
+<p><img alt="alt text" src="../../_images/image-282.png" /></p>
 <p>In this case, 118 files have been recovered.</p>
-<p><img alt="alt text" src="../../_images/image-303.png" />
-<img alt="alt text" src="../../_images/image-315.png" /></p>
+<p><img alt="alt text" src="../../_images/image-302.png" />
+<img alt="alt text" src="../../_images/image-313.png" /></p>
 <p>Repeat the same steps but using the partition 3.</p>
 <p>In this case, 74 files have been recovered.</p>
-<p><img alt="alt text" src="../../_images/image-323.png" /></p>
-<p><img alt="alt text" src="../../_images/image-333.png" /></p>
+<p><img alt="alt text" src="../../_images/image-322.png" /></p>
+<p><img alt="alt text" src="../../_images/image-332.png" /></p>
 <p>The difference in the number of recovered files between <code class="docutils literal notranslate"><span class="pre">tsk_recover</span></code> and <code class="docutils literal notranslate"><span class="pre">photorec</span></code> is due to how each tool works:</p>
 <ul class="simple">
 <li><p>tsk_recover recovers files by reading the filesystem metadata (inodes, directories, etc.).</p></li>
@@ -588,7 +588,7 @@ sudo<span class="w"> </span>./script.sh
 </div>
 <p><img alt="alt text" src="../../_images/image-342.png" /></p>
 <p>The script will automatically save the extracted data in a descriptive file inside the “logs”, “network”, “system” or “users” directories.</p>
-<p><img alt="alt text" src="../../_images/image-352.png" /></p>
+<p><img alt="alt text" src="../../_images/image-351.png" /></p>
 </section>
 </section>
 </section>

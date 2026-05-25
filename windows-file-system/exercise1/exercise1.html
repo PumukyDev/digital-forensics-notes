@@ -359,7 +359,7 @@ g. For each partition:</p>
 <p><img alt="alt text" src="../../_images/image-419.png" /></p>
 <p>When trying to analyze the first disk, it is impossible to interpret it, if we attempt to read it as a standard MBR, the data shown will be meaningless or inconsistent.</p>
 <p><img alt="alt text" src="../../_images/image-516.png" />
-<img alt="alt text" src="../../_images/image-615.png" /></p>
+<img alt="alt text" src="../../_images/image-614.png" /></p>
 <p>Try changing the template to “GUID Partition Table”.</p>
 <p><img alt="alt text" src="../../_images/image-714.png" /></p>
 <p>Once we select the <strong>GUID template</strong>, more colors appear in the application and the structure becomes clearer and more logical. Each color corresponds to a specific partition, helping with visual analysis.</p>
@@ -438,7 +438,7 @@ Then, assign the proper template in the right panel.</p>
 <li><p><strong>Ending LBA:</strong> 614,366</p></li>
 <li><p><strong>Name:</strong> Basic Data Partition</p></li>
 </ul>
-<p><img alt="alt text" src="../../_images/image-1511.png" /></p>
+<p><img alt="alt text" src="../../_images/image-1510.png" /></p>
 </section>
 </section>
 <section id="sleuth-kit">
@@ -448,7 +448,7 @@ Then, assign the proper template in the right panel.</p>
 sudo<span class="w"> </span>mmls<span class="w"> </span>&lt;disk_image&gt;
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-238.png" /></p>
+<p><img alt="alt text" src="../../_images/image-237.png" /></p>
 <p>The tool outputs information similar to what we obtained manually, including:</p>
 <ul class="simple">
 <li><p>The same empty/corrupted third entry</p></li>
@@ -471,7 +471,7 @@ The colored segmentation in Active Disk Editor also visually confirmed inconsist
 <p><img alt="alt text" src="windows-file-system/exercise1/images/image-21.png" /></p>
 <p>Select “Master Boot Record” template again.</p>
 <p><img alt="alt text" src="../../_images/image-419.png" />
-<img alt="alt text" src="../../_images/image-1611.png" /></p>
+<img alt="alt text" src="../../_images/image-1610.png" /></p>
 <p>Inspecting the disk we can confirm that it is <strong>MBR</strong> by checking the first bytes of the disk.</p>
 </section>
 <section id="mbr-header">

@@ -21,44 +21,48 @@ File systems such as FAT, NTFS, ext2/ext3/ext4 store files in data blocks or clu
 
 ## Tasks
 
-1. Download the disk image **“recuperacion.dd”**.
+**1. Download the disk image "recuperacion.dd".**
 
-2. Analyze the disk and determine the following:
-   a. Disk partitioning system (MBR/GPT)  
-   b. Number of valid partitions and their sizes  
-   c. Investigate whether a file system may exist
+**2. Analyze the disk and determine the following:**
 
-3. Use **PhotoRec** to recover as much information as possible from the disk image.  
-   Do the same with **Bulk Extractor** and **Autopsy**.  
-   Briefly document the process.
+**a. Disk partitioning system (MBR/GPT)**
 
-4. Import a multi-system virtual machine (XP–Ubuntu) from the provided OVA.  
-   Corrupt the MBR on purpose and attempt to recover it using:  
-   - the Windows XP installation disk  
-   - the TestDisk tool
+El disco usa GPT
 
-5. Import a multi-system virtual machine (Windows 7–Debian) from the provided OVA.  
-   Corrupt the MBR on purpose and attempt to recover it using the Windows 7 installation disk.
+![alt text](./images/image-90.png)
 
 
-UNDER DEVELOPMENT!!
+**b. Number of valid partitions and their sizes**
 
+El disco solo tiene una partición válida.
 
-Con active disk editor no podemos saber directamente de forma sencilla cuántas particiones hay, porque al estar estropeada la partición de arranque, no lo sabe.
+![alt text](./images/image-91.png)
 
-![alt text](./images/image-73.png)
+Tiene un tamaño de 447 GB.
 
-Al menos sabemos que es MBR
+![alt text](./images/image-92.png)
 
-![alt text](./images/image-74.png)
+**c. Investigate whether a file system may exist**
 
-PS C:\Users\usuario\Desktop\Práctica 3\photorec testdisk-7.2-WIP.win\testdisk-7.2-WIP> .\photorec_win.exe ..\..\recuperacion.dd                                                                     
+Esta partición utiliza el sistema de archivos NTFS.
+
+![alt text](./images/image-93.png)
+
+**3. Use **PhotoRec** to recover as much information as possible from the disk image.**
+
+Abre photorec y selecciona el disco
 
 ![alt text](./images/image-75.png)
 
+Clica en "Search"
+
 ![alt text](./images/image-76.png)
 
+Y haz clik en "Other". Una serie de archivo sdeben aparecer.
+
 ![alt text](./images/image-77.png)
+
+Pulsa la "C" para guardarlo en un directorio.
 
 ![alt text](./images/image-78.png)
 
@@ -66,18 +70,21 @@ PS C:\Users\usuario\Desktop\Práctica 3\photorec testdisk-7.2-WIP.win\testdisk-7
 
 ![alt text](./images/image-80.png)
 
+Podemos ver que los archivos se han exportado correctamente.
+
 ![alt text](./images/image-81.png)
 
+**Do the same with Bulk Extractor and Autopsy.**
 
-autopsy
+Para usar autopsy, crea una caso
 
 ![alt text](./images/image-82.png)
 
 ![alt text](./images/image-83.png)
 
-it will create a database
-
 ![alt text](./images/image-84.png)
+
+selecciona el disco y pulsa en "Next". Sigue hasta terminar
 
 ![alt text](./images/image-85.png)
 
@@ -89,15 +96,129 @@ Te muestra muchas más cosas, quizás un poco más lioso por la poca cantidad de
 
 ![alt text](./images/image-88.png)
 
+Por último,, para usar bulk starctor solo hay que abrirlo, saleecionar el disco y esanear, automa´ticamente podremos ver todos los archivos.
+
+![alt text](./images/image-32.png)
+
+**4. Import a multi-system virtual machine (XP–Ubuntu) from the provided OVA. Recover the mbr using the TestDisk tool**
+
+As shown, the mbr was already broken
+
+![alt text](./images/image-4.png)
+
+To fix it, insert a WIN-XP .iso and boot
+
+![alt text](./images/image-5.png)
+
+There, click "R" to repair the system.
+
+![alt text](./images/image-6.png)
+
+Use the command
+
+```cmd
+FIXMBR
+```
+
+To fix the MBR. Teorically, it should be repaired.
+
+![alt text](./images/image-7.png)
+
+![alt text](./images/image-9.png)
+
+However, after staritng the machine, it is still broken
+
+![alt text](./images/image-10.png)
+
+As shown, the table has been repaired, but it is still broken. 
+
+![alt text](./images/image-11.png)
+
+In kali, run testdisk
+
+```bash
+testdisk
+```
+
+Seleccionamos la opción create para que exista un registro de lo que estamos haciendo
+
+![alt text](./images/image-14.png)
+
+Seleccionamos el disco con el que vamos a trabaja
+
+![alt text](./images/image-15.png)
+
+Especificamos la tabla de particiones como tipo intel.
+
+![alt text](./images/image-16.png)
+
+Iniciamos un análisis del disco.
+
+![alt text](./images/image-17.png)
+
+Este sería el resultado de dicho análisis, que es lo que ocurre tado que hemos fulminado por
+completo la tabla de particiones, así que faltan las marcas
+
+![alt text](./images/image-18.png)
+
+Ahora, seleccionaremos quick search para buscar las particiones perdidas.
+
+![alt text](./images/image-19.png)
+
+Estas serían las particiones que ha encontrado, que, en efecto, son las que tenemos en el
+disco
+
+![alt text](./images/image-20.png)
+
+Comprobamos que todo es correcto, y seleccionamos write.
+
+![alt text](./images/image-21.png)
+
+Y con esto, ya lo tenemos todo arreglado.
+
+![alt text](./images/image-22.png)
 
 
-![alt text](image.png)
 
-![alt text](image-1.png)
+**5. Import a multi-system virtual machine (Windows 7–Debian) from the provided OVA. Corrupt the MBR on purpose and attempt to recover it using the Windows 7 installation disk.**
 
-![alt text](image-2.png)
+Primero, deberemos de iniciar el sistema, en el cual hemos adjuntado un disco duro MBR, con
+un live de kali, importante que no sea en modo forense, pues necesitamos sobreescribir el
+disco para destruir la tabla
 
-![alt text](image-3.png)
+![alt text](./images/image-23.png)
 
-![alt text](image-4.png)
+Una vez dentro, debemos de identificar el disco que debemos destruir.
 
+![alt text](./images/image-25.png)
+
+En mi caso, sería sda.
+Usaremos dd para reescribir la tabla de particiones de MBR, la cual se encuentra en el primer
+bloqu
+
+![alt text](./images/image-26.png)
+
+Y con esto ya hemos destruido la tabla de particiones del disco, pasemos a la reparaci
+
+![alt text](./images/image-27.png)
+
+niciamos el sistema desde una iso de windows 7 y accedemos al modo de reparación
+
+![alt text](./images/image-28.png)
+
+Accedemos al command prompt
+
+![alt text](./images/image-29.png)
+
+Ejecutamos el comando
+
+```cmd
+bootrec /fixmbr
+```
+
+![alt text](./images/image-30.png)
+
+Reiniciamos, y ya hemos reparado el sistema, aunque solo el arranque de windows, para
+reparar el arranque de linux deberíamos usar otras herramientas como grubrepair
+
+![alt text](./images/image-31.png)

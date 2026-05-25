@@ -292,22 +292,22 @@ the tools mentioned previously.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./fmem.sh
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image8.png" /></p>
+<p><img alt="alt text" src="../../_images/image5.png" /></p>
 <p>Verify that it has been loaded:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>lsmod<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>fmem
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-128.png" /></p>
+<p><img alt="alt text" src="../../_images/image-117.png" /></p>
 <p>Create the dump using dd and /dev/fmem as input file</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dd<span class="w"> </span><span class="k">if</span><span class="o">=</span>/dev/fmem<span class="w"> </span><span class="nv">of</span><span class="o">=</span>&lt;dump-location&gt;<span class="w"> </span><span class="nv">bs</span><span class="o">=</span>1MB<span class="w"> </span><span class="nv">count</span><span class="o">=</span><span class="m">2048</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-220.png" /></p>
+<p><img alt="alt text" src="../../_images/image-215.png" /></p>
 <p>The dump should be done. Verify it using the following command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>-lah<span class="w"> </span>/tmp/fmem-data.dd
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-316.png" /></p>
+<p><img alt="alt text" src="../../_images/image-310.png" /></p>
 </section>
 <section id="lime">
 <h3>lime<a class="headerlink" href="#lime" title="Link to this heading">¶</a></h3>
@@ -319,7 +319,7 @@ the tools mentioned previously.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>-lah
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-410.png" /></p>
+<p><img alt="alt text" src="../../_images/image-47.png" /></p>
 </section>
 <section id="avml">
 <h3>avml<a class="headerlink" href="#avml" title="Link to this heading">¶</a></h3>
@@ -329,7 +329,7 @@ the tools mentioned previously.</p>
 </pre></div>
 </div>
 <p>This command automatically acquires the memory dump and stores it in the specified location. Then, perform an ls and verify that the memory has been dumped.</p>
-<p><img alt="alt text" src="../../_images/image-58.png" /></p>
+<p><img alt="alt text" src="../../_images/image-55.png" /></p>
 </section>
 </section>
 </section>
