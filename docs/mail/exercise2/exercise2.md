@@ -25,7 +25,9 @@ Understanding these elements is essential for detecting phishing attempts, ensur
 
 ### 1. Manual and Automated Email Header Analysis (1.eml to 4.eml)
 
-#### [Email 1](./eml/1.eml)
+#### Email 1
+
+[.eml](./eml/1.eml)
 
 **Manual Analysis**
 
@@ -48,7 +50,9 @@ Using external validation tools such as MXToolbox and Google Message Header Anal
 
 ![Email 1 automated analysis](./images/image-1.png)
 
-#### [Email 2](./eml/2.eml)
+#### Email 2
+
+[.eml](./eml/2.eml)
 
 **Manual Analysis**
 
@@ -68,7 +72,9 @@ Automated tools confirm the absence of valid authentication keys, reinforcing th
 
 ![Email 2 automated analysis](./images/image-3.png)
 
-#### [Email 3](./eml/3.eml)
+#### Email 3
+
+[.eml](./eml/3.eml)
 
 **Manual Analysis**
 
@@ -87,7 +93,9 @@ Google’s header analysis tools confirm that all authentication mechanisms are 
 
 ![Email 3 automated analysis](./images/image-5.png)
 
-#### [Email 4](./eml/4.eml)
+#### Email 4
+
+[.eml](./eml/4.eml)
 
 **Manual Analysis**
 
