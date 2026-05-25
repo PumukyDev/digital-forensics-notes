@@ -21,7 +21,7 @@ Part B focuses on extracting forensic evidence when the virtual machines are hos
 - Azure Cloud.
 - Libcloudforensics.
 
-# PART A: Extraction of On-Premise Evidence
+## PART A: Extraction of On-Premise Evidence
 
 In this practical exercise we will learn how to perform a forensic analysis of a system virtualized with VMware
 
@@ -58,7 +58,7 @@ vol3 -f DC-1-Snapshot3.vmem -s ~/desktop/tools/volatility3/volatility3/symbols/ 
 ```
 ![alt text](./images/image-7.png)
 
-# PART B: Extraction of Evidence from Azure Cloud
+## PART B: Extraction of Evidence from Azure Cloud
 
 Sign in Azure CLoud and click on "Virtual machines"
 
