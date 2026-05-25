@@ -22,7 +22,7 @@ Add an **MX record** so other servers know where to deliver mail for the domain.
 
 Publish **SPF** so receivers know which hosts may send mail for the domain. This record authorizes both the mailcow host and IONOS (`kundenserver.de`):
 
-```txt
+```text
 v=spf1 a:mail.pumukydev.com include:kundenserver.de ~all
 ```
 
@@ -112,7 +112,7 @@ Scroll down to **Transport Maps** and enter the relay settings.
 
 A successful SMTP test from the mailcow UI shows TLS negotiation, authentication, and delivery. The full session log looked like this:
 
-```txt
+```text
 No MX records for smtp.ionos.es:587 were found in DNS, skipping and using hostname as next-hop.
 Connection: opening to smtp.ionos.es:587, timeout=15, options=array (
     ↪ 'ssl' =>
@@ -190,7 +190,7 @@ Generate a DKIM key pair in mailcow and note the selector and public key for DNS
 
 ![alt text](./images/image-30.png)
 
-Add the public key as a **TXT** record at IONOS (selector host name plus `v=DKIM1; ...` value).
+Add the public key as a **text** record at IONOS (selector host name plus `v=DKIM1; ...` value).
 
 ![alt text](./images/image-31.png)
 
