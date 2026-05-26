@@ -1,224 +1,265 @@
-# Data recovery
+# Data Recovery
 
-File systems such as FAT, NTFS, ext2/ext3/ext4 store files in data blocks or clusters. The block or cluster size remains constant after being defined during the file system formatting process. In general, most operating systems attempt to store data contiguously to minimize fragmentation. When a file is deleted, its metadata (name, timestamp, size, first block or cluster location, etc.) is lost. This means that the data is still present, but only until it is partially or completely overwritten by new data.
+## Introduction
 
-**PhotoRec** is software designed to recover lost files including videos, documents, and files from hard drives and CDs, as well as lost images (hence the name *PhotoRecovery*) from camera memory cards, MP3 players, pen drives, and more. PhotoRec ignores the file system and performs a deep search for data, working even when the file system is severely damaged or has been reformatted.
+File systems such as FAT, NTFS, and ext2/ext3/ext4 store user data in fixed-size **blocks** or **clusters**. The cluster size is chosen at format time and normally stays constant for the life of the volume. Operating systems try to place files contiguously to limit fragmentation. When a file is **deleted**, the name and directory entry are removed first; the cluster chain is marked free, but the underlying data often remains until new writes overwrite it. Recovery therefore depends on acting before that reuse and on choosing a method that matches how much metadata still exists.
 
-**TestDisk** is free software designed to help recover lost partitions and/or make non-bootable disks bootable again when the cause is software failure, viruses, or human error (such as accidentally deleting a partition table).
+**PhotoRec** recovers files by **carving** recognizable content from raw media. It does not rely on intact directory structures, which makes it effective on damaged or reformatted volumes—at the cost of losing original paths and filenames.
 
-**Autopsy** is a digital forensic analysis platform and the graphical interface for Sleuth Kit and other forensic tools. It is used by governments, public and private organizations, law enforcement, military units, and forensic professionals to investigate computer incidents. After an attack or system failure, it enables browsing through storage devices to recover files, identify system tampering, and recover photos, images, or videos.
+**TestDisk** focuses on **partition tables** and boot sectors: it can rebuild damaged MBR/GPT entries and restore bootability after partition-table loss or certain boot-sector corruption.
 
-## Main Objective of the Practice
-- Practice recovering data using different forensic tools, starting from an NTFS file system.
+**Autopsy** provides a graphical case workflow on top of **The Sleuth Kit**, suited to structured examination, timelines, and reporting on larger images.
 
-## Software to Use
+**Bulk Extractor** scans disk images for e-mail addresses, URLs, credit-card patterns, and other features without mounting the filesystem—useful as a fast triage pass alongside carving and GUI analysis.
+
+## Objectives
+
+Practice recovering data from an NTFS-based scenario using several forensic tools: partition inspection, file carving with PhotoRec, case-based analysis with Autopsy, feature scanning with Bulk Extractor, and MBR repair with TestDisk and Windows recovery media.
+
+## Software
+
 - FTK Imager 4.3 or higher  
-- Active Disk Editor v7.0  
+- Active Disk Editor 7.0  
 - PhotoRec  
 - TestDisk  
 - Bulk Extractor  
 - Autopsy  
 
-## Tasks
-
-**1. Download the disk image "recuperacion.dd".**
-
-**2. Analyze the disk and determine the following:**
-
-**a. Disk partitioning system (MBR/GPT)**
-
-El disco usa GPT
-
-![alt text](./images/image-90.png)
 
 
-**b. Number of valid partitions and their sizes**
+## Task 1 — Obtain the disk image
 
-El disco solo tiene una partición válida.
+Download the forensic image **`recuperacion.dd`** supplied for the practice and verify its integrity (hash, if provided) before analysis.
 
-![alt text](./images/image-91.png)
 
-Tiene un tamaño de 447 GB.
 
-![alt text](./images/image-92.png)
+## Task 2 — Analyze the disk layout
 
-**c. Investigate whether a file system may exist**
+Examine `recuperacion.dd` with FTK Imager or Active Disk Editor and record partitioning scheme, partition count, sizes, and filesystem type.
 
-Esta partición utiliza el sistema de archivos NTFS.
+### a. Partitioning scheme (MBR vs GPT)
 
-![alt text](./images/image-93.png)
+The disk uses **GPT** (GUID Partition Table). The protective MBR and primary GPT header are visible in the sector view; partition entries reference modern GUID types rather than classic MBR CHS entries alone.
 
-**3. Use **PhotoRec** to recover as much information as possible from the disk image.**
+![GPT protective MBR and partition table signature visible in the disk editor](./images/image-90.png)
 
-Abre photorec y selecciona el disco
+### b. Number of valid partitions and size
 
-![alt text](./images/image-75.png)
+The image contains **one valid partition** in the partition table view—no additional active primary or extended partitions are listed for user data.
 
-Clica en "Search"
+![Single valid partition entry in the partition list](./images/image-91.png)
 
-![alt text](./images/image-76.png)
+That partition spans approximately **447 GB** on the logical volume shown in the property pane (exact byte count depends on sector size and reported capacity in the tool).
 
-Y haz clik en "Other". Una serie de archivo sdeben aparecer.
+![Partition size reported as ~447 GB](./images/image-92.png)
 
-![alt text](./images/image-77.png)
+### c. Filesystem presence
 
-Pulsa la "C" para guardarlo en un directorio.
+The partition is formatted with **NTFS**. The volume boot record and filesystem metadata (e.g. “NTFS” OEM ID / BPB fields, depending on the tool) confirm that carved or logical recovery should assume NTFS cluster boundaries and resident data runs where metadata still exists.
 
-![alt text](./images/image-78.png)
+![NTFS filesystem identified on the partition](./images/image-93.png)
 
-![alt text](./images/image-79.png)
 
-![alt text](./images/image-80.png)
 
-Podemos ver que los archivos se han exportado correctamente.
+## Task 3 — Recover data from `recuperacion.dd`
 
-![alt text](./images/image-81.png)
+### PhotoRec (file carving)
 
-**Do the same with Bulk Extractor and Autopsy.**
+PhotoRec was pointed at the disk image. In the opening screen, the physical device or image file representing `recuperacion.dd` is selected as the source medium.
 
-Para usar autopsy, crea una caso
+![PhotoRec — select the disk image as the source](./images/image-75.png)
 
-![alt text](./images/image-82.png)
+The **Search** option starts the carving pass (whole-disk / unallocated-oriented workflow as offered in this version).
 
-![alt text](./images/image-83.png)
+![PhotoRec — Search selected to begin recovery](./images/image-76.png)
 
-![alt text](./images/image-84.png)
+Filesystem type **Other** (or “Whole disk”) was chosen so PhotoRec does not depend on an intact NTFS catalog; recovered file types appear in the results tree as signatures are matched.
 
-selecciona el disco y pulsa en "Next". Sigue hasta terminar
+![PhotoRec — file types / Other option; carved objects listed](./images/image-77.png)
 
-![alt text](./images/image-85.png)
+Press **C** to choose the output directory where recovered files will be written.
 
-![alt text](./images/image-86.png)
+![PhotoRec — prompt to select output directory (C)](./images/image-78.png)
 
-![alt text](./images/image-87.png)
+Confirm the destination folder on the analysis workstation.
 
-Te muestra muchas más cosas, quizás un poco más lioso por la poca cantidad de archivos que tenemos, pero si el sistema fuese mucho más grnade, estaría bastante bien estructurado. Podemos ver más cosas que en photorec
+![PhotoRec — output path confirmation](./images/image-79.png)
 
-![alt text](./images/image-88.png)
+PhotoRec reports completion and the number of files recovered.
 
-Por último,, para usar bulk starctor solo hay que abrirlo, saleecionar el disco y esanear, automa´ticamente podremos ver todos los archivos.
+![PhotoRec — recovery finished](./images/image-80.png)
 
-![alt text](./images/image-32.png)
+The output folder contains carved files grouped by extension; filenames are often generic (`f1234567.jpg`) because directory metadata was not available.
 
-**4. Import a multi-system virtual machine (XP–Ubuntu) from the provided OVA. Recover the mbr using the TestDisk tool**
+![Recovered files exported successfully to the output directory](./images/image-81.png)
 
-As shown, the mbr was already broken
+### Autopsy (case-based examination)
 
-![alt text](./images/image-4.png)
+A new **Autopsy case** was created with a descriptive name and base directory for case metadata and exports.
 
-To fix it, insert a WIN-XP .iso and boot
+![Autopsy — New Case wizard](./images/image-82.png)
 
-![alt text](./images/image-5.png)
+Case information and optional organizational fields were completed.
 
-There, click "R" to repair the system.
+![Autopsy — case details](./images/image-83.png)
 
-![alt text](./images/image-6.png)
+The data source step adds `recuperacion.dd` (or its mounted path) as an **image file** evidence source.
 
-Use the command
+![Autopsy — add data source](./images/image-84.png)
+
+The disk image was selected and the ingest modules were accepted with **Next** through the wizard defaults appropriate for NTFS.
+
+![Autopsy — select disk image and continue ingest](./images/image-85.png)
+
+Ingest progress and module configuration during analysis.
+
+![Autopsy — ingest running](./images/image-86.png)
+
+Results view after processing: directory tree, extracted views, and metadata panels.
+
+![Autopsy — results tree and views populated](./images/image-87.png)
+
+Autopsy exposes more structured context (paths where metadata exists, timestamps, hash sets, keyword hits) than PhotoRec alone. On a small image the interface can look busy relative to the file count; on larger corpora the same layout scales better for filtering and reporting. In this lab, Autopsy surfaced additional artifacts and organization compared with the flat carved output.
+
+![Autopsy — detailed file listing and metadata](./images/image-88.png)
+
+### Bulk Extractor (feature scan)
+
+Bulk Extractor was launched, the image file selected, and a scan started. The tool writes feature files (e-mail, URL, credit card, etc.) under a report directory without fully parsing NTFS paths.
+
+![Bulk Extractor — disk selected and scan output](./images/image-32.png)
+
+Recovered paths and features can be cross-checked with PhotoRec and Autopsy results.
+
+
+
+## Task 4 — Repair MBR on the XP–Ubuntu VM (TestDisk)
+
+A multi-boot virtual machine (Windows XP and Ubuntu) was imported from the provided OVA. The **master boot record** was damaged; the VM failed to boot.
+
+![Boot failure — damaged or missing valid MBR / partition view](./images/image-4.png)
+
+A Windows XP installation ISO was attached and the VM booted from optical media.
+
+![Boot from Windows XP installation CD](./images/image-5.png)
+
+At the setup screen, **R** (Recovery Console / repair path as shown in the lab) was selected to reach a repair environment.
+
+![Recovery / repair option selected](./images/image-6.png)
+
+From the recovery command line, **`FIXMBR`** was executed to rewrite the master boot code.
 
 ```cmd
 FIXMBR
 ```
 
-To fix the MBR. Teorically, it should be repaired.
+The utility reported success.
 
-![alt text](./images/image-7.png)
+![FIXMBR completed in Recovery Console](./images/image-7.png)
 
-![alt text](./images/image-9.png)
+After reboot, the system still failed to start correctly from the hard disk alone.
 
-However, after staritng the machine, it is still broken
+![System still does not boot after FIXMBR](./images/image-9.png)
 
-![alt text](./images/image-10.png)
+Further inspection showed boot code present but the **partition table** still inconsistent with the actual layout—`FIXMBR` repairs the first-stage loader in sector 0 but does not rebuild partition entries.
 
-As shown, the table has been repaired, but it is still broken. 
+![Partition table still invalid or incomplete](./images/image-10.png)
 
-![alt text](./images/image-11.png)
+The partition view remained broken relative to the expected XP/Ubuntu layout.
 
-In kali, run testdisk
+![Disk layout still inconsistent in the hypervisor or guest view](./images/image-11.png)
+
+### TestDisk on Kali Linux
+
+Analysis continued on a **Kali** host with TestDisk.
 
 ```bash
 testdisk
 ```
 
-Seleccionamos la opción create para que exista un registro de lo que estamos haciendo
+**Create** a new log file so actions are documented for the report.
 
-![alt text](./images/image-14.png)
+![TestDisk — Create a new log file](./images/image-14.png)
 
-Seleccionamos el disco con el que vamos a trabaja
+Select the physical disk or image representing the VM virtual disk.
 
-![alt text](./images/image-15.png)
+![TestDisk — select the target disk](./images/image-15.png)
 
-Especificamos la tabla de particiones como tipo intel.
+Choose **Intel** partition table type (standard PC MBR) for this VM.
 
-![alt text](./images/image-16.png)
+![TestDisk — partition table type Intel/PC](./images/image-16.png)
 
-Iniciamos un análisis del disco.
+Run **Analyse** to inspect current and recoverable structures.
 
-![alt text](./images/image-17.png)
+![TestDisk — Analyse disk](./images/image-17.png)
 
-Este sería el resultado de dicho análisis, que es lo que ocurre tado que hemos fulminado por
-completo la tabla de particiones, así que faltan las marcas
+The analysis reflects a **destroyed partition table**: entries are missing or marked non-existent because the MBR sector was overwritten in the earlier exercise.
 
-![alt text](./images/image-18.png)
+![TestDisk — analysis shows missing partition markers](./images/image-18.png)
 
-Ahora, seleccionaremos quick search para buscar las particiones perdidas.
+Run **Quick Search** to locate former partition boundaries.
 
-![alt text](./images/image-19.png)
+![TestDisk — Quick Search for partitions](./images/image-19.png)
 
-Estas serían las particiones que ha encontrado, que, en efecto, son las que tenemos en el
-disco
+TestDisk found the expected partitions (Windows XP and Linux areas matching the original layout).
 
-![alt text](./images/image-20.png)
+![TestDisk — discovered partitions match the original layout](./images/image-20.png)
 
-Comprobamos que todo es correcto, y seleccionamos write.
+After verifying start/end sectors and types, **Write** commits the rebuilt partition table to disk.
 
-![alt text](./images/image-21.png)
+![TestDisk — Write partition table confirmed](./images/image-21.png)
 
-Y con esto, ya lo tenemos todo arreglado.
+The VM boots again with the restored table.
 
-![alt text](./images/image-22.png)
+![TestDisk — operation completed; boot restored](./images/image-22.png)
 
 
 
-**5. Import a multi-system virtual machine (Windows 7–Debian) from the provided OVA. Corrupt the MBR on purpose and attempt to recover it using the Windows 7 installation disk.**
+## Task 5 — Corrupt and recover MBR on the Windows 7–Debian VM
 
-Primero, deberemos de iniciar el sistema, en el cual hemos adjuntado un disco duro MBR, con
-un live de kali, importante que no sea en modo forense, pues necesitamos sobreescribir el
-disco para destruir la tabla
+A second multi-boot VM (Windows 7 and Debian) was imported. The exercise **intentionally destroys** the MBR partition table, then attempts repair with Windows 7 installation media.
 
-![alt text](./images/image-23.png)
+### Deliberate MBR corruption (Kali live)
 
-Una vez dentro, debemos de identificar el disco que debemos destruir.
+The VM was started from a **Kali live** environment (not forensic boot mode, because the exercise requires **writing** to the disk). A second virtual disk using **MBR** was attached.
 
-![alt text](./images/image-25.png)
+![Kali live boot with the target MBR disk attached](./images/image-23.png)
 
-En mi caso, sería sda.
-Usaremos dd para reescribir la tabla de particiones de MBR, la cual se encuentra en el primer
-bloqu
+Identify the correct block device (in this lab, **`/dev/sda`**).
 
-![alt text](./images/image-26.png)
+![Identify target disk — /dev/sda](./images/image-25.png)
 
-Y con esto ya hemos destruido la tabla de particiones del disco, pasemos a la reparaci
+Overwrite the first sector(s) containing the **MBR** and partition table with `dd` (zeros or a prepared pattern), destroying partition entries while leaving much of the volume data intact.
 
-![alt text](./images/image-27.png)
+```bash
+# Example pattern used in the lab — adjust device and count to match your environment
+sudo dd if=/dev/zero of=/dev/sda bs=512 count=1
+```
 
-niciamos el sistema desde una iso de windows 7 y accedemos al modo de reparación
+![dd overwriting the MBR sector on /dev/sda](./images/image-26.png)
 
-![alt text](./images/image-28.png)
+The partition table is no longer valid; the system will not boot until the MBR is repaired.
 
-Accedemos al command prompt
+![Partition table destroyed — disk no longer bootable](./images/image-27.png)
 
-![alt text](./images/image-29.png)
+### Repair with Windows 7 installation media
 
-Ejecutamos el comando
+Boot from a **Windows 7** ISO and open **Repair your computer**.
+
+![Windows 7 — Repair your computer](./images/image-28.png)
+
+Open **Command Prompt** from the recovery options.
+
+![Windows 7 recovery — Command Prompt](./images/image-29.png)
+
+Restore the master boot record with:
 
 ```cmd
 bootrec /fixmbr
 ```
 
-![alt text](./images/image-30.png)
+![bootrec /fixmbr executed successfully](./images/image-30.png)
 
-Reiniciamos, y ya hemos reparado el sistema, aunque solo el arranque de windows, para
-reparar el arranque de linux deberíamos usar otras herramientas como grubrepair
+After reboot, **Windows 7** starts normally. The **Debian** side may still require **GRUB** repair (`boot-repair`, live ISO, or `grub-install` from a Linux environment) because `bootrec /fixmbr` only restores the Windows boot path in the MBR, not the full multi-boot menu.
 
-![alt text](./images/image-31.png)
+![Windows 7 boots after MBR repair; Linux may still need GRUB maintenance](./images/image-31.png)
