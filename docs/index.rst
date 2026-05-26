@@ -30,6 +30,7 @@ Welcome to the Digital Forensics Notes documentation!
 
    windows-volatility/exercise1/exercise1
    windows-volatility/exercise2/exercise2
+   windows-volatility/exercise3/exercise3
 
 .. toctree::
    :maxdepth: 2
