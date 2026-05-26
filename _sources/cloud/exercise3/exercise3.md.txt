@@ -1,16 +1,25 @@
-# Docker and Container Forensics
+# Docker
 
-## Introduction
+## Introduction and container forensics
 
-Docker packages applications and their dependencies into **containers**: isolated processes that share the host kernel but have their own filesystem, network namespace, and resource limits. From a forensic standpoint, containers matter because production and incident scenes increasingly run microservices on Docker rather than only on traditional VMs.
+Docker is a software platform that allows developers to create, test, and deploy applications quickly and easily using containers. It is a technology that has gained significant popularity in recent years, especially in the field of information technology.
 
-Unlike a hypervisor snapshot, a running container does not offer a single “pause the world” button that captures disk and RAM together. Evidence may exist in **image layers**, the **container writable layer**, **named volumes**, **bind mounts**, **container logs**, and on the **host** (`/var/lib/docker`, daemon configuration, and overlay storage). Investigators therefore combine export/commit tools, filesystem diffing, memory capture on the host, and offline analysis of a seized `/var/lib/docker` tree.
+Docker is used to encapsulate applications inside containers, meaning that each application runs in its own isolated environment. This allows developers to ensure that their applications behave consistently across different environments, regardless of hardware or software differences.
 
-This practice is divided into two parts: **Part A** introduces everyday Docker operations on a lab Linux host; **Part B** applies those concepts to acquisition, comparison utilities, offline image analysis, and optional hardening or checkpoint tooling.
+The main advantage of using Docker is the ability to create identical development and production environments, which helps guarantee the quality and consistency of applications. In addition, Docker enables continuous integration and continuous deployment, allowing developers to rapidly deploy new versions of their applications without interrupting the existing service.
+
+Another advantage of Docker is that containers are extremely lightweight and fast to create. Containers can be started and stopped within seconds, allowing developers to test and debug applications much faster than in traditional environments.
+
+However, there are also some disadvantages to using Docker. One of the main issues is the complexity of the platform. Docker can be difficult to learn and configure, especially for those without previous experience managing containers.
+
+Another issue is that Docker can be slower than traditional environments in certain situations. Containers require an additional virtualization layer, which may impact performance in highly demanding environments.
+
+Finally, another challenge when using Docker is that the technology is still evolving. As new features are added and existing capabilities are improved, it can be difficult to keep up with the changes.
 
 ## Objectives
 
-Learn basic container lifecycle operations on Linux, and practice extracting and interpreting forensic artifacts from Docker installations and images—including diff/save/export workflows, `container-diff`, `docker-explorer`, and Docker Scout.
+- Learn how to perform basic operations with containers.
+- Extract evidence from infrastructure systems that provide microservices through containers.
 
 ## Materials
 
@@ -549,5 +558,3 @@ ls /var/lib/docker/containers/<container_id>/checkpoints/
 ```
 
 Preserve that directory with the same integrity controls as other `/var/lib/docker` evidence.
-
-> **Note:** Lab command sequences that both remove and later export a container named `nginx-detached` reflect separate attempts or restored containers; on a live system, export or checkpoint **before** `docker rm`, and document container IDs from `docker ps -a` if the name is reused.

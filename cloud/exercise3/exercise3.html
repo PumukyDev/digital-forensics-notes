@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Email Basics" href="../../mail/exercise1/exercise1.html"><link rel="prev" title="VMware and Azure Cloud" href="../exercise2/exercise2.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
-        <title>Docker and Container Forensics - Digital Forensics Notes documentation</title>
+        <title>Docker - Digital Forensics Notes documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -208,6 +208,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../windows-volatility/exercise1/exercise1.html">Volatility introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../windows-volatility/exercise2/exercise2.html">Volatility advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../windows-volatility/exercise3/exercise3.html">Challenges</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Linux file system and volatility:</span></p>
 <ul>
@@ -226,7 +227,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../exercise1/exercise1.html">Google Drive, OneDrive, Dropbox and Nextcloud</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../exercise2/exercise2.html">VMware and Azure Cloud</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Docker and Container Forensics</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Docker</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Mail:</span></p>
 <ul>
@@ -271,17 +272,24 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="docker-and-container-forensics">
-<h1>Docker and Container Forensics<a class="headerlink" href="#docker-and-container-forensics" title="Link to this heading">¶</a></h1>
-<section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
-<p>Docker packages applications and their dependencies into <strong>containers</strong>: isolated processes that share the host kernel but have their own filesystem, network namespace, and resource limits. From a forensic standpoint, containers matter because production and incident scenes increasingly run microservices on Docker rather than only on traditional VMs.</p>
-<p>Unlike a hypervisor snapshot, a running container does not offer a single “pause the world” button that captures disk and RAM together. Evidence may exist in <strong>image layers</strong>, the <strong>container writable layer</strong>, <strong>named volumes</strong>, <strong>bind mounts</strong>, <strong>container logs</strong>, and on the <strong>host</strong> (<code class="docutils literal notranslate"><span class="pre">/var/lib/docker</span></code>, daemon configuration, and overlay storage). Investigators therefore combine export/commit tools, filesystem diffing, memory capture on the host, and offline analysis of a seized <code class="docutils literal notranslate"><span class="pre">/var/lib/docker</span></code> tree.</p>
-<p>This practice is divided into two parts: <strong>Part A</strong> introduces everyday Docker operations on a lab Linux host; <strong>Part B</strong> applies those concepts to acquisition, comparison utilities, offline image analysis, and optional hardening or checkpoint tooling.</p>
+          <section id="docker">
+<h1>Docker<a class="headerlink" href="#docker" title="Link to this heading">¶</a></h1>
+<section id="introduction-and-container-forensics">
+<h2>Introduction and container forensics<a class="headerlink" href="#introduction-and-container-forensics" title="Link to this heading">¶</a></h2>
+<p>Docker is a software platform that allows developers to create, test, and deploy applications quickly and easily using containers. It is a technology that has gained significant popularity in recent years, especially in the field of information technology.</p>
+<p>Docker is used to encapsulate applications inside containers, meaning that each application runs in its own isolated environment. This allows developers to ensure that their applications behave consistently across different environments, regardless of hardware or software differences.</p>
+<p>The main advantage of using Docker is the ability to create identical development and production environments, which helps guarantee the quality and consistency of applications. In addition, Docker enables continuous integration and continuous deployment, allowing developers to rapidly deploy new versions of their applications without interrupting the existing service.</p>
+<p>Another advantage of Docker is that containers are extremely lightweight and fast to create. Containers can be started and stopped within seconds, allowing developers to test and debug applications much faster than in traditional environments.</p>
+<p>However, there are also some disadvantages to using Docker. One of the main issues is the complexity of the platform. Docker can be difficult to learn and configure, especially for those without previous experience managing containers.</p>
+<p>Another issue is that Docker can be slower than traditional environments in certain situations. Containers require an additional virtualization layer, which may impact performance in highly demanding environments.</p>
+<p>Finally, another challenge when using Docker is that the technology is still evolving. As new features are added and existing capabilities are improved, it can be difficult to keep up with the changes.</p>
 </section>
 <section id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Link to this heading">¶</a></h2>
-<p>Learn basic container lifecycle operations on Linux, and practice extracting and interpreting forensic artifacts from Docker installations and images—including diff/save/export workflows, <code class="docutils literal notranslate"><span class="pre">container-diff</span></code>, <code class="docutils literal notranslate"><span class="pre">docker-explorer</span></code>, and Docker Scout.</p>
+<ul class="simple">
+<li><p>Learn how to perform basic operations with containers.</p></li>
+<li><p>Extract evidence from infrastructure systems that provide microservices through containers.</p></li>
+</ul>
 </section>
 <section id="materials">
 <h2>Materials<a class="headerlink" href="#materials" title="Link to this heading">¶</a></h2>
@@ -755,9 +763,6 @@ chmod<span class="w"> </span>+x<span class="w"> </span>~/.docker/cli-plugins/doc
 </pre></div>
 </div>
 <p>Preserve that directory with the same integrity controls as other <code class="docutils literal notranslate"><span class="pre">/var/lib/docker</span></code> evidence.</p>
-<blockquote>
-<div><p><strong>Note:</strong> Lab command sequences that both remove and later export a container named <code class="docutils literal notranslate"><span class="pre">nginx-detached</span></code> reflect separate attempts or restored containers; on a live system, export or checkpoint <strong>before</strong> <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">rm</span></code>, and document container IDs from <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">ps</span> <span class="pre">-a</span></code> if the name is reused.</p>
-</div></blockquote>
 </section>
 </section>
 </section>
@@ -817,8 +822,8 @@ chmod<span class="w"> </span>+x<span class="w"> </span>~/.docker/cli-plugins/doc
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Docker and Container Forensics</a><ul>
-<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#">Docker</a><ul>
+<li><a class="reference internal" href="#introduction-and-container-forensics">Introduction and container forensics</a></li>
 <li><a class="reference internal" href="#objectives">Objectives</a></li>
 <li><a class="reference internal" href="#materials">Materials</a></li>
 <li><a class="reference internal" href="#part-a-introduction-to-docker">Part A: Introduction to Docker</a><ul>
