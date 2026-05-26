@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Docker" href="../exercise3/exercise3.html"><link rel="prev" title="Google Drive, Onedrive, Dropbox and Nextcloud." href="../exercise1/exercise1.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Docker and Container Forensics" href="../exercise3/exercise3.html"><link rel="prev" title="Google Drive, OneDrive, Dropbox and Nextcloud" href="../exercise1/exercise1.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
-        <title>VMWare and Azure Cloud - Digital Forensics Notes documentation</title>
+        <title>VMware and Azure Cloud - Digital Forensics Notes documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -224,9 +224,9 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Cloud:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../exercise1/exercise1.html">Google Drive, Onedrive, Dropbox and Nextcloud.</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">VMWare and Azure Cloud</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../exercise3/exercise3.html">Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise1/exercise1.html">Google Drive, OneDrive, Dropbox and Nextcloud</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">VMware and Azure Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise3/exercise3.html">Docker and Container Forensics</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Mail:</span></p>
 <ul>
@@ -272,111 +272,127 @@
         </div>
         <article role="main" id="furo-main-content">
           <section id="vmware-and-azure-cloud">
-<h1>VMWare and Azure Cloud<a class="headerlink" href="#vmware-and-azure-cloud" title="Link to this heading">¶</a></h1>
+<h1>VMware and Azure Cloud<a class="headerlink" href="#vmware-and-azure-cloud" title="Link to this heading">¶</a></h1>
 <section id="extraction-of-evidence-from-on-premise-iaas-virtual-machines">
 <h2>Extraction of Evidence from On-Premise / IaaS Virtual Machines<a class="headerlink" href="#extraction-of-evidence-from-on-premise-iaas-virtual-machines" title="Link to this heading">¶</a></h2>
-<p>One of the situations we may face as future forensic professionals is dealing with virtual machines, either in local installations (our own or a client’s) or in third-party infrastructures.</p>
-<p>In local installations, we have more possibilities for forensic acquisition. We can operate from inside the virtual machine itself or directly from the hypervisor. The first scenario is very similar to the forensic procedures already studied in class: we can use DumpIt or similar tools to perform a memory dump, execute scripts to collect forensic artifacts, and also clone the hard drive or obtain a logical image.</p>
-<p>The second scenario is the one covered in Part A of this practice.</p>
-<p>Part B focuses on extracting forensic evidence when the virtual machines are hosted by third-party providers, such as Azure Cloud. In this case, memory dumps can be obtained using the same methods previously studied in class. Additionally, scripts may be executed to collect relevant forensic artifacts for later analysis. Virtual hard drives can also be downloaded or cloned directly in the cloud for analysis from another virtual machine.</p>
+<p>As forensic practitioners we often work with virtual machines, whether they run on local infrastructure (our own or a client’s) or on a third-party cloud platform.</p>
+<p>On-premise hypervisors offer two main acquisition angles. Evidence can be collected from inside the guest operating system—memory dumps with tools such as DumpIt, artifact scripts, and logical or physical disk images—or from the hypervisor layer without booting the guest. Guest-side collection mirrors standard endpoint forensics; hypervisor-side collection is the focus of <strong>Part A</strong>, using VMware snapshots.</p>
+<p><strong>Part B</strong> covers IaaS scenarios in <strong>Azure</strong>. The same memory-acquisition concepts apply, but the VM runs on Microsoft’s infrastructure. After deploying a Linux VM, a memory image was captured with <strong>AVML</strong>, copied to an analysis workstation, and examined with <strong>Volatility 3</strong>. Disk evidence was obtained through an Azure-managed snapshot, a time-limited SAS URL, and finally <strong>libcloudforensics</strong> to clone the virtual disk for offline analysis.</p>
 </section>
 <section id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p>Become aware of the forensic acquisition possibilities offered by cloud environments and virtualized systems.</p></li>
-<li><p>Extract forensic evidence from some of the most widely used cloud systems.</p></li>
-</ul>
+<p>Understand the forensic options available in virtualized and cloud-hosted environments, and practice extracting evidence from on-premise VMware and Azure IaaS workloads.</p>
 </section>
 <section id="materials">
 <h2>Materials<a class="headerlink" href="#materials" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Any Windows distribution virtualized on your system.</p></li>
-<li><p>Azure Cloud.</p></li>
-<li><p>Libcloudforensics.</p></li>
+<li><p>A Windows or Linux host with VMware (or VMware Workstation/Fusion) and at least one test VM.</p></li>
+<li><p>An Azure subscription with permission to create VMs, disks, and snapshots.</p></li>
+<li><p><strong>libcloudforensics</strong>, <strong>Volatility 3</strong>, Docker (for Azure CLI), and SSH/SCP client tools.</p></li>
 </ul>
 </section>
 <section id="part-a-extraction-of-on-premise-evidence">
 <h2>PART A: Extraction of On-Premise Evidence<a class="headerlink" href="#part-a-extraction-of-on-premise-evidence" title="Link to this heading">¶</a></h2>
-<p>In this practical exercise we will learn how to perform a forensic analysis of a system virtualized with VMware</p>
-<p><strong>List all the running machines</strong></p>
+<p>This section documents forensic acquisition of a VMware guest (<strong>DC-1</strong>) from the hypervisor using snapshots and memory analysis on Kali Linux.</p>
+<section id="list-running-virtual-machines">
+<h3>List running virtual machines<a class="headerlink" href="#list-running-virtual-machines" title="Link to this heading">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">vmrun</span></code> utility lists VMs that are currently powered on:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vmrun<span class="w"> </span>list
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-32.png" /></p>
-<p><strong>Take a snapshot of the machine</strong></p>
-<p>It can be done through the Vmware GUI:</p>
+</section>
+<section id="create-a-snapshot">
+<h3>Create a snapshot<a class="headerlink" href="#create-a-snapshot" title="Link to this heading">¶</a></h3>
+<p>A snapshot freezes the VM’s disk and memory state at a point in time. It can be taken from the VMware GUI:</p>
 <p><img alt="alt text" src="../../_images/image-52.png" /></p>
-<p>Or using a CLI command:</p>
+<p>Or from the command line (paths and snapshot name match this lab environment):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vmrun<span class="w"> </span>snapshot<span class="w"> </span><span class="s2">&quot;/home/adrian/desktop/vmware/DC-1/DC-1.vmx&quot;</span><span class="w"> </span><span class="s2">&quot;Snapshot 3&quot;</span>
 </pre></div>
 </div>
-<p>As shown, the snapshot is stored correctly. Move it to Kali in order to analyze it correctly.</p>
+<p>The snapshot files are written under the VM’s directory. For analysis with Linux tooling, the snapshot bundle was copied to a <strong>Kali</strong> machine.</p>
 <p><img alt="alt text" src="../../_images/image-62.png" /></p>
-<p><strong>Analyze the memory dump</strong></p>
-<p>Once the dump is taken, we can analyze it using volatily as shown below</p>
+</section>
+<section id="analyze-the-memory-image">
+<h3>Analyze the memory image<a class="headerlink" href="#analyze-the-memory-image" title="Link to this heading">¶</a></h3>
+<p>The snapshot includes a <code class="docutils literal notranslate"><span class="pre">.vmem</span></code> file representing guest RAM at capture time. <strong>Volatility 3</strong> was used to confirm the image and identify the kernel:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>DC-1-Snapshot3.vmem<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>banners.Banner
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-72.png" /></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">banners.Banner</span></code> plugin reports operating-system banners detected in the dump, which validates that the memory file is usable before running further plugins.</p>
+</section>
 </section>
 <section id="part-b-extraction-of-evidence-from-azure-cloud">
 <h2>PART B: Extraction of Evidence from Azure Cloud<a class="headerlink" href="#part-b-extraction-of-evidence-from-azure-cloud" title="Link to this heading">¶</a></h2>
-<p>Sign in Azure CLoud and click on “Virtual machines”</p>
+<p>This section walks through deploying an Azure Linux VM, acquiring memory and disk evidence, and exporting a disk clone for offline forensics.</p>
+<section id="deploy-a-virtual-machine">
+<h3>Deploy a virtual machine<a class="headerlink" href="#deploy-a-virtual-machine" title="Link to this heading">¶</a></h3>
+<p>Sign in to the <a class="reference external" href="https://portal.azure.com">Azure portal</a> and open <strong>Virtual machines</strong>.</p>
 <p><img alt="alt text" src="../../_images/image2.png" /></p>
-<p>Clik con “Create” and select “Virtual machine”</p>
+<p>Select <strong>Create</strong> → <strong>Virtual machine</strong>.</p>
 <p><img alt="alt text" src="../../_images/image-110.png" /></p>
-<p>There, create a machine of your preferences</p>
+<p>Configure the VM (region, size, authentication method, and networking) according to lab requirements.</p>
 <p><img alt="alt text" src="../../_images/image-25.png" /></p>
-<p>Once finished, a menu like the image below should appear.</p>
+<p>After deployment completes, the VM overview blade shows connection details and status.</p>
 <p><img alt="alt text" src="../../_images/image-33.png" /></p>
-<p>Connect to the deployed machine via ssh</p>
+</section>
+<section id="acquire-memory-from-the-running-vm">
+<h3>Acquire memory from the running VM<a class="headerlink" href="#acquire-memory-from-the-running-vm" title="Link to this heading">¶</a></h3>
+<p>Connect to the VM with SSH (replace the IP address and key path with your deployment):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh<span class="w"> </span>-i<span class="w"> </span>&lt;private-key&gt;<span class="w"> </span>azureuser@9.223.178.153
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-41.png" /></p>
-<p>Download avml and make a memory dump</p>
+<p>On the guest, download <strong>AVML</strong> (Azure VM Memory Logger) and capture physical memory to a raw file:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>https://github.com/microsoft/avml/releases/latest/download/avml
 chmod<span class="w"> </span>+x<span class="w"> </span>avml
 sudo<span class="w"> </span>./avml<span class="w"> </span>memdump.raw
-sudo<span class="w"> </span>chown<span class="w"> </span>azureuser:azureuser<span class="w"> </span>memdump.raw<span class="w"> </span>
+sudo<span class="w"> </span>chown<span class="w"> </span>azureuser:azureuser<span class="w"> </span>memdump.raw
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-82.png" /></p>
-<p>Copyy the memory dump into your local machine</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scp</span> <span class="o">-</span><span class="n">i</span> <span class="n">azure</span><span class="o">-</span><span class="n">forensics</span><span class="o">-</span><span class="n">key</span><span class="o">.</span><span class="n">pem</span> <span class="n">azureuser</span><span class="o">@</span><span class="mf">9.223.178.153</span><span class="p">:</span><span class="o">~/</span><span class="n">memdump</span><span class="o">.</span><span class="n">raw</span> <span class="o">.</span>
+<p>Copy the dump to the forensic workstation with <strong>SCP</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scp<span class="w"> </span>-i<span class="w"> </span>azure-forensics-key.pem<span class="w"> </span>azureuser@9.223.178.153:~/memdump.raw<span class="w"> </span>.
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-212.png" /></p>
-<p>Analyze the memory dump using volatility.</p>
+<p>Analyze the dump locally with Volatility 3:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>memdump.raw<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>banners.Banner
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-221.png" /></p>
-<p>In order to make the disk clone in Azure, click over the disk name</p>
+</section>
+<section id="create-a-disk-snapshot-azure-portal">
+<h3>Create a disk snapshot (Azure portal)<a class="headerlink" href="#create-a-disk-snapshot-azure-portal" title="Link to this heading">¶</a></h3>
+<p>To preserve the OS disk without powering off the VM, open the VM’s <strong>Disks</strong> blade and select the attached OS disk.</p>
 <p><img alt="alt text" src="../../_images/image-92.png" /></p>
-<p>Then click on “Create snapshot”.</p>
+<p>Choose <strong>Create snapshot</strong>.</p>
 <p><img alt="alt text" src="../../_images/image-102.png" /></p>
-<p>Type a name for the snapshot and click on “Review + create”.</p>
+<p>Enter a snapshot name and resource group, then select <strong>Review + create</strong>.</p>
 <p><img alt="alt text" src="../../_images/image-112.png" /></p>
-<p>Verify that the validation is passed and click on “Create”</p>
+<p>Confirm that validation passes and select <strong>Create</strong>.</p>
 <p><img alt="alt text" src="../../_images/image-122.png" /></p>
-<p>Lastly, verigy that th edeplyment is completed and the snapshot is done.</p>
+<p>When deployment finishes, the snapshot appears as <strong>Succeeded</strong> in the resource list.</p>
 <p><img alt="alt text" src="../../_images/image-142.png" /></p>
-<p>In order to use Azure Cli, run the following docker container and execute the login command.</p>
+</section>
+<section id="export-the-snapshot-with-azure-cli">
+<h3>Export the snapshot with Azure CLI<a class="headerlink" href="#export-the-snapshot-with-azure-cli" title="Link to this heading">¶</a></h3>
+<p>A disposable Azure CLI environment was started in Docker:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>mcr.microsoft.com/azure-cli
 az<span class="w"> </span>login
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-162.png" /></p>
-<p>Pasete en the browser the code displayed in the command line</p>
+<p>The CLI prints a device-login code; open the URL shown in the terminal in a browser and complete authentication.</p>
 <p><img alt="alt text" src="../../_images/image-152.png" /></p>
-<p>Write yout azure account mail and click on “Next”</p>
+<p>Sign in with the Azure account email and confirm access.</p>
 <p><img alt="alt text" src="../../_images/image-172.png" /></p>
-<p>Once signed, you can close the window</p>
+<p>After authentication, the browser session can be closed; the CLI session in the container reports a successful login.</p>
 <p><img alt="alt text" src="../../_images/image-182.png" /></p>
-<p>A command line will appear in the terminal</p>
+<p>The terminal returns to an interactive Azure CLI prompt.</p>
 <p><img alt="alt text" src="../../_images/image-192.png" /></p>
-<p>Using the following command, a temporal URL can be created with access to te snapshot that we have generated previously.</p>
+<p>Grant read-only access to the snapshot and obtain a <strong>time-limited SAS URL</strong> (valid for 3600 seconds in this example):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>snapshot<span class="w"> </span>grant-access<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--resource-group<span class="w"> </span>forensics<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--name<span class="w"> </span>snapshot-1<span class="w"> </span><span class="se">\</span>
@@ -384,23 +400,28 @@ az<span class="w"> </span>login
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-201.png" /></p>
-<p>Copy the URL, which in this case is:</p>
+<p>The command returns JSON containing <code class="docutils literal notranslate"><span class="pre">accessSAS</span></code>. Example output:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;accessSAS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://md-d3hcbtldht5q.z31.blob.storage.azure.net/mmjzwc4ms50k/abcd?snapshot=2026-05-16T20%3A11%3A11.0777366Z&amp;sv=2018-11-09&amp;sr=bs&amp;si=ac513c6f073b4bf0ae1dbe1708e749d33e75b39012e740e1832fe1c1e332dd67&amp;sig=1GPN32p0qzTJJLwQx46zwOh%2FLxw8Jrez2BDSWQVTffM%3D&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>And paste it in your browser, the download should start automatically.</p>
+<p>Paste the SAS URL into a browser; the snapshot VHD begins downloading without attaching the disk to a running VM.</p>
 <p><img alt="alt text" src="../../_images/image-231.png" /></p>
-<p>In order to create a disk clone of the VM retrieve some important data with the following commands:</p>
+</section>
+<section id="clone-the-disk-with-libcloudforensics">
+<h3>Clone the disk with libcloudforensics<a class="headerlink" href="#clone-the-disk-with-libcloudforensics" title="Link to this heading">¶</a></h3>
+<p>For automated disk export, collect subscription and service-principal details:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>account<span class="w"> </span>show
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-241.png" /></p>
+<p>Create an application registration for forensics automation:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>ad<span class="w"> </span>sp<span class="w"> </span>create-for-rbac<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;forensics-sp&quot;</span>
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-251.png" /></p>
+<p>Assign <strong>Contributor</strong> (or a narrower custom role, if policy allows) on the subscription scope:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--assignee<span class="w"> </span>&lt;appId&gt;<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--role<span class="w"> </span><span class="s2">&quot;Contributor&quot;</span><span class="w"> </span><span class="se">\</span>
@@ -408,13 +429,13 @@ az<span class="w"> </span>login
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-26.png" /></p>
-<p>Once all the information is retrieved, activate a python venv and install libcloudforensics</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv<span class="w">  </span>
+<p>Create a Python virtual environment and install <strong>libcloudforensics</strong>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
 <span class="nb">source</span><span class="w"> </span>venv/bin/activate
 pip<span class="w"> </span>install<span class="w"> </span>libcloudforensics
 </pre></div>
 </div>
-<p>Export some the previously retrieved data</p>
+<p>Export the credentials returned by <code class="docutils literal notranslate"><span class="pre">create-for-rbac</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span><span class="w"> </span><span class="nv">AZURE_SUBSCRIPTION_ID</span><span class="o">=</span><span class="s2">&quot;&lt;subscription-id&gt;&quot;</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">AZURE_TENANT_ID</span><span class="o">=</span><span class="s2">&quot;&lt;tenant-id&gt;&quot;</span>
 <span class="nb">export</span><span class="w"> </span><span class="nv">AZURE_CLIENT_ID</span><span class="o">=</span><span class="s2">&quot;&lt;app-id&gt;&quot;</span>
@@ -422,13 +443,15 @@ pip<span class="w"> </span>install<span class="w"> </span>libcloudforensics
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-30.png" /></p>
-<p>And create a python script with the following content</p>
+<p>A short Python script invokes the library to copy the target disk to a storage account or local export path (content as captured in the lab):</p>
 <p><img alt="alt text" src="../../_images/image-28.png" /></p>
-<p>Execute it and the clone will be generated inmmediately.</p>
+<p>Run the script:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>forensics.py
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-311.png" /></p>
+<p>The library provisions the copy operation in Azure; when it completes, the cloned disk image is available for imaging tools or mount-and-extract workflows on the forensic workstation.</p>
+</section>
 </section>
 </section>
 
@@ -442,7 +465,7 @@ pip<span class="w"> </span>install<span class="w"> </span>libcloudforensics
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Docker</div>
+                <div class="title">Docker and Container Forensics</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -453,7 +476,7 @@ pip<span class="w"> </span>install<span class="w"> </span>libcloudforensics
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Google Drive, Onedrive, Dropbox and Nextcloud.</div>
+                <div class="title">Google Drive, OneDrive, Dropbox and Nextcloud</div>
                 
               </div>
             </a>
@@ -487,12 +510,24 @@ pip<span class="w"> </span>install<span class="w"> </span>libcloudforensics
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">VMWare and Azure Cloud</a><ul>
+<li><a class="reference internal" href="#">VMware and Azure Cloud</a><ul>
 <li><a class="reference internal" href="#extraction-of-evidence-from-on-premise-iaas-virtual-machines">Extraction of Evidence from On-Premise / IaaS Virtual Machines</a></li>
 <li><a class="reference internal" href="#objectives">Objectives</a></li>
 <li><a class="reference internal" href="#materials">Materials</a></li>
-<li><a class="reference internal" href="#part-a-extraction-of-on-premise-evidence">PART A: Extraction of On-Premise Evidence</a></li>
-<li><a class="reference internal" href="#part-b-extraction-of-evidence-from-azure-cloud">PART B: Extraction of Evidence from Azure Cloud</a></li>
+<li><a class="reference internal" href="#part-a-extraction-of-on-premise-evidence">PART A: Extraction of On-Premise Evidence</a><ul>
+<li><a class="reference internal" href="#list-running-virtual-machines">List running virtual machines</a></li>
+<li><a class="reference internal" href="#create-a-snapshot">Create a snapshot</a></li>
+<li><a class="reference internal" href="#analyze-the-memory-image">Analyze the memory image</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#part-b-extraction-of-evidence-from-azure-cloud">PART B: Extraction of Evidence from Azure Cloud</a><ul>
+<li><a class="reference internal" href="#deploy-a-virtual-machine">Deploy a virtual machine</a></li>
+<li><a class="reference internal" href="#acquire-memory-from-the-running-vm">Acquire memory from the running VM</a></li>
+<li><a class="reference internal" href="#create-a-disk-snapshot-azure-portal">Create a disk snapshot (Azure portal)</a></li>
+<li><a class="reference internal" href="#export-the-snapshot-with-azure-cli">Export the snapshot with Azure CLI</a></li>
+<li><a class="reference internal" href="#clone-the-disk-with-libcloudforensics">Clone the disk with libcloudforensics</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="VMWare and Azure Cloud" href="../exercise2/exercise2.html"><link rel="prev" title="Android forensics advanced" href="../../android/exercise3/exercise3.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="VMware and Azure Cloud" href="../exercise2/exercise2.html"><link rel="prev" title="Android forensics advanced" href="../../android/exercise3/exercise3.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
-        <title>Google Drive, Onedrive, Dropbox and Nextcloud. - Digital Forensics Notes documentation</title>
+        <title>Google Drive, OneDrive, Dropbox and Nextcloud - Digital Forensics Notes documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -224,9 +224,9 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Cloud:</span></p>
 <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Google Drive, Onedrive, Dropbox and Nextcloud.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../exercise2/exercise2.html">VMWare and Azure Cloud</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../exercise3/exercise3.html">Docker</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Google Drive, OneDrive, Dropbox and Nextcloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise2/exercise2.html">VMware and Azure Cloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise3/exercise3.html">Docker and Container Forensics</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Mail:</span></p>
 <ul>
@@ -272,7 +272,7 @@
         </div>
         <article role="main" id="furo-main-content">
           <section id="google-drive-onedrive-dropbox-and-nextcloud">
-<h1>Google Drive, Onedrive, Dropbox and Nextcloud.<a class="headerlink" href="#google-drive-onedrive-dropbox-and-nextcloud" title="Link to this heading">¶</a></h1>
+<h1>Google Drive, OneDrive, Dropbox and Nextcloud<a class="headerlink" href="#google-drive-onedrive-dropbox-and-nextcloud" title="Link to this heading">¶</a></h1>
 <section id="evidence-extraction-from-the-cloud">
 <h2>Evidence Extraction from the Cloud<a class="headerlink" href="#evidence-extraction-from-the-cloud" title="Link to this heading">¶</a></h2>
 <p>Cloud services can be accessed through browsers or client applications on networked devices such as desktops, laptops, tablets, and smartphones, commonly referred to as endpoint devices.</p>
@@ -280,16 +280,13 @@
 </section>
 <section id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p>Become aware of the possibilities that cloud services offer when obtaining forensic evidence.</p></li>
-<li><p>Install, configure, extract evidence, and analyze the most widely used cloud systems.</p></li>
-</ul>
+<p>The goals of this practice are to understand what forensic evidence cloud services can provide, and to install, configure, extract, and analyze several widely used sync clients on Windows.</p>
 </section>
 <section id="materials">
 <h2>Materials<a class="headerlink" href="#materials" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Any Windows distribution available on your system.</p></li>
-<li><p>OneDrive, Google Drive, and Dropbox clients.</p></li>
+<li><p>A Windows system (any supported edition available on your machine).</p></li>
+<li><p>Desktop clients for OneDrive, Google Drive, Dropbox, and Nextcloud.</p></li>
 </ul>
 </section>
 <section id="tasks">
@@ -302,54 +299,16 @@
 </section>
 <section id="b-what-are-the-digital-evidence-sources-that-we-specifically-encounter-when-working-in-the-cloud">
 <h4><strong>b) What are the digital evidence sources that we specifically encounter when working in the cloud?</strong><a class="headerlink" href="#b-what-are-the-digital-evidence-sources-that-we-specifically-encounter-when-working-in-the-cloud" title="Link to this heading">¶</a></h4>
-<p>The main sources of digital evidence in cloud environments are the following:</p>
-<ul class="simple">
-<li><p>Cloud service APIs.</p></li>
-<li><p>Cloud service logs.</p></li>
-<li><p>Local synchronized files.</p></li>
-<li><p>Authentication tokens and session artifacts.</p></li>
-<li><p>Browser cache and cookies.</p></li>
-<li><p>Metadata databases generated by cloud clients.</p></li>
-</ul>
+<p>In cloud investigations, evidence often comes from several layers at once: <strong>cloud service APIs</strong> and <strong>provider logs</strong> for account-side activity; <strong>locally synchronized files</strong> and <strong>metadata databases</strong> left by desktop clients; and <strong>authentication tokens</strong>, <strong>session artifacts</strong>, <strong>browser cache</strong>, and <strong>cookies</strong> from web or hybrid access to the same services.</p>
 </section>
 <section id="c-what-possibilities-do-the-apis-provided-by-cloud-service-providers-offer-us-explain-the-metadata-that-can-be-obtained-through-apis">
 <h4><strong>c) What possibilities do the APIs provided by cloud service providers offer us? Explain the metadata that can be obtained through APIs</strong><a class="headerlink" href="#c-what-possibilities-do-the-apis-provided-by-cloud-service-providers-offer-us-explain-the-metadata-that-can-be-obtained-through-apis" title="Link to this heading">¶</a></h4>
-<p>Cloud APIs allow investigators to:</p>
-<ul class="simple">
-<li><p>Access cloud services through user credentials.</p></li>
-<li><p>Access files and synchronized content.</p></li>
-<li><p>Retrieve metadata and operational details.</p></li>
-<li><p>Analyze account activity.</p></li>
-<li><p>Identify timestamps and IP addresses.</p></li>
-<li><p>Obtain information about deleted files and synchronization events.</p></li>
-</ul>
-<p>Common metadata obtained through APIs includes:</p>
-<ul class="simple">
-<li><p>File names.</p></li>
-<li><p>Creation and modification timestamps.</p></li>
-<li><p>Synchronization history.</p></li>
-<li><p>Device identifiers.</p></li>
-<li><p>User account identifiers.</p></li>
-<li><p>IP addresses.</p></li>
-<li><p>Shared file permissions.</p></li>
-<li><p>Access logs.</p></li>
-<li><p>File hashes.</p></li>
-<li><p>Deleted file recovery information.</p></li>
-</ul>
+<p>With valid credentials or legal access, cloud APIs let investigators reach files and synced content, pull operational metadata, and reconstruct account activity—including timestamps, source IP addresses, and traces of deleted items or sync events that may no longer exist on the endpoint.</p>
+<p>Through those interfaces, responses commonly include file names, creation and modification times, sync history, device and user identifiers, IP addresses, sharing permissions, access logs, file hashes where available, and data needed to recover or reference deleted objects on the provider side.</p>
 </section>
 <section id="d-list-the-most-commonly-used-client-software-for-accessing-cloud-services">
 <h4><strong>d) List the most commonly used client software for accessing cloud services</strong><a class="headerlink" href="#d-list-the-most-commonly-used-client-software-for-accessing-cloud-services" title="Link to this heading">¶</a></h4>
-<p>Most commonly used cloud clients include:</p>
-<ul class="simple">
-<li><p>Microsoft OneDrive</p></li>
-<li><p>Google Drive</p></li>
-<li><p>Dropbox</p></li>
-<li><p>iCloud</p></li>
-<li><p>Mega</p></li>
-<li><p>Box</p></li>
-<li><p>Nextcloud</p></li>
-<li><p>ownCloud</p></li>
-</ul>
+<p>The most widely used desktop clients include <strong>Microsoft OneDrive</strong>, <strong>Google Drive</strong>, <strong>Dropbox</strong>, <strong>iCloud</strong>, <strong>Mega</strong>, <strong>Box</strong>, <strong>Nextcloud</strong>, and <strong>ownCloud</strong>.</p>
 </section>
 </section>
 <section id="install-and-configure-onedrive-google-drive-and-dropbox-clients">
@@ -361,22 +320,16 @@
 </section>
 <section id="google-drive">
 <h4><strong>Google Drive</strong><a class="headerlink" href="#google-drive" title="Link to this heading">¶</a></h4>
-<p>Download the installer from the <a class="reference external" href="https://www.google.com/drive/download/">official Google Drive website.</a>.</p>
-<p>Once downloaded, execute the installer and follow the setup process.</p>
-<p>After authentication, synchronized files become accessible from Windows File Explorer.</p>
+<p>Download the installer from the <a class="reference external" href="https://www.google.com/drive/download/">official Google Drive website</a>, run it, and complete the setup wizard. After sign-in, synced content is available from Windows File Explorer.</p>
 </section>
 <section id="dropbox">
 <h4><strong>Dropbox</strong><a class="headerlink" href="#dropbox" title="Link to this heading">¶</a></h4>
 <p>Download the installer from the <a class="reference external" href="https://www.dropbox.com/install">official Dropbox website</a>.</p>
-<p>After installation, log in with a Dropbox account.</p>
-<p>The synchronized cloud directory will become available from Windows File Explorer.</p>
+<p>After installation, sign in with a Dropbox account; the sync folder then appears in Windows File Explorer.</p>
 </section>
 <section id="nextcloud">
 <h4><strong>Nextcloud</strong><a class="headerlink" href="#nextcloud" title="Link to this heading">¶</a></h4>
-<p>Nextcloud uses the <strong>Nextcloud Desktop Client</strong> to synchronize files between local system and a self-hosted or provider-hosted Nextcloud server. <a class="reference external" href="https://nextcloud.com/install/">Official website</a></p>
-<p>Download and install the desktop client from the official site, then follow the installation wizard.</p>
-<p>After installation, launch Nextcloud and connect it to your server by entering your Nextcloud instance URL (for example: <code class="docutils literal notranslate"><span class="pre">https://nextcloud.yourdomain.com</span></code>) and your credentials.</p>
-<p>After configuration, the synchronized folder will be available in Windows File Explorer.</p>
+<p>Nextcloud uses the <strong>Nextcloud Desktop Client</strong> (<a class="reference external" href="https://nextcloud.com/install/">official website</a>) to sync files between the workstation and a self-hosted or provider-hosted server. Install the client, then connect by entering the instance URL (for example <code class="docutils literal notranslate"><span class="pre">https://nextcloud.yourdomain.com</span></code>) and your account credentials. The chosen sync folder is then available in Windows File Explorer.</p>
 </section>
 </section>
 <section id="analyze-the-previous-clients-and-determine">
@@ -385,20 +338,20 @@
 <h4><strong>a) Identify where the services and their configuration files are installed</strong><a class="headerlink" href="#a-identify-where-the-services-and-their-configuration-files-are-installed" title="Link to this heading">¶</a></h4>
 <section id="id1">
 <h5><strong>OneDrive</strong><a class="headerlink" href="#id1" title="Link to this heading">¶</a></h5>
-<p>OneDrive service and configuration files are typically located at:</p>
+<p>The OneDrive client and its working data are typically stored at:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">user</span><span class="o">&gt;</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Microsoft</span>\<span class="n">OneDrive</span>
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image1.png" /></p>
 <p>Settings directory:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">user</span><span class="o">&gt;</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Microsoft</span>\<span class="n">OneDrive</span>\<span class="n">seDttings</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">user</span><span class="o">&gt;</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Microsoft</span>\<span class="n">OneDrive</span>\<span class="n">settings</span>
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-19.png" /></p>
 </section>
 <section id="id2">
 <h5><strong>Google Drive</strong><a class="headerlink" href="#id2" title="Link to this heading">¶</a></h5>
-<p>Google Drive service and configuration location is here:</p>
+<p>Google Drive for desktop installs its binaries here:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Program</span> <span class="n">Files</span>\<span class="n">Google</span>\<span class="n">Drive</span> <span class="n">File</span> <span class="n">Stream</span>\
 </pre></div>
 </div>
@@ -406,7 +359,7 @@
 </section>
 <section id="id3">
 <h5><strong>Dropbox</strong><a class="headerlink" href="#id3" title="Link to this heading">¶</a></h5>
-<p>Dropbox service location:</p>
+<p>Dropbox executables are located at:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Program</span> <span class="n">Files</span> <span class="p">(</span><span class="n">x86</span><span class="p">)</span>\<span class="n">Dropbox</span>\<span class="n">Client</span>
 </pre></div>
 </div>
@@ -483,15 +436,7 @@
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-101.png" /></p>
-<p>From these logs we can extract:</p>
-<ul class="simple">
-<li><p>Synchronization events.</p></li>
-<li><p>File names.</p></li>
-<li><p>Timestamps.</p></li>
-<li><p>User account information.</p></li>
-<li><p>Synchronization errors.</p></li>
-<li><p>Device identifiers.</p></li>
-</ul>
+<p><code class="docutils literal notranslate"><span class="pre">SyncDiagnostics.log</span></code> and related files typically document synchronization events, affected file names, timestamps, linked account details, error messages, and device identifiers.</p>
 </section>
 <section id="id10">
 <h5><strong>Google Drive</strong><a class="headerlink" href="#id10" title="Link to this heading">¶</a></h5>
@@ -500,32 +445,17 @@
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-111.png" /></p>
-<p>Databases can be analyzed using SQLiteStudio.</p>
-<ul class="simple">
-<li><p>experiment.db</p></li>
-</ul>
+<p>The databases were opened with SQLiteStudio:</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">experiment.db</span></code></strong> — client experiment or feature-related state.</p>
 <p><img alt="alt text" src="../../_images/image-121.png" /></p>
-<ul class="simple">
-<li><p>metrics_store_sqlite.db</p></li>
-</ul>
+<p><strong><code class="docutils literal notranslate"><span class="pre">metrics_store_sqlite.db</span></code></strong> — telemetry store; it was empty in this installation because no metrics had been recorded yet.</p>
 <p><img alt="alt text" src="../../_images/image-131.png" /></p>
-<p>is empty as I did not use it</p>
-<ul class="simple">
-<li><p>root_preferences_sqlite.db</p></li>
-</ul>
-<p>rutas de sincronización</p>
+<p><strong><code class="docutils literal notranslate"><span class="pre">root_preferences_sqlite.db</span></code></strong> — holds synchronization paths:</p>
 <p><img alt="alt text" src="../../_images/image-151.png" /></p>
-<p>here we can see all the disks and their names</p>
+<p>The same database also lists configured disks and their display names:</p>
 <p><img alt="alt text" src="../../_images/image-141.png" /></p>
-<p>Inside these databases we can find:</p>
-<ul class="simple">
-<li><p>Synchronization paths.</p></li>
-<li><p>Device information.</p></li>
-<li><p>Telemetry information.</p></li>
-<li><p>Account details.</p></li>
-<li><p>Client behavior information.</p></li>
-</ul>
-<p>Logs directory:</p>
+<p>Taken together, these files can reveal sync paths, device and account binding, telemetry, and other client behavior not visible from Explorer alone.</p>
+<p>Additional plain-text logs are under:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">user</span><span class="o">&gt;</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Google</span>\<span class="n">DriveFS</span>\<span class="n">logs</span>
 </pre></div>
 </div>
@@ -538,47 +468,33 @@
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-171.png" /></p>
-<p>The most important file are</p>
+<p>The most important files are:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apex</span><span class="o">.</span><span class="n">sqlite3</span>
 <span class="n">host</span><span class="o">.</span><span class="n">db</span>
 </pre></div>
 </div>
-<p>However there are unredeable / uncrypted and we cannot get anything</p>
+<p>In this case they were unreadable (encrypted or otherwise protected), so no useful metadata could be extracted from them directly.</p>
 <p><img alt="alt text" src="../../_images/image-181.png" /></p>
-<p>Possible information extracted:</p>
-<ul class="simple">
-<li><p>Synchronization history.</p></li>
-<li><p>Account email.</p></li>
-<li><p>File metadata.</p></li>
-<li><p>Shared files.</p></li>
-<li><p>Local cache information.</p></li>
-<li><p>Authentication artifacts.</p></li>
-</ul>
+<p>When the databases cannot be parsed, other artifacts under <code class="docutils literal notranslate"><span class="pre">AppData</span></code> may still yield sync history, the account e-mail, file metadata, sharing information, local cache data, and authentication-related remnants.</p>
 </section>
 <section id="id12">
 <h5><strong>Nextcloud</strong><a class="headerlink" href="#id12" title="Link to this heading">¶</a></h5>
-<p>Nextcloud stores forensic artifacts, logs, and client metadata inside:</p>
-<p>C:\Users&lt;user&gt;\AppData\Local\Nextcloud\</p>
+<p>Nextcloud stores forensic artifacts, logs, and client metadata here:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">user</span><span class="o">&gt;</span>\<span class="n">AppData</span>\<span class="n">Local</span>\<span class="n">Nextcloud</span>\
+</pre></div>
+</div>
 <p><img alt="alt text" src="../../_images/image-22.png" /></p>
-<p>Additional configuration and synchronization data can also be found in:</p>
-<p>C:\Users&lt;user&gt;\AppData\Roaming\Nextcloud\</p>
+<p>Additional configuration and sync data are under:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="o">&lt;</span><span class="n">user</span><span class="o">&gt;</span>\<span class="n">AppData</span>\<span class="n">Roaming</span>\<span class="n">Nextcloud</span>\
+</pre></div>
+</div>
 <p><img alt="alt text" src="../../_images/image-23.png" /></p>
-<p>Inside these directories we can find log files, cache information, synchronization metadata, and configuration files.</p>
-<p>The most important file is:</p>
-<p><date>_nextcloud.log</p>
+<p>These directories contain log files, cache data, sync metadata, and configuration files. The most useful artifact for timelines is usually a log named like <code class="docutils literal notranslate"><span class="pre">&lt;date&gt;_nextcloud.log</span></code>:</p>
 <p><img alt="alt text" src="../../_images/image-24.png" /></p>
-<p>Possible information extracted:</p>
-<ul class="simple">
-<li><p>Synchronization history.</p></li>
-<li><p>File upload and download events.</p></li>
-<li><p>User account information.</p></li>
-<li><p>Server URLs.</p></li>
-<li><p>Synchronization timestamps.</p></li>
-<li><p>Error and conflict logs.</p></li>
-<li><p>Local cache information.</p></li>
-<li><p>Client activity events.</p></li>
-</ul>
-<p>TBD, HACER DISCLAIMER DE QUE LAS RUTAS PUEDEN CAMBIAR, NO SIEMRE ES C, QUE ES UNA PARTICIÓN LÓGICA CUALQUIERA QUE TENGAS</p>
+<p>From that log and related files, an examiner can often recover sync history, upload and download events, account and server URL details, timestamps, error and conflict records, cache references, and broader client activity.</p>
+<blockquote>
+<div><p><strong>Note:</strong> Paths in this document assume the default Windows system drive (<code class="docutils literal notranslate"><span class="pre">C:</span></code>) and a typical user profile. Drive letters, profile names, and sync folder locations may differ depending on the installation and user choices.</p>
+</div></blockquote>
 </section>
 </section>
 </section>
@@ -595,7 +511,7 @@
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">VMWare and Azure Cloud</div>
+                <div class="title">VMware and Azure Cloud</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -640,7 +556,7 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Google Drive, Onedrive, Dropbox and Nextcloud.</a><ul>
+<li><a class="reference internal" href="#">Google Drive, OneDrive, Dropbox and Nextcloud</a><ul>
 <li><a class="reference internal" href="#evidence-extraction-from-the-cloud">Evidence Extraction from the Cloud</a></li>
 <li><a class="reference internal" href="#objectives">Objectives</a></li>
 <li><a class="reference internal" href="#materials">Materials</a></li>

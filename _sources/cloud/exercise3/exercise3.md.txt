@@ -1,48 +1,41 @@
-# Docker
+# Docker and Container Forensics
 
-## Introduction and container forensics
+## Introduction
 
-Docker is a software platform that allows developers to create, test, and deploy applications quickly and easily using containers. It is a technology that has gained significant popularity in recent years, especially in the field of information technology.
+Docker packages applications and their dependencies into **containers**: isolated processes that share the host kernel but have their own filesystem, network namespace, and resource limits. From a forensic standpoint, containers matter because production and incident scenes increasingly run microservices on Docker rather than only on traditional VMs.
 
-Docker is used to encapsulate applications inside containers, meaning that each application runs in its own isolated environment. This allows developers to ensure that their applications behave consistently across different environments, regardless of hardware or software differences.
+Unlike a hypervisor snapshot, a running container does not offer a single “pause the world” button that captures disk and RAM together. Evidence may exist in **image layers**, the **container writable layer**, **named volumes**, **bind mounts**, **container logs**, and on the **host** (`/var/lib/docker`, daemon configuration, and overlay storage). Investigators therefore combine export/commit tools, filesystem diffing, memory capture on the host, and offline analysis of a seized `/var/lib/docker` tree.
 
-The main advantage of using Docker is the ability to create identical development and production environments, which helps guarantee the quality and consistency of applications. In addition, Docker enables continuous integration and continuous deployment, allowing developers to rapidly deploy new versions of their applications without interrupting the existing service.
-
-Another advantage of Docker is that containers are extremely lightweight and fast to create. Containers can be started and stopped within seconds, allowing developers to test and debug applications much faster than in traditional environments.
-
-However, there are also some disadvantages to using Docker. One of the main issues is the complexity of the platform. Docker can be difficult to learn and configure, especially for those without previous experience managing containers.
-
-Another issue is that Docker can be slower than traditional environments in certain situations. Containers require an additional virtualization layer, which may impact performance in highly demanding environments.
-
-Finally, another challenge when using Docker is that the technology is still evolving. As new features are added and existing capabilities are improved, it can be difficult to keep up with the changes.
+This practice is divided into two parts: **Part A** introduces everyday Docker operations on a lab Linux host; **Part B** applies those concepts to acquisition, comparison utilities, offline image analysis, and optional hardening or checkpoint tooling.
 
 ## Objectives
 
-- Learn how to perform basic operations with containers.
-- Extract evidence from infrastructure systems that provide microservices through containers.
+Learn basic container lifecycle operations on Linux, and practice extracting and interpreting forensic artifacts from Docker installations and images—including diff/save/export workflows, `container-diff`, `docker-explorer`, and Docker Scout.
 
 ## Materials
 
-- Any Linux distribution.
-- Docker CE.
-- Forensic tools:
-  - Docker Forensics Toolkit
-  - Sysdig
-  - docker-diff
-  - docker-explorer
+- A Linux distribution with root or `sudo` access.
+- **Docker CE** (Community Edition).
+- Forensic and analysis utilities: **Docker Forensics Toolkit** (concepts from course readings), **Sysdig** (referenced in the syllabus), **container-diff**, **docker-explorer**, and **Docker Scout** (CLI plugin).
 
-## PART A: Introduction to Docker
+---
 
-Perform the following tasks:
+## Part A: Introduction to Docker
 
-### **1. Install Docker on a Linux distribution**
+The following steps follow the lab sequence: install the engine, pull and run `nginx:latest`, inspect runtime objects, build a custom image from a Dockerfile, export artifacts, and clean up.
+
+### 1. Install Docker
+
+The official convenience script installs Docker CE and dependencies:
 
 ```bash
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
 ```
 
-### **2. Run a Docker command that displays the installed version**
+### 2. Display the installed version
+
+Confirms client and server versions and API compatibility:
 
 ```bash
 docker version
@@ -50,7 +43,9 @@ docker version
 
 ![alt text](./images/image.png)
 
-### **3. Run a Docker command that shows information about the host system**
+### 3. Show host and daemon information
+
+`docker info` reports storage driver, cgroup driver, registry mirrors, and whether the current user can talk to the daemon without `sudo`:
 
 ```bash
 docker info
@@ -58,7 +53,9 @@ docker info
 
 ![alt text](./images/image-1.png)
 
-### **4. Execute the Docker command required to download the image `nginx:latest` from Docker Hub**
+### 4. Pull `nginx:latest` from Docker Hub
+
+Downloads the image layers and metadata from the default registry:
 
 ```bash
 docker pull nginx:latest
@@ -66,7 +63,7 @@ docker pull nginx:latest
 
 ![alt text](./images/image-2.png)
 
-### **5. Execute the Docker command required to list locally stored images**
+### 5. List local images
 
 ```bash
 docker image ls
@@ -74,7 +71,9 @@ docker image ls
 
 ![alt text](./images/image-3.png)
 
-### **6. Run a container in detached mode using the image `nginx:latest`**
+### 6. Run a container in detached mode
+
+`-d` runs the process in the background; `--name` assigns a stable name for later `inspect`, `exec`, and forensic export:
 
 ```bash
 docker run -d --name nginx-detached nginx:latest
@@ -82,7 +81,9 @@ docker run -d --name nginx-detached nginx:latest
 
 ![alt text](./images/image-4.png)
 
-### **7. Run a container in interactive mode using the image `nginx:latest`**
+### 7. Run a container in interactive mode
+
+`-it` allocates a TTY and keeps STDIN open—useful for manual inspection inside the guest filesystem:
 
 ```bash
 docker run -it --name nginx-interactive nginx:latest /bin/bash
@@ -90,9 +91,9 @@ docker run -it --name nginx-interactive nginx:latest /bin/bash
 
 ![alt text](./images/image-5.png)
 
-NOTE: You can exit from the container with `exit`
+Leave the interactive shell with `exit`.
 
-### **8. Execute the Docker command required to list running containers**
+### 8. List running containers
 
 ```bash
 docker ps
@@ -100,7 +101,11 @@ docker ps
 
 ![alt text](./images/image-6.png)
 
-### **9. Inspect all the properties of one of the containers**
+Only containers in the **running** state appear; stopped containers require `docker ps -a`.
+
+### 9. Inspect container properties
+
+`docker inspect` returns JSON with network settings, mount points, layer IDs, path to the container log, and runtime configuration—often the first structured artifact in a live triage:
 
 ```bash
 docker inspect nginx-detached
@@ -108,7 +113,9 @@ docker inspect nginx-detached
 
 ![alt text](./images/image-7.png)
 
-### **10. Execute the Docker command required to list the networks configured for Docker**
+### 10. List Docker networks
+
+Shows bridge, host, and custom networks used for container connectivity:
 
 ```bash
 docker network ls
@@ -116,7 +123,9 @@ docker network ls
 
 ![alt text](./images/image-8.png)
 
-### **11. Attach the console to one of your containers**
+### 11. Attach to a container console
+
+`docker attach` connects the terminal to the container’s primary process (distinct from `exec`, which starts a new process):
 
 ```bash
 docker attach nginx-detached
@@ -124,7 +133,7 @@ docker attach nginx-detached
 
 ![alt text](./images/image-9.png)
 
-### **12. Execute a `/bin/bash` command inside one of your containers in interactive mode**
+### 12. Run an interactive shell inside a running container
 
 ```bash
 docker exec -it nginx-detached /bin/bash
@@ -132,7 +141,9 @@ docker exec -it nginx-detached /bin/bash
 
 ![alt text](./images/image-10.png)
 
-### **13. Stop one of your containers**
+`exec` is the usual way to examine a live filesystem without stopping the service.
+
+### 13. Stop a container
 
 ```bash
 docker stop nginx-detached
@@ -140,7 +151,7 @@ docker stop nginx-detached
 
 ![alt text](./images/image-11.png)
 
-### **14. Start the previous container again**
+### 14. Start a stopped container
 
 ```bash
 docker start nginx-detached
@@ -148,7 +159,7 @@ docker start nginx-detached
 
 ![alt text](./images/image-12.png)
 
-### **15. Delete one of your containers**
+### 15. Remove a container
 
 ```bash
 docker rm -f nginx-detached
@@ -156,11 +167,13 @@ docker rm -f nginx-detached
 
 ![alt text](./images/image-13.png)
 
-note: the -f parameter is necessaty as the container is starrted, otherwhise we had to stop the conteiner and remove it
+The `-f` flag forces removal even if the container is still running; otherwise you must `docker stop` it first.
 
-### **16. Create a container from a Dockerfile**
+### 16. Build an image from a Dockerfile
 
-```Dockerfile
+Example Dockerfile and helper script used in the lab:
+
+```dockerfile
 # Base image
 FROM ubuntu
 
@@ -179,7 +192,7 @@ docker build -t myubuntu .
 
 ![alt text](./images/image-14.png)
 
-Run the container:
+Run a container from the new image:
 
 ```bash
 docker run -d --name mycontainer myubuntu
@@ -187,7 +200,9 @@ docker run -d --name mycontainer myubuntu
 
 ![alt text](./images/image-15.png)
 
-### **17. Convert the previous container into an image called `mydebian`**
+### 17. Commit a container to a new image
+
+`docker commit` captures the writable layer of `mycontainer` as a new image tag (lab name `mydebian`, even though the base Dockerfile used Ubuntu):
 
 ```bash
 docker commit mycontainer mydebian
@@ -195,13 +210,17 @@ docker commit mycontainer mydebian
 
 ![alt text](./images/image-16.png)
 
+Verify the image is listed:
+
 ```bash
 docker image ls
 ```
 
 ![alt text](./images/image-20.png)
 
-### **18. Export the image `mydebian` as a file**
+### 18. Export an image to a tar archive
+
+`docker save` preserves image layers and metadata for transfer to an analysis host:
 
 ```bash
 docker save -o mydebian.tar mydebian
@@ -215,7 +234,9 @@ ls mydebian.tar
 
 ![alt text](./images/image-19.png)
 
-### **19. Export the `nginx` container as a file**
+### 19. Export a container filesystem
+
+`docker export` writes only the flattened container root filesystem (no image history or tags). In this step the `nginx-detached` container was exported as recorded in the lab:
 
 ```bash
 docker export nginx-detached -o nginx-container.tar
@@ -227,10 +248,9 @@ docker export nginx-detached -o nginx-container.tar
 ls nginx-container.tar
 ```
 
-
 ![alt text](./images/image-22.png)
 
-### **20. Delete one of your containers**
+### 20. Remove the custom container
 
 ```bash
 docker rm -f mycontainer
@@ -238,7 +258,7 @@ docker rm -f mycontainer
 
 ![alt text](./images/image-23.png)
 
-### **21. Delete the image `mydebian`**
+### 21. Remove the committed image
 
 ```bash
 docker image rm mydebian
@@ -246,28 +266,31 @@ docker image rm mydebian
 
 ![alt text](./images/image-24.png)
 
-## PART B: Docker Forensics
+---
 
-### **1. Read the following [article](https://www.redhat.com/en/blog/docker-forensics-for-containers-how-to-conduct-investigations). From a computer forensics perspective, what lessons can we learn regarding evidence acquisition or incident response involving containers?**
+## Part B: Docker Forensics
 
-A diferencia de las maquinas virtuales no tenemos opciones como son las snapshot para recolectar evidencias de forma facil y sencilla, sin embargo, si que existen buenas herramientas que podemos utilizar en este contexto, como son:
+### 1. Lessons from container incident response (Red Hat article)
 
-- `docker commit`: Esto nos sirve para convertir un docker a imagen y capturar las modificaciones de este, lo unico malo es que no guarda el estado de ejecución de los procesos.
-- `dd`: Puede servirnos para capturar la memoria RAM del docker.
+Unlike virtual machines, Docker does not provide hypervisor-style snapshots that freeze disk and memory in one step. Acquisition therefore relies on a combination of techniques:
 
-Debido a su propia naturaleza los dockers son efimeros, esto complica reconstruir los eventos que puedan haberse detenido.
+- **`docker commit`** — Persists the container writable layer as a new image. It captures filesystem changes but **not** running process state or RAM.
+- **Host memory imaging (`dd`, AVML, or equivalent on the host)** — Required when volatile evidence (running processes, open connections, encryption keys) must be preserved; the container alone does not expose full memory through Docker CLI.
+- **Ephemeral workloads** — Containers may be destroyed or recreated quickly, which narrows the window for live response and makes offline analysis of `/var/lib/docker` critical.
 
-Cirtas configuraciones hacen posible que un atacante escape del docker, si vemos indicios de que esto se ha producido, como si el docker se ejecuto con privilegios excesivos, `--privileged`,`--mount` o `--pid host` seria prudente escalar la investicación al host.
+If indicators suggest **container escape** (for example the container was started with `--privileged`, sensitive `--mount` bindings, or `--pid=host`), the scope of the investigation should expand to the **host OS** and adjacent namespaces, not only the container filesystem.
 
-### **2. Read the help documentation for the following Docker command modifiers: [DIFF](https://docs.docker.com/reference/cli/docker/container/diff/), [SAVE](https://docs.docker.com/reference/cli/docker/image/save/), [EXPORT](https://docs.docker.com/reference/cli/docker/container/export/), [LOAD](https://docs.docker.com/reference/cli/docker/image/load/), and [IMPORT](https://docs.docker.com/reference/cli/docker/image/import/). Explain how they may be useful for forensic tasks. Provide examples using each modifier.**
+### 2. Forensic use of `diff`, `save`, `export`, `load`, and `import`
 
-`diff`: Muestra los cambios en el docker respecto a su imagen original, esto nos puede ayudar a detectar ficheros modificados por un atacante e identificar malware, incluso de persistencia.  
-`save`: Exporta una imagen completa como fichero, esto es muy util, principalmente para mover las evidencias de el dispositivo en el que fueron hayadas al dispositivo en el que seran analizadas.  
-`export`: Exporta el sistema de ficheros de un contenedor como fichero .tar. Esto puede ser util para obtener una copia exacta del contenido del contenedor de forma rapida.  
-`load`: Importa una imagen previamente guardada en fichero usando `docker save`, sirve para restaurar imagenes en otro sistema para su analisis.  
-`import`: Importa un fichero .tar generado con export y crea una imagen con el.
+| Command | Forensic role |
+|--------|----------------|
+| **`docker diff`** | Lists files added, changed, or deleted in the writable layer compared to the image. Useful for malware drops, persistence, and attacker modifications. |
+| **`docker save`** | Archives a complete image (layers + metadata) to a tar file for transfer to an analysis workstation. |
+| **`docker export`** | Exports the container root filesystem as a tar archive without image history—quick content copy for carving and file listing. |
+| **`docker load`** | Restores an image previously written with `docker save` on another host for offline examination. |
+| **`docker import`** | Creates a new image from an export tar (flattened filesystem), enabling analysis pipelines that expect an image tag. |
 
-#### DIFF
+#### `docker diff`
 
 ```bash
 docker diff nginx-detached
@@ -275,7 +298,7 @@ docker diff nginx-detached
 
 ![alt text](./images/image-25.png)
 
-#### SAVE
+#### `docker save`
 
 ```bash
 docker save -o nginx-image.tar nginx:latest
@@ -283,7 +306,7 @@ docker save -o nginx-image.tar nginx:latest
 
 ![alt text](./images/image-26.png)
 
-#### EXPORT
+#### `docker export`
 
 ```bash
 docker export nginx-detached -o nginx-container.tar
@@ -291,7 +314,7 @@ docker export nginx-detached -o nginx-container.tar
 
 ![alt text](./images/image-27.png)
 
-#### LOAD
+#### `docker load`
 
 ```bash
 docker load -i nginx-image.tar
@@ -299,7 +322,7 @@ docker load -i nginx-image.tar
 
 ![alt text](./images/image-28.png)
 
-#### IMPORT
+#### `docker import`
 
 ```bash
 docker import nginx-container.tar imported-nginx
@@ -307,7 +330,7 @@ docker import nginx-container.tar imported-nginx
 
 ![alt text](./images/image-29.png)
 
-Run the imported image:
+Run a shell in the imported image:
 
 ```bash
 docker run -it imported-nginx /bin/bash
@@ -315,9 +338,11 @@ docker run -it imported-nginx /bin/bash
 
 ![alt text](./images/image-30.png)
 
-### **3. Review the documentation for the utility [docker-diff](https://github.com/GoogleContainerTools/container-diff), which is used to compare local Docker images against those hosted in Docker Hub. Download the utility and perform a test.**
+### 3. Image comparison with container-diff
 
-Install container-diff:
+[container-diff](https://github.com/GoogleContainerTools/container-diff) compares local images (and optionally remote registries) by layer, file, package, and history—useful for verifying whether a seized image matches a known baseline or for spotting unauthorized packages.
+
+Install the binary:
 
 ```bash
 wget https://github.com/GoogleContainerTools/container-diff/releases/download/v0.17.0/container-diff-linux-amd64 -O container-diff
@@ -333,7 +358,7 @@ container-diff version
 
 ![alt text](./images/image-31.png)
 
-Analyze an image:
+General image analysis:
 
 ```bash
 container-diff analyze daemon://nginx:latest
@@ -341,7 +366,7 @@ container-diff analyze daemon://nginx:latest
 
 ![alt text](./images/image-32.png)
 
-Analyze filesystem contents:
+Filesystem contents:
 
 ```bash
 container-diff analyze daemon://nginx:latest --type=file
@@ -349,7 +374,7 @@ container-diff analyze daemon://nginx:latest --type=file
 
 ![alt text](./images/image-33.png)
 
-Analyze installed packages:
+Installed packages (Debian/apt-based layers):
 
 ```bash
 container-diff analyze daemon://nginx:latest --type=apt
@@ -357,7 +382,7 @@ container-diff analyze daemon://nginx:latest --type=apt
 
 ![alt text](./images/image-34.png)
 
-Analyze image history:
+Image build history:
 
 ```bash
 container-diff analyze daemon://nginx:latest --type=history
@@ -365,7 +390,7 @@ container-diff analyze daemon://nginx:latest --type=history
 
 ![alt text](./images/image-35.png)
 
-Compare two images:
+Compare two local images (replace `<other-container>` with the second image name or ID):
 
 ```bash
 container-diff diff daemon://nginx:latest daemon://<other-container>
@@ -373,7 +398,7 @@ container-diff diff daemon://nginx:latest daemon://<other-container>
 
 ![alt text](./images/image-36.png)
 
-Compare filesystem differences:
+Filesystem differences:
 
 ```bash
 container-diff diff daemon://nginx:latest daemon://<other-container> --type=file
@@ -381,7 +406,7 @@ container-diff diff daemon://nginx:latest daemon://<other-container> --type=file
 
 ![alt text](./images/image-37.png)
 
-Compare installed packages:
+Package differences:
 
 ```bash
 container-diff diff daemon://nginx:latest daemon://<other-container> --type=apt
@@ -389,7 +414,7 @@ container-diff diff daemon://nginx:latest daemon://<other-container> --type=apt
 
 ![alt text](./images/image-38.png)
 
-Compare image history:
+History differences:
 
 ```bash
 container-diff diff daemon://nginx:latest daemon://<other-container> --type=history
@@ -397,15 +422,13 @@ container-diff diff daemon://nginx:latest daemon://<other-container> --type=hist
 
 ![alt text](./images/image-39.png)
 
-### **4. Within the context of an ongoing investigation, a logical image corresponding to a Docker installation from a suspicious computer system has been obtained. It is suspected that this installation may have been used to conceal activities.**
+### 4. Offline analysis of a seized Docker logical image
 
-As a forensic analyst, you have been tasked with performing a thorough analysis of the Docker logical image in order to identify the services being provided.
+#### a. Obtain and mount the forensic copy
 
-#### **a. [Download](https://drive.usercontent.google.com/download?id=1bFlnUBg1GH17h8pIQRywhDkHbNeTjvNZ&export=download&authuser=1) a forensic copy of the Docker logical image**
+Download the [provided logical image](https://drive.usercontent.google.com/download?id=1bFlnUBg1GH17h8pIQRywhDkHbNeTjvNZ&export=download&authuser=1) and place it so that the Docker data root is available under the path used below (in this lab, content was unpacked under `~/docker` with `/var/lib/docker` inside the image).
 
-it has been saved in ~/docker
-
-Install docker-explorer:
+Install **docker-explorer** in a virtual environment:
 
 ```bash
 python3 -m venv de-env
@@ -413,9 +436,9 @@ source de-env/bin/activate
 pip install docker-explorer
 ```
 
-#### **b. Perform an analysis of the Docker configuration and the containers hosted within the image**
+#### b. Analyze Docker configuration and hosted containers
 
-List all containers:
+List all containers recorded in the image:
 
 ```bash
 sudo de-env/bin/de.py -r /var/lib/docker list all_containers
@@ -423,19 +446,25 @@ sudo de-env/bin/de.py -r /var/lib/docker list all_containers
 
 ![alt text](./images/image-40.png)
 
-from this json we can get these results:
+The JSON output was summarized as follows:
 
-| Image Name | Container ID | Image ID | Start Date | Mount Points | Exposed Ports | Log Path |
-|------------|--------------|----------|------------|--------------|----------------|----------|
-| homeassistant/home-assistant:latest | 4ea041fd90ad823353e5a62f395f5ddab3c8096a4cbf1816eb5c4f88169d0818 | 306f9233e149f606d94e7bb3c746cba599b2d3fd3e1080d9d05175daa02f9ae3 | 2023-04-19T15:47:23.510586+00:00 | var/lib/docker/volumes/ha_vol/_data → /config | 8123/tcp | /var/lib/docker/containers/4ea041fd90ad823353e5a62f395f5ddab3c8096a4cbf1816eb5c4f88169d0818/4ea041fd90ad823353e5a62f395f5ddab3c8096a4cbf1816eb5c4f88169d0818-json.log |
-| nextcloud | 5e38912f3093be4e81cedbf8290a084345f81425cd3bc0e6ae940a12fc93aaed | 964325ce9b9519b517f852b8b24e0d0a945edd5521b2eee5e0f94254d67821ee | 2023-04-20T07:51:42.664787+00:00 | var/lib/docker/volumes/nextcloud/_data → /var/www/html  <br>var/lib/docker/volumes/config/_data → /var/www/html/config  <br>var/lib/docker/volumes/apps/_data → /var/www/html/custom_apps | 80/tcp | /var/lib/docker/containers/5e38912f3093be4e81cedbf8290a084345f81425cd3bc0e6ae940a12fc93aaed/5e38912f3093be4e81cedbf8290a084345f81425cd3bc0e6ae940a12fc93aaed-json.log |
-| nginx:latest | e7cae6335bef239e2b827b717eb442a3b5e7a385d30ac7c03bfb4b6ba337eaf3 | 6efc10a0510f143a90b69dc564a914574973223e88418d65c1f8809e08dc0a1f | 2023-04-20T07:54:41.608245+00:00 | var/lib/docker/home/azureuser/html → /usr/share/nginx/html | 442/tcp, 80/tcp | /var/lib/docker/containers/e7cae6335bef239e2b827b717eb442a3b5e7a385d30ac7c03bfb4b6ba337eaf3/e7cae6335bef239e2b827b717eb442a3b5e7a385d30ac7c03bfb4b6ba337eaf3-json.log |
+| Image | Container ID | Image ID | Start (UTC) | Mounts / volumes | Ports | Container log |
+|-------|----------------|----------|-------------|------------------|-------|----------------|
+| `homeassistant/home-assistant:latest` | `4ea041fd90ad…` | `306f9233e149…` | 2023-04-19T15:47:23Z | `ha_vol` → `/config` | 8123/tcp | `…/4ea041fd90ad…-json.log` |
+| `nextcloud` | `5e38912f3093…` | `964325ce9b95…` | 2023-04-20T07:51:42Z | `nextcloud`, `config`, `apps` volumes → `/var/www/html` paths | 80/tcp | `…/5e38912f3093…-json.log` |
+| `nginx:latest` | `e7cae6335bef…` | `6efc10a0510f…` | 2023-04-20T07:54:41Z | bind: `…/html` → `/usr/share/nginx/html` | 442/tcp, 80/tcp | `…/e7cae6335bef…-json.log` |
 
-#### **c. You may follow the steps described in this [article](https://osdfir.blogspot.com/2021/01/container-forensics-with-docker-explorer.html)**
+**Interpretation:** The host was running three distinct services—a **Home Assistant** automation stack (port **8123**), a **Nextcloud** collaboration instance with separate config and application volumes (port **80**), and an **nginx** reverse proxy or static site with a host directory bound into the web root (ports **80** and **442**). Mount points and log paths should be preserved in the chain of custody; container JSON logs under `/var/lib/docker/containers/<id>/` often contain stdout/stderr useful for timeline reconstruction.
 
-### **5. [Docker Scout](https://www.docker.com/products/docker-scout/) is a collection of features that provides detailed information about the composition and security of container images. It is used to analyze image contents and generate detailed reports about packages and vulnerabilities detected. It can also provide suggestions on how to remediate issues discovered during image analysis. Install Docker Scout and perform a small test.**
+#### c. Further reading
 
-Login to Docker:
+Additional walkthrough steps are described in [Container forensics with docker-explorer](https://osdfir.blogspot.com/2021/01/container-forensics-with-docker-explorer.html) (layer extraction, history, and deep filesystem views).
+
+### 5. Docker Scout (image composition and CVE reporting)
+
+[Docker Scout](https://www.docker.com/products/docker-scout/) analyzes image layers for packages and known vulnerabilities. While primarily a supply-chain tool, it supports forensic triage by quickly listing what software is present in an image under investigation.
+
+Sign in to Docker Hub (required for some Scout features):
 
 ```bash
 docker login
@@ -443,7 +472,7 @@ docker login
 
 ![alt text](./images/image-41.png)
 
-Install Docker Scout:
+Install the Scout CLI plugin:
 
 ```bash
 curl -L https://github.com/docker/scout-cli/releases/download/v1.20.4/docker-scout_1.20.4_linux_amd64.tar.gz -o docker-scout.tar.gz
@@ -465,7 +494,7 @@ docker scout version
 
 ![alt text](./images/image-42.png)
 
-Analyze an image:
+Summary view:
 
 ```bash
 docker scout quickview nginx:latest
@@ -473,7 +502,7 @@ docker scout quickview nginx:latest
 
 ![alt text](./images/image-43.png)
 
-Detailed CVE analysis:
+CVE listing:
 
 ```bash
 docker scout cves nginx:latest
@@ -481,7 +510,7 @@ docker scout cves nginx:latest
 
 ![alt text](./images/image-44.png)
 
-Recommendations:
+Remediation hints:
 
 ```bash
 docker scout recommendations nginx:latest
@@ -489,34 +518,36 @@ docker scout recommendations nginx:latest
 
 ![alt text](./images/image-45.png)
 
-### **6. Read the following [article](https://tbhaxor.com/analyzing-docker-image-for-hunting-secrets/). From a forensic perspective, what are checkpoints useful for?**
+### 6. Docker checkpoints (forensic perspective)
 
-Los checkpoints de Docker son herramientas fundamentales que permiten capturar el estado de ejecucion completo de un docker en un momento dado, permitiendo asi preservar la memoria volatil y el estado de los procesos en ejecución.
+From a forensic standpoint, **checkpoints** (when enabled) capture a container’s **running state**—memory and process context at a point in time—more completely than `docker commit`, which only records filesystem changes. They depend on **CRIU** (Checkpoint/Restore In Userspace) and experimental Docker features; they are not always available on default installations.
 
+Relevant reading: [Analyzing Docker images for hunting secrets](https://tbhaxor.com/analyzing-docker-image-for-hunting-secrets/) (image-layer secrets and static analysis complements checkpoint-style live capture).
 
-Se podría hacer así, pero es necesario tener las funciones experimentales de docker:
-
-
-Install CRIU:
+Install CRIU on the analysis host:
 
 ```bash
 sudo apt install criu
 ```
 
-Create a checkpoint:
+Create a checkpoint of a running container:
 
 ```bash
 docker checkpoint create nginx-detached checkpoint1
 ```
 
-Start the container from the checkpoint:
+Resume from the checkpoint:
 
 ```bash
 docker start --checkpoint checkpoint1 nginx-detached
 ```
 
-List checkpoints:
+Checkpoint data is stored on the host under:
 
 ```bash
 ls /var/lib/docker/containers/<container_id>/checkpoints/
 ```
+
+Preserve that directory with the same integrity controls as other `/var/lib/docker` evidence.
+
+> **Note:** Lab command sequences that both remove and later export a container named `nginx-detached` reflect separate attempts or restored containers; on a live system, export or checkpoint **before** `docker rm`, and document container IDs from `docker ps -a` if the name is reused.

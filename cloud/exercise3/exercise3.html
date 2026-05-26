@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Email Basics" href="../../mail/exercise1/exercise1.html"><link rel="prev" title="VMWare and Azure Cloud" href="../exercise2/exercise2.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Email Basics" href="../../mail/exercise1/exercise1.html"><link rel="prev" title="VMware and Azure Cloud" href="../exercise2/exercise2.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
-        <title>Docker - Digital Forensics Notes documentation</title>
+        <title>Docker and Container Forensics - Digital Forensics Notes documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -224,9 +224,9 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Cloud:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../exercise1/exercise1.html">Google Drive, Onedrive, Dropbox and Nextcloud.</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../exercise2/exercise2.html">VMWare and Azure Cloud</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise1/exercise1.html">Google Drive, OneDrive, Dropbox and Nextcloud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise2/exercise2.html">VMware and Azure Cloud</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Docker and Container Forensics</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Mail:</span></p>
 <ul>
@@ -271,153 +271,152 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="docker">
-<h1>Docker<a class="headerlink" href="#docker" title="Link to this heading">¶</a></h1>
-<section id="introduction-and-container-forensics">
-<h2>Introduction and container forensics<a class="headerlink" href="#introduction-and-container-forensics" title="Link to this heading">¶</a></h2>
-<p>Docker is a software platform that allows developers to create, test, and deploy applications quickly and easily using containers. It is a technology that has gained significant popularity in recent years, especially in the field of information technology.</p>
-<p>Docker is used to encapsulate applications inside containers, meaning that each application runs in its own isolated environment. This allows developers to ensure that their applications behave consistently across different environments, regardless of hardware or software differences.</p>
-<p>The main advantage of using Docker is the ability to create identical development and production environments, which helps guarantee the quality and consistency of applications. In addition, Docker enables continuous integration and continuous deployment, allowing developers to rapidly deploy new versions of their applications without interrupting the existing service.</p>
-<p>Another advantage of Docker is that containers are extremely lightweight and fast to create. Containers can be started and stopped within seconds, allowing developers to test and debug applications much faster than in traditional environments.</p>
-<p>However, there are also some disadvantages to using Docker. One of the main issues is the complexity of the platform. Docker can be difficult to learn and configure, especially for those without previous experience managing containers.</p>
-<p>Another issue is that Docker can be slower than traditional environments in certain situations. Containers require an additional virtualization layer, which may impact performance in highly demanding environments.</p>
-<p>Finally, another challenge when using Docker is that the technology is still evolving. As new features are added and existing capabilities are improved, it can be difficult to keep up with the changes.</p>
+          <section id="docker-and-container-forensics">
+<h1>Docker and Container Forensics<a class="headerlink" href="#docker-and-container-forensics" title="Link to this heading">¶</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>Docker packages applications and their dependencies into <strong>containers</strong>: isolated processes that share the host kernel but have their own filesystem, network namespace, and resource limits. From a forensic standpoint, containers matter because production and incident scenes increasingly run microservices on Docker rather than only on traditional VMs.</p>
+<p>Unlike a hypervisor snapshot, a running container does not offer a single “pause the world” button that captures disk and RAM together. Evidence may exist in <strong>image layers</strong>, the <strong>container writable layer</strong>, <strong>named volumes</strong>, <strong>bind mounts</strong>, <strong>container logs</strong>, and on the <strong>host</strong> (<code class="docutils literal notranslate"><span class="pre">/var/lib/docker</span></code>, daemon configuration, and overlay storage). Investigators therefore combine export/commit tools, filesystem diffing, memory capture on the host, and offline analysis of a seized <code class="docutils literal notranslate"><span class="pre">/var/lib/docker</span></code> tree.</p>
+<p>This practice is divided into two parts: <strong>Part A</strong> introduces everyday Docker operations on a lab Linux host; <strong>Part B</strong> applies those concepts to acquisition, comparison utilities, offline image analysis, and optional hardening or checkpoint tooling.</p>
 </section>
 <section id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Link to this heading">¶</a></h2>
-<ul class="simple">
-<li><p>Learn how to perform basic operations with containers.</p></li>
-<li><p>Extract evidence from infrastructure systems that provide microservices through containers.</p></li>
-</ul>
+<p>Learn basic container lifecycle operations on Linux, and practice extracting and interpreting forensic artifacts from Docker installations and images—including diff/save/export workflows, <code class="docutils literal notranslate"><span class="pre">container-diff</span></code>, <code class="docutils literal notranslate"><span class="pre">docker-explorer</span></code>, and Docker Scout.</p>
 </section>
 <section id="materials">
 <h2>Materials<a class="headerlink" href="#materials" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Any Linux distribution.</p></li>
-<li><p>Docker CE.</p></li>
-<li><p>Forensic tools:</p>
-<ul>
-<li><p>Docker Forensics Toolkit</p></li>
-<li><p>Sysdig</p></li>
-<li><p>docker-diff</p></li>
-<li><p>docker-explorer</p></li>
-</ul>
-</li>
+<li><p>A Linux distribution with root or <code class="docutils literal notranslate"><span class="pre">sudo</span></code> access.</p></li>
+<li><p><strong>Docker CE</strong> (Community Edition).</p></li>
+<li><p>Forensic and analysis utilities: <strong>Docker Forensics Toolkit</strong> (concepts from course readings), <strong>Sysdig</strong> (referenced in the syllabus), <strong>container-diff</strong>, <strong>docker-explorer</strong>, and <strong>Docker Scout</strong> (CLI plugin).</p></li>
 </ul>
 </section>
+<hr class="docutils" />
 <section id="part-a-introduction-to-docker">
-<h2>PART A: Introduction to Docker<a class="headerlink" href="#part-a-introduction-to-docker" title="Link to this heading">¶</a></h2>
-<p>Perform the following tasks:</p>
-<section id="install-docker-on-a-linux-distribution">
-<h3><strong>1. Install Docker on a Linux distribution</strong><a class="headerlink" href="#install-docker-on-a-linux-distribution" title="Link to this heading">¶</a></h3>
+<h2>Part A: Introduction to Docker<a class="headerlink" href="#part-a-introduction-to-docker" title="Link to this heading">¶</a></h2>
+<p>The following steps follow the lab sequence: install the engine, pull and run <code class="docutils literal notranslate"><span class="pre">nginx:latest</span></code>, inspect runtime objects, build a custom image from a Dockerfile, export artifacts, and clean up.</p>
+<section id="install-docker">
+<h3>1. Install Docker<a class="headerlink" href="#install-docker" title="Link to this heading">¶</a></h3>
+<p>The official convenience script installs Docker CE and dependencies:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://get.docker.com<span class="w"> </span>-o<span class="w"> </span>get-docker.sh
 sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 </pre></div>
 </div>
 </section>
-<section id="run-a-docker-command-that-displays-the-installed-version">
-<h3><strong>2. Run a Docker command that displays the installed version</strong><a class="headerlink" href="#run-a-docker-command-that-displays-the-installed-version" title="Link to this heading">¶</a></h3>
+<section id="display-the-installed-version">
+<h3>2. Display the installed version<a class="headerlink" href="#display-the-installed-version" title="Link to this heading">¶</a></h3>
+<p>Confirms client and server versions and API compatibility:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>version
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image3.png" /></p>
 </section>
-<section id="run-a-docker-command-that-shows-information-about-the-host-system">
-<h3><strong>3. Run a Docker command that shows information about the host system</strong><a class="headerlink" href="#run-a-docker-command-that-shows-information-about-the-host-system" title="Link to this heading">¶</a></h3>
+<section id="show-host-and-daemon-information">
+<h3>3. Show host and daemon information<a class="headerlink" href="#show-host-and-daemon-information" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">info</span></code> reports storage driver, cgroup driver, registry mirrors, and whether the current user can talk to the daemon without <code class="docutils literal notranslate"><span class="pre">sudo</span></code>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>info
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-113.png" /></p>
 </section>
-<section id="execute-the-docker-command-required-to-download-the-image-nginx-latest-from-docker-hub">
-<h3><strong>4. Execute the Docker command required to download the image <code class="docutils literal notranslate"><span class="pre">nginx:latest</span></code> from Docker Hub</strong><a class="headerlink" href="#execute-the-docker-command-required-to-download-the-image-nginx-latest-from-docker-hub" title="Link to this heading">¶</a></h3>
+<section id="pull-nginx-latest-from-docker-hub">
+<h3>4. Pull <code class="docutils literal notranslate"><span class="pre">nginx:latest</span></code> from Docker Hub<a class="headerlink" href="#pull-nginx-latest-from-docker-hub" title="Link to this heading">¶</a></h3>
+<p>Downloads the image layers and metadata from the default registry:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>nginx:latest
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-27.png" /></p>
 </section>
-<section id="execute-the-docker-command-required-to-list-locally-stored-images">
-<h3><strong>5. Execute the Docker command required to list locally stored images</strong><a class="headerlink" href="#execute-the-docker-command-required-to-list-locally-stored-images" title="Link to this heading">¶</a></h3>
+<section id="list-local-images">
+<h3>5. List local images<a class="headerlink" href="#list-local-images" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>image<span class="w"> </span>ls
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-34.png" /></p>
 </section>
-<section id="run-a-container-in-detached-mode-using-the-image-nginx-latest">
-<h3><strong>6. Run a container in detached mode using the image <code class="docutils literal notranslate"><span class="pre">nginx:latest</span></code></strong><a class="headerlink" href="#run-a-container-in-detached-mode-using-the-image-nginx-latest" title="Link to this heading">¶</a></h3>
+<section id="run-a-container-in-detached-mode">
+<h3>6. Run a container in detached mode<a class="headerlink" href="#run-a-container-in-detached-mode" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">-d</span></code> runs the process in the background; <code class="docutils literal notranslate"><span class="pre">--name</span></code> assigns a stable name for later <code class="docutils literal notranslate"><span class="pre">inspect</span></code>, <code class="docutils literal notranslate"><span class="pre">exec</span></code>, and forensic export:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>nginx-detached<span class="w"> </span>nginx:latest
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-42.png" /></p>
 </section>
-<section id="run-a-container-in-interactive-mode-using-the-image-nginx-latest">
-<h3><strong>7. Run a container in interactive mode using the image <code class="docutils literal notranslate"><span class="pre">nginx:latest</span></code></strong><a class="headerlink" href="#run-a-container-in-interactive-mode-using-the-image-nginx-latest" title="Link to this heading">¶</a></h3>
+<section id="run-a-container-in-interactive-mode">
+<h3>7. Run a container in interactive mode<a class="headerlink" href="#run-a-container-in-interactive-mode" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">-it</span></code> allocates a TTY and keeps STDIN open—useful for manual inspection inside the guest filesystem:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--name<span class="w"> </span>nginx-interactive<span class="w"> </span>nginx:latest<span class="w"> </span>/bin/bash
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-53.png" /></p>
-<p>NOTE: You can exit from the container with <code class="docutils literal notranslate"><span class="pre">exit</span></code></p>
+<p>Leave the interactive shell with <code class="docutils literal notranslate"><span class="pre">exit</span></code>.</p>
 </section>
-<section id="execute-the-docker-command-required-to-list-running-containers">
-<h3><strong>8. Execute the Docker command required to list running containers</strong><a class="headerlink" href="#execute-the-docker-command-required-to-list-running-containers" title="Link to this heading">¶</a></h3>
+<section id="list-running-containers">
+<h3>8. List running containers<a class="headerlink" href="#list-running-containers" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>ps
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-63.png" /></p>
+<p>Only containers in the <strong>running</strong> state appear; stopped containers require <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">ps</span> <span class="pre">-a</span></code>.</p>
 </section>
-<section id="inspect-all-the-properties-of-one-of-the-containers">
-<h3><strong>9. Inspect all the properties of one of the containers</strong><a class="headerlink" href="#inspect-all-the-properties-of-one-of-the-containers" title="Link to this heading">¶</a></h3>
+<section id="inspect-container-properties">
+<h3>9. Inspect container properties<a class="headerlink" href="#inspect-container-properties" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">inspect</span></code> returns JSON with network settings, mount points, layer IDs, path to the container log, and runtime configuration—often the first structured artifact in a live triage:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>inspect<span class="w"> </span>nginx-detached
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-73.png" /></p>
 </section>
-<section id="execute-the-docker-command-required-to-list-the-networks-configured-for-docker">
-<h3><strong>10. Execute the Docker command required to list the networks configured for Docker</strong><a class="headerlink" href="#execute-the-docker-command-required-to-list-the-networks-configured-for-docker" title="Link to this heading">¶</a></h3>
+<section id="list-docker-networks">
+<h3>10. List Docker networks<a class="headerlink" href="#list-docker-networks" title="Link to this heading">¶</a></h3>
+<p>Shows bridge, host, and custom networks used for container connectivity:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>network<span class="w"> </span>ls
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-83.png" /></p>
 </section>
-<section id="attach-the-console-to-one-of-your-containers">
-<h3><strong>11. Attach the console to one of your containers</strong><a class="headerlink" href="#attach-the-console-to-one-of-your-containers" title="Link to this heading">¶</a></h3>
+<section id="attach-to-a-container-console">
+<h3>11. Attach to a container console<a class="headerlink" href="#attach-to-a-container-console" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">attach</span></code> connects the terminal to the container’s primary process (distinct from <code class="docutils literal notranslate"><span class="pre">exec</span></code>, which starts a new process):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>attach<span class="w"> </span>nginx-detached
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-93.png" /></p>
 </section>
-<section id="execute-a-bin-bash-command-inside-one-of-your-containers-in-interactive-mode">
-<h3><strong>12. Execute a <code class="docutils literal notranslate"><span class="pre">/bin/bash</span></code> command inside one of your containers in interactive mode</strong><a class="headerlink" href="#execute-a-bin-bash-command-inside-one-of-your-containers-in-interactive-mode" title="Link to this heading">¶</a></h3>
+<section id="run-an-interactive-shell-inside-a-running-container">
+<h3>12. Run an interactive shell inside a running container<a class="headerlink" href="#run-an-interactive-shell-inside-a-running-container" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>nginx-detached<span class="w"> </span>/bin/bash
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-103.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">exec</span></code> is the usual way to examine a live filesystem without stopping the service.</p>
 </section>
-<section id="stop-one-of-your-containers">
-<h3><strong>13. Stop one of your containers</strong><a class="headerlink" href="#stop-one-of-your-containers" title="Link to this heading">¶</a></h3>
+<section id="stop-a-container">
+<h3>13. Stop a container<a class="headerlink" href="#stop-a-container" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>nginx-detached
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-114.png" /></p>
 </section>
-<section id="start-the-previous-container-again">
-<h3><strong>14. Start the previous container again</strong><a class="headerlink" href="#start-the-previous-container-again" title="Link to this heading">¶</a></h3>
+<section id="start-a-stopped-container">
+<h3>14. Start a stopped container<a class="headerlink" href="#start-a-stopped-container" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>start<span class="w"> </span>nginx-detached
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-123.png" /></p>
 </section>
-<section id="delete-one-of-your-containers">
-<h3><strong>15. Delete one of your containers</strong><a class="headerlink" href="#delete-one-of-your-containers" title="Link to this heading">¶</a></h3>
+<section id="remove-a-container">
+<h3>15. Remove a container<a class="headerlink" href="#remove-a-container" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>nginx-detached
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-132.png" /></p>
-<p>note: the -f parameter is necessaty as the container is starrted, otherwhise we had to stop the conteiner and remove it</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">-f</span></code> flag forces removal even if the container is still running; otherwise you must <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">stop</span></code> it first.</p>
 </section>
-<section id="create-a-container-from-a-dockerfile">
-<h3><strong>16. Create a container from a Dockerfile</strong><a class="headerlink" href="#create-a-container-from-a-dockerfile" title="Link to this heading">¶</a></h3>
-<div class="highlight-Dockerfile notranslate"><div class="highlight"><pre><span></span><span class="c"># Base image</span>
+<section id="build-an-image-from-a-dockerfile">
+<h3>16. Build an image from a Dockerfile<a class="headerlink" href="#build-an-image-from-a-dockerfile" title="Link to this heading">¶</a></h3>
+<p>Example Dockerfile and helper script used in the lab:</p>
+<div class="highlight-dockerfile notranslate"><div class="highlight"><pre><span></span><span class="c"># Base image</span>
 <span class="k">FROM</span><span class="w"> </span><span class="s">ubuntu</span>
 
 <span class="c"># Copy the file &#39;script&#39; to the root directory of the container</span>
@@ -432,25 +431,28 @@ sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-143.png" /></p>
-<p>Run the container:</p>
+<p>Run a container from the new image:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>mycontainer<span class="w"> </span>myubuntu
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-153.png" /></p>
 </section>
-<section id="convert-the-previous-container-into-an-image-called-mydebian">
-<h3><strong>17. Convert the previous container into an image called <code class="docutils literal notranslate"><span class="pre">mydebian</span></code></strong><a class="headerlink" href="#convert-the-previous-container-into-an-image-called-mydebian" title="Link to this heading">¶</a></h3>
+<section id="commit-a-container-to-a-new-image">
+<h3>17. Commit a container to a new image<a class="headerlink" href="#commit-a-container-to-a-new-image" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">commit</span></code> captures the writable layer of <code class="docutils literal notranslate"><span class="pre">mycontainer</span></code> as a new image tag (lab name <code class="docutils literal notranslate"><span class="pre">mydebian</span></code>, even though the base Dockerfile used Ubuntu):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>commit<span class="w"> </span>mycontainer<span class="w"> </span>mydebian
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-163.png" /></p>
+<p>Verify the image is listed:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>image<span class="w"> </span>ls
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-202.png" /></p>
 </section>
-<section id="export-the-image-mydebian-as-a-file">
-<h3><strong>18. Export the image <code class="docutils literal notranslate"><span class="pre">mydebian</span></code> as a file</strong><a class="headerlink" href="#export-the-image-mydebian-as-a-file" title="Link to this heading">¶</a></h3>
+<section id="export-an-image-to-a-tar-archive">
+<h3>18. Export an image to a tar archive<a class="headerlink" href="#export-an-image-to-a-tar-archive" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">save</span></code> preserves image layers and metadata for transfer to an analysis host:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>save<span class="w"> </span>-o<span class="w"> </span>mydebian.tar<span class="w"> </span>mydebian
 </pre></div>
 </div>
@@ -460,8 +462,9 @@ sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 </div>
 <p><img alt="alt text" src="../../_images/image-193.png" /></p>
 </section>
-<section id="export-the-nginx-container-as-a-file">
-<h3><strong>19. Export the <code class="docutils literal notranslate"><span class="pre">nginx</span></code> container as a file</strong><a class="headerlink" href="#export-the-nginx-container-as-a-file" title="Link to this heading">¶</a></h3>
+<section id="export-a-container-filesystem">
+<h3>19. Export a container filesystem<a class="headerlink" href="#export-a-container-filesystem" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">export</span></code> writes only the flattened container root filesystem (no image history or tags). In this step the <code class="docutils literal notranslate"><span class="pre">nginx-detached</span></code> container was exported as recorded in the lab:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">export</span><span class="w"> </span>nginx-detached<span class="w"> </span>-o<span class="w"> </span>nginx-container.tar
 </pre></div>
 </div>
@@ -471,84 +474,107 @@ sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 </div>
 <p><img alt="alt text" src="../../_images/image-222.png" /></p>
 </section>
-<section id="id1">
-<h3><strong>20. Delete one of your containers</strong><a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<section id="remove-the-custom-container">
+<h3>20. Remove the custom container<a class="headerlink" href="#remove-the-custom-container" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>mycontainer
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-232.png" /></p>
 </section>
-<section id="delete-the-image-mydebian">
-<h3><strong>21. Delete the image <code class="docutils literal notranslate"><span class="pre">mydebian</span></code></strong><a class="headerlink" href="#delete-the-image-mydebian" title="Link to this heading">¶</a></h3>
+<section id="remove-the-committed-image">
+<h3>21. Remove the committed image<a class="headerlink" href="#remove-the-committed-image" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>image<span class="w"> </span>rm<span class="w"> </span>mydebian
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-242.png" /></p>
 </section>
 </section>
+<hr class="docutils" />
 <section id="part-b-docker-forensics">
-<h2>PART B: Docker Forensics<a class="headerlink" href="#part-b-docker-forensics" title="Link to this heading">¶</a></h2>
-<section id="read-the-following-article-from-a-computer-forensics-perspective-what-lessons-can-we-learn-regarding-evidence-acquisition-or-incident-response-involving-containers">
-<h3><strong>1. Read the following <a class="reference external" href="https://www.redhat.com/en/blog/docker-forensics-for-containers-how-to-conduct-investigations">article</a>. From a computer forensics perspective, what lessons can we learn regarding evidence acquisition or incident response involving containers?</strong><a class="headerlink" href="#read-the-following-article-from-a-computer-forensics-perspective-what-lessons-can-we-learn-regarding-evidence-acquisition-or-incident-response-involving-containers" title="Link to this heading">¶</a></h3>
-<p>A diferencia de las maquinas virtuales no tenemos opciones como son las snapshot para recolectar evidencias de forma facil y sencilla, sin embargo, si que existen buenas herramientas que podemos utilizar en este contexto, como son:</p>
+<h2>Part B: Docker Forensics<a class="headerlink" href="#part-b-docker-forensics" title="Link to this heading">¶</a></h2>
+<section id="lessons-from-container-incident-response-red-hat-article">
+<h3>1. Lessons from container incident response (Red Hat article)<a class="headerlink" href="#lessons-from-container-incident-response-red-hat-article" title="Link to this heading">¶</a></h3>
+<p>Unlike virtual machines, Docker does not provide hypervisor-style snapshots that freeze disk and memory in one step. Acquisition therefore relies on a combination of techniques:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">commit</span></code>: Esto nos sirve para convertir un docker a imagen y capturar las modificaciones de este, lo unico malo es que no guarda el estado de ejecución de los procesos.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">dd</span></code>: Puede servirnos para capturar la memoria RAM del docker.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">commit</span></code></strong> — Persists the container writable layer as a new image. It captures filesystem changes but <strong>not</strong> running process state or RAM.</p></li>
+<li><p><strong>Host memory imaging (<code class="docutils literal notranslate"><span class="pre">dd</span></code>, AVML, or equivalent on the host)</strong> — Required when volatile evidence (running processes, open connections, encryption keys) must be preserved; the container alone does not expose full memory through Docker CLI.</p></li>
+<li><p><strong>Ephemeral workloads</strong> — Containers may be destroyed or recreated quickly, which narrows the window for live response and makes offline analysis of <code class="docutils literal notranslate"><span class="pre">/var/lib/docker</span></code> critical.</p></li>
 </ul>
-<p>Debido a su propia naturaleza los dockers son efimeros, esto complica reconstruir los eventos que puedan haberse detenido.</p>
-<p>Cirtas configuraciones hacen posible que un atacante escape del docker, si vemos indicios de que esto se ha producido, como si el docker se ejecuto con privilegios excesivos, <code class="docutils literal notranslate"><span class="pre">--privileged</span></code>,<code class="docutils literal notranslate"><span class="pre">--mount</span></code> o <code class="docutils literal notranslate"><span class="pre">--pid</span> <span class="pre">host</span></code> seria prudente escalar la investicación al host.</p>
+<p>If indicators suggest <strong>container escape</strong> (for example the container was started with <code class="docutils literal notranslate"><span class="pre">--privileged</span></code>, sensitive <code class="docutils literal notranslate"><span class="pre">--mount</span></code> bindings, or <code class="docutils literal notranslate"><span class="pre">--pid=host</span></code>), the scope of the investigation should expand to the <strong>host OS</strong> and adjacent namespaces, not only the container filesystem.</p>
 </section>
-<section id="read-the-help-documentation-for-the-following-docker-command-modifiers-diff-save-export-load-and-import-explain-how-they-may-be-useful-for-forensic-tasks-provide-examples-using-each-modifier">
-<h3><strong>2. Read the help documentation for the following Docker command modifiers: <a class="reference external" href="https://docs.docker.com/reference/cli/docker/container/diff/">DIFF</a>, <a class="reference external" href="https://docs.docker.com/reference/cli/docker/image/save/">SAVE</a>, <a class="reference external" href="https://docs.docker.com/reference/cli/docker/container/export/">EXPORT</a>, <a class="reference external" href="https://docs.docker.com/reference/cli/docker/image/load/">LOAD</a>, and <a class="reference external" href="https://docs.docker.com/reference/cli/docker/image/import/">IMPORT</a>. Explain how they may be useful for forensic tasks. Provide examples using each modifier.</strong><a class="headerlink" href="#read-the-help-documentation-for-the-following-docker-command-modifiers-diff-save-export-load-and-import-explain-how-they-may-be-useful-for-forensic-tasks-provide-examples-using-each-modifier" title="Link to this heading">¶</a></h3>
-<p><code class="docutils literal notranslate"><span class="pre">diff</span></code>: Muestra los cambios en el docker respecto a su imagen original, esto nos puede ayudar a detectar ficheros modificados por un atacante e identificar malware, incluso de persistencia.<br />
-<code class="docutils literal notranslate"><span class="pre">save</span></code>: Exporta una imagen completa como fichero, esto es muy util, principalmente para mover las evidencias de el dispositivo en el que fueron hayadas al dispositivo en el que seran analizadas.<br />
-<code class="docutils literal notranslate"><span class="pre">export</span></code>: Exporta el sistema de ficheros de un contenedor como fichero .tar. Esto puede ser util para obtener una copia exacta del contenido del contenedor de forma rapida.<br />
-<code class="docutils literal notranslate"><span class="pre">load</span></code>: Importa una imagen previamente guardada en fichero usando <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">save</span></code>, sirve para restaurar imagenes en otro sistema para su analisis.<br />
-<code class="docutils literal notranslate"><span class="pre">import</span></code>: Importa un fichero .tar generado con export y crea una imagen con el.</p>
-<section id="diff">
-<h4>DIFF<a class="headerlink" href="#diff" title="Link to this heading">¶</a></h4>
+<section id="forensic-use-of-diff-save-export-load-and-import">
+<h3>2. Forensic use of <code class="docutils literal notranslate"><span class="pre">diff</span></code>, <code class="docutils literal notranslate"><span class="pre">save</span></code>, <code class="docutils literal notranslate"><span class="pre">export</span></code>, <code class="docutils literal notranslate"><span class="pre">load</span></code>, and <code class="docutils literal notranslate"><span class="pre">import</span></code><a class="headerlink" href="#forensic-use-of-diff-save-export-load-and-import" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Command</p></th>
+<th class="head"><p>Forensic role</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">diff</span></code></strong></p></td>
+<td><p>Lists files added, changed, or deleted in the writable layer compared to the image. Useful for malware drops, persistence, and attacker modifications.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">save</span></code></strong></p></td>
+<td><p>Archives a complete image (layers + metadata) to a tar file for transfer to an analysis workstation.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">export</span></code></strong></p></td>
+<td><p>Exports the container root filesystem as a tar archive without image history—quick content copy for carving and file listing.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">load</span></code></strong></p></td>
+<td><p>Restores an image previously written with <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">save</span></code> on another host for offline examination.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">import</span></code></strong></p></td>
+<td><p>Creates a new image from an export tar (flattened filesystem), enabling analysis pipelines that expect an image tag.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="docker-diff">
+<h4><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">diff</span></code><a class="headerlink" href="#docker-diff" title="Link to this heading">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>diff<span class="w"> </span>nginx-detached
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-252.png" /></p>
 </section>
-<section id="save">
-<h4>SAVE<a class="headerlink" href="#save" title="Link to this heading">¶</a></h4>
+<section id="docker-save">
+<h4><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">save</span></code><a class="headerlink" href="#docker-save" title="Link to this heading">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>save<span class="w"> </span>-o<span class="w"> </span>nginx-image.tar<span class="w"> </span>nginx:latest
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-261.png" /></p>
 </section>
-<section id="export">
-<h4>EXPORT<a class="headerlink" href="#export" title="Link to this heading">¶</a></h4>
+<section id="docker-export">
+<h4><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">export</span></code><a class="headerlink" href="#docker-export" title="Link to this heading">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">export</span><span class="w"> </span>nginx-detached<span class="w"> </span>-o<span class="w"> </span>nginx-container.tar
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-271.png" /></p>
 </section>
-<section id="load">
-<h4>LOAD<a class="headerlink" href="#load" title="Link to this heading">¶</a></h4>
+<section id="docker-load">
+<h4><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">load</span></code><a class="headerlink" href="#docker-load" title="Link to this heading">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>load<span class="w"> </span>-i<span class="w"> </span>nginx-image.tar
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-281.png" /></p>
 </section>
-<section id="import">
-<h4>IMPORT<a class="headerlink" href="#import" title="Link to this heading">¶</a></h4>
+<section id="docker-import">
+<h4><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">import</span></code><a class="headerlink" href="#docker-import" title="Link to this heading">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>import<span class="w"> </span>nginx-container.tar<span class="w"> </span>imported-nginx
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-29.png" /></p>
-<p>Run the imported image:</p>
+<p>Run a shell in the imported image:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>imported-nginx<span class="w"> </span>/bin/bash
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-301.png" /></p>
 </section>
 </section>
-<section id="review-the-documentation-for-the-utility-docker-diff-which-is-used-to-compare-local-docker-images-against-those-hosted-in-docker-hub-download-the-utility-and-perform-a-test">
-<h3><strong>3. Review the documentation for the utility <a class="reference external" href="https://github.com/GoogleContainerTools/container-diff">docker-diff</a>, which is used to compare local Docker images against those hosted in Docker Hub. Download the utility and perform a test.</strong><a class="headerlink" href="#review-the-documentation-for-the-utility-docker-diff-which-is-used-to-compare-local-docker-images-against-those-hosted-in-docker-hub-download-the-utility-and-perform-a-test" title="Link to this heading">¶</a></h3>
-<p>Install container-diff:</p>
+<section id="image-comparison-with-container-diff">
+<h3>3. Image comparison with container-diff<a class="headerlink" href="#image-comparison-with-container-diff" title="Link to this heading">¶</a></h3>
+<p><a class="reference external" href="https://github.com/GoogleContainerTools/container-diff">container-diff</a> compares local images (and optionally remote registries) by layer, file, package, and history—useful for verifying whether a seized image matches a known baseline or for spotting unauthorized packages.</p>
+<p>Install the binary:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>https://github.com/GoogleContainerTools/container-diff/releases/download/v0.17.0/container-diff-linux-amd64<span class="w"> </span>-O<span class="w"> </span>container-diff
 chmod<span class="w"> </span>+x<span class="w"> </span>container-diff
 sudo<span class="w"> </span>mv<span class="w"> </span>container-diff<span class="w"> </span>/usr/local/bin/
@@ -559,121 +585,123 @@ sudo<span class="w"> </span>mv<span class="w"> </span>container-diff<span class=
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-312.png" /></p>
-<p>Analyze an image:</p>
+<p>General image analysis:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>container-diff<span class="w"> </span>analyze<span class="w"> </span>daemon://nginx:latest
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-321.png" /></p>
-<p>Analyze filesystem contents:</p>
+<p>Filesystem contents:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>container-diff<span class="w"> </span>analyze<span class="w"> </span>daemon://nginx:latest<span class="w"> </span>--type<span class="o">=</span>file
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-331.png" /></p>
-<p>Analyze installed packages:</p>
+<p>Installed packages (Debian/apt-based layers):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>container-diff<span class="w"> </span>analyze<span class="w"> </span>daemon://nginx:latest<span class="w"> </span>--type<span class="o">=</span>apt
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-341.png" /></p>
-<p>Analyze image history:</p>
+<p>Image build history:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>container-diff<span class="w"> </span>analyze<span class="w"> </span>daemon://nginx:latest<span class="w"> </span>--type<span class="o">=</span><span class="nb">history</span>
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-35.png" /></p>
-<p>Compare two images:</p>
+<p>Compare two local images (replace <code class="docutils literal notranslate"><span class="pre">&lt;other-container&gt;</span></code> with the second image name or ID):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>container-diff<span class="w"> </span>diff<span class="w"> </span>daemon://nginx:latest<span class="w"> </span>daemon://&lt;other-container&gt;
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-36.png" /></p>
-<p>Compare filesystem differences:</p>
+<p>Filesystem differences:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>container-diff<span class="w"> </span>diff<span class="w"> </span>daemon://nginx:latest<span class="w"> </span>daemon://&lt;other-container&gt;<span class="w"> </span>--type<span class="o">=</span>file
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-37.png" /></p>
-<p>Compare installed packages:</p>
+<p>Package differences:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>container-diff<span class="w"> </span>diff<span class="w"> </span>daemon://nginx:latest<span class="w"> </span>daemon://&lt;other-container&gt;<span class="w"> </span>--type<span class="o">=</span>apt
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-38.png" /></p>
-<p>Compare image history:</p>
+<p>History differences:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>container-diff<span class="w"> </span>diff<span class="w"> </span>daemon://nginx:latest<span class="w"> </span>daemon://&lt;other-container&gt;<span class="w"> </span>--type<span class="o">=</span><span class="nb">history</span>
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-39.png" /></p>
 </section>
-<section id="within-the-context-of-an-ongoing-investigation-a-logical-image-corresponding-to-a-docker-installation-from-a-suspicious-computer-system-has-been-obtained-it-is-suspected-that-this-installation-may-have-been-used-to-conceal-activities">
-<h3><strong>4. Within the context of an ongoing investigation, a logical image corresponding to a Docker installation from a suspicious computer system has been obtained. It is suspected that this installation may have been used to conceal activities.</strong><a class="headerlink" href="#within-the-context-of-an-ongoing-investigation-a-logical-image-corresponding-to-a-docker-installation-from-a-suspicious-computer-system-has-been-obtained-it-is-suspected-that-this-installation-may-have-been-used-to-conceal-activities" title="Link to this heading">¶</a></h3>
-<p>As a forensic analyst, you have been tasked with performing a thorough analysis of the Docker logical image in order to identify the services being provided.</p>
-<section id="a-download-a-forensic-copy-of-the-docker-logical-image">
-<h4><strong>a. <a class="reference external" href="https://drive.usercontent.google.com/download?id=1bFlnUBg1GH17h8pIQRywhDkHbNeTjvNZ&amp;amp;export=download&amp;amp;authuser=1">Download</a> a forensic copy of the Docker logical image</strong><a class="headerlink" href="#a-download-a-forensic-copy-of-the-docker-logical-image" title="Link to this heading">¶</a></h4>
-<p>it has been saved in ~/docker</p>
-<p>Install docker-explorer:</p>
+<section id="offline-analysis-of-a-seized-docker-logical-image">
+<h3>4. Offline analysis of a seized Docker logical image<a class="headerlink" href="#offline-analysis-of-a-seized-docker-logical-image" title="Link to this heading">¶</a></h3>
+<section id="a-obtain-and-mount-the-forensic-copy">
+<h4>a. Obtain and mount the forensic copy<a class="headerlink" href="#a-obtain-and-mount-the-forensic-copy" title="Link to this heading">¶</a></h4>
+<p>Download the <a class="reference external" href="https://drive.usercontent.google.com/download?id=1bFlnUBg1GH17h8pIQRywhDkHbNeTjvNZ&amp;amp;export=download&amp;amp;authuser=1">provided logical image</a> and place it so that the Docker data root is available under the path used below (in this lab, content was unpacked under <code class="docutils literal notranslate"><span class="pre">~/docker</span></code> with <code class="docutils literal notranslate"><span class="pre">/var/lib/docker</span></code> inside the image).</p>
+<p>Install <strong>docker-explorer</strong> in a virtual environment:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>de-env
 <span class="nb">source</span><span class="w"> </span>de-env/bin/activate
 pip<span class="w"> </span>install<span class="w"> </span>docker-explorer
 </pre></div>
 </div>
 </section>
-<section id="b-perform-an-analysis-of-the-docker-configuration-and-the-containers-hosted-within-the-image">
-<h4><strong>b. Perform an analysis of the Docker configuration and the containers hosted within the image</strong><a class="headerlink" href="#b-perform-an-analysis-of-the-docker-configuration-and-the-containers-hosted-within-the-image" title="Link to this heading">¶</a></h4>
-<p>List all containers:</p>
+<section id="b-analyze-docker-configuration-and-hosted-containers">
+<h4>b. Analyze Docker configuration and hosted containers<a class="headerlink" href="#b-analyze-docker-configuration-and-hosted-containers" title="Link to this heading">¶</a></h4>
+<p>List all containers recorded in the image:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>de-env/bin/de.py<span class="w"> </span>-r<span class="w"> </span>/var/lib/docker<span class="w"> </span>list<span class="w"> </span>all_containers
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-40.png" /></p>
-<p>from this json we can get these results:</p>
+<p>The JSON output was summarized as follows:</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="head"><p>Image Name</p></th>
+<tr class="row-odd"><th class="head"><p>Image</p></th>
 <th class="head"><p>Container ID</p></th>
 <th class="head"><p>Image ID</p></th>
-<th class="head"><p>Start Date</p></th>
-<th class="head"><p>Mount Points</p></th>
-<th class="head"><p>Exposed Ports</p></th>
-<th class="head"><p>Log Path</p></th>
+<th class="head"><p>Start (UTC)</p></th>
+<th class="head"><p>Mounts / volumes</p></th>
+<th class="head"><p>Ports</p></th>
+<th class="head"><p>Container log</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>homeassistant/home-assistant:latest</p></td>
-<td><p>4ea041fd90ad823353e5a62f395f5ddab3c8096a4cbf1816eb5c4f88169d0818</p></td>
-<td><p>306f9233e149f606d94e7bb3c746cba599b2d3fd3e1080d9d05175daa02f9ae3</p></td>
-<td><p>2023-04-19T15:47:23.510586+00:00</p></td>
-<td><p>var/lib/docker/volumes/ha_vol/_data → /config</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">homeassistant/home-assistant:latest</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">4ea041fd90ad…</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">306f9233e149…</span></code></p></td>
+<td><p>2023-04-19T15:47:23Z</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ha_vol</span></code> → <code class="docutils literal notranslate"><span class="pre">/config</span></code></p></td>
 <td><p>8123/tcp</p></td>
-<td><p>/var/lib/docker/containers/4ea041fd90ad823353e5a62f395f5ddab3c8096a4cbf1816eb5c4f88169d0818/4ea041fd90ad823353e5a62f395f5ddab3c8096a4cbf1816eb5c4f88169d0818-json.log</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">…/4ea041fd90ad…-json.log</span></code></p></td>
 </tr>
-<tr class="row-odd"><td><p>nextcloud</p></td>
-<td><p>5e38912f3093be4e81cedbf8290a084345f81425cd3bc0e6ae940a12fc93aaed</p></td>
-<td><p>964325ce9b9519b517f852b8b24e0d0a945edd5521b2eee5e0f94254d67821ee</p></td>
-<td><p>2023-04-20T07:51:42.664787+00:00</p></td>
-<td><p>var/lib/docker/volumes/nextcloud/_data → /var/www/html  <br>var/lib/docker/volumes/config/_data → /var/www/html/config  <br>var/lib/docker/volumes/apps/_data → /var/www/html/custom_apps</p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nextcloud</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">5e38912f3093…</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">964325ce9b95…</span></code></p></td>
+<td><p>2023-04-20T07:51:42Z</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">nextcloud</span></code>, <code class="docutils literal notranslate"><span class="pre">config</span></code>, <code class="docutils literal notranslate"><span class="pre">apps</span></code> volumes → <code class="docutils literal notranslate"><span class="pre">/var/www/html</span></code> paths</p></td>
 <td><p>80/tcp</p></td>
-<td><p>/var/lib/docker/containers/5e38912f3093be4e81cedbf8290a084345f81425cd3bc0e6ae940a12fc93aaed/5e38912f3093be4e81cedbf8290a084345f81425cd3bc0e6ae940a12fc93aaed-json.log</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">…/5e38912f3093…-json.log</span></code></p></td>
 </tr>
-<tr class="row-even"><td><p>nginx:latest</p></td>
-<td><p>e7cae6335bef239e2b827b717eb442a3b5e7a385d30ac7c03bfb4b6ba337eaf3</p></td>
-<td><p>6efc10a0510f143a90b69dc564a914574973223e88418d65c1f8809e08dc0a1f</p></td>
-<td><p>2023-04-20T07:54:41.608245+00:00</p></td>
-<td><p>var/lib/docker/home/azureuser/html → /usr/share/nginx/html</p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">nginx:latest</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">e7cae6335bef…</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">6efc10a0510f…</span></code></p></td>
+<td><p>2023-04-20T07:54:41Z</p></td>
+<td><p>bind: <code class="docutils literal notranslate"><span class="pre">…/html</span></code> → <code class="docutils literal notranslate"><span class="pre">/usr/share/nginx/html</span></code></p></td>
 <td><p>442/tcp, 80/tcp</p></td>
-<td><p>/var/lib/docker/containers/e7cae6335bef239e2b827b717eb442a3b5e7a385d30ac7c03bfb4b6ba337eaf3/e7cae6335bef239e2b827b717eb442a3b5e7a385d30ac7c03bfb4b6ba337eaf3-json.log</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">…/e7cae6335bef…-json.log</span></code></p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<p><strong>Interpretation:</strong> The host was running three distinct services—a <strong>Home Assistant</strong> automation stack (port <strong>8123</strong>), a <strong>Nextcloud</strong> collaboration instance with separate config and application volumes (port <strong>80</strong>), and an <strong>nginx</strong> reverse proxy or static site with a host directory bound into the web root (ports <strong>80</strong> and <strong>442</strong>). Mount points and log paths should be preserved in the chain of custody; container JSON logs under <code class="docutils literal notranslate"><span class="pre">/var/lib/docker/containers/&lt;id&gt;/</span></code> often contain stdout/stderr useful for timeline reconstruction.</p>
 </section>
-<section id="c-you-may-follow-the-steps-described-in-this-article">
-<h4><strong>c. You may follow the steps described in this <a class="reference external" href="https://osdfir.blogspot.com/2021/01/container-forensics-with-docker-explorer.html">article</a></strong><a class="headerlink" href="#c-you-may-follow-the-steps-described-in-this-article" title="Link to this heading">¶</a></h4>
+<section id="c-further-reading">
+<h4>c. Further reading<a class="headerlink" href="#c-further-reading" title="Link to this heading">¶</a></h4>
+<p>Additional walkthrough steps are described in <a class="reference external" href="https://osdfir.blogspot.com/2021/01/container-forensics-with-docker-explorer.html">Container forensics with docker-explorer</a> (layer extraction, history, and deep filesystem views).</p>
 </section>
 </section>
-<section id="docker-scout-is-a-collection-of-features-that-provides-detailed-information-about-the-composition-and-security-of-container-images-it-is-used-to-analyze-image-contents-and-generate-detailed-reports-about-packages-and-vulnerabilities-detected-it-can-also-provide-suggestions-on-how-to-remediate-issues-discovered-during-image-analysis-install-docker-scout-and-perform-a-small-test">
-<h3><strong>5. <a class="reference external" href="https://www.docker.com/products/docker-scout/">Docker Scout</a> is a collection of features that provides detailed information about the composition and security of container images. It is used to analyze image contents and generate detailed reports about packages and vulnerabilities detected. It can also provide suggestions on how to remediate issues discovered during image analysis. Install Docker Scout and perform a small test.</strong><a class="headerlink" href="#docker-scout-is-a-collection-of-features-that-provides-detailed-information-about-the-composition-and-security-of-container-images-it-is-used-to-analyze-image-contents-and-generate-detailed-reports-about-packages-and-vulnerabilities-detected-it-can-also-provide-suggestions-on-how-to-remediate-issues-discovered-during-image-analysis-install-docker-scout-and-perform-a-small-test" title="Link to this heading">¶</a></h3>
-<p>Login to Docker:</p>
+<section id="docker-scout-image-composition-and-cve-reporting">
+<h3>5. Docker Scout (image composition and CVE reporting)<a class="headerlink" href="#docker-scout-image-composition-and-cve-reporting" title="Link to this heading">¶</a></h3>
+<p><a class="reference external" href="https://www.docker.com/products/docker-scout/">Docker Scout</a> analyzes image layers for packages and known vulnerabilities. While primarily a supply-chain tool, it supports forensic triage by quickly listing what software is present in an image under investigation.</p>
+<p>Sign in to Docker Hub (required for some Scout features):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>login
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-411.png" /></p>
-<p>Install Docker Scout:</p>
+<p>Install the Scout CLI plugin:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-L<span class="w"> </span>https://github.com/docker/scout-cli/releases/download/v1.20.4/docker-scout_1.20.4_linux_amd64.tar.gz<span class="w"> </span>-o<span class="w"> </span>docker-scout.tar.gz
 
 tar<span class="w"> </span>-xzf<span class="w"> </span>docker-scout.tar.gz
@@ -690,42 +718,46 @@ chmod<span class="w"> </span>+x<span class="w"> </span>~/.docker/cli-plugins/doc
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-421.png" /></p>
-<p>Analyze an image:</p>
+<p>Summary view:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>scout<span class="w"> </span>quickview<span class="w"> </span>nginx:latest
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-43.png" /></p>
-<p>Detailed CVE analysis:</p>
+<p>CVE listing:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>scout<span class="w"> </span>cves<span class="w"> </span>nginx:latest
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-44.png" /></p>
-<p>Recommendations:</p>
+<p>Remediation hints:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>scout<span class="w"> </span>recommendations<span class="w"> </span>nginx:latest
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-45.png" /></p>
 </section>
-<section id="read-the-following-article-from-a-forensic-perspective-what-are-checkpoints-useful-for">
-<h3><strong>6. Read the following <a class="reference external" href="https://tbhaxor.com/analyzing-docker-image-for-hunting-secrets/">article</a>. From a forensic perspective, what are checkpoints useful for?</strong><a class="headerlink" href="#read-the-following-article-from-a-forensic-perspective-what-are-checkpoints-useful-for" title="Link to this heading">¶</a></h3>
-<p>Los checkpoints de Docker son herramientas fundamentales que permiten capturar el estado de ejecucion completo de un docker en un momento dado, permitiendo asi preservar la memoria volatil y el estado de los procesos en ejecución.</p>
-<p>Se podría hacer así, pero es necesario tener las funciones experimentales de docker:</p>
-<p>Install CRIU:</p>
+<section id="docker-checkpoints-forensic-perspective">
+<h3>6. Docker checkpoints (forensic perspective)<a class="headerlink" href="#docker-checkpoints-forensic-perspective" title="Link to this heading">¶</a></h3>
+<p>From a forensic standpoint, <strong>checkpoints</strong> (when enabled) capture a container’s <strong>running state</strong>—memory and process context at a point in time—more completely than <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">commit</span></code>, which only records filesystem changes. They depend on <strong>CRIU</strong> (Checkpoint/Restore In Userspace) and experimental Docker features; they are not always available on default installations.</p>
+<p>Relevant reading: <a class="reference external" href="https://tbhaxor.com/analyzing-docker-image-for-hunting-secrets/">Analyzing Docker images for hunting secrets</a> (image-layer secrets and static analysis complements checkpoint-style live capture).</p>
+<p>Install CRIU on the analysis host:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>criu
 </pre></div>
 </div>
-<p>Create a checkpoint:</p>
+<p>Create a checkpoint of a running container:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>checkpoint<span class="w"> </span>create<span class="w"> </span>nginx-detached<span class="w"> </span>checkpoint1
 </pre></div>
 </div>
-<p>Start the container from the checkpoint:</p>
+<p>Resume from the checkpoint:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>start<span class="w"> </span>--checkpoint<span class="w"> </span>checkpoint1<span class="w"> </span>nginx-detached
 </pre></div>
 </div>
-<p>List checkpoints:</p>
+<p>Checkpoint data is stored on the host under:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>/var/lib/docker/containers/&lt;container_id&gt;/checkpoints/
 </pre></div>
 </div>
+<p>Preserve that directory with the same integrity controls as other <code class="docutils literal notranslate"><span class="pre">/var/lib/docker</span></code> evidence.</p>
+<blockquote>
+<div><p><strong>Note:</strong> Lab command sequences that both remove and later export a container named <code class="docutils literal notranslate"><span class="pre">nginx-detached</span></code> reflect separate attempts or restored containers; on a live system, export or checkpoint <strong>before</strong> <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">rm</span></code>, and document container IDs from <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">ps</span> <span class="pre">-a</span></code> if the name is reused.</p>
+</div></blockquote>
 </section>
 </section>
 </section>
@@ -751,7 +783,7 @@ chmod<span class="w"> </span>+x<span class="w"> </span>~/.docker/cli-plugins/doc
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">VMWare and Azure Cloud</div>
+                <div class="title">VMware and Azure Cloud</div>
                 
               </div>
             </a>
@@ -785,53 +817,53 @@ chmod<span class="w"> </span>+x<span class="w"> </span>~/.docker/cli-plugins/doc
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Docker</a><ul>
-<li><a class="reference internal" href="#introduction-and-container-forensics">Introduction and container forensics</a></li>
+<li><a class="reference internal" href="#">Docker and Container Forensics</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#objectives">Objectives</a></li>
 <li><a class="reference internal" href="#materials">Materials</a></li>
-<li><a class="reference internal" href="#part-a-introduction-to-docker">PART A: Introduction to Docker</a><ul>
-<li><a class="reference internal" href="#install-docker-on-a-linux-distribution"><strong>1. Install Docker on a Linux distribution</strong></a></li>
-<li><a class="reference internal" href="#run-a-docker-command-that-displays-the-installed-version"><strong>2. Run a Docker command that displays the installed version</strong></a></li>
-<li><a class="reference internal" href="#run-a-docker-command-that-shows-information-about-the-host-system"><strong>3. Run a Docker command that shows information about the host system</strong></a></li>
-<li><a class="reference internal" href="#execute-the-docker-command-required-to-download-the-image-nginx-latest-from-docker-hub"><strong>4. Execute the Docker command required to download the image <code class="docutils literal notranslate"><span class="pre">nginx:latest</span></code> from Docker Hub</strong></a></li>
-<li><a class="reference internal" href="#execute-the-docker-command-required-to-list-locally-stored-images"><strong>5. Execute the Docker command required to list locally stored images</strong></a></li>
-<li><a class="reference internal" href="#run-a-container-in-detached-mode-using-the-image-nginx-latest"><strong>6. Run a container in detached mode using the image <code class="docutils literal notranslate"><span class="pre">nginx:latest</span></code></strong></a></li>
-<li><a class="reference internal" href="#run-a-container-in-interactive-mode-using-the-image-nginx-latest"><strong>7. Run a container in interactive mode using the image <code class="docutils literal notranslate"><span class="pre">nginx:latest</span></code></strong></a></li>
-<li><a class="reference internal" href="#execute-the-docker-command-required-to-list-running-containers"><strong>8. Execute the Docker command required to list running containers</strong></a></li>
-<li><a class="reference internal" href="#inspect-all-the-properties-of-one-of-the-containers"><strong>9. Inspect all the properties of one of the containers</strong></a></li>
-<li><a class="reference internal" href="#execute-the-docker-command-required-to-list-the-networks-configured-for-docker"><strong>10. Execute the Docker command required to list the networks configured for Docker</strong></a></li>
-<li><a class="reference internal" href="#attach-the-console-to-one-of-your-containers"><strong>11. Attach the console to one of your containers</strong></a></li>
-<li><a class="reference internal" href="#execute-a-bin-bash-command-inside-one-of-your-containers-in-interactive-mode"><strong>12. Execute a <code class="docutils literal notranslate"><span class="pre">/bin/bash</span></code> command inside one of your containers in interactive mode</strong></a></li>
-<li><a class="reference internal" href="#stop-one-of-your-containers"><strong>13. Stop one of your containers</strong></a></li>
-<li><a class="reference internal" href="#start-the-previous-container-again"><strong>14. Start the previous container again</strong></a></li>
-<li><a class="reference internal" href="#delete-one-of-your-containers"><strong>15. Delete one of your containers</strong></a></li>
-<li><a class="reference internal" href="#create-a-container-from-a-dockerfile"><strong>16. Create a container from a Dockerfile</strong></a></li>
-<li><a class="reference internal" href="#convert-the-previous-container-into-an-image-called-mydebian"><strong>17. Convert the previous container into an image called <code class="docutils literal notranslate"><span class="pre">mydebian</span></code></strong></a></li>
-<li><a class="reference internal" href="#export-the-image-mydebian-as-a-file"><strong>18. Export the image <code class="docutils literal notranslate"><span class="pre">mydebian</span></code> as a file</strong></a></li>
-<li><a class="reference internal" href="#export-the-nginx-container-as-a-file"><strong>19. Export the <code class="docutils literal notranslate"><span class="pre">nginx</span></code> container as a file</strong></a></li>
-<li><a class="reference internal" href="#id1"><strong>20. Delete one of your containers</strong></a></li>
-<li><a class="reference internal" href="#delete-the-image-mydebian"><strong>21. Delete the image <code class="docutils literal notranslate"><span class="pre">mydebian</span></code></strong></a></li>
+<li><a class="reference internal" href="#part-a-introduction-to-docker">Part A: Introduction to Docker</a><ul>
+<li><a class="reference internal" href="#install-docker">1. Install Docker</a></li>
+<li><a class="reference internal" href="#display-the-installed-version">2. Display the installed version</a></li>
+<li><a class="reference internal" href="#show-host-and-daemon-information">3. Show host and daemon information</a></li>
+<li><a class="reference internal" href="#pull-nginx-latest-from-docker-hub">4. Pull <code class="docutils literal notranslate"><span class="pre">nginx:latest</span></code> from Docker Hub</a></li>
+<li><a class="reference internal" href="#list-local-images">5. List local images</a></li>
+<li><a class="reference internal" href="#run-a-container-in-detached-mode">6. Run a container in detached mode</a></li>
+<li><a class="reference internal" href="#run-a-container-in-interactive-mode">7. Run a container in interactive mode</a></li>
+<li><a class="reference internal" href="#list-running-containers">8. List running containers</a></li>
+<li><a class="reference internal" href="#inspect-container-properties">9. Inspect container properties</a></li>
+<li><a class="reference internal" href="#list-docker-networks">10. List Docker networks</a></li>
+<li><a class="reference internal" href="#attach-to-a-container-console">11. Attach to a container console</a></li>
+<li><a class="reference internal" href="#run-an-interactive-shell-inside-a-running-container">12. Run an interactive shell inside a running container</a></li>
+<li><a class="reference internal" href="#stop-a-container">13. Stop a container</a></li>
+<li><a class="reference internal" href="#start-a-stopped-container">14. Start a stopped container</a></li>
+<li><a class="reference internal" href="#remove-a-container">15. Remove a container</a></li>
+<li><a class="reference internal" href="#build-an-image-from-a-dockerfile">16. Build an image from a Dockerfile</a></li>
+<li><a class="reference internal" href="#commit-a-container-to-a-new-image">17. Commit a container to a new image</a></li>
+<li><a class="reference internal" href="#export-an-image-to-a-tar-archive">18. Export an image to a tar archive</a></li>
+<li><a class="reference internal" href="#export-a-container-filesystem">19. Export a container filesystem</a></li>
+<li><a class="reference internal" href="#remove-the-custom-container">20. Remove the custom container</a></li>
+<li><a class="reference internal" href="#remove-the-committed-image">21. Remove the committed image</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#part-b-docker-forensics">PART B: Docker Forensics</a><ul>
-<li><a class="reference internal" href="#read-the-following-article-from-a-computer-forensics-perspective-what-lessons-can-we-learn-regarding-evidence-acquisition-or-incident-response-involving-containers"><strong>1. Read the following article. From a computer forensics perspective, what lessons can we learn regarding evidence acquisition or incident response involving containers?</strong></a></li>
-<li><a class="reference internal" href="#read-the-help-documentation-for-the-following-docker-command-modifiers-diff-save-export-load-and-import-explain-how-they-may-be-useful-for-forensic-tasks-provide-examples-using-each-modifier"><strong>2. Read the help documentation for the following Docker command modifiers: DIFF, SAVE, EXPORT, LOAD, and IMPORT. Explain how they may be useful for forensic tasks. Provide examples using each modifier.</strong></a><ul>
-<li><a class="reference internal" href="#diff">DIFF</a></li>
-<li><a class="reference internal" href="#save">SAVE</a></li>
-<li><a class="reference internal" href="#export">EXPORT</a></li>
-<li><a class="reference internal" href="#load">LOAD</a></li>
-<li><a class="reference internal" href="#import">IMPORT</a></li>
+<li><a class="reference internal" href="#part-b-docker-forensics">Part B: Docker Forensics</a><ul>
+<li><a class="reference internal" href="#lessons-from-container-incident-response-red-hat-article">1. Lessons from container incident response (Red Hat article)</a></li>
+<li><a class="reference internal" href="#forensic-use-of-diff-save-export-load-and-import">2. Forensic use of <code class="docutils literal notranslate"><span class="pre">diff</span></code>, <code class="docutils literal notranslate"><span class="pre">save</span></code>, <code class="docutils literal notranslate"><span class="pre">export</span></code>, <code class="docutils literal notranslate"><span class="pre">load</span></code>, and <code class="docutils literal notranslate"><span class="pre">import</span></code></a><ul>
+<li><a class="reference internal" href="#docker-diff"><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">diff</span></code></a></li>
+<li><a class="reference internal" href="#docker-save"><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">save</span></code></a></li>
+<li><a class="reference internal" href="#docker-export"><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">export</span></code></a></li>
+<li><a class="reference internal" href="#docker-load"><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">load</span></code></a></li>
+<li><a class="reference internal" href="#docker-import"><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">import</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#review-the-documentation-for-the-utility-docker-diff-which-is-used-to-compare-local-docker-images-against-those-hosted-in-docker-hub-download-the-utility-and-perform-a-test"><strong>3. Review the documentation for the utility docker-diff, which is used to compare local Docker images against those hosted in Docker Hub. Download the utility and perform a test.</strong></a></li>
-<li><a class="reference internal" href="#within-the-context-of-an-ongoing-investigation-a-logical-image-corresponding-to-a-docker-installation-from-a-suspicious-computer-system-has-been-obtained-it-is-suspected-that-this-installation-may-have-been-used-to-conceal-activities"><strong>4. Within the context of an ongoing investigation, a logical image corresponding to a Docker installation from a suspicious computer system has been obtained. It is suspected that this installation may have been used to conceal activities.</strong></a><ul>
-<li><a class="reference internal" href="#a-download-a-forensic-copy-of-the-docker-logical-image"><strong>a. Download a forensic copy of the Docker logical image</strong></a></li>
-<li><a class="reference internal" href="#b-perform-an-analysis-of-the-docker-configuration-and-the-containers-hosted-within-the-image"><strong>b. Perform an analysis of the Docker configuration and the containers hosted within the image</strong></a></li>
-<li><a class="reference internal" href="#c-you-may-follow-the-steps-described-in-this-article"><strong>c. You may follow the steps described in this article</strong></a></li>
+<li><a class="reference internal" href="#image-comparison-with-container-diff">3. Image comparison with container-diff</a></li>
+<li><a class="reference internal" href="#offline-analysis-of-a-seized-docker-logical-image">4. Offline analysis of a seized Docker logical image</a><ul>
+<li><a class="reference internal" href="#a-obtain-and-mount-the-forensic-copy">a. Obtain and mount the forensic copy</a></li>
+<li><a class="reference internal" href="#b-analyze-docker-configuration-and-hosted-containers">b. Analyze Docker configuration and hosted containers</a></li>
+<li><a class="reference internal" href="#c-further-reading">c. Further reading</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#docker-scout-is-a-collection-of-features-that-provides-detailed-information-about-the-composition-and-security-of-container-images-it-is-used-to-analyze-image-contents-and-generate-detailed-reports-about-packages-and-vulnerabilities-detected-it-can-also-provide-suggestions-on-how-to-remediate-issues-discovered-during-image-analysis-install-docker-scout-and-perform-a-small-test"><strong>5. Docker Scout is a collection of features that provides detailed information about the composition and security of container images. It is used to analyze image contents and generate detailed reports about packages and vulnerabilities detected. It can also provide suggestions on how to remediate issues discovered during image analysis. Install Docker Scout and perform a small test.</strong></a></li>
-<li><a class="reference internal" href="#read-the-following-article-from-a-forensic-perspective-what-are-checkpoints-useful-for"><strong>6. Read the following article. From a forensic perspective, what are checkpoints useful for?</strong></a></li>
+<li><a class="reference internal" href="#docker-scout-image-composition-and-cve-reporting">5. Docker Scout (image composition and CVE reporting)</a></li>
+<li><a class="reference internal" href="#docker-checkpoints-forensic-perspective">6. Docker checkpoints (forensic perspective)</a></li>
 </ul>
 </li>
 </ul>
