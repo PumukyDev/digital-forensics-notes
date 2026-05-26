@@ -1,31 +1,30 @@
-# VMWare and Azure Cloud
+# VMware and Azure Cloud
 
 ## Extraction of Evidence from On-Premise / IaaS Virtual Machines
 
-One of the situations we may face as future forensic professionals is dealing with virtual machines, either in local installations (our own or a client’s) or in third-party infrastructures.
+As forensic practitioners we often work with virtual machines, whether they run on local infrastructure (our own or a client’s) or on a third-party cloud platform.
 
-In local installations, we have more possibilities for forensic acquisition. We can operate from inside the virtual machine itself or directly from the hypervisor. The first scenario is very similar to the forensic procedures already studied in class: we can use DumpIt or similar tools to perform a memory dump, execute scripts to collect forensic artifacts, and also clone the hard drive or obtain a logical image.
+On-premise hypervisors offer two main acquisition angles. Evidence can be collected from inside the guest operating system—memory dumps with tools such as DumpIt, artifact scripts, and logical or physical disk images—or from the hypervisor layer without booting the guest. Guest-side collection mirrors standard endpoint forensics; hypervisor-side collection is the focus of **Part A**, using VMware snapshots.
 
-The second scenario is the one covered in Part A of this practice.
-
-Part B focuses on extracting forensic evidence when the virtual machines are hosted by third-party providers, such as Azure Cloud. In this case, memory dumps can be obtained using the same methods previously studied in class. Additionally, scripts may be executed to collect relevant forensic artifacts for later analysis. Virtual hard drives can also be downloaded or cloned directly in the cloud for analysis from another virtual machine.
+**Part B** covers IaaS scenarios in **Azure**. The same memory-acquisition concepts apply, but the VM runs on Microsoft’s infrastructure. After deploying a Linux VM, a memory image was captured with **AVML**, copied to an analysis workstation, and examined with **Volatility 3**. Disk evidence was obtained through an Azure-managed snapshot, a time-limited SAS URL, and finally **libcloudforensics** to clone the virtual disk for offline analysis.
 
 ## Objectives
 
-- Become aware of the forensic acquisition possibilities offered by cloud environments and virtualized systems.
-- Extract forensic evidence from some of the most widely used cloud systems.
+Understand the forensic options available in virtualized and cloud-hosted environments, and practice extracting evidence from on-premise VMware and Azure IaaS workloads.
 
 ## Materials
 
-- Any Windows distribution virtualized on your system.
-- Azure Cloud.
-- Libcloudforensics.
+- A Windows or Linux host with VMware (or VMware Workstation/Fusion) and at least one test VM.
+- An Azure subscription with permission to create VMs, disks, and snapshots.
+- **libcloudforensics**, **Volatility 3**, Docker (for Azure CLI), and SSH/SCP client tools.
 
 ## PART A: Extraction of On-Premise Evidence
 
-In this practical exercise we will learn how to perform a forensic analysis of a system virtualized with VMware
+This section documents forensic acquisition of a VMware guest (**DC-1**) from the hypervisor using snapshots and memory analysis on Kali Linux.
 
-**List all the running machines**
+### List running virtual machines
+
+The `vmrun` utility lists VMs that are currently powered on:
 
 ```bash
 vmrun list
@@ -33,50 +32,59 @@ vmrun list
 
 ![alt text](./images/image-32.png)
 
-**Take a snapshot of the machine**
+### Create a snapshot
 
-It can be done through the Vmware GUI:
+A snapshot freezes the VM’s disk and memory state at a point in time. It can be taken from the VMware GUI:
 
 ![alt text](./images/image-5.png)
 
-Or using a CLI command:
+Or from the command line (paths and snapshot name match this lab environment):
 
 ```bash
 vmrun snapshot "/home/adrian/desktop/vmware/DC-1/DC-1.vmx" "Snapshot 3"
 ```
 
-As shown, the snapshot is stored correctly. Move it to Kali in order to analyze it correctly.
+The snapshot files are written under the VM’s directory. For analysis with Linux tooling, the snapshot bundle was copied to a **Kali** machine.
 
 ![alt text](./images/image-6.png)
 
-**Analyze the memory dump**
+### Analyze the memory image
 
-Once the dump is taken, we can analyze it using volatily as shown below
+The snapshot includes a `.vmem` file representing guest RAM at capture time. **Volatility 3** was used to confirm the image and identify the kernel:
 
 ```bash
 vol3 -f DC-1-Snapshot3.vmem -s ~/desktop/tools/volatility3/volatility3/symbols/ banners.Banner
 ```
+
 ![alt text](./images/image-7.png)
+
+The `banners.Banner` plugin reports operating-system banners detected in the dump, which validates that the memory file is usable before running further plugins.
 
 ## PART B: Extraction of Evidence from Azure Cloud
 
-Sign in Azure CLoud and click on "Virtual machines"
+This section walks through deploying an Azure Linux VM, acquiring memory and disk evidence, and exporting a disk clone for offline forensics.
+
+### Deploy a virtual machine
+
+Sign in to the [Azure portal](https://portal.azure.com) and open **Virtual machines**.
 
 ![alt text](./images/image.png)
 
-Clik con "Create" and select "Virtual machine"
+Select **Create** → **Virtual machine**.
 
 ![alt text](./images/image-1.png)
 
-There, create a machine of your preferences
+Configure the VM (region, size, authentication method, and networking) according to lab requirements.
 
 ![alt text](./images/image-2.png)
 
-Once finished, a menu like the image below should appear.
+After deployment completes, the VM overview blade shows connection details and status.
 
 ![alt text](./images/image-3.png)
 
-Connect to the deployed machine via ssh
+### Acquire memory from the running VM
+
+Connect to the VM with SSH (replace the IP address and key path with your deployment):
 
 ```bash
 ssh -i <private-key> azureuser@9.223.178.153
@@ -84,26 +92,26 @@ ssh -i <private-key> azureuser@9.223.178.153
 
 ![alt text](./images/image-4.png)
 
-Download avml and make a memory dump
+On the guest, download **AVML** (Azure VM Memory Logger) and capture physical memory to a raw file:
 
 ```bash
 wget https://github.com/microsoft/avml/releases/latest/download/avml
 chmod +x avml
 sudo ./avml memdump.raw
-sudo chown azureuser:azureuser memdump.raw 
+sudo chown azureuser:azureuser memdump.raw
 ```
 
 ![alt text](./images/image-8.png)
 
-Copyy the memory dump into your local machine
+Copy the dump to the forensic workstation with **SCP**:
 
-```
+```bash
 scp -i azure-forensics-key.pem azureuser@9.223.178.153:~/memdump.raw .
 ```
 
 ![alt text](./images/image-21.png)
 
-Analyze the memory dump using volatility.
+Analyze the dump locally with Volatility 3:
 
 ```bash
 vol3 -f memdump.raw -s ~/desktop/tools/volatility3/volatility3/symbols/ banners.Banner
@@ -111,27 +119,31 @@ vol3 -f memdump.raw -s ~/desktop/tools/volatility3/volatility3/symbols/ banners.
 
 ![alt text](./images/image-22.png)
 
-In order to make the disk clone in Azure, click over the disk name
+### Create a disk snapshot (Azure portal)
+
+To preserve the OS disk without powering off the VM, open the VM’s **Disks** blade and select the attached OS disk.
 
 ![alt text](./images/image-9.png)
 
-Then click on "Create snapshot".
+Choose **Create snapshot**.
 
 ![alt text](./images/image-10.png)
 
-Type a name for the snapshot and click on "Review + create".
+Enter a snapshot name and resource group, then select **Review + create**.
 
 ![alt text](./images/image-11.png)
 
-Verify that the validation is passed and click on "Create"
+Confirm that validation passes and select **Create**.
 
 ![alt text](./images/image-12.png)
 
-Lastly, verigy that th edeplyment is completed and the snapshot is done.
+When deployment finishes, the snapshot appears as **Succeeded** in the resource list.
 
 ![alt text](./images/image-14.png)
 
-In order to use Azure Cli, run the following docker container and execute the login command.
+### Export the snapshot with Azure CLI
+
+A disposable Azure CLI environment was started in Docker:
 
 ```bash
 docker run -it mcr.microsoft.com/azure-cli
@@ -140,23 +152,23 @@ az login
 
 ![alt text](./images/image-16.png)
 
-Pasete en the browser the code displayed in the command line
+The CLI prints a device-login code; open the URL shown in the terminal in a browser and complete authentication.
 
 ![alt text](./images/image-15.png)
 
-Write yout azure account mail and click on "Next"
+Sign in with the Azure account email and confirm access.
 
 ![alt text](./images/image-17.png)
 
-Once signed, you can close the window
+After authentication, the browser session can be closed; the CLI session in the container reports a successful login.
 
 ![alt text](./images/image-18.png)
 
-A command line will appear in the terminal
+The terminal returns to an interactive Azure CLI prompt.
 
 ![alt text](./images/image-19.png)
 
-Using the following command, a temporal URL can be created with access to te snapshot that we have generated previously.
+Grant read-only access to the snapshot and obtain a **time-limited SAS URL** (valid for 3600 seconds in this example):
 
 ```bash
 az snapshot grant-access \
@@ -167,7 +179,7 @@ az snapshot grant-access \
 
 ![alt text](./images/image-20.png)
 
-Copy the URL, which in this case is:
+The command returns JSON containing `accessSAS`. Example output:
 
 ```json
 {
@@ -175,11 +187,13 @@ Copy the URL, which in this case is:
 }
 ```
 
-And paste it in your browser, the download should start automatically.
+Paste the SAS URL into a browser; the snapshot VHD begins downloading without attaching the disk to a running VM.
 
 ![alt text](./images/image-23.png)
 
-In order to create a disk clone of the VM retrieve some important data with the following commands:
+### Clone the disk with libcloudforensics
+
+For automated disk export, collect subscription and service-principal details:
 
 ```bash
 az account show
@@ -187,10 +201,15 @@ az account show
 
 ![alt text](./images/image-24.png)
 
+Create an application registration for forensics automation:
+
 ```bash
 az ad sp create-for-rbac --name "forensics-sp"
 ```
+
 ![alt text](./images/image-25.png)
+
+Assign **Contributor** (or a narrower custom role, if policy allows) on the subscription scope:
 
 ```bash
 az role assignment create \
@@ -201,15 +220,15 @@ az role assignment create \
 
 ![alt text](./images/image-26.png)
 
-Once all the information is retrieved, activate a python venv and install libcloudforensics
+Create a Python virtual environment and install **libcloudforensics**:
 
 ```bash
-python3 -m venv venv  
+python3 -m venv venv
 source venv/bin/activate
 pip install libcloudforensics
 ```
 
-Export some the previously retrieved data
+Export the credentials returned by `create-for-rbac`:
 
 ```bash
 export AZURE_SUBSCRIPTION_ID="<subscription-id>"
@@ -220,15 +239,16 @@ export AZURE_CLIENT_SECRET="<client-secret>"
 
 ![alt text](./images/image-30.png)
 
-
-And create a python script with the following content
+A short Python script invokes the library to copy the target disk to a storage account or local export path (content as captured in the lab):
 
 ![alt text](./images/image-28.png)
 
-Execute it and the clone will be generated inmmediately.
+Run the script:
 
 ```bash
 python3 forensics.py
 ```
 
 ![alt text](./images/image-31.png)
+
+The library provisions the copy operation in Azure; when it completes, the cloned disk image is available for imaging tools or mount-and-extract workflows on the forensic workstation.
