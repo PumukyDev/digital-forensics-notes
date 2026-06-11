@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Android forensics basics" href="../../android/exercise1/exercise1.html"><link rel="prev" title="Volatility Linux" href="../exercise4/exercise4.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Forensic analysis with diferent Linux file systems." href="../exercise6/exercise6.html"><link rel="prev" title="Volatility Linux" href="../exercise4/exercise4.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
-        <title>&lt;no title&gt; - Digital Forensics Notes documentation</title>
+        <title>Linux challenges - Digital Forensics Notes documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -174,7 +174,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -211,17 +211,19 @@
 <li class="toctree-l1"><a class="reference internal" href="../../windows-volatility/exercise3/exercise3.html">Challenges</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Linux file system and volatility:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../exercise1/exercise1.html">Linux File system</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../exercise2/exercise2.html">Memory Dump</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../exercise3/exercise3.html">Compile tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../exercise4/exercise4.html">Volatility Linux</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Linux challenges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise6/exercise6.html">Forensic analysis with diferent Linux file systems.</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Android:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../android/exercise1/exercise1.html">Android forensics basics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../android/exercise2/exercise2.html">Android forensics medium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../android/exercise3/exercise3.html">Android forensics advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../android/exercise3/exercise3.html">Android and IOS forensics advanced</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Cloud:</span></p>
 <ul>
@@ -267,59 +269,152 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <p>links</p>
-<p><a class="reference external" href="https://drive.google.com/file/d/1BmAR1cny_JfWmiTsWOXmmnGDmVPEzc8P/view?usp=sharing">ram</a></p>
-<p><a class="reference external" href="https://drive.google.com/file/d/1MOLyIXZJLdsFTofNxv1BuhV5ZVUIKTgj/view?usp=sharing">disk</a></p>
-<p>la primera es muy fácil, meter el perfil y hacerle un sockscan</p>
-<p>la segunda:</p>
-<p>fdisk -l lampmunics.img</p>
-<p>vemos que hay 2 partes</p>
-<p>losetup -f -P lampmunics.img</p>
-<p>mkdir /media/</p>
-<p>mount /dev/loop0p1 /media/par1 -o ro</p>
-<p>cd /media/part1CapC
-dsffds<img alt="jlkñkjdflakñsjdfl" src="../../_images/image8.png" />
-ls</p>
-<p>vemos qu eno hay gran cosa</p>
-<p>umount /media/par1</p>
-<p>y montamos otra parte</p>
-<p>mount /dev/loop0p2 /mnt/part1 -o ro</p>
-<p>pero no funciona porque ess una partición lvm</p>
-<p>podemos usar los comandos: pvs, vgs y lvs para listar las particiones de este</p>
-<p>con esos comandos podemos ver que este lvm está hecho por 2 discos</p>
-<p>con: vgchange -ay podemos activar los voñumenes lógicos´</p>
-<p>mount /dev/VolGroup00/LogVol00 /media/part1 -o ro</p>
-<p>cd /media/part1</p>
-<p>ls</p>
-<p>y vemos un sistea de linux entero. para cambiar el root y poder ejecutar comadnos como si esetuviéramos en esa máquina:</p>
-<p>chroot /media/part1</p>
-<p>pero nos saldrá un error, se corrige así:</p>
-<p>mount –bind /dev /media/part1/dev
-mount –bind /proc /media/part1/proc
-mount –bind /sys /media/part1/sys</p>
-<p>chroot /media/part1 /bin/bash</p>
-<p>y ahora tenemos una bash con el sistema que estamos auditando</p>
-<p>ahora si hacemos un history vemos qué comandos se han ejecutado</p>
-<p>su - achen</p>
-<p>history</p>
-<p>vemos que ha hecho un sudo su</p>
+          <section id="linux-challenges">
+<h1>Linux challenges<a class="headerlink" href="#linux-challenges" title="Link to this heading">¶</a></h1>
+<section id="atenea-challenge">
+<h2>Atenea challenge<a class="headerlink" href="#atenea-challenge" title="Link to this heading">¶</a></h2>
+<section id="introduction">
+<h3>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h3>
+<p>Una de las alertas del SIEM ha reportado que determinado equipo Linux está realizando multitud de peticiones a una IP externa. Se sospecha que la máquina ha podido ser comprometida. Para comenzar la investigación se ha realizado un volcado de memoria antes de apagar dicho equipo.</p>
+<p>Como analista forense deberás identificar el PID dañino responsable de esta alerta (por ejemplo: 1255)</p>
+<p>Puede descargar el volcado de memoria <a class="reference external" href="https://drive.google.com/file/d/1BmAR1cny_JfWmiTsWOXmmnGDmVPEzc8P/view?usp=sharing">aquí</a>.</p>
+</section>
+<section id="solution">
+<h3>Solution<a class="headerlink" href="#solution" title="Link to this heading">¶</a></h3>
+<p>First, verify what distro and kernel version the dump is by performing the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>dump-practica5<span class="w"> </span>banners.Banner
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image10.png" /></p>
+<p>As shown, it is a Ubuntu 4.2.0-16 generic. Then, downlaod a volatility profile for said linux version from the following <a class="reference external" href="https://github.com/Abyss-W4tcher/volatility2-profiles/blob/master/Ubuntu/amd64/4.2.0/16/generic/Ubuntu_4.2.0-16-generic_4.2.0-16.19_amd64.zip">github repository</a>.</p>
+<p>Move said <code class="docutils literal notranslate"><span class="pre">.zip</span></code> file into your volatility’s plugin directory and verify that it is being used by volatility. Note that in this case I’m using volatility2 instead of volatility3.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mv<span class="w"> </span>~/downloads/Ubuntu_4.2.0-16-generic_4.2.0-16.19_amd64.zip<span class="w"> </span>~/desktop/tools/volatility2/volatility/plugins/overlays/linux/
+vol2<span class="w"> </span>--info<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>Linux
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-130.png" /></p>
+<p>After all this configuration, we have more specific commands to create network maps and process listing of the memory. In order to see the connections, run the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>--profile<span class="o">=</span>LinuxUbuntu_4_2_0-16-generic_4_2_0-16_19_amd64x64<span class="w"> </span>-f<span class="w"> </span>dump-practica5<span class="w"> </span>linux_netstat<span class="w"> </span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-329.png" /></p>
+<p>As shown, there is a connection between the device and a external IP using the “irssi” process.</p>
+<p>Let’s check for more weird processes using pslist:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>--profile<span class="o">=</span>LinuxUbuntu_4_2_0-16-generic_4_2_0-16_19_amd64x64<span class="w"> </span>-f<span class="w"> </span>dump-practica5<span class="w"> </span>linux_pslist<span class="w"> </span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-230.png" /></p>
+<p>The same process “irssi” with PID 1849 is shown. After this analysis, SSH and irssi proccess may are suspicius.</p>
+<p>Create a process map of irssi:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol2<span class="w"> </span>--profile<span class="o">=</span>LinuxUbuntu_4_2_0-16-generic_4_2_0-16_19_amd64x64<span class="w"> </span>-f<span class="w"> </span>dump-practica5<span class="w"> </span>linux_proc_maps<span class="w"> </span>-p<span class="w"> </span><span class="m">1849</span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-420.png" /></p>
+<p>TBD explicar esto de aquí abajo, ponerlo en inglés y parafrasearlo:</p>
+<p>Aquí encontramos varios elementos clave para determinar que se trata de este proceso.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>El proceso está usando librerías de criptografía y ssl, confirmando que se realizan comunicaciones cifradas.
+
+
+Tiene cargadas librerías para manejo de sockets y red.
+
+
+Tiene cargada una librería para soporte de Perl.
+</pre></div>
+</div>
+<p>Esto es particularmente sospechoso porque significa que el proceso puede ejecutar scripts Perl, que es una capacidad comúnmente usada en malware basado en IRC para ejecutar comandos o payloads adicionales.</p>
+<p>Conclusión</p>
+<p>Si combinamos esto con la conexión establecida que encontramos antes:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Conexión cifrada al puerto 6697 (IRC sobre SSL)
+Capacidad de ejecución de scripts Perl
+Conexión persistente a una IP externa
+</pre></div>
+</div>
+<p>Todo apunta a que este proceso podría estar siendo usado como un bot IRC o un canal de comando y control (C2). Los atacantes frecuentemente usan clientes IRC legítimos como IRSSI modificados para mantener persistencia y control remoto en sistemas comprometidos.</p>
+</section>
+</section>
+<section id="forense-post-mortem-linux">
+<h2>Forense Post-mortem Linux<a class="headerlink" href="#forense-post-mortem-linux" title="Link to this heading">¶</a></h2>
+<p>El 5 de abril de 2022, la policía fue contactada por una empresa, ya que su sistema había sido hackeado. Has sido contratado para trabajar con la policía con el objetivo de ayudarles a encontrar evidencia que demuestre la invasión realizada por el cracker. Al hablar con el administrador del sistema, él afirmó que solo los siguientes puertos estaban abiertos en la máquina: 21, 22, 23, 3306, 123, algunos de los cuales son utilizados por él para realizar el mantenimiento del sistema.</p>
+<section id="objetivo">
+<h3>Objetivo:<a class="headerlink" href="#objetivo" title="Link to this heading">¶</a></h3>
+<p>El objetivo principal es encontrar evidencia, ya sean registros del sistema, comandos ingresados, puertos abiertos, aplicaciones maliciosas, entre otros.</p>
+</section>
+<section id="consejos">
+<h3>Consejos:<a class="headerlink" href="#consejos" title="Link to this heading">¶</a></h3>
+<p>Se puede utilizar cualquier técnica forense, comando y herramienta para resolver el escenario.</p>
+</section>
+<section id="pistas">
+<h3>Pistas:<a class="headerlink" href="#pistas" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>¿Qué usuario fue agregado por el atacante?</p></li>
+<li><p>¿Hay algún malware instalado en la máquina?</p></li>
+<li><p>Intenta indicar la ruta del directorio en el que posiblemente se hayan accedido o modificado archivos considerados confidenciales.</p></li>
+<li><p>¿Se han abierto puertos por el atacante? ¿Cuáles?</p></li>
+<li><p>¿Se ha programado la ejecución de algún script malicioso?</p></li>
+</ul>
+<p>Download the image disk form <a class="reference external" href="https://drive.google.com/file/d/1MOLyIXZJLdsFTofNxv1BuhV5ZVUIKTgj/view?usp=sharing">here</a>.</p>
+<p>Once downloaded, mount the image:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>losetup<span class="w"> </span>-fP<span class="w"> </span>postmortem.img
+mkdir<span class="w"> </span>postmortem
+sudo<span class="w"> </span>mount<span class="w"> </span>-o<span class="w"> </span>ro<span class="w"> </span>/dev/loop0<span class="w"> </span>postmortem
+<span class="nb">cd</span><span class="w"> </span>postmortem
+</pre></div>
+</div>
+<p>Verify the content once mounted:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>-lah
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-520.png" /></p>
+<p>Firstly, check if there is somwthing weird between the users of the system:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>etc/passwd
+</pre></div>
+</div>
+<p>As shown above, a user called “ghostHacker” exists in the system. Probably it is not inteded to be there and may have been created by the hacker.</p>
+<p><img alt="alt text" src="../../_images/image-614.png" /></p>
+<p>In order to know persistant scripts in the system, check the cron logs:</p>
+<p><img alt="alt text" src="../../_images/image-79.png" /></p>
+<p>As shown, the logs demonstrate that there is a Keylogger in the system.</p>
+<p>Verify ssh logs for possible extrange logs:</p>
+<p><img alt="alt text" src="../../_images/image-88.png" /></p>
+<p>There are two SSH successull connections with user:password, maybe the hacker accessed the system via SSH once he obtained a password via phising or force bruting.</p>
+<p>Check if the bash history has more evicences:</p>
+<p><img alt="alt text" src="../../_images/image-98.png" /></p>
+<p>Only the “exit” command is shown, probably the hacker has removed all the history after performing the work.</p>
+<p>After a few more investigation, a modified file can be shown:</p>
+<p><img alt="alt text" src="../../_images/image-108.png" /></p>
+<p>It was supposed to be an installer, however, it only shutdowns the PC.</p>
+<p>After analyzing the firewalld logs, it can be seen that the port 88 is open. It can be intended or not.</p>
+<p><img alt="alt text" src="../../_images/image-1112.png" /></p>
+<p>TBD poner mejor las conclusiones en base a lo que se ve arriba, parafrasear y poner en inglés:</p>
+<p>Conclusiones
+El atacante accedio al sistema como root usando la contraseña de ssh, posiblemente obtenida
+mediante ingenieria social o fuerza bruta, pues en el registro se ven multiples intentos fallidos.
+Una vez dentro, la linea de post-explotación fue la siguiente:
+El atacante creo el usuario ghostHacker para establecer redundancia.
+El atacante edito los ficheros en la ruta /mnt/company
+El atacante abrio el puerto 88.
+El atacante instalo un keyloger y programo su ejecución en crontab.
+Una vez tenia lo que queria, borro los ficheros .bash_history y cerro de la shell</p>
+</section>
+</section>
+</section>
 
         </article>
       </div>
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../../android/exercise1/exercise1.html">
+          <a class="next-page" href="../exercise6/exercise6.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">Android forensics basics</div>
+                <div class="title">Forensic analysis with diferent Linux file systems.</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
@@ -352,8 +447,37 @@ mount –bind /sys /media/part1/sys</p>
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Linux challenges</a><ul>
+<li><a class="reference internal" href="#atenea-challenge">Atenea challenge</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#solution">Solution</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#forense-post-mortem-linux">Forense Post-mortem Linux</a><ul>
+<li><a class="reference internal" href="#objetivo">Objetivo:</a></li>
+<li><a class="reference internal" href="#consejos">Consejos:</a></li>
+<li><a class="reference internal" href="#pistas">Pistas:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

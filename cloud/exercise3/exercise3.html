@@ -216,12 +216,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise2/exercise2.html">Memory Dump</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise3/exercise3.html">Compile tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise4/exercise4.html">Volatility Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise5/exercise5.html">Linux challenges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise6/exercise6.html">Forensic analysis with diferent Linux file systems.</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Android:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../android/exercise1/exercise1.html">Android forensics basics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../android/exercise2/exercise2.html">Android forensics medium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../android/exercise3/exercise3.html">Android forensics advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../android/exercise3/exercise3.html">Android and IOS forensics advanced</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Cloud:</span></p>
 <ul class="current">
@@ -317,7 +319,7 @@ sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>version
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image3.png" /></p>
+<p><img alt="alt text" src="../../_images/image5.png" /></p>
 </section>
 <section id="show-host-and-daemon-information">
 <h3>3. Show host and daemon information<a class="headerlink" href="#show-host-and-daemon-information" title="Link to this heading">¶</a></h3>
@@ -325,7 +327,7 @@ sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>info
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-113.png" /></p>
+<p><img alt="alt text" src="../../_images/image-118.png" /></p>
 </section>
 <section id="pull-nginx-latest-from-docker-hub">
 <h3>4. Pull <code class="docutils literal notranslate"><span class="pre">nginx:latest</span></code> from Docker Hub<a class="headerlink" href="#pull-nginx-latest-from-docker-hub" title="Link to this heading">¶</a></h3>
@@ -333,14 +335,14 @@ sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>pull<span class="w"> </span>nginx:latest
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-27.png" /></p>
+<p><img alt="alt text" src="../../_images/image-218.png" /></p>
 </section>
 <section id="list-local-images">
 <h3>5. List local images<a class="headerlink" href="#list-local-images" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>image<span class="w"> </span>ls
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-34.png" /></p>
+<p><img alt="alt text" src="../../_images/image-317.png" /></p>
 </section>
 <section id="run-a-container-in-detached-mode">
 <h3>6. Run a container in detached mode<a class="headerlink" href="#run-a-container-in-detached-mode" title="Link to this heading">¶</a></h3>
@@ -348,7 +350,7 @@ sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>nginx-detached<span class="w"> </span>nginx:latest
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-42.png" /></p>
+<p><img alt="alt text" src="../../_images/image-414.png" /></p>
 </section>
 <section id="run-a-container-in-interactive-mode">
 <h3>7. Run a container in interactive mode<a class="headerlink" href="#run-a-container-in-interactive-mode" title="Link to this heading">¶</a></h3>
@@ -356,7 +358,7 @@ sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>--name<span class="w"> </span>nginx-interactive<span class="w"> </span>nginx:latest<span class="w"> </span>/bin/bash
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-53.png" /></p>
+<p><img alt="alt text" src="../../_images/image-515.png" /></p>
 <p>Leave the interactive shell with <code class="docutils literal notranslate"><span class="pre">exit</span></code>.</p>
 </section>
 <section id="list-running-containers">
@@ -364,7 +366,7 @@ sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>ps
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-63.png" /></p>
+<p><img alt="alt text" src="../../_images/image-69.png" /></p>
 <p>Only containers in the <strong>running</strong> state appear; stopped containers require <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">ps</span> <span class="pre">-a</span></code>.</p>
 </section>
 <section id="inspect-container-properties">
@@ -373,7 +375,7 @@ sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>inspect<span class="w"> </span>nginx-detached
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-73.png" /></p>
+<p><img alt="alt text" src="../../_images/image-75.png" /></p>
 </section>
 <section id="list-docker-networks">
 <h3>10. List Docker networks<a class="headerlink" href="#list-docker-networks" title="Link to this heading">¶</a></h3>
@@ -381,7 +383,7 @@ sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>network<span class="w"> </span>ls
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-83.png" /></p>
+<p><img alt="alt text" src="../../_images/image-85.png" /></p>
 </section>
 <section id="attach-to-a-container-console">
 <h3>11. Attach to a container console<a class="headerlink" href="#attach-to-a-container-console" title="Link to this heading">¶</a></h3>
@@ -389,14 +391,14 @@ sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>attach<span class="w"> </span>nginx-detached
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-93.png" /></p>
+<p><img alt="alt text" src="../../_images/image-95.png" /></p>
 </section>
 <section id="run-an-interactive-shell-inside-a-running-container">
 <h3>12. Run an interactive shell inside a running container<a class="headerlink" href="#run-an-interactive-shell-inside-a-running-container" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>nginx-detached<span class="w"> </span>/bin/bash
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-103.png" /></p>
+<p><img alt="alt text" src="../../_images/image-105.png" /></p>
 <p><code class="docutils literal notranslate"><span class="pre">exec</span></code> is the usual way to examine a live filesystem without stopping the service.</p>
 </section>
 <section id="stop-a-container">
@@ -404,21 +406,21 @@ sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>stop<span class="w"> </span>nginx-detached
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-114.png" /></p>
+<p><img alt="alt text" src="../../_images/image-119.png" /></p>
 </section>
 <section id="start-a-stopped-container">
 <h3>14. Start a stopped container<a class="headerlink" href="#start-a-stopped-container" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>start<span class="w"> </span>nginx-detached
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-123.png" /></p>
+<p><img alt="alt text" src="../../_images/image-125.png" /></p>
 </section>
 <section id="remove-a-container">
 <h3>15. Remove a container<a class="headerlink" href="#remove-a-container" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>nginx-detached
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-132.png" /></p>
+<p><img alt="alt text" src="../../_images/image-134.png" /></p>
 <p>The <code class="docutils literal notranslate"><span class="pre">-f</span></code> flag forces removal even if the container is still running; otherwise you must <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">stop</span></code> it first.</p>
 </section>
 <section id="build-an-image-from-a-dockerfile">
@@ -438,12 +440,12 @@ sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>myubuntu<span class="w"> </span>.
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-143.png" /></p>
+<p><img alt="alt text" src="../../_images/image-145.png" /></p>
 <p>Run a container from the new image:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--name<span class="w"> </span>mycontainer<span class="w"> </span>myubuntu
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-153.png" /></p>
+<p><img alt="alt text" src="../../_images/image-155.png" /></p>
 </section>
 <section id="commit-a-container-to-a-new-image">
 <h3>17. Commit a container to a new image<a class="headerlink" href="#commit-a-container-to-a-new-image" title="Link to this heading">¶</a></h3>
@@ -451,12 +453,12 @@ sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>commit<span class="w"> </span>mycontainer<span class="w"> </span>mydebian
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-163.png" /></p>
+<p><img alt="alt text" src="../../_images/image-165.png" /></p>
 <p>Verify the image is listed:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>image<span class="w"> </span>ls
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-202.png" /></p>
+<p><img alt="alt text" src="../../_images/image-205.png" /></p>
 </section>
 <section id="export-an-image-to-a-tar-archive">
 <h3>18. Export an image to a tar archive<a class="headerlink" href="#export-an-image-to-a-tar-archive" title="Link to this heading">¶</a></h3>
@@ -464,11 +466,11 @@ sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>save<span class="w"> </span>-o<span class="w"> </span>mydebian.tar<span class="w"> </span>mydebian
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-183.png" /></p>
+<p><img alt="alt text" src="../../_images/image-185.png" /></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>mydebian.tar
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-193.png" /></p>
+<p><img alt="alt text" src="../../_images/image-195.png" /></p>
 </section>
 <section id="export-a-container-filesystem">
 <h3>19. Export a container filesystem<a class="headerlink" href="#export-a-container-filesystem" title="Link to this heading">¶</a></h3>
@@ -476,25 +478,25 @@ sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">export</span><span class="w"> </span>nginx-detached<span class="w"> </span>-o<span class="w"> </span>nginx-container.tar
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-213.png" /></p>
+<p><img alt="alt text" src="../../_images/image-219.png" /></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>nginx-container.tar
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-222.png" /></p>
+<p><img alt="alt text" src="../../_images/image-225.png" /></p>
 </section>
 <section id="remove-the-custom-container">
 <h3>20. Remove the custom container<a class="headerlink" href="#remove-the-custom-container" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>rm<span class="w"> </span>-f<span class="w"> </span>mycontainer
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-232.png" /></p>
+<p><img alt="alt text" src="../../_images/image-235.png" /></p>
 </section>
 <section id="remove-the-committed-image">
 <h3>21. Remove the committed image<a class="headerlink" href="#remove-the-committed-image" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>image<span class="w"> </span>rm<span class="w"> </span>mydebian
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-242.png" /></p>
+<p><img alt="alt text" src="../../_images/image-245.png" /></p>
 </section>
 </section>
 <hr class="docutils" />
@@ -543,40 +545,40 @@ sudo<span class="w"> </span>sh<span class="w"> </span>get-docker.sh
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>diff<span class="w"> </span>nginx-detached
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-252.png" /></p>
+<p><img alt="alt text" src="../../_images/image-254.png" /></p>
 </section>
 <section id="docker-save">
 <h4><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">save</span></code><a class="headerlink" href="#docker-save" title="Link to this heading">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>save<span class="w"> </span>-o<span class="w"> </span>nginx-image.tar<span class="w"> </span>nginx:latest
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-261.png" /></p>
+<p><img alt="alt text" src="../../_images/image-264.png" /></p>
 </section>
 <section id="docker-export">
 <h4><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">export</span></code><a class="headerlink" href="#docker-export" title="Link to this heading">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span><span class="nb">export</span><span class="w"> </span>nginx-detached<span class="w"> </span>-o<span class="w"> </span>nginx-container.tar
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-271.png" /></p>
+<p><img alt="alt text" src="../../_images/image-273.png" /></p>
 </section>
 <section id="docker-load">
 <h4><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">load</span></code><a class="headerlink" href="#docker-load" title="Link to this heading">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>load<span class="w"> </span>-i<span class="w"> </span>nginx-image.tar
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-281.png" /></p>
+<p><img alt="alt text" src="../../_images/image-284.png" /></p>
 </section>
 <section id="docker-import">
 <h4><code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">import</span></code><a class="headerlink" href="#docker-import" title="Link to this heading">¶</a></h4>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>import<span class="w"> </span>nginx-container.tar<span class="w"> </span>imported-nginx
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-29.png" /></p>
+<p><img alt="alt text" src="../../_images/image-293.png" /></p>
 <p>Run a shell in the imported image:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>run<span class="w"> </span>-it<span class="w"> </span>imported-nginx<span class="w"> </span>/bin/bash
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-301.png" /></p>
+<p><img alt="alt text" src="../../_images/image-304.png" /></p>
 </section>
 </section>
 <section id="image-comparison-with-container-diff">
@@ -592,47 +594,47 @@ sudo<span class="w"> </span>mv<span class="w"> </span>container-diff<span class=
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>container-diff<span class="w"> </span>version
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-312.png" /></p>
+<p><img alt="alt text" src="../../_images/image-318.png" /></p>
 <p>General image analysis:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>container-diff<span class="w"> </span>analyze<span class="w"> </span>daemon://nginx:latest
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-321.png" /></p>
+<p><img alt="alt text" src="../../_images/image-324.png" /></p>
 <p>Filesystem contents:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>container-diff<span class="w"> </span>analyze<span class="w"> </span>daemon://nginx:latest<span class="w"> </span>--type<span class="o">=</span>file
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-331.png" /></p>
+<p><img alt="alt text" src="../../_images/image-333.png" /></p>
 <p>Installed packages (Debian/apt-based layers):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>container-diff<span class="w"> </span>analyze<span class="w"> </span>daemon://nginx:latest<span class="w"> </span>--type<span class="o">=</span>apt
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-341.png" /></p>
+<p><img alt="alt text" src="../../_images/image-343.png" /></p>
 <p>Image build history:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>container-diff<span class="w"> </span>analyze<span class="w"> </span>daemon://nginx:latest<span class="w"> </span>--type<span class="o">=</span><span class="nb">history</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-35.png" /></p>
+<p><img alt="alt text" src="../../_images/image-352.png" /></p>
 <p>Compare two local images (replace <code class="docutils literal notranslate"><span class="pre">&lt;other-container&gt;</span></code> with the second image name or ID):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>container-diff<span class="w"> </span>diff<span class="w"> </span>daemon://nginx:latest<span class="w"> </span>daemon://&lt;other-container&gt;
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-36.png" /></p>
+<p><img alt="alt text" src="../../_images/image-362.png" /></p>
 <p>Filesystem differences:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>container-diff<span class="w"> </span>diff<span class="w"> </span>daemon://nginx:latest<span class="w"> </span>daemon://&lt;other-container&gt;<span class="w"> </span>--type<span class="o">=</span>file
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-37.png" /></p>
+<p><img alt="alt text" src="../../_images/image-372.png" /></p>
 <p>Package differences:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>container-diff<span class="w"> </span>diff<span class="w"> </span>daemon://nginx:latest<span class="w"> </span>daemon://&lt;other-container&gt;<span class="w"> </span>--type<span class="o">=</span>apt
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-38.png" /></p>
+<p><img alt="alt text" src="../../_images/image-383.png" /></p>
 <p>History differences:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>container-diff<span class="w"> </span>diff<span class="w"> </span>daemon://nginx:latest<span class="w"> </span>daemon://&lt;other-container&gt;<span class="w"> </span>--type<span class="o">=</span><span class="nb">history</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-39.png" /></p>
+<p><img alt="alt text" src="../../_images/image-393.png" /></p>
 </section>
 <section id="offline-analysis-of-a-seized-docker-logical-image">
 <h3>4. Offline analysis of a seized Docker logical image<a class="headerlink" href="#offline-analysis-of-a-seized-docker-logical-image" title="Link to this heading">¶</a></h3>
@@ -652,7 +654,7 @@ pip<span class="w"> </span>install<span class="w"> </span>docker-explorer
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>de-env/bin/de.py<span class="w"> </span>-r<span class="w"> </span>/var/lib/docker<span class="w"> </span>list<span class="w"> </span>all_containers
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-40.png" /></p>
+<p><img alt="alt text" src="../../_images/image-403.png" /></p>
 <p>The JSON output was summarized as follows:</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
@@ -708,7 +710,7 @@ pip<span class="w"> </span>install<span class="w"> </span>docker-explorer
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>login
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-411.png" /></p>
+<p><img alt="alt text" src="../../_images/image-415.png" /></p>
 <p>Install the Scout CLI plugin:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-L<span class="w"> </span>https://github.com/docker/scout-cli/releases/download/v1.20.4/docker-scout_1.20.4_linux_amd64.tar.gz<span class="w"> </span>-o<span class="w"> </span>docker-scout.tar.gz
 
@@ -725,22 +727,22 @@ chmod<span class="w"> </span>+x<span class="w"> </span>~/.docker/cli-plugins/doc
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>scout<span class="w"> </span>version
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-421.png" /></p>
+<p><img alt="alt text" src="../../_images/image-423.png" /></p>
 <p>Summary view:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>scout<span class="w"> </span>quickview<span class="w"> </span>nginx:latest
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-43.png" /></p>
+<p><img alt="alt text" src="../../_images/image-433.png" /></p>
 <p>CVE listing:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>scout<span class="w"> </span>cves<span class="w"> </span>nginx:latest
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-44.png" /></p>
+<p><img alt="alt text" src="../../_images/image-443.png" /></p>
 <p>Remediation hints:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>scout<span class="w"> </span>recommendations<span class="w"> </span>nginx:latest
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-45.png" /></p>
+<p><img alt="alt text" src="../../_images/image-452.png" /></p>
 </section>
 <section id="docker-checkpoints-forensic-perspective">
 <h3>6. Docker checkpoints (forensic perspective)<a class="headerlink" href="#docker-checkpoints-forensic-perspective" title="Link to this heading">¶</a></h3>

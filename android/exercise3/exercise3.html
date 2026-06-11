@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Google Drive, OneDrive, Dropbox and Nextcloud" href="../../cloud/exercise1/exercise1.html"><link rel="prev" title="Android forensics medium" href="../exercise2/exercise2.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
-        <title>Android forensics advanced - Digital Forensics Notes documentation</title>
+        <title>Android and IOS forensics advanced - Digital Forensics Notes documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -216,12 +216,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise2/exercise2.html">Memory Dump</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise3/exercise3.html">Compile tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise4/exercise4.html">Volatility Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise5/exercise5.html">Linux challenges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise6/exercise6.html">Forensic analysis with diferent Linux file systems.</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Android:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../exercise1/exercise1.html">Android forensics basics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../exercise2/exercise2.html">Android forensics medium</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Android forensics advanced</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Android and IOS forensics advanced</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Cloud:</span></p>
 <ul>
@@ -272,10 +274,371 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="android-forensics-advanced">
-<h1>Android forensics advanced<a class="headerlink" href="#android-forensics-advanced" title="Link to this heading">¶</a></h1>
-<section id="tbd">
-<h2>TBD<a class="headerlink" href="#tbd" title="Link to this heading">¶</a></h2>
+          <section id="android-and-ios-forensics-advanced">
+<h1>Android and IOS forensics advanced<a class="headerlink" href="#android-and-ios-forensics-advanced" title="Link to this heading">¶</a></h1>
+<p>Esta práctica, en esencia, simula un escenario real en el que un analista forense debe  extraer,  preservar  y  examinar  evidencias  digitales  de  un  dispositivo  móvil, integrando  tanto  técnicas  de  volcado  físico  como  análisis  de  los  artefactos generados por diversas aplicaciones instaladas y configuradas en el dispositivo.</p>
+<section id="forense-android-manual">
+<h2>Forense Android Manual<a class="headerlink" href="#forense-android-manual" title="Link to this heading">¶</a></h2>
+<p>Este escenario se centra en el examen de un dispositivo Android 11, basado en un Google Pixel 3, que ha sido sometido a un proceso controlado de generación de imagen forense. A continuación, se describen los aspectos más relevantes:</p>
+<section id="detalles-del-sistema-y-version-de-android">
+<h3>Detalles del sistema y versión de Android:<a class="headerlink" href="#detalles-del-sistema-y-version-de-android" title="Link to this heading">¶</a></h3>
+<p>El dispositivo opera con Android 11, utilizando una imagen stock proporcionada por Google (Build: RP1A.200720.009, Patch Level: 5 de septiembre de 2020).</p>
+<ul class="simple">
+<li><p>Make: Google Pixel 3</p></li>
+<li><p>Model: G013A</p></li>
+<li><p>Storage: 64 GB</p></li>
+<li><p>RAM: 4GB</p></li>
+<li><p>Carrier: Google Fi</p></li>
+<li><p>Phone Number: 919-579-4674</p></li>
+<li><p>Serial: 8CEX1N716</p></li>
+<li><p>Wi-Fi MAC: 7c:d9:5c:ac:a2:cf</p></li>
+<li><p>BT MAC: 7c:d9:5c:ac:a2:ce</p></li>
+</ul>
+</section>
+<section id="proceso-de-generacion-de-la-imagen-forense">
+<h3>Proceso de generación de la imagen forense<a class="headerlink" href="#proceso-de-generacion-de-la-imagen-forense" title="Link to this heading">¶</a></h3>
+<p>El  procedimiento  inicia  con  el  restablecimiento  a  valores  de  fábrica mediante el flasheo  de  una  imagen  stock.  Posteriormente,  se  realizan  los  siguientes  pasos críticos:</p>
+<ul class="simple">
+<li><p>Configuración del dispositivo: Se añade una cuenta de Google Fi para habilitar el servicio celular.</p></li>
+<li><p>Obtención de acceso privilegiado: Se desbloquea el bootloader y se instala Magisk, permitiendo el acceso root necesario para extraer información protegida.</p></li>
+<li><p>Población de datos: Se instalan 46 aplicaciones no nativas (junto con las aplicaciones stock) desde Google Play, las cuales son pobladas con datos de usuario mediante sus funcionalidades específicas.</p></li>
+<li><p>Extracción de datos: Se ha realizado una extracción lógica del contenido dela memoria del teléfono usando el software “Magnet Acquire”; descargala <a class="reference external" href="https://drive.google.com/file/d/1AiMDFlSRHuEeAxw4mgzlISnflB_DB-D9/view">aquí</a>. La salida del log del proceso de extracción se encuentra <a class="reference external" href="https://drive.google.com/drive/folders/16ws1Bk0i03O58X8z2oRJNMYvRQKDZlFo">aquí</a>.</p></li>
+</ul>
+</section>
+<section id="finalidad-y-herramientas-de-analisis">
+<h3>Finalidad y herramientas de análisis<a class="headerlink" href="#finalidad-y-herramientas-de-analisis" title="Link to this heading">¶</a></h3>
+<p>El objetivo principal de esta práctica es identificar y analizar los artefactos forenses contenidos en el dispositivo Android de forma manual, permitiendo la reconstrucción de  eventos  y  actividades  del  usuario.  Para  lograrlo,  se  recomienda  el  uso  de herramientas como:</p>
+<ul class="simple">
+<li><p>FTK Imager: Para la obtención de artefactos forenses de Android.</p></li>
+<li><p>Otras herramientas complementarias: DB Browser (sqlite) para acceder directamente al contenido de los artefactos cuando se trata de bases de datos sqlite. Autopsy o Mobiledit que facilitan el análisis detallado de
+registros, metadatos y datos residuales en las aplicaciones y en el sistema. Notepad++ u otros editores para manejar textos planos o codificaciones hexadecimales, base64, xml, etc. Se pide extraer y analizar los artefactos que permitan obtener información sobre</p></li>
+</ul>
+</section>
+<section id="analysis">
+<h3>Analysis<a class="headerlink" href="#analysis" title="Link to this heading">¶</a></h3>
+<p>First, uncompress the file by performing the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>-xvf<span class="w"> </span><span class="s2">&quot;Android 11 - Pixel 3 - Data.tar&quot;</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>Propiedades  del  dispositivo:  Android  ID,  Bluetooth  name,  Bluetooth address</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">data/system/users/%USERNUMBER%/settings_secure.xml</span></code></p>
+<p><img alt="alt text" src="../../_images/image2.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">data/system/users/%USERNUMBER%/companion_device_manager_associations.xml</span></code></p>
+<p><img alt="alt text" src="../../_images/image-112.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">/data/misc/bluedroid/bt_config.conf</span></code></p>
+<p><img alt="alt text" src="../../_images/image-212.png" /></p>
+<ol class="arabic simple" start="2">
+<li><p>Lista  de  contactos  del  teléfono</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/data/com.android.providers.contacts/databases/contacts2.db</span></code></p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">data1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">nombre</span><span class="p">,</span>
+<span class="w">       </span><span class="n">p</span><span class="p">.</span><span class="n">data1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">telefono</span>
+<span class="k">FROM</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="n">n</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">mimetypes</span><span class="w"> </span><span class="n">mn</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">mimetype_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mn</span><span class="p">.</span><span class="n">_id</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">n</span><span class="p">.</span><span class="n">raw_contact_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">raw_contact_id</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">mimetypes</span><span class="w"> </span><span class="n">mp</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">mimetype_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mp</span><span class="p">.</span><span class="n">_id</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">mn</span><span class="p">.</span><span class="n">mimetype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;vnd.android.cursor.item/name&#39;</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">mp</span><span class="p">.</span><span class="n">mimetype</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;vnd.android.cursor.item/phone_v2&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-312.png" /></p>
+<ol class="arabic simple" start="3">
+<li><p>Llamadas  entrantes  y  salientes</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/data/com.android.providers.contacts/databases/calllog.db</span></code></p>
+<p><img alt="alt text" src="../../_images/image-410.png" /></p>
+<ol class="arabic simple" start="4">
+<li><p>Mensajes SMS</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/data/com.android.providers.telephony/databases/mmssms.db</span></code></p>
+<p><img alt="alt text" src="../../_images/image-511.png" /></p>
+<ol class="arabic simple" start="5">
+<li><p>Puntos  de  acceso  Wifi  utilizados</p></li>
+</ol>
+<p>data/misc/apexdata/com.android.wifi/WifiConfigStore.xml</p>
+<p><img alt="alt text" src="../../_images/image-65.png" /></p>
+<ol class="arabic simple" start="6">
+<li><p>Dispositivos  Bluetooth  a  los  que  se  ha  emparejado</p></li>
+</ol>
+<p>data/misc/bluedroid/bt_config.conf</p>
+<p><img alt="alt text" src="../../_images/image-72.png" /></p>
+<ol class="arabic simple" start="7">
+<li><p>Fotos,  descargas,  documentos   y  material  multimedia  de  whatsapp, signal, telegram, kik y Snapchat.</p></li>
+</ol>
+<p><strong>Whatsapp</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">thunar</span> <span class="pre">data/media/0/WhatsApp/Media/WhatsApp</span> <span class="pre">Images/</span></code></p>
+<p><img alt="alt text" src="../../_images/image-82.png" /></p>
+<p><strong>Signal</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">thunar</span> <span class="pre">data/media/0/Signal/</span></code></p>
+<p><img alt="alt text" src="../../_images/image-92.png" /></p>
+<p><strong>Telegram</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">thunar</span> <span class="pre">~/android-postmortem/data/media/0/Telegram/Telegram\</span> <span class="pre">Images/</span></code></p>
+<p><img alt="alt text" src="../../_images/image-102.png" /></p>
+<p><strong>Kik</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">thunar</span> <span class="pre">~/android-postmortem/data/media/0/Kik/</span></code></p>
+<p><img alt="alt text" src="../../_images/image-113.png" /></p>
+<p><strong>Snapchat</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">thunar</span> <span class="pre">~/android-postmortem/data/media/0/Snapchat/</span></code></p>
+<p><img alt="alt text" src="../../_images/image-122.png" /></p>
+<ol class="arabic simple" start="8">
+<li><p>Aplicaciones  instaladas  en  el  dispositivo</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/user/0/com.android.vending/databases/localappstate.db</span></code></p>
+<p><img alt="alt text" src="../../_images/image-132.png" /></p>
+<ol class="arabic simple" start="9">
+<li><p>Búsquedas  realizadas  en  Play  Store</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/user/0/com.android.vending/databases/suggestions.db</span></code></p>
+<p><img alt="alt text" src="../../_images/image-142.png" /></p>
+<ol class="arabic simple" start="10">
+<li><p>Cuentas  de  usuario  registradas.</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/system_ce/0/accounts_ce.db</span></code></p>
+<p><img alt="alt text" src="../../_images/image-152.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/system_de/0/accounts_de.db</span></code></p>
+<p><img alt="alt text" src="../../_images/image-162.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/system_de/10/accounts_de.db</span></code></p>
+<p><img alt="alt text" src="../../_images/image-172.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">data/data/com.android.vending/shared_prefs/lastAccount.xml</span></code></p>
+<p><img alt="alt text" src="../../_images/image-182.png" /></p>
+<ol class="arabic simple" start="11">
+<li><p>Estadísticas  de  uso  de  aplicaciones</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">data/user/0/com.google.android.apps.turbo/shared_prefs/app_usage_stats.xml</span></code></p>
+<p><img alt="alt text" src="../../_images/image-192.png" /></p>
+<ol class="arabic simple" start="12">
+<li><p>Eventos de uso de aplicaciones y dispositivos</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/data/com.google.android.apps.wellbeing/databases/app_usage</span></code></p>
+<p><img alt="alt text" src="../../_images/image-202.png" /></p>
+<ol class="arabic simple" start="13">
+<li><p>Actividades de aplicaciones y dispositivos</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/data/com.google.android.as/databases/reflection_gel_events.db</span></code></p>
+<p>TBD, en este caso no existe, explicar qué ser ddebería ver. poner la explicación resumida de Julio: Esta almacena información utilizada por los Servicios de Personalización del Dispositivo (DPS), que recopilan diversas estadísticas de uso para predecir y sugerir aplicaciones y contenido al usuario. Una característica destacada de esta base de datos es que puede conservar registros de aplicaciones que fueron eliminadas del dispositivo. Los artefactos de reflection_gel_events.db pueden ayudar a establecer una línea de tiempo detallada de eventos en el dispositivo durante un periodo de tiempo más amplio que el que registran los datos de Digital Wellbeing. Aunque en este caso no encontramos esta base de datos en el dispositivo.</p>
+<p><img alt="alt text" src="../../_images/image-213.png" /></p>
+<ol class="arabic simple" start="14">
+<li><p>Mensajes  intercambiados  en  Facebook</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/user/0/com.facebook.orca/databases/threads_db2</span></code></p>
+<p><img alt="alt text" src="../../_images/image-222.png" /></p>
+<ol class="arabic simple" start="15">
+<li><p>Mensajes de Instagram.</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/user/0/com.instagram.android/databases/direct.db</span></code></p>
+<p><img alt="alt text" src="../../_images/image-232.png" /></p>
+<ol class="arabic simple" start="16">
+<li><p>Mensajes de Twitter.</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/data/com.twitter.android/databases/1068228364824178689-61.db</span></code></p>
+<p><img alt="alt text" src="../../_images/image-242.png" /></p>
+<ol class="arabic simple" start="17">
+<li><p>Mensajes de Telegram.</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/user/0/org.telegram.messenger/files/cache4.db</span></code></p>
+<p><img alt="alt text" src="../../_images/image-252.png" /></p>
+<ol class="arabic simple" start="18">
+<li><p>Mensajes de Tiktok.</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/user/0/com.zhiliaoapp.musically/databases/6787436503258760198_im.db</span></code></p>
+<p><img alt="alt text" src="../../_images/image-262.png" /></p>
+<ol class="arabic simple" start="19">
+<li><p>Mensajes de SnapChat.</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/user/0/com.snapchat.android/databases/main.db</span></code></p>
+<p><img alt="alt text" src="../../_images/image-272.png" /></p>
+<ol class="arabic simple" start="20">
+<li><p>Mensajes de Signal.</p></li>
+</ol>
+<ul class="simple">
+<li><p>/data/user/0/org.thoughtcrime.securesms/databases/signal.db</p></li>
+<li><p>/data/misc/keystore/user_0/10244_USRSKEY_SignalSecret</p></li>
+<li><p>/data/user/0/org.thoughtcrime.securesms\shared_prefs\org.thoughtcrime.securesms_preferences.xml</p></li>
+</ul>
+<p>están cifrados y no se pueden descrifrar. Julio tiene esto:</p>
+<p>La base de datos de Signal se encuentra encriptada por lo que debemos seguir el siguiente proceso para poder acceder al contenido.</p>
+<p>Signal utiliza el método de cifrado AES en modo GCM para cifrar su base de datos mediante SQLCipher. Primero, se obtiene la clave SQLCipher, y luego se utiliza una clave AES-GCM derivada de USERKEY + IV para cifrar la base de datos. Estos valores se almacenan en el archivo org.thoughtcrime.securesms_preferences.xml. Para descifrar la base de datos, es necesario invertir el proceso para obtener la clave SQLCipher.</p>
+<p>Aunque actualmente no he conseguido acceder a la base de datos de Signal.</p>
+<p><img alt="alt text" src="../../_images/image-282.png" /></p>
+<ol class="arabic simple" start="21">
+<li><p>Mensajes y nombre de ficheros adjuntos intercambiado con ProtonMail</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/user/0/ch.protonmail.android/databases/dGhpc2lzZGZpckBwcm90b25tYWlsLmNvbQ=\=-MessagesDatabase.db</span></code></p>
+<p><img alt="alt text" src="../../_images/image-292.png" /></p>
+<ol class="arabic simple" start="22">
+<li><p>Mensajes  de  Whatsapp</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/data/com.whatsapp/databases/msgstore.db</span></code></p>
+<p><img alt="alt text" src="../../_images/image-302.png" /></p>
+<ol class="arabic simple" start="23">
+<li><p>Websites visitados con Chrome</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/data/com.android.chrome/app_chrome/Default/History</span></code></p>
+<p><img alt="alt text" src="../../_images/image-313.png" /></p>
+<ol class="arabic simple" start="24">
+<li><p>Websites visitados con Firefox (places.sqlite)</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/data/org.mozilla.firefox/files/places.sqlite</span></code></p>
+<p><img alt="alt text" src="../../_images/image-322.png" /></p>
+<ol class="arabic simple" start="25">
+<li><p>Mensajes de Gmail</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/data/com.google.android.gm/databases/bigTopDataDB.-1294433372</span></code></p>
+<p><img alt="alt text" src="../../_images/image-332.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">thunar</span> <span class="pre">data/data/com.google.android.gm/files/downloads/5761130b154b62887de36515992b44d3/attachments/d_0_0_e5ba0594_aab96d52_b09148ce_17639171_ec181ca8</span></code></p>
+<p><img alt="alt text" src="../../_images/image-342.png" /></p>
+<ol class="arabic simple" start="26">
+<li><p>Navegaciones realizadas con Google Maps</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">sqlitebrowser</span> <span class="pre">data/data/com.google.android.apps.maps/databases/gmm_sync.db</span></code></p>
+<p><img alt="alt text" src="../../_images/image-351.png" /></p>
+</section>
+</section>
+<section id="forense-ios-automatizada">
+<h2>Forense iOS Automatizada<a class="headerlink" href="#forense-ios-automatizada" title="Link to this heading">¶</a></h2>
+<section id="objetivo">
+<h3>Objetivo<a class="headerlink" href="#objetivo" title="Link to this heading">¶</a></h3>
+<p>Realizar un análisis forense de un dispositivo iPhone SE, extrayendo e interpretando los artefactos digitales relevantes mediante la herramienta iLEAPP, a partir de un backup lógico sin jailbreak (checkra1n utility).</p>
+</section>
+<section id="detalles-del-dispositivo">
+<h3>Detalles del Dispositivo<a class="headerlink" href="#detalles-del-dispositivo" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Make iPhone SE</p></li>
+<li><p>Model A1662 (Rose Gold)</p></li>
+<li><p>Order Number MLXL2LL/2</p></li>
+<li><p>RAM 2 GB</p></li>
+<li><p>Storage 64 GB</p></li>
+<li><p>Carrier Google Fi</p></li>
+<li><p>Phone Number 919-579-4674</p></li>
+<li><p>Serial DX3T126VH2XV</p></li>
+<li><p>Wi-Fi MAC A0:D7:95:79:DD:A1</p></li>
+<li><p>BT MAC A0:D7:95:79:DD:A2</p></li>
+<li><p>iOS Version 13.4.1 (Build 17E262)</p></li>
+<li><p>Passcode 0731</p></li>
+</ul>
+</section>
+<section id="adquisicion-forense">
+<h3>Adquisición Forense:<a class="headerlink" href="#adquisicion-forense" title="Link to this heading">¶</a></h3>
+<ol class="arabic simple">
+<li><p>Método de adquisición: Backup lógico vía iTunes. Pulsa <a class="reference external" href="https://drive.google.com/file/d/1npTXJTNtt2gmMhJ8fAw0FFuq7XBsjcwf/view">aquí</a> para obtener el fichero de backup</p></li>
+</ol>
+<ul class="simple">
+<li><p>Formato obtenido: Archivo .zip.</p></li>
+<li><p>Contraseña del backup cifrado: mypassword123</p></li>
+<li><p>No se realizó jailbreak al dispositivo.</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p>Método de adquisición: Magnet Acquire y volcado completo del dispositivo. Pulsa <a class="reference external" href="https://drive.google.com/file/d/1j7fUmxzmk_R2fWP9v1XFPGfEef3wUAXd/view">aquí</a> para obtener la imagen del dispositivo. Usarás esta imagen en el segundo informe que se generará más adelante.</p></li>
+</ol>
+</section>
+<section id="herramientas-a-utilizar">
+<h3>Herramientas a Utilizar:<a class="headerlink" href="#herramientas-a-utilizar" title="Link to this heading">¶</a></h3>
+<p><strong>iLEAPP (iOS Logs Events And Preferences Parser)</strong></p>
+<ul class="simple">
+<li><p>Desarrollada por Alexis Brignoni y Yogesh Khatri.</p></li>
+<li><p>Permite analizar respaldos de iTunes/iOS para extraer artefactos forenses.</p></li>
+</ul>
+<p><strong>Itunes Backup Explorer</strong></p>
+<ul class="simple">
+<li><p>Permite transformar decodificar los backups de iOS</p></li>
+</ul>
+</section>
+</section>
+<section id="pasos-a-seguir">
+<h2>Pasos a Seguir<a class="headerlink" href="#pasos-a-seguir" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Preparación del Entorno</p></li>
+</ol>
+<ul class="simple">
+<li><p>Utiliza un equipo con sistema operativo Windows/Linux/macOS.</p></li>
+<li><p>Descarga e instala iLEAPP desde el <a class="reference external" href="https://github.com/abrignoni/iLEAPP">repositorio oficial</a>:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>wget<span class="w"> </span>https://github.com/abrignoni/iLEAPP/releases/download/v2.5.0/ileappGUI-v2.5.0-Linux_x86_64.AppImage
+chmod<span class="w"> </span>+x<span class="w"> </span>ileappGUI-v2.5.0-Linux_x86_64.AppImage
+./ileappGUI-v2.5.0-Linux_x86_64.AppImage
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-382.png" /></p>
+<ol class="arabic simple" start="2">
+<li><p>Descomprimir el Backup</p></li>
+</ol>
+<ul class="simple">
+<li><p>Descomprime el archivo .zip del backup en una carpeta local.</p></li>
+<li><p>Decodifica la carpeta con el backup descomprimido usando la aplicacion “Itunes Backup Explorer”. Si se solicita, introduce la contraseña: mypassword123.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>unzip<span class="w"> </span>c623fbd7e91b041e07a68f8523f53a35973e475d.zip
+mkdir<span class="w"> </span>input<span class="w"> </span>output
+wget<span class="w"> </span>https://github.com/MaxiHuHe04/iTunes-Backup-Explorer/releases/download/v1.7/itunes-backup-explorer_1.7_debian_x64.deb
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>./itunes-backup-explorer_1.7_debian_x64.deb
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-392.png" /></p>
+<p><img alt="alt text" src="../../_images/image-402.png" /></p>
+<p><img alt="alt text" src="../../_images/image-411.png" /></p>
+<p><img alt="alt text" src="../../_images/image-422.png" /></p>
+<p><img alt="alt text" src="../../_images/image-432.png" /></p>
+<p><img alt="alt text" src="../../_images/image-442.png" /></p>
+<p><img alt="alt text" src="../../_images/image-451.png" /></p>
+<p><img alt="alt text" src="../../_images/image-461.png" /></p>
+<ol class="arabic simple" start="3">
+<li><p>Ejecutar iLEAPP</p></li>
+</ol>
+<ul class="simple">
+<li><p>Abre iLEAPP y selecciona como entrada la carpeta descomprimida y decodificada del backup.</p></li>
+<li><p>Define una carpeta de salida para el informe.</p></li>
+<li><p>Inicia el análisis automático.</p></li>
+</ul>
+<p><img alt="alt text" src="../../_images/image-471.png" /></p>
+<p><img alt="alt text" src="../../_images/image-481.png" /></p>
+<p><img alt="alt text" src="../../_images/image-491.png" /></p>
+<ol class="arabic simple" start="4">
+<li><p>Revisión del Informe</p></li>
+</ol>
+<ul class="simple">
+<li><p>Al finalizar, iLEAPP generará un informe HTML con múltiples pestañas.</p></li>
+<li><p>Revisa especialmente los siguientes artefactos:</p></li>
+</ul>
+<p><strong>Safari: Historial de navegación.</strong></p>
+<p><img alt="alt text" src="../../_images/image-501.png" /></p>
+<p><strong>Location Services: Registros de localización GPS.</strong></p>
+<p>Not found</p>
+<p><strong>iMessage / SMS: Conversaciones.</strong></p>
+<p><img alt="alt text" src="../../_images/image-512.png" /></p>
+<p><strong>Installed Apps: Lista de aplicaciones.</strong></p>
+<p><img alt="alt text" src="../../_images/image-521.png" /></p>
+<p><img alt="alt text" src="../../_images/image-531.png" /></p>
+<p><strong>Battery Usage: Actividad de apps.</strong></p>
+<p>Not found</p>
+<p><strong>Network Connections: Conexiones Wi-Fi conocidas.</strong></p>
+<p><img alt="alt text" src="../../_images/image-541.png" /></p>
+<p><strong>Lockdown / Device Info: Información del dispositivo</strong></p>
+<p><img alt="alt text" src="../../_images/image-551.png" /></p>
+<p><img alt="alt text" src="../../_images/image-561.png" /></p>
+<ol class="arabic simple" start="5">
+<li><p>Realiza un Segundo Informe con iLEAPP</p></li>
+</ol>
+<ul class="simple">
+<li><p>Usaremos la imagen del dispositivo completa, sin necesidad de descomprimir, con la aplicación iLEAPP.</p></li>
+<li><p>Compara este informe con el anterior y verifica que es mucho más completo.</p></li>
+</ul>
+<p><img alt="alt text" src="../../_images/image-581.png" /></p>
+<p><strong>Safari: Historial de navegación.</strong></p>
+<p><img alt="alt text" src="../../_images/image-591.png" /></p>
+<p><strong>Location Services: Registros de localización GPS.</strong></p>
+<p><img alt="alt text" src="../../_images/image-631.png" /></p>
+<p><strong>iMessage / SMS: Conversaciones.</strong></p>
+<p><img alt="alt text" src="../../_images/image-601.png" /></p>
+<p><strong>Installed Apps: Lista de aplicaciones.</strong></p>
+<p><img alt="alt text" src="../../_images/image-611.png" /></p>
+<p><strong>Battery Usage: Actividad de apps.</strong></p>
+<p><img alt="alt text" src="../../_images/image-621.png" /></p>
+<p><strong>Network Connections: Conexiones Wi-Fi conocidas.</strong></p>
+<p><img alt="alt text" src="../../_images/image-641.png" /></p>
+<p><strong>Lockdown / Device Info: Información del dispositivo</strong></p>
+<p><img alt="alt text" src="../../_images/image-66.png" /></p>
+<p><img alt="alt text" src="../../_images/image-651.png" /></p>
 </section>
 </section>
 
@@ -334,8 +697,22 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Android forensics advanced</a><ul>
-<li><a class="reference internal" href="#tbd">TBD</a></li>
+<li><a class="reference internal" href="#">Android and IOS forensics advanced</a><ul>
+<li><a class="reference internal" href="#forense-android-manual">Forense Android Manual</a><ul>
+<li><a class="reference internal" href="#detalles-del-sistema-y-version-de-android">Detalles del sistema y versión de Android:</a></li>
+<li><a class="reference internal" href="#proceso-de-generacion-de-la-imagen-forense">Proceso de generación de la imagen forense</a></li>
+<li><a class="reference internal" href="#finalidad-y-herramientas-de-analisis">Finalidad y herramientas de análisis</a></li>
+<li><a class="reference internal" href="#analysis">Analysis</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#forense-ios-automatizada">Forense iOS Automatizada</a><ul>
+<li><a class="reference internal" href="#objetivo">Objetivo</a></li>
+<li><a class="reference internal" href="#detalles-del-dispositivo">Detalles del Dispositivo</a></li>
+<li><a class="reference internal" href="#adquisicion-forense">Adquisición Forense:</a></li>
+<li><a class="reference internal" href="#herramientas-a-utilizar">Herramientas a Utilizar:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pasos-a-seguir">Pasos a Seguir</a></li>
 </ul>
 </li>
 </ul>

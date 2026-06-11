@@ -216,12 +216,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise2/exercise2.html">Memory Dump</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise3/exercise3.html">Compile tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise4/exercise4.html">Volatility Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise5/exercise5.html">Linux challenges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise6/exercise6.html">Forensic analysis with diferent Linux file systems.</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Android:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../android/exercise1/exercise1.html">Android forensics basics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../android/exercise2/exercise2.html">Android forensics medium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../android/exercise3/exercise3.html">Android forensics advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../android/exercise3/exercise3.html">Android and IOS forensics advanced</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Cloud:</span></p>
 <ul class="current">
@@ -301,18 +303,18 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vmrun<span class="w"> </span>list
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-32.png" /></p>
+<p><img alt="alt text" src="../../_images/image-323.png" /></p>
 </section>
 <section id="create-a-snapshot">
 <h3>Create a snapshot<a class="headerlink" href="#create-a-snapshot" title="Link to this heading">¶</a></h3>
 <p>A snapshot freezes the VM’s disk and memory state at a point in time. It can be taken from the VMware GUI:</p>
-<p><img alt="alt text" src="../../_images/image-52.png" /></p>
+<p><img alt="alt text" src="../../_images/image-514.png" /></p>
 <p>Or from the command line (paths and snapshot name match this lab environment):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vmrun<span class="w"> </span>snapshot<span class="w"> </span><span class="s2">&quot;/home/adrian/desktop/vmware/DC-1/DC-1.vmx&quot;</span><span class="w"> </span><span class="s2">&quot;Snapshot 3&quot;</span>
 </pre></div>
 </div>
 <p>The snapshot files are written under the VM’s directory. For analysis with Linux tooling, the snapshot bundle was copied to a <strong>Kali</strong> machine.</p>
-<p><img alt="alt text" src="../../_images/image-62.png" /></p>
+<p><img alt="alt text" src="../../_images/image-68.png" /></p>
 </section>
 <section id="analyze-the-memory-image">
 <h3>Analyze the memory image<a class="headerlink" href="#analyze-the-memory-image" title="Link to this heading">¶</a></h3>
@@ -320,7 +322,7 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>DC-1-Snapshot3.vmem<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>banners.Banner
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-72.png" /></p>
+<p><img alt="alt text" src="../../_images/image-74.png" /></p>
 <p>The <code class="docutils literal notranslate"><span class="pre">banners.Banner</span></code> plugin reports operating-system banners detected in the dump, which validates that the memory file is usable before running further plugins.</p>
 </section>
 </section>
@@ -330,13 +332,13 @@
 <section id="deploy-a-virtual-machine">
 <h3>Deploy a virtual machine<a class="headerlink" href="#deploy-a-virtual-machine" title="Link to this heading">¶</a></h3>
 <p>Sign in to the <a class="reference external" href="https://portal.azure.com">Azure portal</a> and open <strong>Virtual machines</strong>.</p>
-<p><img alt="alt text" src="../../_images/image2.png" /></p>
+<p><img alt="alt text" src="../../_images/image4.png" /></p>
 <p>Select <strong>Create</strong> → <strong>Virtual machine</strong>.</p>
-<p><img alt="alt text" src="../../_images/image-110.png" /></p>
+<p><img alt="alt text" src="../../_images/image-116.png" /></p>
 <p>Configure the VM (region, size, authentication method, and networking) according to lab requirements.</p>
-<p><img alt="alt text" src="../../_images/image-25.png" /></p>
+<p><img alt="alt text" src="../../_images/image-216.png" /></p>
 <p>After deployment completes, the VM overview blade shows connection details and status.</p>
-<p><img alt="alt text" src="../../_images/image-33.png" /></p>
+<p><img alt="alt text" src="../../_images/image-315.png" /></p>
 </section>
 <section id="acquire-memory-from-the-running-vm">
 <h3>Acquire memory from the running VM<a class="headerlink" href="#acquire-memory-from-the-running-vm" title="Link to this heading">¶</a></h3>
@@ -344,7 +346,7 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh<span class="w"> </span>-i<span class="w"> </span>&lt;private-key&gt;<span class="w"> </span>azureuser@9.223.178.153
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-41.png" /></p>
+<p><img alt="alt text" src="../../_images/image-413.png" /></p>
 <p>On the guest, download <strong>AVML</strong> (Azure VM Memory Logger) and capture physical memory to a raw file:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>https://github.com/microsoft/avml/releases/latest/download/avml
 chmod<span class="w"> </span>+x<span class="w"> </span>avml
@@ -352,30 +354,30 @@ sudo<span class="w"> </span>./avml<span class="w"> </span>memdump.raw
 sudo<span class="w"> </span>chown<span class="w"> </span>azureuser:azureuser<span class="w"> </span>memdump.raw
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-82.png" /></p>
+<p><img alt="alt text" src="../../_images/image-84.png" /></p>
 <p>Copy the dump to the forensic workstation with <strong>SCP</strong>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scp<span class="w"> </span>-i<span class="w"> </span>azure-forensics-key.pem<span class="w"> </span>azureuser@9.223.178.153:~/memdump.raw<span class="w"> </span>.
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-212.png" /></p>
+<p><img alt="alt text" src="../../_images/image-217.png" /></p>
 <p>Analyze the dump locally with Volatility 3:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>vol3<span class="w"> </span>-f<span class="w"> </span>memdump.raw<span class="w"> </span>-s<span class="w"> </span>~/desktop/tools/volatility3/volatility3/symbols/<span class="w"> </span>banners.Banner
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-221.png" /></p>
+<p><img alt="alt text" src="../../_images/image-224.png" /></p>
 </section>
 <section id="create-a-disk-snapshot-azure-portal">
 <h3>Create a disk snapshot (Azure portal)<a class="headerlink" href="#create-a-disk-snapshot-azure-portal" title="Link to this heading">¶</a></h3>
 <p>To preserve the OS disk without powering off the VM, open the VM’s <strong>Disks</strong> blade and select the attached OS disk.</p>
-<p><img alt="alt text" src="../../_images/image-92.png" /></p>
+<p><img alt="alt text" src="../../_images/image-94.png" /></p>
 <p>Choose <strong>Create snapshot</strong>.</p>
-<p><img alt="alt text" src="../../_images/image-102.png" /></p>
+<p><img alt="alt text" src="../../_images/image-104.png" /></p>
 <p>Enter a snapshot name and resource group, then select <strong>Review + create</strong>.</p>
-<p><img alt="alt text" src="../../_images/image-112.png" /></p>
+<p><img alt="alt text" src="../../_images/image-117.png" /></p>
 <p>Confirm that validation passes and select <strong>Create</strong>.</p>
-<p><img alt="alt text" src="../../_images/image-122.png" /></p>
+<p><img alt="alt text" src="../../_images/image-124.png" /></p>
 <p>When deployment finishes, the snapshot appears as <strong>Succeeded</strong> in the resource list.</p>
-<p><img alt="alt text" src="../../_images/image-142.png" /></p>
+<p><img alt="alt text" src="../../_images/image-144.png" /></p>
 </section>
 <section id="export-the-snapshot-with-azure-cli">
 <h3>Export the snapshot with Azure CLI<a class="headerlink" href="#export-the-snapshot-with-azure-cli" title="Link to this heading">¶</a></h3>
@@ -384,15 +386,15 @@ sudo<span class="w"> </span>chown<span class="w"> </span>azureuser:azureuser<spa
 az<span class="w"> </span>login
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-162.png" /></p>
+<p><img alt="alt text" src="../../_images/image-164.png" /></p>
 <p>The CLI prints a device-login code; open the URL shown in the terminal in a browser and complete authentication.</p>
-<p><img alt="alt text" src="../../_images/image-152.png" /></p>
+<p><img alt="alt text" src="../../_images/image-154.png" /></p>
 <p>Sign in with the Azure account email and confirm access.</p>
-<p><img alt="alt text" src="../../_images/image-172.png" /></p>
+<p><img alt="alt text" src="../../_images/image-174.png" /></p>
 <p>After authentication, the browser session can be closed; the CLI session in the container reports a successful login.</p>
-<p><img alt="alt text" src="../../_images/image-182.png" /></p>
+<p><img alt="alt text" src="../../_images/image-184.png" /></p>
 <p>The terminal returns to an interactive Azure CLI prompt.</p>
-<p><img alt="alt text" src="../../_images/image-192.png" /></p>
+<p><img alt="alt text" src="../../_images/image-194.png" /></p>
 <p>Grant read-only access to the snapshot and obtain a <strong>time-limited SAS URL</strong> (valid for 3600 seconds in this example):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>snapshot<span class="w"> </span>grant-access<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--resource-group<span class="w"> </span>forensics<span class="w"> </span><span class="se">\</span>
@@ -400,7 +402,7 @@ az<span class="w"> </span>login
 <span class="w">  </span>--duration-in-seconds<span class="w"> </span><span class="m">3600</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-201.png" /></p>
+<p><img alt="alt text" src="../../_images/image-204.png" /></p>
 <p>The command returns JSON containing <code class="docutils literal notranslate"><span class="pre">accessSAS</span></code>. Example output:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
 <span class="w">  </span><span class="nt">&quot;accessSAS&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://md-d3hcbtldht5q.z31.blob.storage.azure.net/mmjzwc4ms50k/abcd?snapshot=2026-05-16T20%3A11%3A11.0777366Z&amp;sv=2018-11-09&amp;sr=bs&amp;si=ac513c6f073b4bf0ae1dbe1708e749d33e75b39012e740e1832fe1c1e332dd67&amp;sig=1GPN32p0qzTJJLwQx46zwOh%2FLxw8Jrez2BDSWQVTffM%3D&quot;</span>
@@ -408,7 +410,7 @@ az<span class="w"> </span>login
 </pre></div>
 </div>
 <p>Paste the SAS URL into a browser; the snapshot VHD begins downloading without attaching the disk to a running VM.</p>
-<p><img alt="alt text" src="../../_images/image-231.png" /></p>
+<p><img alt="alt text" src="../../_images/image-234.png" /></p>
 </section>
 <section id="clone-the-disk-with-libcloudforensics">
 <h3>Clone the disk with libcloudforensics<a class="headerlink" href="#clone-the-disk-with-libcloudforensics" title="Link to this heading">¶</a></h3>
@@ -416,12 +418,12 @@ az<span class="w"> </span>login
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>account<span class="w"> </span>show
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-241.png" /></p>
+<p><img alt="alt text" src="../../_images/image-244.png" /></p>
 <p>Create an application registration for forensics automation:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>ad<span class="w"> </span>sp<span class="w"> </span>create-for-rbac<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;forensics-sp&quot;</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-251.png" /></p>
+<p><img alt="alt text" src="../../_images/image-253.png" /></p>
 <p>Assign <strong>Contributor</strong> (or a narrower custom role, if policy allows) on the subscription scope:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>az<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--assignee<span class="w"> </span>&lt;appId&gt;<span class="w"> </span><span class="se">\</span>
@@ -429,7 +431,7 @@ az<span class="w"> </span>login
 <span class="w">  </span>--scope<span class="w"> </span>/subscriptions/&lt;id&gt;
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-26.png" /></p>
+<p><img alt="alt text" src="../../_images/image-263.png" /></p>
 <p>Create a Python virtual environment and install <strong>libcloudforensics</strong>:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
 <span class="nb">source</span><span class="w"> </span>venv/bin/activate
@@ -443,14 +445,14 @@ pip<span class="w"> </span>install<span class="w"> </span>libcloudforensics
 <span class="nb">export</span><span class="w"> </span><span class="nv">AZURE_CLIENT_SECRET</span><span class="o">=</span><span class="s2">&quot;&lt;client-secret&gt;&quot;</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-30.png" /></p>
+<p><img alt="alt text" src="../../_images/image-303.png" /></p>
 <p>A short Python script invokes the library to copy the target disk to a storage account or local export path (content as captured in the lab):</p>
-<p><img alt="alt text" src="../../_images/image-28.png" /></p>
+<p><img alt="alt text" src="../../_images/image-283.png" /></p>
 <p>Run the script:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>forensics.py
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-311.png" /></p>
+<p><img alt="alt text" src="../../_images/image-316.png" /></p>
 <p>The library provisions the copy operation in Azure; when it completes, the cloned disk image is available for imaging tools or mount-and-extract workflows on the forensic workstation.</p>
 </section>
 </section>

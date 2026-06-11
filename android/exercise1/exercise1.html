@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Android forensics medium" href="../exercise2/exercise2.html"><link rel="prev" title="&lt;no title&gt;" href="../../linux-file-system/exercise5/exercise5.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Android forensics medium" href="../exercise2/exercise2.html"><link rel="prev" title="Forensic analysis with diferent Linux file systems." href="../../linux-file-system/exercise6/exercise6.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
         <title>Android forensics basics - Digital Forensics Notes documentation</title>
@@ -216,12 +216,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise2/exercise2.html">Memory Dump</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise3/exercise3.html">Compile tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise4/exercise4.html">Volatility Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise5/exercise5.html">Linux challenges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise6/exercise6.html">Forensic analysis with diferent Linux file systems.</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Android:</span></p>
 <ul class="current">
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Android forensics basics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../exercise2/exercise2.html">Android forensics medium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../exercise3/exercise3.html">Android forensics advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../exercise3/exercise3.html">Android and IOS forensics advanced</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Cloud:</span></p>
 <ul>
@@ -317,11 +319,10 @@
 </ul>
 </section>
 <section id="familiarization-with-android">
-<h2>1) Familiarization with Android<a class="headerlink" href="#familiarization-with-android" title="Link to this heading">¶</a></h2>
-<section id="a-install-android-studio">
-<h3><strong>a) Install Android Studio</strong><a class="headerlink" href="#a-install-android-studio" title="Link to this heading">¶</a></h3>
-<p>Android Studio can be downloaded from the official website:</p>
-<p>https://developer.android.com/studio</p>
+<h2>Familiarization with Android<a class="headerlink" href="#familiarization-with-android" title="Link to this heading">¶</a></h2>
+<section id="install-android-studio">
+<h3>Install Android Studio**<a class="headerlink" href="#install-android-studio" title="Link to this heading">¶</a></h3>
+<p>Android Studio can be downloaded from the <a class="reference external" href="https://developer.android.com/studio">official website</a>:</p>
 <p>Installation on Debian/Ubuntu:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update
 sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>openjdk-17-jdk<span class="w"> </span>-y
@@ -335,25 +336,17 @@ sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> <
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>-xvf<span class="w"> </span>android-studio-linux.tar.gz
 </pre></div>
 </div>
+<p>Open it.</p>
 <p><img alt="alt text" src="../../_images/image.png" /></p>
+<p>A menu similar to the shown below should appear.</p>
 <p><img alt="alt text" src="../../_images/image-1.png" /></p>
+<p>In order to know the available devices, click on “More Actions” –&gt; “Virtual Device Manager”.</p>
 <p><img alt="alt text" src="../../_images/image-3.png" /></p>
 <p><img alt="alt text" src="../../_images/image-2.png" /></p>
 </section>
-<hr class="docutils" />
-<section id="b-run-an-android-virtual-device-avd">
-<h3><strong>b) Run an Android Virtual Device (AVD)</strong><a class="headerlink" href="#b-run-an-android-virtual-device-avd" title="Link to this heading">¶</a></h3>
-<p>Once Android Studio is installed:</p>
-<ol class="arabic simple">
-<li><p>Create any project.</p></li>
-<li><p>Open <code class="docutils literal notranslate"><span class="pre">Device</span> <span class="pre">Manager</span></code>.</p></li>
-<li><p>Create a virtual device.</p></li>
-<li><p>Select a Google Pixel image.</p></li>
-<li><p>Download the Android system image.</p></li>
-<li><p>Start the emulator using the Play button.</p></li>
-</ol>
-<p>Alternative command-line execution:</p>
-<p>To install the <code class="docutils literal notranslate"><span class="pre">.apk</span></code>, an emulator is required. Create an emulator using the following command:</p>
+<section id="run-an-android-virtual-device-avd">
+<h3>Run an Android Virtual Device (AVD)**<a class="headerlink" href="#run-an-android-virtual-device-avd" title="Link to this heading">¶</a></h3>
+<p>Create an emulator using the the previous GUI or using the following command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>avdmanager<span class="w"> </span>create<span class="w"> </span>avd<span class="w"> </span>-n<span class="w"> </span>Android26<span class="w"> </span>-k<span class="w"> </span><span class="s2">&quot;system-images;android-26;default;x86_64&quot;</span><span class="w"> </span>-c<span class="w"> </span>10M
 </pre></div>
 </div>
@@ -368,9 +361,8 @@ sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> <
 </div>
 <p><img alt="alt text" src="../../_images/image-6.png" /></p>
 </section>
-<hr class="docutils" />
-<section id="c-install-android-debug-bridge-adb-platform-tools">
-<h3><strong>c) Install Android Debug Bridge (ADB Platform Tools)</strong><a class="headerlink" href="#c-install-android-debug-bridge-adb-platform-tools" title="Link to this heading">¶</a></h3>
+<section id="install-android-debug-bridge-adb-platform-tools-and-test-it">
+<h3>Install Android Debug Bridge (ADB Platform Tools) and test it**<a class="headerlink" href="#install-android-debug-bridge-adb-platform-tools-and-test-it" title="Link to this heading">¶</a></h3>
 <p>Installation on Debian/Ubuntu:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update
 sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>adb<span class="w"> </span>fastboot<span class="w"> </span>-y
@@ -381,18 +373,6 @@ sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> <
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-7.png" /></p>
-<p>Start ADB server:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>start-server
-</pre></div>
-</div>
-<p>Stop ADB server:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>kill-server
-</pre></div>
-</div>
-</section>
-<hr class="docutils" />
-<section id="d-enable-debugging-and-practice-adb-commands">
-<h3><strong>d) Enable debugging and practice ADB commands</strong><a class="headerlink" href="#d-enable-debugging-and-practice-adb-commands" title="Link to this heading">¶</a></h3>
 <p>Inside the emulator:</p>
 <ol class="arabic simple">
 <li><p>Open <code class="docutils literal notranslate"><span class="pre">Settings</span></code>.</p></li>
@@ -402,8 +382,14 @@ sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> <
 <li><p>Go to <code class="docutils literal notranslate"><span class="pre">Developer</span> <span class="pre">Options</span></code>.</p></li>
 <li><p>Enable <code class="docutils literal notranslate"><span class="pre">USB</span> <span class="pre">debugging</span></code>.</p></li>
 </ol>
-<section id="adb-commands">
-<h4>ADB Commands<a class="headerlink" href="#adb-commands" title="Link to this heading">¶</a></h4>
+<p>Start ADB server:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>start-server
+</pre></div>
+</div>
+<p>Stop ADB server:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>kill-server
+</pre></div>
+</div>
 <p>List devices:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>devices
 </pre></div>
@@ -466,166 +452,115 @@ adb<span class="w"> </span>push<span class="w"> </span>hello.txt<span class="w">
 <p><img alt="alt text" src="../../_images/image-18.png" /></p>
 </section>
 </section>
-</section>
-<hr class="docutils" />
 <section id="android-virtualization-close-to-real-conditions">
-<h2>2) Android Virtualization Close to Real Conditions<a class="headerlink" href="#android-virtualization-close-to-real-conditions" title="Link to this heading">¶</a></h2>
-<section id="a-download-android-x86">
-<h3><strong>a) Download Android x86</strong><a class="headerlink" href="#a-download-android-x86" title="Link to this heading">¶</a></h3>
-<p>Official website:</p>
-<p>https://www.android-x86.org/</p>
-<p>Download ISO using wget:</p>
+<h2>Android Virtualization Close to Real Conditions<a class="headerlink" href="#android-virtualization-close-to-real-conditions" title="Link to this heading">¶</a></h2>
+<p>Download Android from the <a class="reference external" href="https://www.android-x86.org/">official website</a> or using wget:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget<span class="w"> </span>https://sourceforge.net/projects/android-x86/files/latest/download<span class="w"> </span>-O<span class="w"> </span>android-x86.iso
 </pre></div>
 </div>
-<p>Verify ISO:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sha256sum<span class="w"> </span>android-x86.iso
-</pre></div>
-</div>
-</section>
-<hr class="docutils" />
-<section id="b-create-a-32-bit-linux-vm">
-<h3><strong>b) Create a 32-bit Linux VM</strong><a class="headerlink" href="#b-create-a-32-bit-linux-vm" title="Link to this heading">¶</a></h3>
-<p>Recommended VirtualBox configuration:</p>
+<p>Recommended VMWare configuration:</p>
 <ul class="simple">
-<li><p>2GB RAM</p></li>
-<li><p>8GB Hard Disk</p></li>
+<li><p>4GB RAM</p></li>
+<li><p>20GB Hard Disk</p></li>
 <li><p>256MB Video Memory</p></li>
 </ul>
-<p>Create VM using VBoxManage:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>VBoxManage<span class="w"> </span>createvm<span class="w"> </span>--name<span class="w"> </span>AndroidVM<span class="w"> </span>--ostype<span class="w"> </span>Linux_64<span class="w"> </span>--register
+<p>After inicializing the machine, click on “Installation - Install Android-x86 to hardisk”.</p>
+<p><img alt="alt text" src="../../_images/image-19.png" /></p>
+<p>Select the “Create/Modify partitions” option.</p>
+<p><img alt="alt text" src="../../_images/image-20.png" /></p>
+<p>Select “Yes” when asked for GPT.</p>
+<p><img alt="alt text" src="../../_images/image-21.png" /></p>
+<p>And createa “Linux filesystem” partition.</p>
+<p><img alt="alt text" src="../../_images/image-22.png" /></p>
+<p><img alt="alt text" src="../../_images/image-23.png" /></p>
+<p><img alt="alt text" src="../../_images/image-24.png" /></p>
+<p><img alt="alt text" src="../../_images/image-25.png" /></p>
+<p>Once the partition is created, click on “OK”.</p>
+<p><img alt="alt text" src="../../_images/image-26.png" /></p>
+<p>Select “ext4” and click on “OK”.</p>
+<p><img alt="alt text" src="../../_images/image-27.png" /></p>
+<p>Click on “YES” several times until reboot.</p>
+<p><img alt="alt text" src="../../_images/image-28.png" /></p>
+<p><img alt="alt text" src="../../_images/image-29.png" /></p>
+<p><img alt="alt text" src="../../_images/image-30.png" /></p>
+<p><img alt="alt text" src="../../_images/image-31.png" /></p>
+<p><img alt="alt text" src="../../_images/image-32.png" /></p>
+<p>Once the device is rebooted and the ISO is removed, before starting the device, click “e” twice on the GRUB menu to edit it.</p>
+<p><img alt="alt text" src="../../_images/image-33.png" /></p>
+<p><img alt="alt text" src="../../_images/image-34.png" /></p>
+<p>Remove the “quiet” line and type “nomodeseet xforvesa”. Then, click <code class="docutils literal notranslate"><span class="pre">ESC</span></code> + <code class="docutils literal notranslate"><span class="pre">b</span></code>. This step is done because if these words are not added, the mobile will not have graphical interfe, having only a console tty.</p>
+<p><img alt="alt text" src="../../_images/image-35.png" /></p>
+<p><img alt="alt text" src="../../_images/image-36.png" /></p>
+<p>After login, an graphical interface will appear.</p>
+<p><img alt="alt text" src="../../_images/image-37.png" /></p>
+<p>Enable the developer mode in the device as previously with the Android Studio device.</p>
+<p><img alt="alt text" src="../../_images/image-38.png" /></p>
+<p><img alt="alt text" src="../../_images/image-47.png" /></p>
+<p><img alt="alt text" src="../../_images/image-48.png" /></p>
+<p><img alt="alt text" src="../../_images/image-49.png" /></p>
+<p><img alt="alt text" src="../../_images/image-50.png" /></p>
+<p>Lastly, check the IP of the device, there are multiple options, but it can be done opening a terminal and executing the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ip<span class="w"> </span>a
 </pre></div>
 </div>
-<p>Create disk:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>VBoxManage<span class="w"> </span>createmedium<span class="w"> </span>disk<span class="w"> </span>--filename<span class="w"> </span>AndroidVM.vdi<span class="w"> </span>--size<span class="w"> </span><span class="m">8192</span>
-</pre></div>
-</div>
-<p>Set RAM:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>VBoxManage<span class="w"> </span>modifyvm<span class="w"> </span>AndroidVM<span class="w"> </span>--memory<span class="w"> </span><span class="m">2048</span><span class="w"> </span>--vram<span class="w"> </span><span class="m">256</span>
-</pre></div>
-</div>
-<p>Attach disk:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>VBoxManage<span class="w"> </span>storagectl<span class="w"> </span>AndroidVM<span class="w"> </span>--name<span class="w"> </span><span class="s2">&quot;SATA Controller&quot;</span><span class="w"> </span>--add<span class="w"> </span>sata
-</pre></div>
-</div>
-<p>Attach ISO:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>VBoxManage<span class="w"> </span>storageattach<span class="w"> </span>AndroidVM<span class="w"> </span>--storagectl<span class="w"> </span><span class="s2">&quot;SATA Controller&quot;</span><span class="w"> </span>--port<span class="w"> </span><span class="m">0</span><span class="w"> </span>--device<span class="w"> </span><span class="m">0</span><span class="w"> </span>--type<span class="w"> </span>dvddrive<span class="w"> </span>--medium<span class="w"> </span>android-x86.iso
-</pre></div>
-</div>
-</section>
-<hr class="docutils" />
-<section id="c-install-android-in-the-vm">
-<h3><strong>c) Install Android in the VM</strong><a class="headerlink" href="#c-install-android-in-the-vm" title="Link to this heading">¶</a></h3>
-<p>Boot the VM and select:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Installation - Install Android-x86 to harddisk
-</pre></div>
-</div>
-<p>Create partitions.</p>
-<p>Select filesystem:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ext4
-</pre></div>
-</div>
-<p>After installation:</p>
-<p>Remove ISO from the VM.</p>
-<p>Edit GRUB boot parameters:</p>
-<p>Replace:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>quiet
-</pre></div>
-</div>
-<p>With:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>nomodeset xforcevesa
-</pre></div>
-</div>
-<p>Boot the system.</p>
-<p>Configure Android normally.</p>
-<p>Add Google account:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Settings -&gt; Accounts -&gt; Add account
-</pre></div>
-</div>
-<p>Enable synchronization:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Automatically sync data
-</pre></div>
-</div>
-</section>
-<hr class="docutils" />
-<section id="d-install-aflogical-ose-and-perform-forensic-extraction">
-<h3><strong>d) Install AFLogical OSE and perform forensic extraction</strong><a class="headerlink" href="#d-install-aflogical-ose-and-perform-forensic-extraction" title="Link to this heading">¶</a></h3>
-<p>Connect to the Android VM:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>connect<span class="w"> </span><span class="m">10</span>.206.8.1
-</pre></div>
-</div>
-<p>Verify connection:</p>
+<p><img alt="alt text" src="../../_images/image-51.png" /></p>
+<p>In the main machine, connect to the device using adb and shown below. Take note of chaging the IP address by the one extracted in the step before.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>devices
+adb<span class="w"> </span>connect<span class="w"> </span><span class="m">192</span>.168.1.41:5555
+adb<span class="w"> </span>devices
 </pre></div>
 </div>
-<p>Install AFLogical OSE:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>install<span class="w"> </span>AFLogical-OSE_1.5.2.apk
+<p><img alt="alt text" src="../../_images/image-52.png" /></p>
+<p>If we want to add an account, open settings and navigate to the “Accounts” section.</p>
+<p><img alt="alt text" src="../../_images/image-39.png" /></p>
+<p>Click on “Add account”.</p>
+<p><img alt="alt text" src="../../_images/image-40.png" /></p>
+<p>And sign in using any account.</p>
+<p><img alt="alt text" src="../../_images/image-42.png" /></p>
+<p>Once the login is successfull, the account should appear in the menu.</p>
+<p><img alt="alt text" src="../../_images/image-43.png" /></p>
+<p>In order to install AFLogical OSE, download it from <a class="reference external" href="https://github.com/nowsecure/android-forensics">here</a> and execute the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>install<span class="w"> </span>./AFLogical-OSE_1.5.2.apk
 </pre></div>
 </div>
-<p>Launch the application.</p>
-<p>Select:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Select All -&gt; Capture
-</pre></div>
-</div>
-<p>Evidence will be stored inside:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/sdcard/forensics/
-</pre></div>
-</div>
-<p>Extract evidence:</p>
+<p><img alt="alt text" src="../../_images/image-44.png" /></p>
+<p>Select everything and click on “Capture”.</p>
+<p><img alt="alt text" src="../../_images/image-45.png" /></p>
+<p>Once the extraction is done, a dialogue with “Data extraction completed” should appear.</p>
+<p><img alt="alt text" src="../../_images/image-46.png" /></p>
+<p>Extract the evidences folder using the following command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>pull<span class="w"> </span>/sdcard/forensics/<span class="w"> </span>.
 </pre></div>
 </div>
-<p>List extracted files:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls<span class="w"> </span>forensics/
+<p>The following folders should appear.</p>
+<p><img alt="alt text" src="../../_images/image-53.png" /></p>
+<p>Now, the application andriller will be used to extract evidences. Note that it will be done using fish, so it may vary if using other terminals:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>env
+<span class="nb">source</span><span class="w"> </span>env/bin/activate.fish
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>andriller
 </pre></div>
 </div>
-<p>Generate hashes:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sha256sum<span class="w"> </span>forensics/*
-</pre></div>
-</div>
-</section>
-<hr class="docutils" />
-<section id="e-install-andriller-and-perform-evidence-extraction">
-<h3><strong>e) Install Andriller and perform evidence extraction</strong><a class="headerlink" href="#e-install-andriller-and-perform-evidence-extraction" title="Link to this heading">¶</a></h3>
-<p>Create virtual environment:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>env
-</pre></div>
-</div>
-<p>Activate environment:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>env/bin/activate
-</pre></div>
-</div>
-<p>Install Andriller:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>andriller<span class="w"> </span>-U
-</pre></div>
-</div>
-<p>Launch Andriller:</p>
+<p><img alt="alt text" src="../../_images/image-54.png" /></p>
+<p>Execute the program:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>andriller
 </pre></div>
 </div>
-<p>Select:</p>
-<ul class="simple">
-<li><p>Output directory</p></li>
-<li><p>ADB-connected device</p></li>
-</ul>
-<p>Start extraction.</p>
-<p>The final report will be generated as HTML.</p>
-<p>Useful commands:</p>
-<p>Verify ADB connection:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>devices
-</pre></div>
-</div>
-<p>Generate Android backup:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>backup<span class="w"> </span>-all
-</pre></div>
-</div>
+<p>The following menu should appear, click on “Output..” and set the output folder.</p>
+<p><img alt="alt text" src="../../_images/image-55.png" /></p>
+<p>Once the folder is selected, click on “Check”.</p>
+<p><img alt="alt text" src="../../_images/image-56.png" /></p>
+<p>Lastly, click on “Extract” and the program will connect to the device automatilly and will extract the evicences.</p>
+<p><img alt="alt text" src="../../_images/image-57.png" /></p>
+<p>Once finished, a report like the following will be generated:</p>
+<p><img alt="alt text" src="../../_images/image-58.png" /></p>
+<p>These are the generated files:</p>
+<p><img alt="alt text" src="../../_images/image-59.png" /></p>
 </section>
-</section>
-<hr class="docutils" />
 <section id="whatsapp-forensic-analysis">
-<h2>3) WhatsApp Forensic Analysis<a class="headerlink" href="#whatsapp-forensic-analysis" title="Link to this heading">¶</a></h2>
-<section id="a-what-are-consensual-and-non-consensual-forensic-analyses">
-<h3><strong>a) What are consensual and non-consensual forensic analyses?</strong><a class="headerlink" href="#a-what-are-consensual-and-non-consensual-forensic-analyses" title="Link to this heading">¶</a></h3>
+<h2>WhatsApp Forensic Analysis<a class="headerlink" href="#whatsapp-forensic-analysis" title="Link to this heading">¶</a></h2>
+<section id="what-are-consensual-and-non-consensual-forensic-analyses">
+<h3>What are consensual and non-consensual forensic analyses?<a class="headerlink" href="#what-are-consensual-and-non-consensual-forensic-analyses" title="Link to this heading">¶</a></h3>
 <section id="consensual-analysis">
 <h4>Consensual Analysis<a class="headerlink" href="#consensual-analysis" title="Link to this heading">¶</a></h4>
 <p>A forensic analyst has authorization from the device owner to perform the analysis.</p>
@@ -646,9 +581,8 @@ adb<span class="w"> </span>push<span class="w"> </span>hello.txt<span class="w">
 </ul>
 </section>
 </section>
-<hr class="docutils" />
-<section id="b-what-techniques-can-be-used-to-analyze-whatsapp-conversations">
-<h3><strong>b) What techniques can be used to analyze WhatsApp conversations?</strong><a class="headerlink" href="#b-what-techniques-can-be-used-to-analyze-whatsapp-conversations" title="Link to this heading">¶</a></h3>
+<section id="what-techniques-can-be-used-to-analyze-whatsapp-conversations">
+<h3>What techniques can be used to analyze WhatsApp conversations?<a class="headerlink" href="#what-techniques-can-be-used-to-analyze-whatsapp-conversations" title="Link to this heading">¶</a></h3>
 <section id="screenshot-analysis">
 <h4>Screenshot Analysis<a class="headerlink" href="#screenshot-analysis" title="Link to this heading">¶</a></h4>
 <p>Conversations can be analyzed using screenshots.</p>
@@ -679,9 +613,8 @@ find<span class="w"> </span>/data/data/com.whatsapp<span class="w"> </span>-name
 </div>
 </section>
 </section>
-<hr class="docutils" />
-<section id="c-where-does-whatsapp-store-encryption-keys-and-databases">
-<h3><strong>c) Where does WhatsApp store encryption keys and databases?</strong><a class="headerlink" href="#c-where-does-whatsapp-store-encryption-keys-and-databases" title="Link to this heading">¶</a></h3>
+<section id="where-does-whatsapp-store-encryption-keys-and-databases">
+<h3>Where does WhatsApp store encryption keys and databases?<a class="headerlink" href="#where-does-whatsapp-store-encryption-keys-and-databases" title="Link to this heading">¶</a></h3>
 <section id="encryption-key">
 <h4>Encryption Key<a class="headerlink" href="#encryption-key" title="Link to this heading">¶</a></h4>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>/data/data/com.whatsapp/files/key
@@ -710,70 +643,6 @@ wa.db
 adb<span class="w"> </span>shell
 </pre></div>
 </div>
-</section>
-</section>
-</section>
-<hr class="docutils" />
-<section id="install-whatsapp-and-extract-databases">
-<h2>4) Install WhatsApp and Extract Databases<a class="headerlink" href="#install-whatsapp-and-extract-databases" title="Link to this heading">¶</a></h2>
-<p>Install WhatsApp from Google Play.</p>
-<p>Alternatively:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>install<span class="w"> </span>WhatsApp.apk
-</pre></div>
-</div>
-<p>Verify installation:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>shell<span class="w"> </span>pm<span class="w"> </span>list<span class="w"> </span>packages<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>whatsapp
-</pre></div>
-</div>
-<p>After receiving messages:</p>
-<p>Open root shell:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>root
-adb<span class="w"> </span>shell
-</pre></div>
-</div>
-<p>Navigate to databases:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/data/data/com.whatsapp/databases
-</pre></div>
-</div>
-<p>List files:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls
-</pre></div>
-</div>
-<p>Extract databases:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>pull<span class="w"> </span>/data/data/com.whatsapp/databases
-</pre></div>
-</div>
-<p>Extract encryption key:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>pull<span class="w"> </span>/data/data/com.whatsapp/files/key
-</pre></div>
-</div>
-<p>Analyze SQLite database:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sqlite3<span class="w"> </span>msgstore.db
-</pre></div>
-</div>
-<p>View messages:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">message</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">timestamp</span><span class="p">;</span>
-</pre></div>
-</div>
-<p>List tables:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="p">.</span><span class="n">tables</span>
-</pre></div>
-</div>
-<p>Exit SQLite:</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="p">.</span><span class="n">exit</span>
-</pre></div>
-</div>
-<p>Decrypt crypt databases using Andriller.</p>
-<p>Useful forensic commands:</p>
-<p>Generate hashes:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sha256sum<span class="w"> </span>msgstore.db
-</pre></div>
-</div>
-<p>Check file metadata:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>stat<span class="w"> </span>msgstore.db
-</pre></div>
-</div>
-<p>Analyze APK information:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>aapt<span class="w"> </span>dump<span class="w"> </span>badging<span class="w"> </span>WhatsApp.apk
 </pre></div>
 </div>
@@ -798,6 +667,87 @@ adb<span class="w"> </span>shell
 </div>
 </section>
 </section>
+</section>
+<section id="whatsapp-analysis">
+<h2>Whatsapp analysis<a class="headerlink" href="#whatsapp-analysis" title="Link to this heading">¶</a></h2>
+<p>Whatsapp has been installed and linked to an account as shown below (to be honest I did not blurred anything, characters are simply not loading XD):</p>
+<p><img alt="alt text" src="../../_images/image-60.png" /></p>
+<p>Connect to the device using root and verify the whatsapp database directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>root
+adb<span class="w"> </span>shell
+ls<span class="w"> </span>-lah<span class="w"> </span>/data/data/com.whatsapp/database/
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-61.png" /></p>
+<p>Extract the entire whatsapp directory using adb for an easier analysis.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>pull<span class="w"> </span>/data/data/com.whatsapp
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-62.png" /></p>
+<p>There are several databases with useful info, but the following one contains the messages:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sqlite3<span class="w"> </span>msgstore.db
+<span class="k">select</span><span class="w"> </span>*<span class="w"> </span>from<span class="w"> </span>message<span class="w"> </span>ORDER<span class="w"> </span>BY<span class="w"> </span>timestamp<span class="p">;</span>
+</pre></div>
+</div>
+<p><img alt="alt text" src="../../_images/image-63.png" /></p>
+<p>Here is a small summary to understand what is happening:</p>
+<p>TBD traducir y poner bonito!</p>
+<ol class="arabic simple">
+<li><p>ID del mensaje
+El número tipo 518, 517, 516…
+Es el identificador interno del mensaje (primary key)</p></li>
+<li><p>Campos técnicos (flags / estado)
+Muchos 0, -1, NULL
+Son estados internos como:
+leído / no leído
+enviado / recibido / pendiente
+flags de sistema</p></li>
+<li><p>Identificador del chat o usuario
+Valores tipo:
+3AFDC…
+Esto suele ser el JID (Jabber ID):
+número de teléfono o grupo
+formato interno de WhatsApp</p></li>
+<li><p>Timestamp (muy importante)
+Números como:
+17007477, 19000, 36000, etc.
+Normalmente son timestamps en formato UNIX o milisegundos
+Indican cuándo se envió/recibió el mensaje</p></li>
+<li><p>Campo de texto del mensaje
+Lo que ves a la derecha:
+“Seguro q hace tela calor”
+“Ya”
+“No sé si es lo mejor”
+“Comemos en algún sitio?”
+Esto normalmente corresponde a algo como:
+data
+text
+message</p></li>
+<li><p>Campos multimedia (vacíos en tu captura)
+Muchos NULL
+Significa:
+no hay imagen
+no hay audio
+no hay vídeo
+Si hubiera media verías rutas o MIME types</p></li>
+<li><p>Otros campos técnicos comunes (los que no se ven bien)</p></li>
+</ol>
+<p>En WhatsApp suelen existir también:</p>
+<p>media_type
+status
+key_from_me (si lo enviaste tú o no)
+remote_resource
+quoted_row_id (respuestas citadas)
+latitude/longitude (si hay ubicación)
+📌 Interpretación rápida de tu imagen</p>
+<p>Lo más importante de lo que muestras:</p>
+<p>Cada fila = 1 mensaje
+La columna final visible = texto del mensaje
+Los bloques de NULL = sin multimedia o campos no usados
+Los números grandes = timestamps o IDs internos
+El hash largo (3AFDC…) = chat o usuario/grupo</p>
+</section>
+</section>
 
         </article>
       </div>
@@ -813,14 +763,14 @@ adb<span class="w"> </span>shell
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="../../linux-file-system/exercise5/exercise5.html">
+          <a class="prev-page" href="../../linux-file-system/exercise6/exercise6.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">&lt;no title&gt;</div>
+                <div class="title">Forensic analysis with diferent Linux file systems.</div>
                 
               </div>
             </a>
@@ -858,44 +808,33 @@ adb<span class="w"> </span>shell
 <li><a class="reference internal" href="#evidence-extraction">Evidence Extraction</a></li>
 <li><a class="reference internal" href="#objectives">Objectives</a></li>
 <li><a class="reference internal" href="#materials">Materials</a></li>
-<li><a class="reference internal" href="#familiarization-with-android">1) Familiarization with Android</a><ul>
-<li><a class="reference internal" href="#a-install-android-studio"><strong>a) Install Android Studio</strong></a></li>
-<li><a class="reference internal" href="#b-run-an-android-virtual-device-avd"><strong>b) Run an Android Virtual Device (AVD)</strong></a></li>
-<li><a class="reference internal" href="#c-install-android-debug-bridge-adb-platform-tools"><strong>c) Install Android Debug Bridge (ADB Platform Tools)</strong></a></li>
-<li><a class="reference internal" href="#d-enable-debugging-and-practice-adb-commands"><strong>d) Enable debugging and practice ADB commands</strong></a><ul>
-<li><a class="reference internal" href="#adb-commands">ADB Commands</a></li>
+<li><a class="reference internal" href="#familiarization-with-android">Familiarization with Android</a><ul>
+<li><a class="reference internal" href="#install-android-studio">Install Android Studio**</a></li>
+<li><a class="reference internal" href="#run-an-android-virtual-device-avd">Run an Android Virtual Device (AVD)**</a></li>
+<li><a class="reference internal" href="#install-android-debug-bridge-adb-platform-tools-and-test-it">Install Android Debug Bridge (ADB Platform Tools) and test it**</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a class="reference internal" href="#android-virtualization-close-to-real-conditions">2) Android Virtualization Close to Real Conditions</a><ul>
-<li><a class="reference internal" href="#a-download-android-x86"><strong>a) Download Android x86</strong></a></li>
-<li><a class="reference internal" href="#b-create-a-32-bit-linux-vm"><strong>b) Create a 32-bit Linux VM</strong></a></li>
-<li><a class="reference internal" href="#c-install-android-in-the-vm"><strong>c) Install Android in the VM</strong></a></li>
-<li><a class="reference internal" href="#d-install-aflogical-ose-and-perform-forensic-extraction"><strong>d) Install AFLogical OSE and perform forensic extraction</strong></a></li>
-<li><a class="reference internal" href="#e-install-andriller-and-perform-evidence-extraction"><strong>e) Install Andriller and perform evidence extraction</strong></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#whatsapp-forensic-analysis">3) WhatsApp Forensic Analysis</a><ul>
-<li><a class="reference internal" href="#a-what-are-consensual-and-non-consensual-forensic-analyses"><strong>a) What are consensual and non-consensual forensic analyses?</strong></a><ul>
+<li><a class="reference internal" href="#android-virtualization-close-to-real-conditions">Android Virtualization Close to Real Conditions</a></li>
+<li><a class="reference internal" href="#whatsapp-forensic-analysis">WhatsApp Forensic Analysis</a><ul>
+<li><a class="reference internal" href="#what-are-consensual-and-non-consensual-forensic-analyses">What are consensual and non-consensual forensic analyses?</a><ul>
 <li><a class="reference internal" href="#consensual-analysis">Consensual Analysis</a></li>
 <li><a class="reference internal" href="#non-consensual-analysis">Non-Consensual Analysis</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#b-what-techniques-can-be-used-to-analyze-whatsapp-conversations"><strong>b) What techniques can be used to analyze WhatsApp conversations?</strong></a><ul>
+<li><a class="reference internal" href="#what-techniques-can-be-used-to-analyze-whatsapp-conversations">What techniques can be used to analyze WhatsApp conversations?</a><ul>
 <li><a class="reference internal" href="#screenshot-analysis">Screenshot Analysis</a></li>
 <li><a class="reference internal" href="#token-based-database-extraction">Token-Based Database Extraction</a></li>
 <li><a class="reference internal" href="#database-extraction-from-the-device">Database Extraction from the Device</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#c-where-does-whatsapp-store-encryption-keys-and-databases"><strong>c) Where does WhatsApp store encryption keys and databases?</strong></a><ul>
+<li><a class="reference internal" href="#where-does-whatsapp-store-encryption-keys-and-databases">Where does WhatsApp store encryption keys and databases?</a><ul>
 <li><a class="reference internal" href="#encryption-key">Encryption Key</a></li>
 <li><a class="reference internal" href="#databases">Databases</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#install-whatsapp-and-extract-databases">4) Install WhatsApp and Extract Databases</a></li>
+<li><a class="reference internal" href="#whatsapp-analysis">Whatsapp analysis</a></li>
 </ul>
 </li>
 </ul>

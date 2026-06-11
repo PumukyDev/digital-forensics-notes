@@ -1,6 +1,6 @@
 # Android forensics medium
 
-## PART A: Professional Third-Party Tools
+## Professional Third-Party Tools
 
 ### Objectives
 
@@ -8,52 +8,46 @@
 - Study the functionality they provide.
 - Evaluate and test forensic tools for mobile devices.
 
-## Materials
+### Materials
 
 - Avilla Forensics
 
-## Tasks
+### Tasks
 
-### 1. Install Avilla Forensics
+Se pide: 
 
-In my case, I decided to install the tool directly from the institute NAS.
+1.  Instala Avilla Forensics. Puedes descargarlo desde [aquí](https://onedrive.live.com/?redeem=aHR0cHM6Ly8xZHJ2Lm1zL3UvYy9jYWQwMDBkNmE5NmU1OWU0L0lRQ0pGR1l6MFl5YlNvMlBOWERfTkxkM0FYODdWUE9iQ3NuLUJ1YmVBV0EyQl9VP2U9WVE3OVY5&cid=CAD000D6A96E59E4&id=CAD000D6A96E59E4%21s336614898cd14a9b8d8f3570ff34b777&parId=CAD000D6A96E59E4%211704272&o=OneUp).
 
-Once downloaded, I navigated to the installation directory and executed the `.exe` file.
+2.  Probar la funcionalidad que ofrece. Para ello deberás utilizar tu teléfono móvil o  tablet.  Ilustra  con capturas de pantalla y algún comentario las evidencias que te permiten obtener. 
 
-The first step was entering my investigator information in order to preserve the chain of custody during the forensic process.
+Escribirmos nuestros datos personales para no perder la cadena de custodia
 
-After that, I created a new forensic case within the application.
+![alt text](./images/image.psd(27).png)
 
----
+Le damos a "NEW CASE" para crear un nuevo caso
 
-### 2. Test the functionality provided by Avilla Forensics
+![alt text](./images/image.psd(28).png)
 
-To test the tool, I used my Android smartphone.
+Extraemos un backuop de whatsapp usando apk downgrade, para ello tnemos que desactivar las protecciones del dispositivos y datle a "Test Application".
 
-The first extraction method tested was social network backup extraction through APK downgrade.
+![alt text](./images/image.png)
 
-Before performing the extraction, several Android security protections had to be disabled in order to allow the acquisition process.
+Seleccionamos el paquete que queremos extraer, en este caso `com.whatsapp` y le damos a "Extract".
 
-Because the device used was relatively old, this process was possible without major issues.
+![alt text](./images/image-1.png)
 
-Once the protections were disabled, I selected the application package I wanted to analyze and started the extraction process.
+Tendremos un backup completo de whatsapp, extendible a varias aplicaciones de mensajería más
 
-The tool was capable of extracting different kinds of evidences depending on the permissions granted to the application and the security level of the device.
+![alt text](./images/image.psd(29).png)
 
-Some of the evidences obtained included:
+3.  Supón que trabajas en el sector del peritaje informático. Le has comentado a 
+tu jefe la dificultad que presentan los dispositivos móviles a la hora de realizar 
+una  adquisición  de  evidencias  de  los  mismos.  Tu  jefe  te  ha  encargado  la 
+tarea  de  que  compres  lo  necesario  para  resolver  las  dificultades  que 
+encuentres.   Busca  información en Internet de qué software/materiales hay 
+disponibles, y justifica cuales comprarías
 
-- Application databases
-- Cached files
-- Multimedia files
-- User account information
-- Application logs
-- Message backups
-
-The amount of information extracted depended heavily on whether the device was rooted and on the Android version installed.
-
----
-
-### 3. Hardware and software recommendations for mobile forensic investigations
+TBD. Parafrasear esto, mirar mejores herramientas, mejorar la tabla, convertir al inglés. Hacer un buen cambio a esto.
 
 One of the first things that should be acquired for any mobile forensic laboratory is a Faraday bag.
 
@@ -91,9 +85,7 @@ From a professional perspective, I would prioritize purchasing:
 - Faraday bags for evidence preservation
 - Dedicated forensic workstations with write blockers
 
----
-
-## PART B: Feasibility of Android Forensic Analysis
+## Feasibility of Android Forensic Analysis
 
 In general, RAM memory analysis and persistent storage analysis are considered essential parts of digital forensic investigations.
 
@@ -101,18 +93,18 @@ After the advances achieved in Windows, Linux and macOS forensic analysis, resea
 
 Many research papers focus on Android RAM analysis, especially on virtualized Android devices.
 
-## Objectives
+### Objectives
 
 - Investigate the difficulties involved in Android forensic investigations.
 - Study the feasibility of performing forensic analysis depending on device characteristics.
 
-## Documentation
+### Documentation
 
-- Practical Infeasibility of Android Smartphone Live Forensics
+- [Practical Infeasibility of Android Smartphone Live Forensics](https://faui1-files.cs.fau.de/filepool/gruhn/thesis_waechter.pdf)
 
-## Tasks
+### Tasks
 
-### 1. Ideal situation for a perfect Android forensic investigation
+#### Ideal situation for a perfect Android forensic investigation
 
 The ideal forensic scenario would involve the following conditions:
 
@@ -132,11 +124,9 @@ Under these conditions, investigators would be able to:
 
 However, this situation is extremely rare in real-world investigations.
 
----
+#### Real-world limitations and possible solutions
 
-### 2. Real-world limitations and possible solutions
-
-#### a. Rooting without data loss
+##### Rooting without data loss
 
 Most rooting procedures require rebooting the device.
 
@@ -150,9 +140,7 @@ Possible solutions include:
 
 However, these methods are highly device-dependent.
 
----
-
-#### b. Android security mechanisms
+##### Android security mechanisms
 
 Android devices implement many protections:
 
@@ -171,9 +159,7 @@ Possible solutions include:
 - Specialized forensic hardware
 - Exploiting device vulnerabilities
 
----
-
-#### c. Hardware and software fragmentation
+##### Hardware and software fragmentation
 
 Android fragmentation is one of the biggest challenges for investigators.
 
@@ -194,9 +180,7 @@ Investigators often need to:
 
 In many cases, manufacturers do not provide the required sources.
 
----
-
-#### d. Technical and legal limitations
+##### Technical and legal limitations
 
 Tools such as Volatility may fail due to incompatibilities or unsupported memory formats.
 
@@ -209,130 +193,261 @@ Because of this, investigators must:
 - Understand every forensic tool used
 - Preserve chain of custody at all times
 
----
+## Chat Analysis
 
-## PART C: Chat Analysis
+As part of a police investigation into a murder, three mobile phones belonging to members of a criminal gang involved in drug trafficking were seized. Although the mobile phones had only been in use for a short period of time and the criminals tried not to use many cloud services, they made some mistakes that resulted in the download of personal data from some of these services, providing analysts with important information for the case investigation. You will have to take on the role of a forensic analyst and analyze the obtained data to answer some questions related to the investigation. The three criminals had the following nicknames:
 
-In the context of a police investigation involving a murder connected to drug trafficking, three smartphones belonging to members of a criminal organization were seized.
+- Capo: Leader and criminal mastermind of the gang.
+- Hitman: Veteran member of the gang responsible for the more “sensitive” matters.
+- Mule: A young and reckless guy who recently joined the gang. He was found dead near a shopping center.
 
-The suspects were known as:
+At the following [link](https://informatica.ieszaidinvergeles.org:5001/sharing/c7p8DyLrT), you will find a compressed file containing the data extracted from the mobile phones used by the criminals.
 
-- Capo: Leader of the organization
-- Hitman: Senior gang member
-- Mule: Young and inexperienced member recently recruited
-
-The extracted logical acquisitions and downgraded applications were analyzed in order to answer the following questions.
-
----
+By analyzing the information available in the logical acquisitions and application downgrades, try to answer the following questions about the 3 criminals. Write a report providing screenshots to support your answers.
 
 ## Capo
 
-## 1. Vehicle pickup location
+**Capo had several WhatsApp conversations with Mule (Mulligan Two). In the first one, he says that he has to travel near Madrid to pick up a car. Where exactly does he have to pick it up?**
 
-Capo told Mule to travel to Madrid in order to pick up a vehicle.
-
-The exact location mentioned in the WhatsApp conversation was:
-
-**Cruz de la Horca, Av. Felipe II, 23, 28280 El Escorial, Madrid**
-
----
-
-## 2. Voice message analysis
-
-A WhatsApp voice message sent by Capo on October 6th during the afternoon was recovered from the WhatsApp media directory.
-
-The audio file was located inside the WhatsApp voice notes folder.
-
-After listening to the recording, the following phrase could be heard:
-
-> "That is Mathew's business, do your job and stick to it."
-
-The message was clearly a reprimand directed at Mule for asking too many questions.
-
----
-
-## 3. Who killed Mule?
-
-The final WhatsApp conversations strongly suggest that the murderer was Mathew.
-
-The relevant chat was identified through the WhatsApp database:
-
-- Chat ID was located
-- The associated JID was identified
-- The phone number was linked to the contact "Mathew" inside `wa.db`
-
-This matches the name mentioned in the recovered voice message.
-
----
-
-## Mule
-
-## 1. Birthday party location
-
-Two photographs taken during Mule's birthday party were recovered from the camera directory.
-
-The EXIF metadata was analyzed using:
+Navigate to "/Capo, Mulero y Matón/capo_maton_mulero_moviles/Capo" and check where the Whatsapp database is located:
 
 ```bash
-exiftool image.jpg
+find . -name msgstore.db
 ```
 
+![alt text](./images/image-2.png)
 
-TBD FALTAN COSAS!!
-
-## Hitman
-
-## 1. Telegram location recovery
-
-On October 7th, 2023, Hitman exchanged several Telegram messages with Capo, whose Telegram username was **Ernesto Capote**.
-
-The Telegram database was analyzed using SQLiteStudio.
-
-First, the user associated with Ernesto Capote was identified inside the `users` table.
-
-After that, the messages were located inside the `messages_v2` table.
-
-During the conversation, they mentioned receiving information from someone called **Berto**, which could be relevant for future investigation.
-
-One of the messages sent by Capo contained a Telegram location link.
-
-After recovering and opening the location, the coordinates pointed to:
-
-**Rúa do Castelo Ramiro, Ourense**
-
----
-
-## 2. Who killed Mule and when?
-
-The final Telegram conversations clearly reveal the events that occurred.
-
-Mule had stolen part of a drug shipment for personal use during his birthday party.
-
-This caused serious problems for Capo with another criminal organization referred to as **"the Perillo group"**.
-
-After seeing the birthday party pictures and confirming that the missing drugs had been consumed by Mule, Hitman and Capo decided that Mule had become a liability.
-
-The conversations indicate that both of them agreed Mule needed to be eliminated in order to recover the trust of the organization.
-
-At:
-
-**2023-10-17 16:28:41 UTC**
-
-Hitman, whose real name was identified as **Mathew**, sent a Telegram message to Capo confirming that the murder had been completed.
-
-Therefore:
-
-- **Murderer:** Mathew (Hitman)
-- **Date:** October 17th, 2023
-- **Time:** 16:28:41 UTC
-
----
-
-## 3. Exact murder location
-
-The photographs stored on Hitman’s phone taken on the day of the murder were analyzed.
-
-The images were extracted from the camera directory and their metadata was examined using:
+Open the rute using sqlitebrowser
 
 ```bash
-exiftool image.jpg
+sqlitebrowser ./BackupADB_Capo/apps/com.whatsapp/databases/msgstore.db
+```
+
+Then, navigate to the "Execute SQL" section, write the following sql request and click on the play button to execute it.
+
+```sql
+select * from message
+```
+
+As shown above, all the message are shown in plain text. Analyze the conversation an check if there is useful data.
+
+![alt text](./images/image-3.png)
+
+As shown, the car is a Dacia, parked in the cementery near to "Cruz de la horca".
+
+![alt text](./images/image-4.png)
+
+Using google maps the location `Cruz de la Horca Av. Felipe II, 23, 28280 El Escorial, Madrid` can be obtained. This is the parking where the car was parked.
+
+![alt text](./images/image-6.png)
+
+![alt text](./images/image-5.png)
+
+**On October 6 in the middle of the afternoon, Capo sent Mule a WhatsApp voice message scolding him about something. Recover the audio file and listen to the message. Why is he scolding him?**
+
+Analyzing the same database than before, it can be seen that there is a message_type with id "2". This means that it is an audio.
+
+![alt text](./images/image-7.png)
+
+
+Vavigate to `/capo_maton_mulero_moviles/Capo/BackupADB_Capo/Shared/WhatsApp/Media/WhatsApp Voice Notes/202340` to find said audio and play it.
+
+![alt text](./images/image-8.png)
+
+The audio says literaly: "Eso es cosa de Mathew, haz tu trabajo y limitate a eso, ¿capiste?". Which translated to English is "TBD". Capo is anoyed because of Mule asking about something.
+
+Investigating a lite more, it can be seen that Mule ask for the job: "Eeeeeeh, mola. Y va a ser muy heavy el recadito ?"
+
+![alt text](./images/image-9.png)
+
+**Based on the last series of WhatsApp messages available on Capo’s phone, who appears to have killed Mule?**
+
+Mirando nuevamente la base de datos, se puede ver cómo después de hablar con mulero (2), habla con otra persona (3), pero todavía no sabemos quién es.
+
+![alt text](./images/image-10.png)
+
+Mirando un poco más los chats, podemos ver que antes o normalmente hablan por telegram, pero como no funciona, se pasan a whatsapp. Se puede ver en la conversación que la persona (3) es quien ha efectuado el asesinato:
+
+- "Quién me vio? Como me enteré va a saber!! Si no había nadie cago en todo!!!!"
+
+Así que está admitiendo que es él. Pero todavía no sabemos quién es (3).
+
+![alt text](./images/image-11.png)
+
+Para ello, nos vamos a sqlite otra vez y hacemos la siguiente búsqueda, viendo que el "_id" 3, tiene asignado un contacto de "jid_row_id" igual a 9
+
+![alt text](./images/image-12.png)
+
+Luego biscamos por ese jid 9 y miramos cual es el número de telefono de este.
+
+![alt text](./images/image-13.png)
+
+Con ello sacamos el número de teléfono `+34 672921162`
+
+abrimos la base de datos donde se guardan los contactos de whatsapp y miramos quién es ese número de teléfono
+
+```bash
+sqlitebrowser ./BackupADB_Capo/apps/com.whatsapp/databases/wa.db
+```
+
+![alt text](./images/image-14.png)
+
+con esto vemos que quien ha matado a la víctima, es decir (3), es Mathew.
+
+## Mule:
+
+**Mule took two photographs with his mobile phone camera at his birthday party on the beach. Could you determine on which beach the party took place?**
+
+Para ver las fotos de su cámara, nos metemos en su directorio ("Mulero") y nos vamos al directorio de la cámara:
+
+```bash
+cd ./BackupADB/shared/0/DCIM/Camera/
+```
+
+![alt text](./images/image-15.png)
+
+Las fotos relacionadas con una playa son las siguientes:
+
+![alt text](./images/image-16.png)
+
+![alt text](./images/image-17.png)
+
+Sacamos los metadatos de las imagenes de la camara para sacar la posición donde han sido tomadas. Desde whatsapp no habría sido posible porque limpia los metadatos.
+
+```bash
+exiftool IMG_20231008_190256.jpg
+```
+
+![alt text](./images/image-18.png)
+
+![alt text](./images/image-19.png)
+
+Podemos ver que el móvil tenía activada la ubicación y que encima la metía como metadatos en las imágenes! Con ello, podemos sacar que la ubicación desde la que fueron tomadas fue `43°30'13.12"N, 8°19'10.68"W`
+
+Tras buscarlo en google maps, podemos ver lo siguiente:
+
+![alt text](./images/image-20.png)
+
+![alt text](./images/image-21.png)
+
+Las fotos fueron tomadas en `Praia do Outeiro`, en Ferrol.
+
+**Mule was interested in investing in cryptocurrencies and visited some websites with information about them. Which pages did he visit?**
+
+La base de datos que tenemos que buscar es places.sqlite, podemos mirar dónde está usando el siguiente comando:
+
+```bash
+find . -name places.sqlite
+```
+
+![alt text](./images/image-22.png)
+
+Abrimos la ubicación del archivo usando sqlitebrowser nuevamente:
+
+```bash
+sqlitebrowser "./APK Downgrade/org.mozilla.firefox/apps/org.mozilla.firefox/f/places.sqlite"
+```
+
+Y sacamos la información de la tabla moz_places como se ve a continuación:
+
+![alt text](./images/image-23.png)
+
+Podemos ver que en algún momento Mulero entró en la página `https://www.novatostradingclub.com/criptomonedas/como-ganar-dinero-con-criptomonedas/`
+
+## Hitman:
+
+**On October 7, 2023, Hitman exchanged several messages with Capo on Telegram (Telegram user: Ernesto Capote) regarding a tip-off that had been received. In the third message of the day, Capo sent him the location of a street on the outskirts of Ourense. Can you recover the location from the Telegram messages and identify which street it is?**
+
+Ahora, tendremos que cambiarnos al directorio de "Maton", posteriormente, podemos encontrar la base de datos de telegram con el siguiente comando:
+
+```bash
+find . -name cache4.db 
+```
+
+![alt text](./images/image-24.png)
+
+Sacanddo la información de la tabla de users, podemos ver que Ernesto Capote tiene el uid `6614674280`. Esto será de utilidad en el siguiente paso
+
+```bash
+sqlitebrowser "./APK Downgrade/org.telegram.messenger/apps/org.telegram.messenger/files/cache4.db"
+```
+
+![alt text](./images/image-25.png)
+
+Ahora si miramos la table de "messages_v2", podemos ver uno de los mensajes de uid `6614674280` que manda una dirección de google maps.
+
+![alt text](./images/image-26.png)
+
+Después de buscar la [dirección](https://maps.app.goo.gl/GTBT9atyWAoH8UJ19), podemos ver que es una casa de Ourense.
+
+![alt text](./images/image-27.png)
+
+![alt text](./images/image-28.png)
+
+**In the last Telegram messages exchanged between Hitman and Capo, it becomes definitively clear who killed Mule. Who did it and when?**
+
+Para poder entender bien qué pasó, hay que analizar muchos mensajes, esto es todo lo que se ha podido ver:
+
+![alt text](./images/image-32.png)
+
+"Oye, estuve con uno de los de Perillo. Están cabreados porque dicen que les faltan 100gr del material."
+
+![alt text](./images/image-33.png)
+
+"Se me dio por mirar las redes del nuevo y me encontré con esto..."
+
+![alt text](./images/image-34.png)
+
+es la siguiente foto:
+
+![alt text](./images/image-36.png)
+
+![alt text](./images/image-37.png)
+
+"¿Le haces una visita?"
+
+después de unos cuantos mensajes, se ve esto
+
+![alt text](./images/image-38.png)
+
+"Yo creo que la cosa está clara. Tenemos que deshacernos de él"
+
+![alt text](./images/image-29.png)
+
+"Trabajito listo. Ayer lo seguí y al salir del supermercado me Reuní con el."
+
+![alt text](./images/image-30.png)
+
+"Todo limpio, no es fácil encontrar nada"
+
+![alt text](./images/image-31.png)
+
+"Ése no vuelve a dar por culo."
+
+Después de todo esto TBD traducir al ingles y parafrasear: Leyendo las conversaciones, podemos ver lo que ha ocurrido, Mulero tomo parte de un cargamento de droga para consumirlo en su cumpleaños, esto trajo problemas a Capo, Matón vio las imagenes del cumpleaños de Mulero, donde vio la droga faltante, tras interrogar a Mulero, tanto Matón como Capo conluyeron que, para recuperar la confianza de la organización criminal, debian de acabar con mulero.
+
+**Now that we know the date of the murder, let’s look at the photos taken with Hitman’s phone that day to see if they provide any clue as to where it took place. Can you indicate the exact location?**
+
+![alt text](./images/image-39.png)
+
+En el directorio de la cámara de fotos de "Maton", podemos ver 2 imágenes de un sitio ese día:
+
+![alt text](./images/image-40.png)
+
+![alt text](./images/image-41.png)
+
+Al igual que antes, sacamos los metadatos de la imagen para ver si podemos sacar la ubicación:
+
+```bash
+exiftool IMG_20231016_221751.jpg
+```
+
+![alt text](./images/image-42.png)
+
+Podemos ver que las dotos han sido tomadas desde `43°30'21.45"N, 8°12'18.47"W`.
+
+Si miramos en google maps, encontramos esto:
+
+![alt text](./images/image-43.png)
+
+![alt text](./images/image-44.png)

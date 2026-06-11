@@ -216,12 +216,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise2/exercise2.html">Memory Dump</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise3/exercise3.html">Compile tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise4/exercise4.html">Volatility Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise5/exercise5.html">Linux challenges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise6/exercise6.html">Forensic analysis with diferent Linux file systems.</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Android:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../android/exercise1/exercise1.html">Android forensics basics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../android/exercise2/exercise2.html">Android forensics medium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../android/exercise3/exercise3.html">Android forensics advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../android/exercise3/exercise3.html">Android and IOS forensics advanced</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Cloud:</span></p>
 <ul>
@@ -395,28 +397,28 @@ System events: Track software installations and failures.</p></li>
 <section id="evidence-extraction">
 <h3>Evidence extraction<a class="headerlink" href="#evidence-extraction" title="Link to this heading">¶</a></h3>
 <p>Open FTK Imager and click the image icon.<br />
-<img alt="alt text" src="../../_images/image-130.png" /><br />
+<img alt="alt text" src="../../_images/image-160.png" /><br />
 <em>This will allow you to mount the disk image for analysis.</em></p>
 <p>Click “Logical Drive” and click on “Next”.<br />
-<img alt="alt text" src="../../_images/image-227.png" /></p>
+<img alt="alt text" src="../../_images/image-249.png" /></p>
 <p>Select your disk and click “Finish”.<br />
-<img alt="alt text" src="../../_images/image-320.png" /></p>
+<img alt="alt text" src="../../_images/image-339.png" /></p>
 <p>Verify the evidence tree appears in FTK Imager.<br />
-<img alt="alt text" src="../../_images/image-415.png" /></p>
+<img alt="alt text" src="../../_images/image-428.png" /></p>
 <p>Now extract some files for analysis by navigating to <code class="docutils literal notranslate"><span class="pre">\root\Windows\System32\Config\</span></code> and clicking “Export Files…”<br />
-<img alt="alt text" src="../../_images/image-511.png" /><br />
+<img alt="alt text" src="../../_images/image-526.png" /><br />
 <em>These are critical registry hives for forensic analysis.</em></p>
 <p>I’ll save them as “windows-artifacts”.<br />
-<img alt="alt text" src="../../_images/image-69.png" /></p>
+<img alt="alt text" src="../../_images/image-618.png" /></p>
 <p>Open WRR, click “File” → “Open…”.<br />
-<img alt="alt text" src="../../_images/image-89.png" /></p>
+<img alt="alt text" src="../../_images/image-813.png" /></p>
 <p>Select “SOFTWARE”, “SYSTEM” and “SAM” and click on “Open”.<br />
-<img alt="alt text" src="../../_images/image-99.png" /><br />
+<img alt="alt text" src="../../_images/image-912.png" /><br />
 <em>These registry hives contain software settings, system info, and user account data.</em></p>
 <p>Verify files were correctly exported to WRR.<br />
-<img alt="alt text" src="../../_images/image-109.png" /></p>
+<img alt="alt text" src="../../_images/image-1013.png" /></p>
 <p>Repeat the same process for <code class="docutils literal notranslate"><span class="pre">root\Windows\Users\{USER}</span></code>.<br />
-<img alt="alt text" src="../../_images/image-263.png" /></p>
+<img alt="alt text" src="../../_images/image-266.png" /></p>
 <p>Add “NTUSER.DAT” inside {USER}\ and “UsrClass.DAT” inside {USER}\AppData\Local\Microsoft\Windows\ to WRR.<br />
 <img alt="alt text" src="../../_images/image-851.png" /></p>
 </section>
@@ -429,15 +431,15 @@ System events: Track software installations and failures.</p></li>
 <li><p><strong>System version</strong><br />
 <code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows</span> <span class="pre">NT\CurrentVersion</span></code><br />
 <em>Shows OS version, build, and install info.</em><br />
-<img alt="alt text" src="../../_images/image-1113.png" /></p></li>
+<img alt="alt text" src="../../_images/image-1117.png" /></p></li>
 <li><p><strong>Machine name</strong><br />
 <code class="docutils literal notranslate"><span class="pre">System\ControlSet001\Control\ComputerName\ComputerName</span></code><br />
 <em>Stores the hostname of the computer.</em><br />
-<img alt="alt text" src="../../_images/image-138.png" /></p></li>
+<img alt="alt text" src="../../_images/image-1313.png" /></p></li>
 <li><p><strong>Time zone</strong><br />
 <code class="docutils literal notranslate"><span class="pre">System\ControlSet001\Control\TimeZoneInformation</span></code><br />
 <em>Shows local time zone settings.</em><br />
-<img alt="alt text" src="../../_images/image-1211.png" /></p></li>
+<img alt="alt text" src="../../_images/image-1214.png" /></p></li>
 <li><p><strong>Last access timestamp</strong><br />
 <code class="docutils literal notranslate"><span class="pre">System\ControlSet001\Control\Filesystem</span></code><br />
 <img alt="alt text" src="../../_images/image-80.png" /></p></li>
@@ -470,8 +472,8 @@ System events: Track software installations and failures.</p></li>
 <li><p><strong>Shutdown time</strong><br />
 <code class="docutils literal notranslate"><span class="pre">System\ControlSet001\Control\Windows</span></code><br />
 <em>Stores last shutdown or restart timestamps.</em><br />
-<img alt="alt text" src="../../_images/image-149.png" /><br />
-<img alt="alt text" src="../../_images/image-158.png" /></p></li>
+<img alt="alt text" src="../../_images/image-1412.png" /><br />
+<img alt="alt text" src="../../_images/image-1511.png" /></p></li>
 </ul>
 </section>
 <section id="network">
@@ -480,14 +482,14 @@ System events: Track software installations and failures.</p></li>
 <li><p><strong>Network interfaces</strong><br />
 <code class="docutils literal notranslate"><span class="pre">System\ControlSet001\Services\Tcpip\Parameters\Interfaces\{GUID_INTERFACE}</span></code><br />
 <em>Stores DNS root servers and whether the computer has completed the network configuration after installation.</em><br />
-<img alt="alt text" src="../../_images/image-168.png" /><br />
-<img alt="alt text" src="../../_images/image-178.png" /></p></li>
+<img alt="alt text" src="../../_images/image-1611.png" /><br />
+<img alt="alt text" src="../../_images/image-1711.png" /></p></li>
 <li><p><strong>Network history</strong><br />
 <code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows</span> <span class="pre">NT\CurrentVersion\NetworkList\</span></code><br />
 <em>Contains networks the computer connected to, including SSIDs.</em><br />
-<img alt="alt text" src="../../_images/image-207.png" /><br />
-<img alt="alt text" src="../../_images/image-198.png" /><br />
-<img alt="alt text" src="../../_images/image-188.png" />
+<img alt="alt text" src="../../_images/image-2010.png" /><br />
+<img alt="alt text" src="../../_images/image-1910.png" /><br />
+<img alt="alt text" src="../../_images/image-1810.png" />
 <em>These are the root DNS</em></p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows</span> <span class="pre">NT\CurrentVersion\NetworkList\Nla\Cache</span></code><br />
@@ -495,14 +497,14 @@ System events: Track software installations and failures.</p></li>
 <em>Cached information about networks.</em></p>
 <p><code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows</span> <span class="pre">NT\CurrentVersion\NetworkList\Nla\Wireless</span></code><br />
 <em>Cached information about wireless networks.</em><br />
-<img alt="alt text" src="../../_images/image-228.png" /><br />
-<img alt="alt text" src="../../_images/image-2111.png" /></p>
+<img alt="alt text" src="../../_images/image-2212.png" /><br />
+<img alt="alt text" src="../../_images/image-2114.png" /></p>
 <ul class="simple">
 <li><p><strong>When a network was connected</strong><br />
 <code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows</span> <span class="pre">NT\CurrentVersion\NetworkList\Profiles</span></code><br />
 <em>Shows timestamps of network connections.</em><br />
-<img alt="alt text" src="../../_images/image-246.png" /><br />
-<img alt="alt text" src="../../_images/image-236.png" /></p></li>
+<img alt="alt text" src="../../_images/image-2410.png" /><br />
+<img alt="alt text" src="../../_images/image-2311.png" /></p></li>
 </ul>
 </section>
 <section id="sharing-and-startup">
@@ -511,24 +513,24 @@ System events: Track software installations and failures.</p></li>
 <li><p><strong>Shared folders</strong><br />
 <code class="docutils literal notranslate"><span class="pre">System\ControlSet001\Services\LanmanServer\Shares\</span></code><br />
 <em>Lists folders shared over the network.</em><br />
-<img alt="alt text" src="../../_images/image-257.png" /></p></li>
+<img alt="alt text" src="../../_images/image-259.png" /></p></li>
 <li><p><strong>Startup programs</strong><br />
 <code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Run</span></code><br />
 <em>Programs set to start automatically when the user logs in.</em><br />
-<img alt="alt text" src="../../_images/image-276.png" /></p></li>
+<img alt="alt text" src="../../_images/image-278.png" /></p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\RunOnce</span></code><br />
 <em>Per-user programs that run once on the user’s next login.</em><br />
-<img alt="alt text" src="../../_images/image-285.png" /></p>
+<img alt="alt text" src="../../_images/image-288.png" /></p>
 <p><code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows\CurrentVersion\RunOnce</span></code><br />
 <em>System-wide programs that run once at the next login for any use.</em><br />
-<img alt="alt text" src="../../_images/image-294.png" /></p>
+<img alt="alt text" src="../../_images/image-297.png" /></p>
 <p><code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run</span></code><br />
 <em>Sometimes contains enforced startup items.</em><br />
 (Not present.)</p>
 <p><code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows\CurrentVersion\Run</span></code><br />
 <em>Programs that start automatically every time the user logs in</em>
-<img alt="alt text" src="../../_images/image-305.png" /></p>
+<img alt="alt text" src="../../_images/image-308.png" /></p>
 </section>
 <section id="user-activity">
 <h4>User activity<a class="headerlink" href="#user-activity" title="Link to this heading">¶</a></h4>
@@ -540,12 +542,12 @@ System events: Track software installations and failures.</p></li>
 <li><p><strong>Typed paths in Start or Explorer</strong><br />
 <code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths</span></code><br />
 <em>Shows file paths the user manually entered.</em><br />
-<img alt="alt text" src="../../_images/image-3110.png" /></p></li>
+<img alt="alt text" src="../../_images/image-3112.png" /></p></li>
 <li><p><strong>Recent documents</strong><br />
 <code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs</span></code><br />
 <em>Tracks recently opened files.</em><br />
-<img alt="alt text" src="../../_images/image-335.png" /><br />
-<img alt="alt text" src="../../_images/image-325.png" /></p></li>
+<img alt="alt text" src="../../_images/image-3310.png" /><br />
+<img alt="alt text" src="../../_images/image-3211.png" /></p></li>
 <li><p><strong>Recent Office documents</strong><br />
 <code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Office\{Version}\{Excel|Word}\UserMRU</span></code><br />
 <em>Tracks recently opened Office file.</em><br />
@@ -561,11 +563,11 @@ System events: Track software installations and failures.</p></li>
 <li><p><strong>OpenSaveMRU</strong><br />
 <code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32\OpenSavePidlMRU</span></code><br />
 <em>Stores recently opened/saved files per application.</em><br />
-<img alt="alt text" src="../../_images/image-345.png" /></p></li>
+<img alt="alt text" src="../../_images/image-347.png" /></p></li>
 <li><p><strong>Last executed commands</strong><br />
 <code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\RunMRU</span></code><br />
 <em>Tracks commands typed in Run dialog.</em><br />
-<img alt="alt text" src="../../_images/image-354.png" /></p></li>
+<img alt="alt text" src="../../_images/image-356.png" /></p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\Policies\RunMRU</span></code><br />
 <em>Same as RunMRU but enforced by policies.</em><br />
@@ -574,23 +576,23 @@ System events: Track software installations and failures.</p></li>
 <li><p><strong>UserAssist (programs executed)</strong><br />
 <code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist\{GUID}\Count</span></code><br />
 <em>Tracks execution counts of applications.</em><br />
-<img alt="alt text" src="../../_images/image-364.png" /></p></li>
+<img alt="alt text" src="../../_images/image-366.png" /></p></li>
 <li><p><strong>Taskbar-related events</strong><br />
 <code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\FeatureUsage</span></code><br />
 <em>Tracks user interaction with taskbar features.</em><br />
-<img alt="alt text" src="../../_images/image-374.png" /></p></li>
+<img alt="alt text" src="../../_images/image-376.png" /></p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">...\AppBadgeUpdated</span></code><br />
-<img alt="alt text" src="../../_images/image-384.png" /><br />
+<img alt="alt text" src="../../_images/image-387.png" /><br />
 <em>Records when a taskbar app badge (like notifications) is updated.</em></p>
 <p><code class="docutils literal notranslate"><span class="pre">...\AppLaunch</span></code><br />
-<img alt="alt text" src="../../_images/image-393.png" /><br />
+<img alt="alt text" src="../../_images/image-396.png" /><br />
 <em>Logs when a user launches an application from the taskbar.</em></p>
 <p><code class="docutils literal notranslate"><span class="pre">...\AppSwitched</span></code><br />
-<img alt="alt text" src="../../_images/image-402.png" /><br />
+<img alt="alt text" src="../../_images/image-405.png" /><br />
 <em>Tracks when the user switches between apps pinned or open on the taskbar.</em></p>
 <p><code class="docutils literal notranslate"><span class="pre">...\ShowJumpView</span></code><br />
-<img alt="alt text" src="../../_images/image-416.png" />
+<img alt="alt text" src="../../_images/image-4112.png" />
 <em>Logs when the user opens a jump list (right-click menu) on a taskbar app.</em></p>
 <ul class="simple">
 <li><p><strong>Recent applications</strong><br />
@@ -605,23 +607,23 @@ System events: Track software installations and failures.</p></li>
 <li><p><strong>Recent documents (LinkParser / LeCMD)</strong><br />
 <code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Roaming\Microsoft\Windows\Recent</span></code><br />
 <em>Contains shortcut (.lnk) files of recently opened documents.</em><br />
-<img alt="alt text" src="../../_images/image-432.png" /><br />
-<img alt="alt text" src="../../_images/image-423.png" />
-<img alt="alt text" src="../../_images/image-441.png" /></p></li>
+<img alt="alt text" src="../../_images/image-435.png" /><br />
+<img alt="alt text" src="../../_images/image-429.png" />
+<img alt="alt text" src="../../_images/image-444.png" /></p></li>
 <li><p><strong>Jump Lists</strong><br />
 <code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Roaming\Microsoft\Windows\Recent\AutomaticDestinations</span></code><br />
 <em>Shows recent and pinned items for applications.</em><br />
-<img alt="alt text" src="../../_images/image-451.png" /><br />
-<img alt="alt text" src="../../_images/image-461.png" /><br />
-<img alt="alt text" src="../../_images/image-471.png" /></p></li>
+<img alt="alt text" src="../../_images/image-453.png" /><br />
+<img alt="alt text" src="../../_images/image-462.png" /><br />
+<img alt="alt text" src="../../_images/image-472.png" /></p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Roaming\Microsoft\Windows\Recent\CustomDestinations</span></code><br />
-<img alt="alt text" src="../../_images/image-481.png" /><br />
-<img alt="alt text" src="../../_images/image-491.png" /></p>
+<img alt="alt text" src="../../_images/image-482.png" /><br />
+<img alt="alt text" src="../../_images/image-492.png" /></p>
 </section>
 <section id="shellbags">
 <h4>Shellbags<a class="headerlink" href="#shellbags" title="Link to this heading">¶</a></h4>
-<p><img alt="alt text" src="../../_images/image-50.png" /><br />
+<p><img alt="alt text" src="../../_images/image-502.png" /><br />
 <code class="docutils literal notranslate"><span class="pre">USRCLASS.DAT\Local</span> <span class="pre">Settings\Software\Microsoft\Windows\Shell\Bags</span></code><br />
 <em>Stores the view settings of folders (icon view, details view, window size, etc.) for individual folders.</em><br />
 <img alt="alt text" src="../../_images/image-871.png" /></p>
@@ -643,25 +645,25 @@ System events: Track software installations and failures.</p></li>
 <li><p><strong>USB storage (VID / PID)</strong><br />
 <code class="docutils literal notranslate"><span class="pre">SYSTEM\ControlSet001\Enum\USBSTOR</span></code><br />
 <em>Shows vendor/product IDs and device serials.</em><br />
-<img alt="alt text" src="../../_images/image-512.png" /></p></li>
+<img alt="alt text" src="../../_images/image-5110.png" /></p></li>
 <li><p><strong>USB volume names</strong><br />
 <code class="docutils literal notranslate"><span class="pre">SOFTWARE\Microsoft\Windows</span> <span class="pre">Portable</span> <span class="pre">Devices\Devices</span></code><br />
 <em>Stores friendly device names.</em><br />
-<img alt="alt text" src="../../_images/image-521.png" /></p></li>
+<img alt="alt text" src="../../_images/image-527.png" /></p></li>
 <li><p><strong>User who used the USB device</strong><br />
 <code class="docutils literal notranslate"><span class="pre">SYSTEM\MountedDevices</span></code><br />
 <code class="docutils literal notranslate"><span class="pre">NTUSER.DAT\Software\Microsoft\Windows\CurrentVersion\Explorer\MountPoints2</span></code><br />
 <em>Shows which user mounted the device and assigned drive letters.</em><br />
-<img alt="alt text" src="../../_images/image-531.png" /><br />
-<img alt="alt text" src="../../_images/image-541.png" /></p></li>
+<img alt="alt text" src="../../_images/image-532.png" /><br />
+<img alt="alt text" src="../../_images/image-542.png" /></p></li>
 <li><p><strong>Logical volume serial number</strong><br />
 <code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows</span> <span class="pre">NT\CurrentVersion\EMDMgmt</span></code><br />
 <em>Stores volume serials for identification.</em><br />
-<img alt="alt text" src="../../_images/image-551.png" /></p></li>
+<img alt="alt text" src="../../_images/image-552.png" /></p></li>
 <li><p><strong>First and last connection time</strong><br />
 <code class="docutils literal notranslate"><span class="pre">SYSTEM\ControlSet001\Enum\USBSTOR\{VEN_PROD_VERSION}\{USB_SERIAL}\Properties\{83da6326-97a6-4088-9453-a1923f573b29}</span></code><br />
 <em>Tracks timestamps of USB device connections.</em><br />
-<img alt="alt text" src="../../_images/image-811.png" /></p></li>
+<img alt="alt text" src="../../_images/image-814.png" /></p></li>
 </ul>
 <p><code class="docutils literal notranslate"><span class="pre">C:\Windows\inf\setupapi.dev.log</span></code><br />
 <em>Tracks the installation and configuration of device drivers on the system</em><br />
@@ -688,17 +690,17 @@ Indicates the most recent time the USB device was safely removed.
 <code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Local\Microsoft\Windows\Notifications\wpndatabase.db</span></code><br />
 <em>Tracks notifications shown to the user.</em><br />
 <img alt="alt text" src="../../_images/image-571.png" /><br />
-<img alt="alt text" src="../../_images/image-581.png" /><br />
-<img alt="alt text" src="../../_images/image-591.png" /><br />
-<img alt="alt text" src="../../_images/image-60.png" /></p></li>
+<img alt="alt text" src="../../_images/image-582.png" /><br />
+<img alt="alt text" src="../../_images/image-592.png" /><br />
+<img alt="alt text" src="../../_images/image-602.png" /></p></li>
 <li><p><strong>Timeline</strong><br />
 <code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Local\ConnectedDevicesPlatform\ActivitiesCache.db</span></code><br />
 <em>Tracks app and file activity over time.</em><br />
-<img alt="alt text" src="../../_images/image-611.png" /></p></li>
+<img alt="alt text" src="../../_images/image-619.png" /></p></li>
 <li><p><strong>Windows Store</strong><br />
 <code class="docutils literal notranslate"><span class="pre">Software\Microsoft\Windows\CurrentVersion\Appx\AppxAllUserStore\Applications\</span></code><br />
 <em>Contains Windows Store app installation state.</em><br />
-<img alt="alt text" src="../../_images/image-1011.png" /></p></li>
+<img alt="alt text" src="../../_images/image-1014.png" /></p></li>
 </ul>
 </section>
 <section id="other-artifacts">
@@ -708,10 +710,10 @@ Indicates the most recent time the USB device was safely removed.
 <code class="docutils literal notranslate"><span class="pre">thumbs.db</span></code><br />
 <code class="docutils literal notranslate"><span class="pre">C:\Users\{user}\AppData\Local\Microsoft\Windows\Explorer</span></code><br />
 <em>Stores thumbnail images of files for faster previews.</em><br />
-<img alt="alt text" src="../../_images/image-621.png" /><br />
-<img alt="alt text" src="../../_images/image-631.png" /><br />
-<img alt="alt text" src="../../_images/image-641.png" /><br />
-<img alt="alt text" src="../../_images/image-651.png" /><br />
+<img alt="alt text" src="../../_images/image-622.png" /><br />
+<img alt="alt text" src="../../_images/image-632.png" /><br />
+<img alt="alt text" src="../../_images/image-642.png" /><br />
+<img alt="alt text" src="../../_images/image-652.png" /><br />
 <img alt="alt text" src="../../_images/image-661.png" /></p></li>
 <li><p><strong>Recycle Bin</strong><br />
 <code class="docutils literal notranslate"><span class="pre">C:\$Recycle.Bin</span></code><br />
@@ -741,7 +743,7 @@ Indicates the most recent time the USB device was safely removed.
 <div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">.\</span><span class="n">ETLParser</span><span class="p">.</span><span class="n">exe</span> <span class="n">-c</span> <span class="n">DeliveryLogs</span> <span class="n">-s</span> <span class="s2">&quot;C:\Windows\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Logs&quot;</span> <span class="n">-o</span> <span class="s2">&quot;C:\Users\adrian\Downloads\ETLOutput&quot;</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-711.png" /><br />
+<p><img alt="alt text" src="../../_images/image-714.png" /><br />
 <img alt="alt text" src="../../_images/image-70.png" /><br />
 <img alt="alt text" src="../../_images/image-721.png" /></p>
 <ul class="simple">
@@ -770,7 +772,7 @@ Indicates the most recent time the USB device was safely removed.
 <li><p><strong>AmCache (AppCompatCacheParser)</strong><br />
 <code class="docutils literal notranslate"><span class="pre">C:\Windows\AppCompat\Programs\Amcache.hve</span></code><br />
 <em>Stores metadata about executed programs, installation times, and file paths.</em>
-<img alt="alt text" src="../../_images/image-911.png" />
+<img alt="alt text" src="../../_images/image-913.png" />
 <img alt="alt text" src="../../_images/image-921.png" /></p></li>
 <li><p><strong>Scheduled Tasks</strong><br />
 <code class="docutils literal notranslate"><span class="pre">SOFTWARE\Microsoft\Windows</span> <span class="pre">NT\Current</span> <span class="pre">Version\TaskCache\Tree</span></code><br />

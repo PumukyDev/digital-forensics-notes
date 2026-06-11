@@ -216,12 +216,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise2/exercise2.html">Memory Dump</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise3/exercise3.html">Compile tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise4/exercise4.html">Volatility Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise5/exercise5.html">Linux challenges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise6/exercise6.html">Forensic analysis with diferent Linux file systems.</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Android:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../android/exercise1/exercise1.html">Android forensics basics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../android/exercise2/exercise2.html">Android forensics medium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../android/exercise3/exercise3.html">Android forensics advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../android/exercise3/exercise3.html">Android and IOS forensics advanced</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Cloud:</span></p>
 <ul>
@@ -1465,7 +1467,7 @@ hashcat<span class="w"> </span>-m<span class="w"> </span><span class="m">1000</s
 </pre></div>
 </div>
 <p>After cracking the password, the password for admin is <code class="docutils literal notranslate"><span class="pre">administrador</span></code></p>
-<p><img alt="alt text" src="../../_images/image-170.png" /></p>
+<p><img alt="alt text" src="../../_images/image-1101.png" /></p>
 </section>
 <section id="external-connections">
 <h3><strong>External Connections</strong><a class="headerlink" href="#external-connections" title="Link to this heading">¶</a></h3>
@@ -2693,7 +2695,7 @@ cp<span class="w"> </span>file.0xfa801aeaa620.0xfa801b02d460.DataSectionObject.f
 7z<span class="w"> </span>x<span class="w"> </span>ficheroSecreto.7z
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-240.png" /></p>
+<p><img alt="alt text" src="../../_images/image-270.png" /></p>
 </section>
 <section id="file-path">
 <h3><strong>File Path</strong><a class="headerlink" href="#file-path" title="Link to this heading">¶</a></h3>
@@ -2786,7 +2788,7 @@ cp<span class="w"> </span>file.0xfa801aeaa620.0xfa801b02d460.DataSectionObject.f
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>strings<span class="w"> </span>-a<span class="w"> </span>dump.raw<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">&quot;https://[a-zA-Z0-9\-]{7}\.[a-z]{2}&quot;</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-337.png" /></p>
+<p><img alt="alt text" src="../../_images/image-358.png" /></p>
 <p>The page is <code class="docutils literal notranslate"><span class="pre">https://sci-hub.tw</span></code></p>
 </section>
 <section id="date-and-time-of-visit">
@@ -2800,7 +2802,7 @@ Expected format: `DD/MM/YYYY HH:MM:SS (UTC)`
 ls<span class="w"> </span>-lah<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>places.sqlite
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-817.png" /></p>
+<p><img alt="alt text" src="../../_images/image-823.png" /></p>
 <p>Open one big file and open moz_places and moz_historyvisits, trying to obtain the ID of the request (in this case 8) and the timestamp</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sqlite3<span class="w"> </span>file.0xfa801ac41f20.0xfa801acb9b40.DataSectionObject.places.sqlite.dat
 .tables
@@ -2808,12 +2810,12 @@ ls<span class="w"> </span>-lah<span class="w"> </span><span class="p">|</span><s
 <span class="k">select</span><span class="w"> </span>*<span class="w"> </span>from<span class="w"> </span>moz_historyvisits<span class="p">;</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-1118.png" /></p>
+<p><img alt="alt text" src="../../_images/image-1122.png" /></p>
 <p>Transform the date to a human redeable time format:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">select</span><span class="w"> </span>datetime<span class="o">(</span><span class="m">1591971503557000</span>/1000000,<span class="s1">&#39;unixepoch&#39;</span><span class="o">)</span><span class="p">;</span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-1215.png" /></p>
+<p><img alt="alt text" src="../../_images/image-1218.png" /></p>
 <p>The date is <code class="docutils literal notranslate"><span class="pre">2020-06-12</span> <span class="pre">at</span> <span class="pre">14:18:23</span></code></p>
 </section>
 <section id="notepad">
@@ -2888,7 +2890,7 @@ ls<span class="w"> </span>-lah<span class="w"> </span><span class="p">|</span><s
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>strings<span class="w"> </span>-e<span class="w"> </span>l<span class="w"> </span>pid.3060.dmp<span class="w"> </span><span class="p">|</span><span class="w"> </span>less<span class="w"> </span>
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-718.png" /></p>
+<p><img alt="alt text" src="../../_images/image-724.png" /></p>
 <p>The password could be <code class="docutils literal notranslate"><span class="pre">admnistradorFicheroDescifrado</span></code></p>
 </section>
 <section id="encrypted-file">
@@ -2898,12 +2900,12 @@ ls<span class="w"> </span>-lah<span class="w"> </span><span class="p">|</span><s
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>7z<span class="w"> </span>x<span class="w"> </span>ficheroSecreto.7z
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-918.png" /></p>
+<p><img alt="alt text" src="../../_images/image-923.png" /></p>
 <p>Open the file to show the flag</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>cat<span class="w"> </span>ficheroSecreto.txt
 </pre></div>
 </div>
-<p><img alt="alt text" src="../../_images/image-1017.png" /></p>
+<p><img alt="alt text" src="../../_images/image-1021.png" /></p>
 </section>
 </section>
 </section>

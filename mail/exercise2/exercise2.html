@@ -216,12 +216,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise2/exercise2.html">Memory Dump</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise3/exercise3.html">Compile tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise4/exercise4.html">Volatility Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise5/exercise5.html">Linux challenges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../linux-file-system/exercise6/exercise6.html">Forensic analysis with diferent Linux file systems.</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Android:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../android/exercise1/exercise1.html">Android forensics basics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../android/exercise2/exercise2.html">Android forensics medium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../android/exercise3/exercise3.html">Android forensics advanced</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../android/exercise3/exercise3.html">Android and IOS forensics advanced</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Cloud:</span></p>
 <ul>
@@ -312,10 +314,10 @@
 <li><p>No suspicious routing anomalies.</p></li>
 </ul>
 <p>Overall, both the technical analysis and the message content suggest that the email is legitimate.</p>
-<p><img alt="Email 1 manual analysis" src="../../_images/image10.png" /></p>
+<p><img alt="Email 1 manual analysis" src="../../_images/image13.png" /></p>
 <p><strong>Automated Analysis</strong></p>
 <p>Using external validation tools such as MXToolbox and Google Message Header Analyzer confirms that authentication signatures are valid and consistent with the manual inspection.</p>
-<p><img alt="Email 1 automated analysis" src="../../_images/image-127.png" /></p>
+<p><img alt="Email 1 automated analysis" src="../../_images/image-140.png" /></p>
 </section>
 <section id="email-2">
 <h4>Email 2<a class="headerlink" href="#email-2" title="Link to this heading">¶</a></h4>
@@ -332,7 +334,7 @@
 <p>Even without deep technical analysis, the combination of suspicious content and lack of authentication strongly suggests that the email is fraudulent.</p>
 <p><strong>Automated Analysis</strong></p>
 <p>Automated tools confirm the absence of valid authentication keys, reinforcing the conclusion that the message cannot be considered legitimate.</p>
-<p><img alt="Email 2 automated analysis" src="../../_images/image-318.png" /></p>
+<p><img alt="Email 2 automated analysis" src="../../_images/image-337.png" /></p>
 </section>
 <section id="email-3">
 <h4>Email 3<a class="headerlink" href="#email-3" title="Link to this heading">¶</a></h4>
@@ -348,7 +350,7 @@
 <p>The email behaves as expected in a standard enterprise email flow, with no evidence of manipulation or spoofing.</p>
 <p><strong>Automated Analysis</strong></p>
 <p>Google’s header analysis tools confirm that all authentication mechanisms are valid, aligning with the manual findings.</p>
-<p><img alt="Email 3 automated analysis" src="../../_images/image-59.png" /></p>
+<p><img alt="Email 3 automated analysis" src="../../_images/image-524.png" /></p>
 </section>
 <section id="email-4">
 <h4>Email 4<a class="headerlink" href="#email-4" title="Link to this heading">¶</a></h4>
@@ -365,7 +367,7 @@
 <p>These characteristics strongly indicate that the email is malicious or spoofed.</p>
 <p><strong>Automated Analysis</strong></p>
 <p>Automated validation tools confirm the manual assessment, showing failed authentication and lack of proper email signing mechanisms.</p>
-<p><img alt="Email 4 automated analysis" src="../../_images/image-78.png" /></p>
+<p><img alt="Email 4 automated analysis" src="../../_images/image-712.png" /></p>
 </section>
 </section>
 <section id="forensic-analysis-of-pst-and-mbox-files">
@@ -375,17 +377,17 @@
 <h4>PST Files<a class="headerlink" href="#pst-files" title="Link to this heading">¶</a></h4>
 <p>To analyze PST files, applications such as BytesMorph (Microsoft Store) can be used. This tool allows direct loading of PST files and provides access to mailbox structures including inbox and sent items.</p>
 <p>After opening the PST file, emails are displayed in a structured mailbox view, allowing forensic inspection of message contents and metadata.</p>
-<p><img alt="PST analysis" src="../../_images/image-128.png" /></p>
+<p><img alt="PST analysis" src="../../_images/image-1212.png" /></p>
 <p>The tool clearly displays email folders such as Inbox and Sent, making it suitable for forensic review.</p>
-<p><img alt="PST mailbox view" src="../../_images/image-136.png" /></p>
+<p><img alt="PST mailbox view" src="../../_images/image-1311.png" /></p>
 </section>
 <section id="mbox-files">
 <h4>MBOX Files<a class="headerlink" href="#mbox-files" title="Link to this heading">¶</a></h4>
 <p>For MBOX analysis, MBox Viewer is a commonly used tool. It is open source and allows loading email archives by selecting the folder containing MBOX files.</p>
 <p>Once loaded, all contained emails are rendered in a readable interface, allowing investigators to inspect message content and metadata.</p>
-<p><img alt="MBOX folder selection" src="../../_images/image-147.png" /></p>
+<p><img alt="MBOX folder selection" src="../../_images/image-1410.png" /></p>
 <p>After selecting the directory, the emails are displayed automatically in a structured format.</p>
-<p><img alt="MBOX email list" src="../../_images/image-176.png" /></p>
+<p><img alt="MBOX email list" src="../../_images/image-179.png" /></p>
 <p>This tool is open source and its code can be found in its official repository on GitHub: https://github.com/eneam/mboxviewer</p>
 </section>
 </section>
@@ -397,10 +399,10 @@
 <p>Thunderbird stores email data in the user profile directory under AppData. Within this structure, key directories include Mail, ImapMail, and Local Folders.</p>
 <p>These directories typically contain MBOX files representing mailbox structures such as Inbox, Sent, Trash, and Drafts. These files are valuable forensic artifacts as they contain raw email data.</p>
 <p>The presence of these files allows investigators to reconstruct user email activity, including message history and communication patterns.</p>
-<p><img alt="Thunderbird artifacts 1" src="../../_images/image-87.png" />
-<img alt="Thunderbird artifacts 2" src="../../_images/image-97.png" />
-<img alt="Thunderbird artifacts 3" src="../../_images/image-107.png" />
-<img alt="Thunderbird artifacts 4" src="../../_images/image-1111.png" /></p>
+<p><img alt="Thunderbird artifacts 1" src="../../_images/image-811.png" />
+<img alt="Thunderbird artifacts 2" src="../../_images/image-910.png" />
+<img alt="Thunderbird artifacts 3" src="../../_images/image-1011.png" />
+<img alt="Thunderbird artifacts 4" src="../../_images/image-1115.png" /></p>
 </section>
 <section id="outlook-storage">
 <h4>Outlook Storage<a class="headerlink" href="#outlook-storage" title="Link to this heading">¶</a></h4>
