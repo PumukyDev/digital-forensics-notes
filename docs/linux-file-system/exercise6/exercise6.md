@@ -1,34 +1,34 @@
 # Forensic analysis with diferent Linux file systems.
 
-## Objetivo:
+## Objective
 
-- Aprender a acceder a las posibles evidencias contenidas en imágenes de disco generadas en sistemas informáticos que ejecutan sistemas operativos Linux.
-- Utilización de herramientas de recuperación de archivos borrados: foremost, photorec y scalpel
+- Learn how to access potential evidence contained in disk images acquired from Linux-based systems.
+- Use file recovery tools for deleted data: foremost, PhotoRec, and Scalpel.
 
-## Materiales
+## Materials
 
-- Distribución Linux Kali Linux.
-- Herramientas propias del sistema operativo: mount, losetup, fdisk, etc.
-- Herramientas forenses: Sleuthkit, foremost, scalpel y photorec.
-- Información de Internet
+- Kali Linux distribution.
+- Built-in system tools: `mount`, `losetup`, `fdisk`, etc.
+- Forensic tools: The Sleuth Kit, foremost, Scalpel, and PhotoRec.
+- Online reference material.
 
-Una de las tareas más habituales quehacer diario de un profesional forense informático es realizar imágenes forenses de discos duros (teniendo en cuenta todos los requisitos relativos a la cadena de custodia) para posteriormente realizar un análisis de los contenidos del mismo.
+One of the most common day-to-day tasks for a digital forensic examiner is to create forensic disk images — while maintaining proper chain of custody — and then analyze their contents.
 
-En esta situación, se hace imprescindible disponer de destrezas y habilidades para conocer las peculiaridades de los distintos sistemas de archivos que utilizan los SO Linux, para ser capaces de acceder a la información contenida en estas imágenes.
+To do this effectively, it is essential to understand the characteristics of the different file systems used by Linux operating systems, so that evidence stored in these images can be accessed correctly.
 
-Se nos pueden presentar situaciones donde aparezcan configuraciones más sofisticadas, tipo LVM, ZFS o LUKS encrypted, que hagan más difícil el acceso a la información almacenada.
+Investigators may also encounter more complex configurations such as LVM, ZFS, or LUKS encryption, which make access to stored data more challenging.
 
-Para la realización de la práctica se requiere que se descarguen las siguientes imágenes:
+For this exercise, download the following disk images:
 
-- [Datos](https://drive.google.com/file/d/1eN9oT3m66BphGWj5T-eEdU4GOpory-xm/view), se trata de un dispositivo de disco normal (ext4) donde sería necesario montar las particiones que se identifiquen y aplicar en ellas herramientas para la recuperación de datos borrados (photorec, foremost y scalpel).
-- [LVM](https://drive.google.com/file/d/1Zy35lShfEQ4zTsOFdax09p4N1I-ko9Y8/view), se trata de un disco que hace uso de volúmenes lógicos. Habrá que dar los pasos necesarios para “desenmascarar” los grupos de volúmenes, y volúmenes lógicos definidos para acceder a su información.
-- [Cifrado](https://drive.google.com/file/d/12BHCF2zr9Pp9wHRLlvic28pvehmarE27/view), se trata de un disco cifrado (contraseña “usuario”) con la tecnología propia de Linux (LUKS). Sería necesario acceder a la información que contenga
+- **[Data](https://drive.google.com/file/d/1eN9oT3m66BphGWj5T-eEdU4GOpory-xm/view)** — a standard disk image (ext4). Mount the identified partitions and apply deleted-file recovery tools (PhotoRec, foremost, and Scalpel).
+- **[LVM](https://drive.google.com/file/d/1Zy35lShfEQ4zTsOFdax09p4N1I-ko9Y8/view)** — a disk using logical volumes. Follow the steps required to activate the volume groups and logical volumes in order to access their contents.
+- **[Encryption](https://drive.google.com/file/d/12BHCF2zr9Pp9wHRLlvic28pvehmarE27/view)** — a LUKS-encrypted disk (password: `"usuario"` — Spanish for *"user"*). Decrypt and access the data it contains.
 
 ## Solution
 
-### Datos
+### Data
 
-Mount the image using the following commands. Note that the loop number may vary dapending if there are other images mounted. Start mounting the first loop (loopXp1):
+Attach and mount the image using the following commands. The loop device number may vary depending on whether other images are already attached. Begin with the first partition (`loopXp1`):
 
 ```bash
 sudo losetup -fP datos.dd
@@ -38,13 +38,13 @@ sudo mount -o ro /dev/loop1p1 evidences
 
 ![alt text](./images/image.png)
 
-There is only one directory called "recup_dir.1", check the content of said directory:
+Only one directory is present: `recup_dir.1`. Review its contents:
 
 ![alt text](./images/image-2.png)
 
 ![alt text](./images/image-1.png)
 
-It contains multiple files, umount the first loop and mount the second one.
+The directory contains multiple recovered files. Unmount the first partition and mount the second:
 
 ```bash
 sudo umount /dev/loop1p1
@@ -53,7 +53,7 @@ sudo mount -o ro /dev/loop1p2 evidences
 
 ![alt text](./images/image-3.png)
 
-However, the loop cannot be mounted as it is part of the swap. Them, mount the third and last loop:
+The second partition cannot be mounted because it is a swap partition. Mount the third and final partition instead:
 
 ```bash
 sudo mount -o ro /dev/loop1p3 evidences
@@ -61,9 +61,9 @@ sudo mount -o ro /dev/loop1p3 evidences
 
 ![alt text](./images/image-4.png)
 
-An empty lost+found directory is found.
+Only an empty `lost+found` directory is present — deleted files are not visible through a normal mount.
 
-Use photorec in order to recover files. Launch it and select the first partition:
+Use **PhotoRec** to recover deleted files. Launch the tool and select the first partition:
 
 ![alt text](./images/image-5.png)
 
@@ -75,7 +75,7 @@ Select "ext2/ext3".
 
 ![alt text](./images/image-7.png)
 
-Select "Whole" to recover as much files as possible.
+Select **Whole** to scan the entire partition and recover as many files as possible.
 
 ![alt text](./images/image-8.png)
 
@@ -83,15 +83,15 @@ As shown below, many files have been recovered.
 
 ![alt text](./images/image-10.png)
 
-Repeat the same process for the third partition.
+Repeat the same PhotoRec process for the third partition.
 
-After performing that, many files have been recovered:
+After both recovery runs, a large number of deleted files are restored:
 
 ![alt text](./images/image-11.png)
 
 ### LVM
 
-Mount the partition and verigy the file system type.
+Attach the image and verify the file system layout:
 
 ```bash
 sudo losetup -fP lvm.dd
@@ -100,9 +100,9 @@ lsblk -f
 
 ![alt text](./images/image-12.png)
 
-As shown, it is a LVM2 file system.
+As shown, the disk uses **LVM2** (Logical Volume Manager).
 
-Activate LVM to see the logical partitions.
+Activate the volume group to expose the logical volumes:
 
 ```bash
 sudo vgscan
@@ -112,7 +112,7 @@ lsblk
 
 ![alt text](./images/image-13.png)
 
-Mount the partitions and ensure that the files can be shown perfectly:
+Mount the logical volumes and verify that the file systems are accessible:
 
 ```bash
 sudo mount /dev/debian-vg/root evidences/root/
@@ -121,9 +121,9 @@ sudo mount /dev/debian-vg/home evidences/home/
 
 ![alt text](./images/image-14.png)
 
-### Cifrado
+### Encryption
 
-Mount the disk and ensure that it is a encrypted disk:
+Attach the disk image and confirm that it is encrypted:
 
 ```bash
 sudo losetup -fP cifrado.dd
@@ -132,9 +132,9 @@ lsblk
 
 ![alt text](./images/image-15.png)
 
-It is encrypted using LUKS as shown above.
+The partition is encrypted with **LUKS**, as shown above.
 
-More information about the disk can be extracted using the following command:
+Additional metadata about the encrypted volume can be inspected with:
 
 ```bash
 sudo cryptsetup luksDump /dev/loop0p1
@@ -142,11 +142,13 @@ sudo cryptsetup luksDump /dev/loop0p1
 
 ![alt text](./images/image-16.png)
 
-To decrypt the file, simply run the folliowing command and write the "usuario" password. Then, all the files will be correctly deencrypted.
+To decrypt the volume, open the LUKS container and enter the password `"usuario"` when prompted. Then mount the decrypted mapper device:
 
 ```bash
 sudo cryptsetup luksOpen /dev/loop0p1 decrypted
 sudo mount /dev/mapper/decrypted evidences
 ```
+
+The file system becomes accessible and its contents can be examined normally.
 
 ![alt text](./images/image-17.png)

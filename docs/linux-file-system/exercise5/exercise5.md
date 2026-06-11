@@ -4,11 +4,11 @@
 
 ### Introduction
 
-Una de las alertas del SIEM ha reportado que determinado equipo Linux está realizando multitud de peticiones a una IP externa. Se sospecha que la máquina ha podido ser comprometida. Para comenzar la investigación se ha realizado un volcado de memoria antes de apagar dicho equipo.
+A SIEM alert reported that a Linux host is making a large number of requests to an external IP address. The machine is suspected to have been compromised. Before shutting down the system, a memory dump was acquired to begin the investigation.
 
-Como analista forense deberás identificar el PID dañino responsable de esta alerta (por ejemplo: 1255)
+As a forensic analyst, you must identify the malicious PID responsible for this alert (for example: `1255`).
 
-Puede descargar el volcado de memoria [aquí](https://drive.google.com/file/d/1BmAR1cny_JfWmiTsWOXmmnGDmVPEzc8P/view?usp=sharing).
+The memory dump can be downloaded [here](https://drive.google.com/file/d/1BmAR1cny_JfWmiTsWOXmmnGDmVPEzc8P/view?usp=sharing).
 
 ### Solution
 
@@ -19,9 +19,9 @@ vol3 -f dump-practica5 banners.Banner
 ```
 ![alt text](./images/image.png)
 
-As shown, it is a Ubuntu 4.2.0-16 generic. Then, downlaod a volatility profile for said linux version from the following [github repository](https://github.com/Abyss-W4tcher/volatility2-profiles/blob/master/Ubuntu/amd64/4.2.0/16/generic/Ubuntu_4.2.0-16-generic_4.2.0-16.19_amd64.zip).
+As shown, the dump corresponds to **Ubuntu 4.2.0-16-generic**. Download a matching Volatility profile for that kernel version from the following [GitHub repository](https://github.com/Abyss-W4tcher/volatility2-profiles/blob/master/Ubuntu/amd64/4.2.0/16/generic/Ubuntu_4.2.0-16-generic_4.2.0-16.19_amd64.zip).
 
-Move said `.zip` file into your volatility's plugin directory and verify that it is being used by volatility. Note that in this case I'm using volatility2 instead of volatility3.
+Move the `.zip` file into Volatility's Linux overlay plugin directory and verify that the profile is recognized. Note that, for this exercise, **Volatility 2** is used instead of Volatility 3.
 
 ```bash
 mv ~/downloads/Ubuntu_4.2.0-16-generic_4.2.0-16.19_amd64.zip ~/desktop/tools/volatility2/volatility/plugins/overlays/linux/
@@ -30,7 +30,7 @@ vol2 --info | grep Linux
 
 ![alt text](./images/image-1.png)
 
-After all this configuration, we have more specific commands to create network maps and process listing of the memory. In order to see the connections, run the following command:
+With the correct profile loaded, Volatility can enumerate network connections and running processes from the dump. To inspect active connections, run:
 
 ```bash
 vol2 --profile=LinuxUbuntu_4_2_0-16-generic_4_2_0-16_19_amd64x64 -f dump-practica5 linux_netstat 
@@ -38,9 +38,9 @@ vol2 --profile=LinuxUbuntu_4_2_0-16-generic_4_2_0-16_19_amd64x64 -f dump-practic
 
 ![alt text](./images/image-3.png)
 
-As shown, there is a connection between the device and a external IP using the "irssi" process.
+The output shows an outbound connection from the host to an external IP address, associated with the `irssi` process.
 
-Let's check for more weird processes using pslist:
+To corroborate this finding, list running processes with `linux_pslist`:
 
 ```bash
 vol2 --profile=LinuxUbuntu_4_2_0-16-generic_4_2_0-16_19_amd64x64 -f dump-practica5 linux_pslist 
@@ -48,9 +48,9 @@ vol2 --profile=LinuxUbuntu_4_2_0-16-generic_4_2_0-16_19_amd64x64 -f dump-practic
 
 ![alt text](./images/image-2.png)
 
-The same process "irssi" with PID 1849 is shown. After this analysis, SSH and irssi proccess may are suspicius.
+The same `irssi` process appears with **PID 1849**. At this point, both SSH-related activity and `irssi` warrant further investigation.
 
-Create a process map of irssi:
+Inspect the memory mappings of the `irssi` process:
 
 ```bash
 vol2 --profile=LinuxUbuntu_4_2_0-16-generic_4_2_0-16_19_amd64x64 -f dump-practica5 linux_proc_maps -p 1849
@@ -58,52 +58,41 @@ vol2 --profile=LinuxUbuntu_4_2_0-16-generic_4_2_0-16_19_amd64x64 -f dump-practic
 
 ![alt text](./images/image-4.png)
 
-TBD explicar esto de aquí abajo, ponerlo en inglés y parafrasearlo:
+The process memory map reveals several indicators relevant to the investigation:
 
-Aquí encontramos varios elementos clave para determinar que se trata de este proceso.
+- **Cryptography and SSL libraries** are loaded, confirming that the process is capable of encrypted communications.
+- **Socket and networking libraries** are present, consistent with an active outbound connection.
+- **Perl runtime support** is loaded — meaning the process can execute Perl scripts, a capability commonly abused by IRC-based malware to run commands or deploy additional payloads.
 
-    El proceso está usando librerías de criptografía y ssl, confirmando que se realizan comunicaciones cifradas.
+**Conclusion:** Combined with the earlier network findings, the evidence points to malicious use of a legitimate IRC client:
 
+- Encrypted connection to port **6697** (IRC over SSL)
+- Ability to execute Perl scripts
+- Persistent connection to an external IP address
 
-    Tiene cargadas librerías para manejo de sockets y red.
+Together, these indicators suggest that **PID 1849 (`irssi`)** is likely operating as an IRC bot or command-and-control (C2) channel. Attackers frequently abuse legitimate IRC clients such as Irssi — sometimes modified — to maintain persistence and remote control over compromised Linux systems.
 
+## Linux Post-mortem Forensics
 
-    Tiene cargada una librería para soporte de Perl.
+On April 5, 2022, police were contacted by a company whose system had been hacked. You have been hired to assist the investigation and find evidence of the intrusion. According to the system administrator, only the following ports were supposed to be open on the machine: 21, 22, 23, 3306, and 123 — some of which he uses for routine system maintenance.
 
+### Objective
 
-Esto es particularmente sospechoso porque significa que el proceso puede ejecutar scripts Perl, que es una capacidad comúnmente usada en malware basado en IRC para ejecutar comandos o payloads adicionales.
+The main goal is to find evidence of compromise: system logs, commands entered, open ports, malicious applications, and related artifacts.
 
-Conclusión
+### Tips
 
-Si combinamos esto con la conexión establecida que encontramos antes:
+Any forensic technique, command, or tool may be used to solve the scenario.
 
-    Conexión cifrada al puerto 6697 (IRC sobre SSL)
-    Capacidad de ejecución de scripts Perl
-    Conexión persistente a una IP externa
+### Hints
 
-Todo apunta a que este proceso podría estar siendo usado como un bot IRC o un canal de comando y control (C2). Los atacantes frecuentemente usan clientes IRC legítimos como IRSSI modificados para mantener persistencia y control remoto en sistemas comprometidos.
+- Which user account was added by the attacker?
+- Is any malware installed on the machine?
+- Can you identify the directory path where confidential files may have been accessed or modified?
+- Did the attacker open additional ports? Which ones?
+- Was any malicious script scheduled for execution?
 
-## Forense Post-mortem Linux
-
-El 5 de abril de 2022, la policía fue contactada por una empresa, ya que su sistema había sido hackeado. Has sido contratado para trabajar con la policía con el objetivo de ayudarles a encontrar evidencia que demuestre la invasión realizada por el cracker. Al hablar con el administrador del sistema, él afirmó que solo los siguientes puertos estaban abiertos en la máquina: 21, 22, 23, 3306, 123, algunos de los cuales son utilizados por él para realizar el mantenimiento del sistema.
-
-### Objetivo:
-
-El objetivo principal es encontrar evidencia, ya sean registros del sistema, comandos ingresados, puertos abiertos, aplicaciones maliciosas, entre otros.
-
-### Consejos:
-
-Se puede utilizar cualquier técnica forense, comando y herramienta para resolver el escenario.
-
-### Pistas:
-
-- ¿Qué usuario fue agregado por el atacante?
-- ¿Hay algún malware instalado en la máquina?
-- Intenta indicar la ruta del directorio en el que posiblemente se hayan accedido o modificado archivos considerados confidenciales.
-- ¿Se han abierto puertos por el atacante? ¿Cuáles?
-- ¿Se ha programado la ejecución de algún script malicioso?
-
-Download the image disk form [here](https://drive.google.com/file/d/1MOLyIXZJLdsFTofNxv1BuhV5ZVUIKTgj/view?usp=sharing).
+Download the disk image [here](https://drive.google.com/file/d/1MOLyIXZJLdsFTofNxv1BuhV5ZVUIKTgj/view?usp=sharing).
 
 Once downloaded, mount the image:
 
@@ -122,53 +111,56 @@ ls -lah
 
 ![alt text](./images/image-5.png)
 
-Firstly, check if there is somwthing weird between the users of the system:
+First, review the system user accounts for anything anomalous:
 
 ```bash
 cat etc/passwd
 ```
 
-As shown above, a user called "ghostHacker" exists in the system. Probably it is not inteded to be there and may have been created by the hacker.
+A user named `ghostHacker` is present on the system. This account is unlikely to be legitimate and was probably created by the attacker to maintain access.
 
 ![alt text](./images/image-6.png)
 
-In order to know persistant scripts in the system, check the cron logs:
+To identify persistent malicious scripts, review the cron logs:
 
 ![alt text](./images/image-7.png)
 
-As shown, the logs demonstrate that there is a Keylogger in the system.
+The logs indicate that a **keylogger** has been installed and scheduled on the system.
 
-Verify ssh logs for possible extrange logs:
+Review SSH logs for suspicious authentication activity:
 
 ![alt text](./images/image-8.png)
 
-There are two SSH successull connections with user:password, maybe the hacker accessed the system via SSH once he obtained a password via phising or force bruting.
+Two successful SSH connections using `user:password` authentication are recorded. The attacker likely gained access via SSH after obtaining credentials through social engineering or brute force — multiple failed login attempts also appear in the logs.
 
-Check if the bash history has more evicences:
+Check whether bash history retains any further evidence:
 
 ![alt text](./images/image-9.png)
 
-Only the "exit" command is shown, probably the hacker has removed all the history after performing the work.
+Only the `exit` command remains. The attacker likely cleared `.bash_history` after completing the intrusion.
 
-After a few more investigation, a modified file can be shown:
+Further investigation reveals a modified file:
 
 ![alt text](./images/image-10.png)
 
-It was supposed to be an installer, however, it only shutdowns the PC.
+The file was presented as an installer, but its actual behavior is to shut down the machine — consistent with a decoy or anti-forensics payload.
 
-After analyzing the firewalld logs, it can be seen that the port 88 is open. It can be intended or not.
+Analysis of the `firewalld` logs shows that **port 88** was opened — a port not listed among those the administrator claimed were in use.
 
 ![alt text](./images/image-11.png)
 
-TBD poner mejor las conclusiones en base a lo que se ve arriba, parafrasear y poner en inglés:
+### Conclusions
 
+Based on the artifacts reviewed above, the intrusion can be reconstructed as follows:
 
-Conclusiones
-El atacante accedio al sistema como root usando la contraseña de ssh, posiblemente obtenida
-mediante ingenieria social o fuerza bruta, pues en el registro se ven multiples intentos fallidos.
-Una vez dentro, la linea de post-explotación fue la siguiente:
-El atacante creo el usuario ghostHacker para establecer redundancia.
-El atacante edito los ficheros en la ruta /mnt/company
-El atacante abrio el puerto 88.
-El atacante instalo un keyloger y programo su ejecución en crontab.
-Una vez tenia lo que queria, borro los ficheros .bash_history y cerro de la shell
+1. **Initial access:** The attacker authenticated as `root` over SSH, likely using credentials obtained through social engineering or brute force. SSH logs show multiple failed attempts before two successful logins.
+
+2. **Persistence:** The attacker created the user account `ghostHacker` to maintain redundant access to the system.
+
+3. **Data targeting:** Files under `/mnt/company` were accessed or modified — a path consistent with confidential company data.
+
+4. **Network changes:** Port **88** was opened via the firewall, expanding the attack surface beyond the ports the administrator expected.
+
+5. **Malware deployment:** A keylogger was installed and its execution was scheduled through **crontab**, providing ongoing credential harvesting.
+
+6. **Anti-forensics:** Once the objective was achieved, the attacker cleared `.bash_history` files and exited the shell, leaving minimal command-line traces.
