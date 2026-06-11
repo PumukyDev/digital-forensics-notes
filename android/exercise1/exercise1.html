@@ -237,6 +237,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../mail/exercise2/exercise2.html">Email Medium</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../mail/exercise3/exercise3.html">Secure Mail Server</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Reports:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/exercise2/exercise2.html">Análisis de un informe pericial.</a></li>
+</ul>
 
 </div>
 </div>
@@ -321,7 +325,7 @@
 <section id="familiarization-with-android">
 <h2>Familiarization with Android<a class="headerlink" href="#familiarization-with-android" title="Link to this heading">¶</a></h2>
 <section id="install-android-studio">
-<h3>Install Android Studio**<a class="headerlink" href="#install-android-studio" title="Link to this heading">¶</a></h3>
+<h3>Install Android Studio<a class="headerlink" href="#install-android-studio" title="Link to this heading">¶</a></h3>
 <p>Android Studio can be downloaded from the <a class="reference external" href="https://developer.android.com/studio">official website</a>:</p>
 <p>Installation on Debian/Ubuntu:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update
@@ -336,17 +340,17 @@ sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> <
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>-xvf<span class="w"> </span>android-studio-linux.tar.gz
 </pre></div>
 </div>
-<p>Open it.</p>
+<p>Launch Android Studio.</p>
 <p><img alt="alt text" src="../../_images/image.png" /></p>
-<p>A menu similar to the shown below should appear.</p>
+<p>A welcome screen similar to the one shown below should appear.</p>
 <p><img alt="alt text" src="../../_images/image-1.png" /></p>
-<p>In order to know the available devices, click on “More Actions” –&gt; “Virtual Device Manager”.</p>
+<p>To view available virtual devices, open <strong>More Actions</strong> → <strong>Virtual Device Manager</strong>.</p>
 <p><img alt="alt text" src="../../_images/image-3.png" /></p>
 <p><img alt="alt text" src="../../_images/image-2.png" /></p>
 </section>
 <section id="run-an-android-virtual-device-avd">
-<h3>Run an Android Virtual Device (AVD)**<a class="headerlink" href="#run-an-android-virtual-device-avd" title="Link to this heading">¶</a></h3>
-<p>Create an emulator using the the previous GUI or using the following command:</p>
+<h3>Run an Android Virtual Device (AVD)<a class="headerlink" href="#run-an-android-virtual-device-avd" title="Link to this heading">¶</a></h3>
+<p>Create an emulator using the GUI from the previous section, or run the following command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>avdmanager<span class="w"> </span>create<span class="w"> </span>avd<span class="w"> </span>-n<span class="w"> </span>Android26<span class="w"> </span>-k<span class="w"> </span><span class="s2">&quot;system-images;android-26;default;x86_64&quot;</span><span class="w"> </span>-c<span class="w"> </span>10M
 </pre></div>
 </div>
@@ -362,7 +366,7 @@ sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> <
 <p><img alt="alt text" src="../../_images/image-6.png" /></p>
 </section>
 <section id="install-android-debug-bridge-adb-platform-tools-and-test-it">
-<h3>Install Android Debug Bridge (ADB Platform Tools) and test it**<a class="headerlink" href="#install-android-debug-bridge-adb-platform-tools-and-test-it" title="Link to this heading">¶</a></h3>
+<h3>Install Android Debug Bridge (ADB Platform Tools) and test it<a class="headerlink" href="#install-android-debug-bridge-adb-platform-tools-and-test-it" title="Link to this heading">¶</a></h3>
 <p>Installation on Debian/Ubuntu:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update
 sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>adb<span class="w"> </span>fastboot<span class="w"> </span>-y
@@ -464,13 +468,13 @@ adb<span class="w"> </span>push<span class="w"> </span>hello.txt<span class="w">
 <li><p>20GB Hard Disk</p></li>
 <li><p>256MB Video Memory</p></li>
 </ul>
-<p>After inicializing the machine, click on “Installation - Install Android-x86 to hardisk”.</p>
+<p>After booting the virtual machine from the ISO, select <strong>Installation - Install Android-x86 to hard disk</strong>.</p>
 <p><img alt="alt text" src="../../_images/image-19.png" /></p>
 <p>Select the “Create/Modify partitions” option.</p>
 <p><img alt="alt text" src="../../_images/image-20.png" /></p>
 <p>Select “Yes” when asked for GPT.</p>
 <p><img alt="alt text" src="../../_images/image-21.png" /></p>
-<p>And createa “Linux filesystem” partition.</p>
+<p>Then create a <strong>Linux filesystem</strong> partition.</p>
 <p><img alt="alt text" src="../../_images/image-22.png" /></p>
 <p><img alt="alt text" src="../../_images/image-23.png" /></p>
 <p><img alt="alt text" src="../../_images/image-24.png" /></p>
@@ -488,53 +492,53 @@ adb<span class="w"> </span>push<span class="w"> </span>hello.txt<span class="w">
 <p>Once the device is rebooted and the ISO is removed, before starting the device, click “e” twice on the GRUB menu to edit it.</p>
 <p><img alt="alt text" src="../../_images/image-33.png" /></p>
 <p><img alt="alt text" src="../../_images/image-34.png" /></p>
-<p>Remove the “quiet” line and type “nomodeseet xforvesa”. Then, click <code class="docutils literal notranslate"><span class="pre">ESC</span></code> + <code class="docutils literal notranslate"><span class="pre">b</span></code>. This step is done because if these words are not added, the mobile will not have graphical interfe, having only a console tty.</p>
+<p>Remove the <code class="docutils literal notranslate"><span class="pre">quiet</span></code> line and add <code class="docutils literal notranslate"><span class="pre">nomodeset</span> <span class="pre">xforcevesa</span></code>. Then press <code class="docutils literal notranslate"><span class="pre">ESC</span></code> followed by <code class="docutils literal notranslate"><span class="pre">b</span></code> to boot with the modified configuration. This step is required because, without these kernel parameters, the system may fail to start the graphical interface and remain on a text-only TTY console.</p>
 <p><img alt="alt text" src="../../_images/image-35.png" /></p>
 <p><img alt="alt text" src="../../_images/image-36.png" /></p>
-<p>After login, an graphical interface will appear.</p>
+<p>After logging in, the graphical desktop environment should appear.</p>
 <p><img alt="alt text" src="../../_images/image-37.png" /></p>
-<p>Enable the developer mode in the device as previously with the Android Studio device.</p>
+<p>Enable Developer Options on this device using the same procedure described for the Android Studio emulator.</p>
 <p><img alt="alt text" src="../../_images/image-38.png" /></p>
 <p><img alt="alt text" src="../../_images/image-47.png" /></p>
 <p><img alt="alt text" src="../../_images/image-48.png" /></p>
 <p><img alt="alt text" src="../../_images/image-49.png" /></p>
 <p><img alt="alt text" src="../../_images/image-50.png" /></p>
-<p>Lastly, check the IP of the device, there are multiple options, but it can be done opening a terminal and executing the following command:</p>
+<p>Finally, determine the device’s IP address. Several methods are available; one option is to open a terminal on the Android-x86 VM and run:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ip<span class="w"> </span>a
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-51.png" /></p>
-<p>In the main machine, connect to the device using adb and shown below. Take note of chaging the IP address by the one extracted in the step before.</p>
+<p>On the host machine, connect to the device over the network using ADB as shown below. Replace the IP address with the one obtained in the previous step.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>devices
 adb<span class="w"> </span>connect<span class="w"> </span><span class="m">192</span>.168.1.41:5555
 adb<span class="w"> </span>devices
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-52.png" /></p>
-<p>If we want to add an account, open settings and navigate to the “Accounts” section.</p>
+<p>To add a Google account, open <strong>Settings</strong> and navigate to the <strong>Accounts</strong> section.</p>
 <p><img alt="alt text" src="../../_images/image-39.png" /></p>
 <p>Click on “Add account”.</p>
 <p><img alt="alt text" src="../../_images/image-40.png" /></p>
-<p>And sign in using any account.</p>
+<p>Sign in with any Google account.</p>
 <p><img alt="alt text" src="../../_images/image-42.png" /></p>
-<p>Once the login is successfull, the account should appear in the menu.</p>
+<p>Once sign-in completes successfully, the account should appear in the Accounts list.</p>
 <p><img alt="alt text" src="../../_images/image-43.png" /></p>
-<p>In order to install AFLogical OSE, download it from <a class="reference external" href="https://github.com/nowsecure/android-forensics">here</a> and execute the following command:</p>
+<p>To install AFLogical OSE, download the APK from <a class="reference external" href="https://github.com/nowsecure/android-forensics">the official repository</a> and run:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>install<span class="w"> </span>./AFLogical-OSE_1.5.2.apk
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-44.png" /></p>
 <p>Select everything and click on “Capture”.</p>
 <p><img alt="alt text" src="../../_images/image-45.png" /></p>
-<p>Once the extraction is done, a dialogue with “Data extraction completed” should appear.</p>
+<p>Once extraction completes, a dialog displaying <strong>Data extraction completed</strong> should appear.</p>
 <p><img alt="alt text" src="../../_images/image-46.png" /></p>
-<p>Extract the evidences folder using the following command:</p>
+<p>Pull the forensic evidence folder from the device using:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>pull<span class="w"> </span>/sdcard/forensics/<span class="w"> </span>.
 </pre></div>
 </div>
-<p>The following folders should appear.</p>
+<p>The following folders should appear on the host machine.</p>
 <p><img alt="alt text" src="../../_images/image-53.png" /></p>
-<p>Now, the application andriller will be used to extract evidences. Note that it will be done using fish, so it may vary if using other terminals:</p>
+<p>Next, Andriller is used to perform a broader logical extraction. The commands below use the Fish shell; adapt the virtual-environment activation step if you use Bash or another shell:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>env
 <span class="nb">source</span><span class="w"> </span>env/bin/activate.fish
 python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
@@ -546,11 +550,11 @@ python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </sp
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>andriller
 </pre></div>
 </div>
-<p>The following menu should appear, click on “Output..” and set the output folder.</p>
+<p>The Andriller GUI should open. Click <strong>Output..</strong> and select the destination folder for the extraction results.</p>
 <p><img alt="alt text" src="../../_images/image-55.png" /></p>
-<p>Once the folder is selected, click on “Check”.</p>
+<p>After selecting the output folder, click <strong>Check</strong> to verify the device connection.</p>
 <p><img alt="alt text" src="../../_images/image-56.png" /></p>
-<p>Lastly, click on “Extract” and the program will connect to the device automatilly and will extract the evicences.</p>
+<p>Finally, click <strong>Extract</strong>. Andriller connects to the device automatically and pulls the available forensic data.</p>
 <p><img alt="alt text" src="../../_images/image-57.png" /></p>
 <p>Once finished, a report like the following will be generated:</p>
 <p><img alt="alt text" src="../../_images/image-58.png" /></p>
@@ -669,83 +673,74 @@ adb<span class="w"> </span>shell
 </section>
 </section>
 <section id="whatsapp-analysis">
-<h2>Whatsapp analysis<a class="headerlink" href="#whatsapp-analysis" title="Link to this heading">¶</a></h2>
-<p>Whatsapp has been installed and linked to an account as shown below (to be honest I did not blurred anything, characters are simply not loading XD):</p>
+<h2>WhatsApp Analysis<a class="headerlink" href="#whatsapp-analysis" title="Link to this heading">¶</a></h2>
+<p>WhatsApp was installed on the device and linked to an account as shown below (the interface text appears garbled in the screenshot because certain characters failed to render correctly, not because anything was deliberately blurred):</p>
 <p><img alt="alt text" src="../../_images/image-60.png" /></p>
-<p>Connect to the device using root and verify the whatsapp database directory:</p>
+<p>Connect to the device with root privileges and verify the WhatsApp database directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>root
 adb<span class="w"> </span>shell
-ls<span class="w"> </span>-lah<span class="w"> </span>/data/data/com.whatsapp/database/
+ls<span class="w"> </span>-lah<span class="w"> </span>/data/data/com.whatsapp/databases/
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-61.png" /></p>
-<p>Extract the entire whatsapp directory using adb for an easier analysis.</p>
+<p>Pull the entire WhatsApp application data directory to the host for offline analysis.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adb<span class="w"> </span>pull<span class="w"> </span>/data/data/com.whatsapp
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-62.png" /></p>
-<p>There are several databases with useful info, but the following one contains the messages:</p>
+<p>Several SQLite databases contain useful artifacts; <code class="docutils literal notranslate"><span class="pre">msgstore.db</span></code> stores the message history. Query it as follows:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sqlite3<span class="w"> </span>msgstore.db
 <span class="k">select</span><span class="w"> </span>*<span class="w"> </span>from<span class="w"> </span>message<span class="w"> </span>ORDER<span class="w"> </span>BY<span class="w"> </span>timestamp<span class="p">;</span>
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-63.png" /></p>
-<p>Here is a small summary to understand what is happening:</p>
-<p>TBD traducir y poner bonito!</p>
-<ol class="arabic simple">
-<li><p>ID del mensaje
-El número tipo 518, 517, 516…
-Es el identificador interno del mensaje (primary key)</p></li>
-<li><p>Campos técnicos (flags / estado)
-Muchos 0, -1, NULL
-Son estados internos como:
-leído / no leído
-enviado / recibido / pendiente
-flags de sistema</p></li>
-<li><p>Identificador del chat o usuario
-Valores tipo:
-3AFDC…
-Esto suele ser el JID (Jabber ID):
-número de teléfono o grupo
-formato interno de WhatsApp</p></li>
-<li><p>Timestamp (muy importante)
-Números como:
-17007477, 19000, 36000, etc.
-Normalmente son timestamps en formato UNIX o milisegundos
-Indican cuándo se envió/recibió el mensaje</p></li>
-<li><p>Campo de texto del mensaje
-Lo que ves a la derecha:
-“Seguro q hace tela calor”
-“Ya”
-“No sé si es lo mejor”
-“Comemos en algún sitio?”
-Esto normalmente corresponde a algo como:
-data
-text
-message</p></li>
-<li><p>Campos multimedia (vacíos en tu captura)
-Muchos NULL
-Significa:
-no hay imagen
-no hay audio
-no hay vídeo
-Si hubiera media verías rutas o MIME types</p></li>
-<li><p>Otros campos técnicos comunes (los que no se ven bien)</p></li>
-</ol>
-<p>En WhatsApp suelen existir también:</p>
-<p>media_type
-status
-key_from_me (si lo enviaste tú o no)
-remote_resource
-quoted_row_id (respuestas citadas)
-latitude/longitude (si hay ubicación)
-📌 Interpretación rápida de tu imagen</p>
-<p>Lo más importante de lo que muestras:</p>
-<p>Cada fila = 1 mensaje
-La columna final visible = texto del mensaje
-Los bloques de NULL = sin multimedia o campos no usados
-Los números grandes = timestamps o IDs internos
-El hash largo (3AFDC…) = chat o usuario/grupo</p>
+<p>The following summary explains how to interpret the <code class="docutils literal notranslate"><span class="pre">message</span></code> table output:</p>
+<section id="message-id">
+<h3>1. Message ID<a class="headerlink" href="#message-id" title="Link to this heading">¶</a></h3>
+<p>Values such as <code class="docutils literal notranslate"><span class="pre">518</span></code>, <code class="docutils literal notranslate"><span class="pre">517</span></code>, <code class="docutils literal notranslate"><span class="pre">516</span></code>, and so on are the internal message identifiers (primary key).</p>
+</section>
+<section id="technical-fields-flags-status">
+<h3>2. Technical fields (flags / status)<a class="headerlink" href="#technical-fields-flags-status" title="Link to this heading">¶</a></h3>
+<p>Many columns contain <code class="docutils literal notranslate"><span class="pre">0</span></code>, <code class="docutils literal notranslate"><span class="pre">-1</span></code>, or <code class="docutils literal notranslate"><span class="pre">NULL</span></code>. These represent internal state flags, for example:</p>
+<ul class="simple">
+<li><p>read / unread</p></li>
+<li><p>sent / received / pending</p></li>
+<li><p>system-level flags</p></li>
+</ul>
+</section>
+<section id="chat-or-user-identifier">
+<h3>3. Chat or user identifier<a class="headerlink" href="#chat-or-user-identifier" title="Link to this heading">¶</a></h3>
+<p>Values such as <code class="docutils literal notranslate"><span class="pre">3AFDC...</span></code> typically correspond to a <strong>JID</strong> (Jabber ID):</p>
+<ul class="simple">
+<li><p>a phone number or group identifier</p></li>
+<li><p>WhatsApp’s internal addressing format</p></li>
+</ul>
+</section>
+<section id="timestamp-critical-for-timeline-reconstruction">
+<h3>4. Timestamp (critical for timeline reconstruction)<a class="headerlink" href="#timestamp-critical-for-timeline-reconstruction" title="Link to this heading">¶</a></h3>
+<p>Values such as <code class="docutils literal notranslate"><span class="pre">17007477</span></code>, <code class="docutils literal notranslate"><span class="pre">19000</span></code>, <code class="docutils literal notranslate"><span class="pre">36000</span></code>, and so on are usually UNIX timestamps, expressed in seconds or milliseconds depending on the column. They indicate when a message was sent or received.</p>
+</section>
+<section id="message-text-field">
+<h3>5. Message text field<a class="headerlink" href="#message-text-field" title="Link to this heading">¶</a></h3>
+<p>The readable text visible on the right side of the output includes entries such as:</p>
+<ul class="simple">
+<li><p>“Seguro q hace tela calor”</p></li>
+<li><p>“Ya”</p></li>
+<li><p>“No sé si es lo mejor”</p></li>
+<li><p>“Comemos en algún sitio?”</p></li>
+</ul>
+<p>These values typically map to columns named <code class="docutils literal notranslate"><span class="pre">data</span></code>, <code class="docutils literal notranslate"><span class="pre">text</span></code>, or <code class="docutils literal notranslate"><span class="pre">message</span></code>.</p>
+</section>
+<section id="multimedia-fields-empty-in-this-capture">
+<h3>6. Multimedia fields (empty in this capture)<a class="headerlink" href="#multimedia-fields-empty-in-this-capture" title="Link to this heading">¶</a></h3>
+<p>The numerous <code class="docutils literal notranslate"><span class="pre">NULL</span></code> values mean:</p>
+<ul class="simple">
+<li><p>no image attached</p></li>
+<li><p>no audio attached</p></li>
+<li><p>no video attached</p></li>
+</ul>
+<p>If media were present, these columns would contain file paths or MIME types.</p>
+</section>
 </section>
 </section>
 
@@ -809,9 +804,9 @@ El hash largo (3AFDC…) = chat o usuario/grupo</p>
 <li><a class="reference internal" href="#objectives">Objectives</a></li>
 <li><a class="reference internal" href="#materials">Materials</a></li>
 <li><a class="reference internal" href="#familiarization-with-android">Familiarization with Android</a><ul>
-<li><a class="reference internal" href="#install-android-studio">Install Android Studio**</a></li>
-<li><a class="reference internal" href="#run-an-android-virtual-device-avd">Run an Android Virtual Device (AVD)**</a></li>
-<li><a class="reference internal" href="#install-android-debug-bridge-adb-platform-tools-and-test-it">Install Android Debug Bridge (ADB Platform Tools) and test it**</a></li>
+<li><a class="reference internal" href="#install-android-studio">Install Android Studio</a></li>
+<li><a class="reference internal" href="#run-an-android-virtual-device-avd">Run an Android Virtual Device (AVD)</a></li>
+<li><a class="reference internal" href="#install-android-debug-bridge-adb-platform-tools-and-test-it">Install Android Debug Bridge (ADB Platform Tools) and test it</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#android-virtualization-close-to-real-conditions">Android Virtualization Close to Real Conditions</a></li>
@@ -834,7 +829,15 @@ El hash largo (3AFDC…) = chat o usuario/grupo</p>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#whatsapp-analysis">Whatsapp analysis</a></li>
+<li><a class="reference internal" href="#whatsapp-analysis">WhatsApp Analysis</a><ul>
+<li><a class="reference internal" href="#message-id">1. Message ID</a></li>
+<li><a class="reference internal" href="#technical-fields-flags-status">2. Technical fields (flags / status)</a></li>
+<li><a class="reference internal" href="#chat-or-user-identifier">3. Chat or user identifier</a></li>
+<li><a class="reference internal" href="#timestamp-critical-for-timeline-reconstruction">4. Timestamp (critical for timeline reconstruction)</a></li>
+<li><a class="reference internal" href="#message-text-field">5. Message text field</a></li>
+<li><a class="reference internal" href="#multimedia-fields-empty-in-this-capture">6. Multimedia fields (empty in this capture)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

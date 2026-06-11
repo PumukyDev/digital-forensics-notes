@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Secure Mail Server" href="../exercise3/exercise3.html"><link rel="prev" title="Email Basics" href="../exercise1/exercise1.html">
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="prev" title="Secure Mail Server" href="../../mail/exercise3/exercise3.html">
 
     <!-- Generated with Sphinx 8.1.3 and Furo 2025.12.19 -->
-        <title>Email Medium - Digital Forensics Notes documentation</title>
+        <title>Análisis de un informe pericial. - Digital Forensics Notes documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
@@ -232,14 +232,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../../cloud/exercise3/exercise3.html">Docker</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Mail:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../exercise1/exercise1.html">Email Basics</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Email Medium</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../exercise3/exercise3.html">Secure Mail Server</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../mail/exercise1/exercise1.html">Email Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mail/exercise2/exercise2.html">Email Medium</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../mail/exercise3/exercise3.html">Secure Mail Server</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Reports:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../reports/exercise2/exercise2.html">Análisis de un informe pericial.</a></li>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Análisis de un informe pericial.</a></li>
 </ul>
 
 </div>
@@ -260,7 +260,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="../../_sources/mail/exercise2/exercise2.md.txt" title="View this page">
+  <a class="muted-link" href="../../_sources/reports/exercise2/exercise2.md.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -278,142 +278,155 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="email-medium">
-<h1>Email Medium<a class="headerlink" href="#email-medium" title="Link to this heading">¶</a></h1>
-<section id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
-<p>In the field of cybersecurity and digital forensic analysis, examining email headers is a fundamental technique used to assess message authenticity, detect possible tampering, and trace the origin of communications. Email headers contain metadata that describes the route an email has taken through mail servers, as well as authentication and integrity information.</p>
-<p>During a forensic investigation of a system, it is common to encounter multiple email storage formats, each associated with different email clients:</p>
-<ul class="simple">
-<li><p><strong>PST (Personal Storage Table) and OST (Offline Storage Table):</strong> used by Microsoft Outlook to store emails locally or for offline access.</p></li>
-<li><p><strong>MBOX:</strong> a widely used open format supported by clients such as Thunderbird, Apple Mail, and others.</p></li>
-<li><p><strong>EML and MSG:</strong> single-email file formats, commonly used in Outlook-based systems.</p></li>
-<li><p><strong>DBX and MBX:</strong> legacy formats used by older email clients such as Outlook Express and Eudora.</p></li>
-<li><p><strong>NSF:</strong> used by IBM Lotus Notes for emails, calendars, and related data.</p></li>
-</ul>
-<p>Beyond file formats, forensic analysis focuses heavily on authentication mechanisms such as SPF (Sender Policy Framework), DKIM (DomainKeys Identified Mail), and DMARC (Domain-based Message Authentication, Reporting, and Conformance). These mechanisms help determine whether an email is legitimate, altered, or potentially malicious.</p>
-<p>Understanding these elements is essential for detecting phishing attempts, ensuring infrastructure security, and validating trust in electronic communications.</p>
-</section>
+          <section id="analisis-de-un-informe-pericial">
+<h1>Análisis de un informe pericial.<a class="headerlink" href="#analisis-de-un-informe-pericial" title="Link to this heading">¶</a></h1>
+<p>In digital forensics, producing a rigorous and well-structured expert report is essential to ensure both the technical and legal validity of the analysis. A sound report must not only accurately reflect the findings of the investigation, but also provide a clear framework that justifies the methodology used, the chain of custody of the evidence, and the conclusions reached. Clarity, coherence, and professionalism are key if the document is to be accepted as valid evidence in judicial or administrative proceedings.</p>
+<p>When evaluating a forensic report, several essential aspects should be reviewed: a clear executive summary with conclusions; a detailed description of the case background; and the specific questions that motivated the expert examination. It is also necessary to identify digital evidence in a precise and technical manner — including its characteristics, origin, acquisition method, and preservation. The absence of these elements can undermine the objectivity and reliability of the report and weaken its probative value.</p>
+<p>Other important criteria include appropriate technical language, sensitive-information marking using standards such as <strong>TLP (Traffic Light Protocol)</strong>, documented methodology, and properly referenced visual material. Reproducibility, traceability, and impartiality should guide any forensic report. Critical review is therefore a key practice both for professional improvement and for defending the work in legal settings.</p>
+<p>In some cases, a forensic examiner may need to prepare a <strong>counter-expert report</strong>, either at the request of one of the parties or on the court’s initiative when doubts arise about the original report. This requires a thorough review of the submitted report, evaluating both its formal structure and technical content, in order to identify gaps, methodological errors, chain-of-custody weaknesses, or unsupported conclusions.</p>
 <section id="objectives">
 <h2>Objectives<a class="headerlink" href="#objectives" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Determine the authenticity of email messages.</p></li>
-<li><p>Analyze and interpret different email storage formats.</p></li>
+<li><p><strong>Detect structural gaps:</strong> identify missing key sections such as background, executive summary, or methodology.</p></li>
+<li><p><strong>Evaluate information protection:</strong> verify appropriate TLP marking to ensure confidentiality.</p></li>
+<li><p><strong>Assess conclusion quality:</strong> check whether the executive summary clearly answers the questions raised.</p></li>
+<li><p><strong>Analyze evidence handling:</strong> review whether evidence is properly documented, preserved, and traceable.</p></li>
+<li><p><strong>Examine professional writing:</strong> evaluate whether the language is objective, impersonal, and appropriate for expert work.</p></li>
+<li><p><strong>Identify technical and formal deficiencies:</strong> check for unlabeled figures, missing tools, or undocumented methodology.</p></li>
+<li><p><strong>Assess counter-expert potential:</strong> determine whether the report has weaknesses that could support a critical review or technical challenge.</p></li>
 </ul>
 </section>
-<section id="tasks">
-<h2>Tasks<a class="headerlink" href="#tasks" title="Link to this heading">¶</a></h2>
-<section id="manual-and-automated-email-header-analysis-1-eml-to-4-eml">
-<h3>1. Manual and Automated Email Header Analysis (1.eml to 4.eml)<a class="headerlink" href="#manual-and-automated-email-header-analysis-1-eml-to-4-eml" title="Link to this heading">¶</a></h3>
-<section id="email-1">
-<h4>Email 1<a class="headerlink" href="#email-1" title="Link to this heading">¶</a></h4>
-<p><a class="reference download internal" download="" href="../../_downloads/41e15164e565905ec4f52277cc49e5da/1.eml"><span class="xref download myst">.eml</span></a></p>
-<p><strong>Manual Analysis</strong></p>
-<p>The email appears to originate from a Yahoo address and is delivered to a Gmail account through standard MX routing. The message content is benign and resembles a legitimate support or assistance request regarding a common software installation.</p>
-<p>From a header perspective, the email passes through Yahoo and Google mail servers, and authentication results (SPF, DKIM, and DMARC) are correctly validated at the receiving end.</p>
-<p>The main indicators supporting legitimacy are:</p>
+<section id="report-under-review">
+<h2>Report under review<a class="headerlink" href="#report-under-review" title="Link to this heading">¶</a></h2>
+<p>This exercise analyzes the sample forensic report: ·<a class="reference download internal" download="" href="../../_downloads/3c27f9f50013f07ce3203eb928144571/Informe-pericial-4.pdf"><span class="xref download myst">Informe-pericial-4.pdf</span></a></p>
+</section>
+<section id="analysis">
+<h2>Analysis<a class="headerlink" href="#analysis" title="Link to this heading">¶</a></h2>
+<section id="question-1-what-is-missing-from-the-report">
+<h3>Question 1: What is missing from the report?<a class="headerlink" href="#question-1-what-is-missing-from-the-report" title="Link to this heading">¶</a></h3>
+<p>Although the report includes recognizable sections (executive summary, background, objectives, analysis, and conclusions), several important elements are missing or underdeveloped:</p>
+<p><strong>Methodology and reproducibility</strong></p>
 <ul class="simple">
-<li><p>Proper alignment between sending domain and mail infrastructure.</p></li>
-<li><p>Successful authentication checks (SPF, DKIM, DMARC).</p></li>
-<li><p>No suspicious routing anomalies.</p></li>
+<li><p>No dedicated methodology chapter describing the scientific criteria followed before the analysis itself.</p></li>
+<li><p>Tools such as WinHex, Audacity, FOCA, EnCase, and iZotope RX are mentioned, but their <strong>versions</strong>, configuration, and step-by-step procedures are not documented.</p></li>
+<li><p>Without this level of detail, a third party cannot reliably repeat the examination.</p></li>
 </ul>
-<p>Overall, both the technical analysis and the message content suggest that the email is legitimate.</p>
-<p><img alt="Email 1 manual analysis" src="../../_images/image13.png" /></p>
-<p><strong>Automated Analysis</strong></p>
-<p>Using external validation tools such as MXToolbox and Google Message Header Analyzer confirms that authentication signatures are valid and consistent with the manual inspection.</p>
-<p><img alt="Email 1 automated analysis" src="../../_images/image-140.png" /></p>
-</section>
-<section id="email-2">
-<h4>Email 2<a class="headerlink" href="#email-2" title="Link to this heading">¶</a></h4>
-<p><a class="reference download internal" download="" href="../../_downloads/e301e49a0a6d7013c47767c81a8ab844/2.eml"><span class="xref download myst">.eml</span></a></p>
-<p><strong>Manual Analysis</strong></p>
-<p>The content of this email is already suspicious from a social engineering perspective. The sender address belongs to an unfamiliar domain, and further inspection reveals inconsistencies in the sending infrastructure.</p>
-<p>Key findings include:</p>
+<p><strong>Case framing</strong></p>
 <ul class="simple">
-<li><p>The sender IP address (85.250.54.29) does not match the claimed geographical origin.</p></li>
-<li><p>No valid DKIM signature is present.</p></li>
-<li><p>SPF validation fails or is neutral at best.</p></li>
-<li><p>Absence of strong authentication mechanisms reduces trust significantly.</p></li>
+<li><p>The background of the case and the scope of the engagement are not clearly stated (who commissioned the work, why, and what questions the expert was asked to answer).</p></li>
+<li><p>Explicit <strong>pericial questions</strong> are absent (e.g., whether the video was edited, whether the audio was manipulated, whether the recording is authentic, whether the transcription is accurate).</p></li>
 </ul>
-<p>Even without deep technical analysis, the combination of suspicious content and lack of authentication strongly suggests that the email is fraudulent.</p>
-<p><strong>Automated Analysis</strong></p>
-<p>Automated tools confirm the absence of valid authentication keys, reinforcing the conclusion that the message cannot be considered legitimate.</p>
-<p><img alt="Email 2 automated analysis" src="../../_images/image-337.png" /></p>
-</section>
-<section id="email-3">
-<h4>Email 3<a class="headerlink" href="#email-3" title="Link to this heading">¶</a></h4>
-<p><a class="reference download internal" download="" href="../../_downloads/39aec601e4a88527b6ac7661d4558c62/3.eml"><span class="xref download myst">.eml</span></a></p>
-<p><strong>Manual Analysis</strong></p>
-<p>This email shows strong indicators of legitimacy. The authentication mechanisms are correctly implemented:</p>
+<p><strong>Chain of custody and evidence register</strong></p>
 <ul class="simple">
-<li><p>SPF validation passes successfully.</p></li>
-<li><p>DKIM signatures are present and valid.</p></li>
-<li><p>DMARC validation succeeds.</p></li>
-<li><p>The routing path appears consistent with legitimate email infrastructure.</p></li>
+<li><p>Sources are referenced, but there is no visible <strong>chain-of-custody sheet</strong> documenting who handed over the material, when, how it was stored, and what controls were applied.</p></li>
+<li><p>A formal evidence inventory table is missing.</p></li>
 </ul>
-<p>The email behaves as expected in a standard enterprise email flow, with no evidence of manipulation or spoofing.</p>
-<p><strong>Automated Analysis</strong></p>
-<p>Google’s header analysis tools confirm that all authentication mechanisms are valid, aligning with the manual findings.</p>
-<p><img alt="Email 3 automated analysis" src="../../_images/image-524.png" /></p>
-</section>
-<section id="email-4">
-<h4>Email 4<a class="headerlink" href="#email-4" title="Link to this heading">¶</a></h4>
-<p><a class="reference download internal" download="" href="../../_downloads/22343ef521da2653d4c55ddee726ede6/4.eml"><span class="xref download myst">.eml</span></a></p>
-<p><strong>Manual Analysis</strong></p>
-<p>This email presents multiple red flags from the beginning. The sender address appears unusual and unrelated to legitimate corporate domains.</p>
-<p>Additional issues include:</p>
+<p><strong>Other formal elements</strong></p>
 <ul class="simple">
-<li><p>Missing SPF, DKIM, and DMARC records.</p></li>
-<li><p>SPF validation fails.</p></li>
-<li><p>Suspicious routing path with no trusted intermediaries.</p></li>
-<li><p>No cryptographic validation of message integrity.</p></li>
+<li><p>No glossary of technical terms and abbreviations for non-specialist readers.</p></li>
+<li><p>No explicit <strong>TLP</strong> label on the cover or header, despite the sensitivity of the content.</p></li>
+<li><p>The limitations section exists in name only; it does not adequately address recording quality, ambient noise, compression loss, or what cannot be determined from the file alone.</p></li>
 </ul>
-<p>These characteristics strongly indicate that the email is malicious or spoofed.</p>
-<p><strong>Automated Analysis</strong></p>
-<p>Automated validation tools confirm the manual assessment, showing failed authentication and lack of proper email signing mechanisms.</p>
-<p><img alt="Email 4 automated analysis" src="../../_images/image-712.png" /></p>
 </section>
+<section id="question-2-what-can-you-say-about-the-report-s-tlp-marking-what-level-would-you-assign">
+<h3>Question 2: What can you say about the report’s TLP marking? What level would you assign?<a class="headerlink" href="#question-2-what-can-you-say-about-the-report-s-tlp-marking-what-level-would-you-assign" title="Link to this heading">¶</a></h3>
+<p>The report does <strong>not</strong> use explicit TLP (Traffic Light Protocol) marking. None of the standard labels appear:</p>
+<ul class="simple">
+<li><p>TLP:CLEAR</p></li>
+<li><p>TLP:GREEN</p></li>
+<li><p>TLP:AMBER</p></li>
+<li><p>TLP:RED</p></li>
+</ul>
+<p>This is a significant omission given the nature of the material, which includes:</p>
+<ul class="simple">
+<li><p>Full names and national ID numbers</p></li>
+<li><p>Judicial procedure data</p></li>
+<li><p>Statements from a protected witness</p></li>
+<li><p>Prosecutor and judge-related information</p></li>
+<li><p>Recordings from a courtroom environment</p></li>
+</ul>
+<p><strong>Recommended classification: TLP:AMBER</strong> as a minimum information may be shared only with parties who need it for the proceeding. Given the extreme sensitivity of witness-protection and judicial content, <strong>TLP:RED</strong> would also be defensible (restricted circulation, no public dissemination). In no case would <strong>TLP:CLEAR</strong> be appropriate.</p>
 </section>
-<section id="forensic-analysis-of-pst-and-mbox-files">
-<h3>2. Forensic Analysis of PST and MBOX Files<a class="headerlink" href="#forensic-analysis-of-pst-and-mbox-files" title="Link to this heading">¶</a></h3>
-<p>During forensic investigations, email data is often extracted in PST or MBOX formats. Several tools can be used to analyze these files.</p>
-<section id="pst-files">
-<h4>PST Files<a class="headerlink" href="#pst-files" title="Link to this heading">¶</a></h4>
-<p>To analyze PST files, applications such as BytesMorph (Microsoft Store) can be used. This tool allows direct loading of PST files and provides access to mailbox structures including inbox and sent items.</p>
-<p>After opening the PST file, emails are displayed in a structured mailbox view, allowing forensic inspection of message contents and metadata.</p>
-<p><img alt="PST analysis" src="../../_images/image-1212.png" /></p>
-<p>The tool clearly displays email folders such as Inbox and Sent, making it suitable for forensic review.</p>
-<p><img alt="PST mailbox view" src="../../_images/image-1311.png" /></p>
+<section id="question-3-what-are-the-conclusions-of-the-executive-summary-what-would-you-add-and-on-what-basis">
+<h3>Question 3: What are the conclusions of the executive summary? What would you add, and on what basis?<a class="headerlink" href="#question-3-what-are-the-conclusions-of-the-executive-summary-what-would-you-add-and-on-what-basis" title="Link to this heading">¶</a></h3>
+<p><strong>What the summary currently conveys</strong></p>
+<ul class="simple">
+<li><p>An authenticity analysis of the recording was performed.</p></li>
+<li><p>A partial transcription was produced.</p></li>
+<li><p>No clear signs of manipulation were identified.</p></li>
+<li><p>The recording is presented as maintaining its integrity.</p></li>
+</ul>
+<p><strong>Weaknesses</strong></p>
+<ul class="simple">
+<li><p>The summary does not directly answer the commissioning questions in a structured way.</p></li>
+<li><p>It lacks a clear <strong>Object → Procedure → Result → Conclusion</strong> format.</p></li>
+<li><p>It does not foreground the most relevant technical findings — for example, evidence suggestive of <strong>contamination of testimony</strong>, such as WhatsApp notifications received during the session and third parties apparently prompting the protected witness.</p></li>
+</ul>
+<p><strong>What should be added</strong></p>
+<ol class="arabic simple">
+<li><p>A numbered set of technical conclusions tied to observable findings (spectral analysis, synchronization tables, notification sounds, visual behaviour).</p></li>
+<li><p>A qualified conclusion on manipulation: <em>no technical indicators consistent with editing were found in the file analyzed</em> — rather than absolute certainty.</p></li>
+<li><p>An explicit limitation: conclusions apply to the <strong>file received</strong>; without a complete chain of custody, the expert cannot prove it is the original recording device output.</p></li>
+</ol>
+<p>This last point is especially important because the report repeatedly states the video was not manipulated, while technically that claim cannot be fully guaranteed from the delivered file alone.</p>
 </section>
-<section id="mbox-files">
-<h4>MBOX Files<a class="headerlink" href="#mbox-files" title="Link to this heading">¶</a></h4>
-<p>For MBOX analysis, MBox Viewer is a commonly used tool. It is open source and allows loading email archives by selecting the folder containing MBOX files.</p>
-<p>Once loaded, all contained emails are rendered in a readable interface, allowing investigators to inspect message content and metadata.</p>
-<p><img alt="MBOX folder selection" src="../../_images/image-1410.png" /></p>
-<p>After selecting the directory, the emails are displayed automatically in a structured format.</p>
-<p><img alt="MBOX email list" src="../../_images/image-179.png" /></p>
-<p>This tool is open source and its code can be found in its official repository on GitHub: https://github.com/eneam/mboxviewer</p>
+<section id="question-4-what-do-you-think-of-the-evidence-identification">
+<h3>Question 4: What do you think of the evidence identification?<a class="headerlink" href="#question-4-what-do-you-think-of-the-evidence-identification" title="Link to this heading">¶</a></h3>
+<p>Reviewers reached different conclusions on this point, which itself highlights an inconsistency in the report.</p>
+<p><strong>Positive aspects</strong></p>
+<ul class="simple">
+<li><p>The main video file is identified and its MP4 format is stated.</p></li>
+<li><p>Some technical metadata appears in the analysis (duration, codecs, bit rates).</p></li>
+<li><p>Screenshots of tools (WinHex, hash utilities, frequency spectra) support traceability of certain steps.</p></li>
+<li><p>In places, integrity algorithms such as SHA-1 and SHA-256 are referenced.</p></li>
+</ul>
+<p><strong>Critical weaknesses</strong></p>
+<ul class="simple">
+<li><p>There is no <strong>formal evidence table</strong> integrating hash values, file size, acquisition date/time, source device, and unique evidence identifiers in one place.</p></li>
+<li><p>Chain-of-custody details are insufficient to demonstrate that the analyzed file is the same object that left the source environment.</p></li>
+<li><p>Enumeration of all received material, creation timestamps, and preservation controls is incomplete.</p></li>
+</ul>
+<p><strong>Overall assessment</strong>
+Evidence identification is <strong>uneven</strong>: some technical rigour appears within the analysis, but not at the level expected in a modern forensic report. A counter-expert could challenge admissibility on the grounds that integrity and custody are not systematically documented, even if individual hash screenshots exist in the body of the report.</p>
 </section>
+<section id="question-5-what-do-you-think-of-the-language-used">
+<h3>Question 5: What do you think of the language used?<a class="headerlink" href="#question-5-what-do-you-think-of-the-language-used" title="Link to this heading">¶</a></h3>
+<p>The report generally uses professional and technically appropriate vocabulary, and complex concepts are explained in places with reasonable clarity.</p>
+<p>However, several issues reduce its objectivity:</p>
+<ul class="simple">
+<li><p><strong>First-person phrasing</strong> appears in sections where impersonal, descriptive language would be preferable in an expert report.</p></li>
+<li><p><strong>Overly categorical statements</strong> are used, such as <em>“totally and absolutely impossible”</em>, <em>“there is no doubt”</em>, <em>“faithful and real”</em>, or claims that the analysis <em>“guarantees”</em> the file was not manipulated.</p></li>
+<li><p>Forensic practice normally works with <strong>degrees of confidence</strong> and observed indicators, not absolute certainty.</p></li>
+<li><p>Subjective value judgements occasionally appear where neutral technical description would be expected.</p></li>
+</ul>
+<p>The language is acceptable in parts but should be more neutral, scientific, and cautious especially in conclusions.</p>
 </section>
-<section id="analysis-of-dbx-mbx-and-mbox-artifacts">
-<h3>3. Analysis of DBX, MBX, and MBOX Artifacts<a class="headerlink" href="#analysis-of-dbx-mbx-and-mbox-artifacts" title="Link to this heading">¶</a></h3>
-<p>During forensic disk analysis, email artifacts may be extracted from email clients such as Thunderbird or Outlook Express.</p>
-<section id="thunderbird-storage">
-<h4>Thunderbird Storage<a class="headerlink" href="#thunderbird-storage" title="Link to this heading">¶</a></h4>
-<p>Thunderbird stores email data in the user profile directory under AppData. Within this structure, key directories include Mail, ImapMail, and Local Folders.</p>
-<p>These directories typically contain MBOX files representing mailbox structures such as Inbox, Sent, Trash, and Drafts. These files are valuable forensic artifacts as they contain raw email data.</p>
-<p>The presence of these files allows investigators to reconstruct user email activity, including message history and communication patterns.</p>
-<p><img alt="Thunderbird artifacts 1" src="../../_images/image-811.png" />
-<img alt="Thunderbird artifacts 2" src="../../_images/image-910.png" />
-<img alt="Thunderbird artifacts 3" src="../../_images/image-1011.png" />
-<img alt="Thunderbird artifacts 4" src="../../_images/image-1115.png" /></p>
-</section>
-<section id="outlook-storage">
-<h4>Outlook Storage<a class="headerlink" href="#outlook-storage" title="Link to this heading">¶</a></h4>
-<p>Microsoft Outlook stores email data in local directories that typically include PST and OST files. Common locations include the Local Microsoft Outlook folders under the user profile.</p>
-<p>These files may also contain cached metadata, logs, and synchronization data, which can be valuable in forensic investigations.</p>
-<p>The analysis of these artifacts allows investigators to reconstruct email timelines, detect anomalies, and verify communication integrity.</p>
-</section>
+<section id="question-6-what-else-stands-out-to-you">
+<h3>Question 6: What else stands out to you?<a class="headerlink" href="#question-6-what-else-stands-out-to-you" title="Link to this heading">¶</a></h3>
+<p><strong>Technical strengths</strong></p>
+<ul class="simple">
+<li><p><strong>Synchronization analysis:</strong> comparative tables linking recording timeline and real courtroom time to show simultaneous events.</p></li>
+<li><p><strong>Acoustic detection:</strong> identification of WhatsApp notification sounds and correlation with the behaviour of people present.</p></li>
+<li><p><strong>Visual traceability:</strong> inclusion of tool screenshots (WinHex, spectra, etc.) that support reproducibility of specific steps.</p></li>
+</ul>
+<p><strong>Structural concerns</strong></p>
+<ul class="simple">
+<li><p>A large portion of the report consists of a commented transcription of video fragments, giving it a more <strong>argumentative</strong> than strictly expert tone.</p></li>
+<li><p>Conclusions about non-manipulation sometimes appear <strong>before</strong> the final conclusions section, which may suggest confirmation bias.</p></li>
+<li><p>No mention of independent peer review or cross-validation of results.</p></li>
+</ul>
+<p><strong>Practical implication</strong>
+The underlying technical work may be sound — the analysis appears to address whether the recording was edited and documents second-by-second observations — but <strong>poor formal presentation</strong> (missing systematic hashes, weak custody documentation, no TLP marking, overstated conclusions) could cause the report to carry less weight in court than the underlying analysis deserves.</p>
+<p><strong>Counter-expert viability</strong>
+There are sufficient grounds to challenge the report on:</p>
+<ol class="arabic simple">
+<li><p>Incomplete chain of custody</p></li>
+<li><p>Insufficient formal evidence identification</p></li>
+<li><p>Missing or non-systematic integrity hashes</p></li>
+<li><p>Under-documented methodology (tool versions, procedures)</p></li>
+<li><p>Overly conclusive language</p></li>
+<li><p>Inability to prove the analyzed file is the original recording</p></li>
+</ol>
 </section>
 </section>
 </section>
@@ -423,23 +436,15 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../exercise3/exercise3.html">
-              <div class="page-info">
-                <div class="context">
-                  <span>Next</span>
-                </div>
-                <div class="title">Secure Mail Server</div>
-              </div>
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-            </a>
-          <a class="prev-page" href="../exercise1/exercise1.html">
+          
+          <a class="prev-page" href="../../mail/exercise3/exercise3.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Email Basics</div>
+                <div class="title">Secure Mail Server</div>
                 
               </div>
             </a>
@@ -473,27 +478,16 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">Email Medium</a><ul>
-<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#">Análisis de un informe pericial.</a><ul>
 <li><a class="reference internal" href="#objectives">Objectives</a></li>
-<li><a class="reference internal" href="#tasks">Tasks</a><ul>
-<li><a class="reference internal" href="#manual-and-automated-email-header-analysis-1-eml-to-4-eml">1. Manual and Automated Email Header Analysis (1.eml to 4.eml)</a><ul>
-<li><a class="reference internal" href="#email-1">Email 1</a></li>
-<li><a class="reference internal" href="#email-2">Email 2</a></li>
-<li><a class="reference internal" href="#email-3">Email 3</a></li>
-<li><a class="reference internal" href="#email-4">Email 4</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#forensic-analysis-of-pst-and-mbox-files">2. Forensic Analysis of PST and MBOX Files</a><ul>
-<li><a class="reference internal" href="#pst-files">PST Files</a></li>
-<li><a class="reference internal" href="#mbox-files">MBOX Files</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#analysis-of-dbx-mbx-and-mbox-artifacts">3. Analysis of DBX, MBX, and MBOX Artifacts</a><ul>
-<li><a class="reference internal" href="#thunderbird-storage">Thunderbird Storage</a></li>
-<li><a class="reference internal" href="#outlook-storage">Outlook Storage</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#report-under-review">Report under review</a></li>
+<li><a class="reference internal" href="#analysis">Analysis</a><ul>
+<li><a class="reference internal" href="#question-1-what-is-missing-from-the-report">Question 1: What is missing from the report?</a></li>
+<li><a class="reference internal" href="#question-2-what-can-you-say-about-the-report-s-tlp-marking-what-level-would-you-assign">Question 2: What can you say about the report’s TLP marking? What level would you assign?</a></li>
+<li><a class="reference internal" href="#question-3-what-are-the-conclusions-of-the-executive-summary-what-would-you-add-and-on-what-basis">Question 3: What are the conclusions of the executive summary? What would you add, and on what basis?</a></li>
+<li><a class="reference internal" href="#question-4-what-do-you-think-of-the-evidence-identification">Question 4: What do you think of the evidence identification?</a></li>
+<li><a class="reference internal" href="#question-5-what-do-you-think-of-the-language-used">Question 5: What do you think of the language used?</a></li>
+<li><a class="reference internal" href="#question-6-what-else-stands-out-to-you">Question 6: What else stands out to you?</a></li>
 </ul>
 </li>
 </ul>

@@ -43,7 +43,7 @@ Several aspects must be considered during mobile forensic investigations:
 
 ## Familiarization with Android
 
-### Install Android Studio**
+### Install Android Studio
 
 Android Studio can be downloaded from the [official website](https://developer.android.com/studio):
 
@@ -66,23 +66,23 @@ Extract the package:
 tar -xvf android-studio-linux.tar.gz
 ```
 
-Open it.
+Launch Android Studio.
 
 ![alt text](./images/image.png)
 
-A menu similar to the shown below should appear.
+A welcome screen similar to the one shown below should appear.
 
 ![alt text](./images/image-1.png)
 
-In order to know the available devices, click on "More Actions" --> "Virtual Device Manager".
+To view available virtual devices, open **More Actions** → **Virtual Device Manager**.
 
 ![alt text](./images/image-3.png)
 
 ![alt text](./images/image-2.png)
 
-### Run an Android Virtual Device (AVD)**
+### Run an Android Virtual Device (AVD)
 
-Create an emulator using the the previous GUI or using the following command:
+Create an emulator using the GUI from the previous section, or run the following command:
 
 ```bash
 avdmanager create avd -n Android26 -k "system-images;android-26;default;x86_64" -c 10M
@@ -104,7 +104,7 @@ emulator -avd Android26
 
 ![alt text](./images/image-6.png)
 
-### Install Android Debug Bridge (ADB Platform Tools) and test it**
+### Install Android Debug Bridge (ADB Platform Tools) and test it
 
 Installation on Debian/Ubuntu:
 
@@ -250,7 +250,7 @@ Recommended VMWare configuration:
 - 20GB Hard Disk
 - 256MB Video Memory
 
-After inicializing the machine, click on "Installation - Install Android-x86 to hardisk".
+After booting the virtual machine from the ISO, select **Installation - Install Android-x86 to hard disk**.
 
 ![alt text](./images/image-19.png)
 
@@ -262,7 +262,7 @@ Select "Yes" when asked for GPT.
 
 ![alt text](./images/image-21.png)
 
-And createa "Linux filesystem" partition.
+Then create a **Linux filesystem** partition.
 
 ![alt text](./images/image-22.png)
 
@@ -298,17 +298,17 @@ Once the device is rebooted and the ISO is removed, before starting the device, 
 
 ![alt text](./images/image-34.png)
 
-Remove the "quiet" line and type "nomodeseet xforvesa". Then, click `ESC` + `b`. This step is done because if these words are not added, the mobile will not have graphical interfe, having only a console tty.
+Remove the `quiet` line and add `nomodeset xforcevesa`. Then press `ESC` followed by `b` to boot with the modified configuration. This step is required because, without these kernel parameters, the system may fail to start the graphical interface and remain on a text-only TTY console.
 
 ![alt text](./images/image-35.png)
 
 ![alt text](./images/image-36.png)
 
-After login, an graphical interface will appear.
+After logging in, the graphical desktop environment should appear.
 
 ![alt text](./images/image-37.png)
 
-Enable the developer mode in the device as previously with the Android Studio device.
+Enable Developer Options on this device using the same procedure described for the Android Studio emulator.
 
 ![alt text](./images/image-38.png)
 
@@ -320,7 +320,7 @@ Enable the developer mode in the device as previously with the Android Studio de
 
 ![alt text](./images/image-50.png)
 
-Lastly, check the IP of the device, there are multiple options, but it can be done opening a terminal and executing the following command:
+Finally, determine the device's IP address. Several methods are available; one option is to open a terminal on the Android-x86 VM and run:
 
 ```bash
 ip a
@@ -328,7 +328,7 @@ ip a
 
 ![alt text](./images/image-51.png)
 
-In the main machine, connect to the device using adb and shown below. Take note of chaging the IP address by the one extracted in the step before.
+On the host machine, connect to the device over the network using ADB as shown below. Replace the IP address with the one obtained in the previous step.
 
 ```bash
 adb devices
@@ -338,7 +338,7 @@ adb devices
 
 ![alt text](./images/image-52.png)
 
-If we want to add an account, open settings and navigate to the "Accounts" section.
+To add a Google account, open **Settings** and navigate to the **Accounts** section.
 
 ![alt text](./images/image-39.png)
 
@@ -346,15 +346,15 @@ Click on "Add account".
 
 ![alt text](./images/image-40.png)
 
-And sign in using any account.
+Sign in with any Google account.
 
 ![alt text](./images/image-42.png)
 
-Once the login is successfull, the account should appear in the menu.
+Once sign-in completes successfully, the account should appear in the Accounts list.
 
 ![alt text](./images/image-43.png)
 
-In order to install AFLogical OSE, download it from [here](https://github.com/nowsecure/android-forensics) and execute the following command:
+To install AFLogical OSE, download the APK from [the official repository](https://github.com/nowsecure/android-forensics) and run:
 
 ```bash
 adb install ./AFLogical-OSE_1.5.2.apk
@@ -366,21 +366,21 @@ Select everything and click on "Capture".
 
 ![alt text](./images/image-45.png)
 
-Once the extraction is done, a dialogue with "Data extraction completed" should appear.
+Once extraction completes, a dialog displaying **Data extraction completed** should appear.
 
 ![alt text](./images/image-46.png)
 
-Extract the evidences folder using the following command:
+Pull the forensic evidence folder from the device using:
 
 ```bash
 adb pull /sdcard/forensics/ .
 ```
 
-The following folders should appear.
+The following folders should appear on the host machine.
 
 ![alt text](./images/image-53.png)
 
-Now, the application andriller will be used to extract evidences. Note that it will be done using fish, so it may vary if using other terminals:
+Next, Andriller is used to perform a broader logical extraction. The commands below use the Fish shell; adapt the virtual-environment activation step if you use Bash or another shell:
 
 ```bash
 python -m venv env
@@ -397,15 +397,15 @@ Execute the program:
 python -m andriller
 ```
 
-The following menu should appear, click on "Output.." and set the output folder.
+The Andriller GUI should open. Click **Output..** and select the destination folder for the extraction results.
 
 ![alt text](./images/image-55.png)
 
-Once the folder is selected, click on "Check".
+After selecting the output folder, click **Check** to verify the device connection.
 
 ![alt text](./images/image-56.png)
 
-Lastly, click on "Extract" and the program will connect to the device automatilly and will extract the evicences.
+Finally, click **Extract**. Andriller connects to the device automatically and pulls the available forensic data.
 
 ![alt text](./images/image-57.png)
 
@@ -545,23 +545,23 @@ Capture device filesystem:
 adb shell ls -R /sdcard/
 ```
 
-## Whatsapp analysis
+## WhatsApp Analysis
 
-Whatsapp has been installed and linked to an account as shown below (to be honest I did not blurred anything, characters are simply not loading XD):
+WhatsApp was installed on the device and linked to an account as shown below (the interface text appears garbled in the screenshot because certain characters failed to render correctly, not because anything was deliberately blurred):
 
 ![alt text](./images/image-60.png)
 
-Connect to the device using root and verify the whatsapp database directory:
+Connect to the device with root privileges and verify the WhatsApp database directory:
 
 ```bash
 adb root
 adb shell
-ls -lah /data/data/com.whatsapp/database/
+ls -lah /data/data/com.whatsapp/databases/
 ```
 
 ![alt text](./images/image-61.png)
 
-Extract the entire whatsapp directory using adb for an easier analysis.
+Pull the entire WhatsApp application data directory to the host for offline analysis.
 
 ```bash
 adb pull /data/data/com.whatsapp
@@ -569,7 +569,7 @@ adb pull /data/data/com.whatsapp
 
 ![alt text](./images/image-62.png)
 
-There are several databases with useful info, but the following one contains the messages:
+Several SQLite databases contain useful artifacts; `msgstore.db` stores the message history. Query it as follows:
 
 ```bash
 sqlite3 msgstore.db
@@ -578,63 +578,48 @@ select * from message ORDER BY timestamp;
 
 ![alt text](./images/image-63.png)
 
-Here is a small summary to understand what is happening:
+The following summary explains how to interpret the `message` table output:
 
-TBD traducir y poner bonito!
+#### 1. Message ID
 
-1. ID del mensaje
-El número tipo 518, 517, 516...
-Es el identificador interno del mensaje (primary key)
-2. Campos técnicos (flags / estado)
-Muchos 0, -1, NULL
-Son estados internos como:
-leído / no leído
-enviado / recibido / pendiente
-flags de sistema
-3. Identificador del chat o usuario
-Valores tipo:
-3AFDC...
-Esto suele ser el JID (Jabber ID):
-número de teléfono o grupo
-formato interno de WhatsApp
-4. Timestamp (muy importante)
-Números como:
-17007477, 19000, 36000, etc.
-Normalmente son timestamps en formato UNIX o milisegundos
-Indican cuándo se envió/recibió el mensaje
-5. Campo de texto del mensaje
-Lo que ves a la derecha:
-“Seguro q hace tela calor”
-“Ya”
-“No sé si es lo mejor”
-“Comemos en algún sitio?”
-Esto normalmente corresponde a algo como:
-data
-text
-message
-6. Campos multimedia (vacíos en tu captura)
-Muchos NULL
-Significa:
-no hay imagen
-no hay audio
-no hay vídeo
-Si hubiera media verías rutas o MIME types
-7. Otros campos técnicos comunes (los que no se ven bien)
+Values such as `518`, `517`, `516`, and so on are the internal message identifiers (primary key).
 
-En WhatsApp suelen existir también:
+#### 2. Technical fields (flags / status)
 
-media_type
-status
-key_from_me (si lo enviaste tú o no)
-remote_resource
-quoted_row_id (respuestas citadas)
-latitude/longitude (si hay ubicación)
-📌 Interpretación rápida de tu imagen
+Many columns contain `0`, `-1`, or `NULL`. These represent internal state flags, for example:
 
-Lo más importante de lo que muestras:
+- read / unread
+- sent / received / pending
+- system-level flags
 
-Cada fila = 1 mensaje
-La columna final visible = texto del mensaje
-Los bloques de NULL = sin multimedia o campos no usados
-Los números grandes = timestamps o IDs internos
-El hash largo (3AFDC...) = chat o usuario/grupo
+#### 3. Chat or user identifier
+
+Values such as `3AFDC...` typically correspond to a **JID** (Jabber ID):
+
+- a phone number or group identifier
+- WhatsApp's internal addressing format
+
+#### 4. Timestamp (critical for timeline reconstruction)
+
+Values such as `17007477`, `19000`, `36000`, and so on are usually UNIX timestamps, expressed in seconds or milliseconds depending on the column. They indicate when a message was sent or received.
+
+#### 5. Message text field
+
+The readable text visible on the right side of the output includes entries such as:
+
+- "Seguro q hace tela calor"
+- "Ya"
+- "No sé si es lo mejor"
+- "Comemos en algún sitio?"
+
+These values typically map to columns named `data`, `text`, or `message`.
+
+#### 6. Multimedia fields (empty in this capture)
+
+The numerous `NULL` values mean:
+
+- no image attached
+- no audio attached
+- no video attached
+
+If media were present, these columns would contain file paths or MIME types.

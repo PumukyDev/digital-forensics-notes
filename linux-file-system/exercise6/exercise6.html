@@ -237,6 +237,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../mail/exercise2/exercise2.html">Email Medium</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../mail/exercise3/exercise3.html">Secure Mail Server</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Reports:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../reports/exercise2/exercise2.html">Análisis de un informe pericial.</a></li>
+</ul>
 
 </div>
 </div>
@@ -276,113 +280,114 @@
         <article role="main" id="furo-main-content">
           <section id="forensic-analysis-with-diferent-linux-file-systems">
 <h1>Forensic analysis with diferent Linux file systems.<a class="headerlink" href="#forensic-analysis-with-diferent-linux-file-systems" title="Link to this heading">¶</a></h1>
-<section id="objetivo">
-<h2>Objetivo:<a class="headerlink" href="#objetivo" title="Link to this heading">¶</a></h2>
+<section id="objective">
+<h2>Objective<a class="headerlink" href="#objective" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Aprender a acceder a las posibles evidencias contenidas en imágenes de disco generadas en sistemas informáticos que ejecutan sistemas operativos Linux.</p></li>
-<li><p>Utilización de herramientas de recuperación de archivos borrados: foremost, photorec y scalpel</p></li>
+<li><p>Learn how to access potential evidence contained in disk images acquired from Linux-based systems.</p></li>
+<li><p>Use file recovery tools for deleted data: foremost, PhotoRec, and Scalpel.</p></li>
 </ul>
 </section>
-<section id="materiales">
-<h2>Materiales<a class="headerlink" href="#materiales" title="Link to this heading">¶</a></h2>
+<section id="materials">
+<h2>Materials<a class="headerlink" href="#materials" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>Distribución Linux Kali Linux.</p></li>
-<li><p>Herramientas propias del sistema operativo: mount, losetup, fdisk, etc.</p></li>
-<li><p>Herramientas forenses: Sleuthkit, foremost, scalpel y photorec.</p></li>
-<li><p>Información de Internet</p></li>
+<li><p>Kali Linux distribution.</p></li>
+<li><p>Built-in system tools: <code class="docutils literal notranslate"><span class="pre">mount</span></code>, <code class="docutils literal notranslate"><span class="pre">losetup</span></code>, <code class="docutils literal notranslate"><span class="pre">fdisk</span></code>, etc.</p></li>
+<li><p>Forensic tools: The Sleuth Kit, foremost, Scalpel, and PhotoRec.</p></li>
+<li><p>Online reference material.</p></li>
 </ul>
-<p>Una de las tareas más habituales quehacer diario de un profesional forense informático es realizar imágenes forenses de discos duros (teniendo en cuenta todos los requisitos relativos a la cadena de custodia) para posteriormente realizar un análisis de los contenidos del mismo.</p>
-<p>En esta situación, se hace imprescindible disponer de destrezas y habilidades para conocer las peculiaridades de los distintos sistemas de archivos que utilizan los SO Linux, para ser capaces de acceder a la información contenida en estas imágenes.</p>
-<p>Se nos pueden presentar situaciones donde aparezcan configuraciones más sofisticadas, tipo LVM, ZFS o LUKS encrypted, que hagan más difícil el acceso a la información almacenada.</p>
-<p>Para la realización de la práctica se requiere que se descarguen las siguientes imágenes:</p>
+<p>One of the most common day-to-day tasks for a digital forensic examiner is to create forensic disk images — while maintaining proper chain of custody — and then analyze their contents.</p>
+<p>To do this effectively, it is essential to understand the characteristics of the different file systems used by Linux operating systems, so that evidence stored in these images can be accessed correctly.</p>
+<p>Investigators may also encounter more complex configurations such as LVM, ZFS, or LUKS encryption, which make access to stored data more challenging.</p>
+<p>For this exercise, download the following disk images:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://drive.google.com/file/d/1eN9oT3m66BphGWj5T-eEdU4GOpory-xm/view">Datos</a>, se trata de un dispositivo de disco normal (ext4) donde sería necesario montar las particiones que se identifiquen y aplicar en ellas herramientas para la recuperación de datos borrados (photorec, foremost y scalpel).</p></li>
-<li><p><a class="reference external" href="https://drive.google.com/file/d/1Zy35lShfEQ4zTsOFdax09p4N1I-ko9Y8/view">LVM</a>, se trata de un disco que hace uso de volúmenes lógicos. Habrá que dar los pasos necesarios para “desenmascarar” los grupos de volúmenes, y volúmenes lógicos definidos para acceder a su información.</p></li>
-<li><p><a class="reference external" href="https://drive.google.com/file/d/12BHCF2zr9Pp9wHRLlvic28pvehmarE27/view">Cifrado</a>, se trata de un disco cifrado (contraseña “usuario”) con la tecnología propia de Linux (LUKS). Sería necesario acceder a la información que contenga</p></li>
+<li><p><strong><a class="reference external" href="https://drive.google.com/file/d/1eN9oT3m66BphGWj5T-eEdU4GOpory-xm/view">Data</a></strong> — a standard disk image (ext4). Mount the identified partitions and apply deleted-file recovery tools (PhotoRec, foremost, and Scalpel).</p></li>
+<li><p><strong><a class="reference external" href="https://drive.google.com/file/d/1Zy35lShfEQ4zTsOFdax09p4N1I-ko9Y8/view">LVM</a></strong> — a disk using logical volumes. Follow the steps required to activate the volume groups and logical volumes in order to access their contents.</p></li>
+<li><p><strong><a class="reference external" href="https://drive.google.com/file/d/12BHCF2zr9Pp9wHRLlvic28pvehmarE27/view">Encryption</a></strong> — a LUKS-encrypted disk (password: <code class="docutils literal notranslate"><span class="pre">&quot;usuario&quot;</span></code> — Spanish for <em>“user”</em>). Decrypt and access the data it contains.</p></li>
 </ul>
 </section>
 <section id="solution">
 <h2>Solution<a class="headerlink" href="#solution" title="Link to this heading">¶</a></h2>
-<section id="datos">
-<h3>Datos<a class="headerlink" href="#datos" title="Link to this heading">¶</a></h3>
-<p>Mount the image using the following commands. Note that the loop number may vary dapending if there are other images mounted. Start mounting the first loop (loopXp1):</p>
+<section id="data">
+<h3>Data<a class="headerlink" href="#data" title="Link to this heading">¶</a></h3>
+<p>Attach and mount the image using the following commands. The loop device number may vary depending on whether other images are already attached. Begin with the first partition (<code class="docutils literal notranslate"><span class="pre">loopXp1</span></code>):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>losetup<span class="w"> </span>-fP<span class="w"> </span>datos.dd
 mkdir<span class="w"> </span>evidences
 sudo<span class="w"> </span>mount<span class="w"> </span>-o<span class="w"> </span>ro<span class="w"> </span>/dev/loop1p1<span class="w"> </span>evidences
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image11.png" /></p>
-<p>There is only one directory called “recup_dir.1”, check the content of said directory:</p>
+<p>Only one directory is present: <code class="docutils literal notranslate"><span class="pre">recup_dir.1</span></code>. Review its contents:</p>
 <p><img alt="alt text" src="../../_images/image-238.png" /></p>
 <p><img alt="alt text" src="../../_images/image-137.png" /></p>
-<p>It contains multiple files, umount the first loop and mount the second one.</p>
+<p>The directory contains multiple recovered files. Unmount the first partition and mount the second:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>umount<span class="w"> </span>/dev/loop1p1
 sudo<span class="w"> </span>mount<span class="w"> </span>-o<span class="w"> </span>ro<span class="w"> </span>/dev/loop1p2<span class="w"> </span>evidences
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-330.png" /></p>
-<p>However, the loop cannot be mounted as it is part of the swap. Them, mount the third and last loop:</p>
+<p>The second partition cannot be mounted because it is a swap partition. Mount the third and final partition instead:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>mount<span class="w"> </span>-o<span class="w"> </span>ro<span class="w"> </span>/dev/loop1p3<span class="w"> </span>evidences
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-424.png" /></p>
-<p>An empty lost+found directory is found.</p>
-<p>Use photorec in order to recover files. Launch it and select the first partition:</p>
+<p>Only an empty <code class="docutils literal notranslate"><span class="pre">lost+found</span></code> directory is present — deleted files are not visible through a normal mount.</p>
+<p>Use <strong>PhotoRec</strong> to recover deleted files. Launch the tool and select the first partition:</p>
 <p><img alt="alt text" src="../../_images/image-522.png" /></p>
 <p>Select “Linux”.</p>
 <p><img alt="alt text" src="../../_images/image-615.png" /></p>
 <p>Select “ext2/ext3”.</p>
 <p><img alt="alt text" src="../../_images/image-710.png" /></p>
-<p>Select “Whole” to recover as much files as possible.</p>
+<p>Select <strong>Whole</strong> to scan the entire partition and recover as many files as possible.</p>
 <p><img alt="alt text" src="../../_images/image-89.png" /></p>
 <p>As shown below, many files have been recovered.</p>
 <p><img alt="alt text" src="../../_images/image-109.png" /></p>
-<p>Repeat the same process for the third partition.</p>
-<p>After performing that, many files have been recovered:</p>
+<p>Repeat the same PhotoRec process for the third partition.</p>
+<p>After both recovery runs, a large number of deleted files are restored:</p>
 <p><img alt="alt text" src="../../_images/image-1113.png" /></p>
 </section>
 <section id="lvm">
 <h3>LVM<a class="headerlink" href="#lvm" title="Link to this heading">¶</a></h3>
-<p>Mount the partition and verigy the file system type.</p>
+<p>Attach the image and verify the file system layout:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>losetup<span class="w"> </span>-fP<span class="w"> </span>lvm.dd
 lsblk<span class="w"> </span>-f
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-1210.png" /></p>
-<p>As shown, it is a LVM2 file system.</p>
-<p>Activate LVM to see the logical partitions.</p>
+<p>As shown, the disk uses <strong>LVM2</strong> (Logical Volume Manager).</p>
+<p>Activate the volume group to expose the logical volumes:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>vgscan
 sudo<span class="w"> </span>vgchange<span class="w"> </span>-ay
 lsblk
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-138.png" /></p>
-<p>Mount the partitions and ensure that the files can be shown perfectly:</p>
+<p>Mount the logical volumes and verify that the file systems are accessible:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>mount<span class="w"> </span>/dev/debian-vg/root<span class="w"> </span>evidences/root/
 sudo<span class="w"> </span>mount<span class="w"> </span>/dev/debian-vg/home<span class="w"> </span>evidences/home/
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-148.png" /></p>
 </section>
-<section id="cifrado">
-<h3>Cifrado<a class="headerlink" href="#cifrado" title="Link to this heading">¶</a></h3>
-<p>Mount the disk and ensure that it is a encrypted disk:</p>
+<section id="encryption">
+<h3>Encryption<a class="headerlink" href="#encryption" title="Link to this heading">¶</a></h3>
+<p>Attach the disk image and confirm that it is encrypted:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>losetup<span class="w"> </span>-fP<span class="w"> </span>cifrado.dd
 lsblk
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-158.png" /></p>
-<p>It is encrypted using LUKS as shown above.</p>
-<p>More information about the disk can be extracted using the following command:</p>
+<p>The partition is encrypted with <strong>LUKS</strong>, as shown above.</p>
+<p>Additional metadata about the encrypted volume can be inspected with:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>cryptsetup<span class="w"> </span>luksDump<span class="w"> </span>/dev/loop0p1
 </pre></div>
 </div>
 <p><img alt="alt text" src="../../_images/image-168.png" /></p>
-<p>To decrypt the file, simply run the folliowing command and write the “usuario” password. Then, all the files will be correctly deencrypted.</p>
+<p>To decrypt the volume, open the LUKS container and enter the password <code class="docutils literal notranslate"><span class="pre">&quot;usuario&quot;</span></code> when prompted. Then mount the decrypted mapper device:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>cryptsetup<span class="w"> </span>luksOpen<span class="w"> </span>/dev/loop0p1<span class="w"> </span>decrypted
 sudo<span class="w"> </span>mount<span class="w"> </span>/dev/mapper/decrypted<span class="w"> </span>evidences
 </pre></div>
 </div>
+<p>The file system becomes accessible and its contents can be examined normally.</p>
 <p><img alt="alt text" src="../../_images/image-177.png" /></p>
 </section>
 </section>
@@ -444,12 +449,12 @@ sudo<span class="w"> </span>mount<span class="w"> </span>/dev/mapper/decrypted<s
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">Forensic analysis with diferent Linux file systems.</a><ul>
-<li><a class="reference internal" href="#objetivo">Objetivo:</a></li>
-<li><a class="reference internal" href="#materiales">Materiales</a></li>
+<li><a class="reference internal" href="#objective">Objective</a></li>
+<li><a class="reference internal" href="#materials">Materials</a></li>
 <li><a class="reference internal" href="#solution">Solution</a><ul>
-<li><a class="reference internal" href="#datos">Datos</a></li>
+<li><a class="reference internal" href="#data">Data</a></li>
 <li><a class="reference internal" href="#lvm">LVM</a></li>
-<li><a class="reference internal" href="#cifrado">Cifrado</a></li>
+<li><a class="reference internal" href="#encryption">Encryption</a></li>
 </ul>
 </li>
 </ul>
