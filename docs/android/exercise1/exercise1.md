@@ -41,13 +41,11 @@ Several aspects must be considered during mobile forensic investigations:
 - Andriller
 - AFLogical OSE
 
-## 1) Familiarization with Android
+## Familiarization with Android
 
-### **a) Install Android Studio**
+### Install Android Studio**
 
-Android Studio can be downloaded from the official website:
-
-https://developer.android.com/studio
+Android Studio can be downloaded from the [official website](https://developer.android.com/studio):
 
 Installation on Debian/Ubuntu:
 
@@ -68,33 +66,23 @@ Extract the package:
 tar -xvf android-studio-linux.tar.gz
 ```
 
-![alt text](image.png)
+Open it.
 
-![alt text](image-1.png)
+![alt text](./images/image.png)
 
-![alt text](image-3.png)
+A menu similar to the shown below should appear.
 
-![alt text](image-2.png)
+![alt text](./images/image-1.png)
 
+In order to know the available devices, click on "More Actions" --> "Virtual Device Manager".
 
+![alt text](./images/image-3.png)
 
----
+![alt text](./images/image-2.png)
 
-### **b) Run an Android Virtual Device (AVD)**
+### Run an Android Virtual Device (AVD)**
 
-Once Android Studio is installed:
-
-1. Create any project.
-2. Open `Device Manager`.
-3. Create a virtual device.
-4. Select a Google Pixel image.
-5. Download the Android system image.
-6. Start the emulator using the Play button.
-
-Alternative command-line execution:
-
-
-To install the `.apk`, an emulator is required. Create an emulator using the following command:
+Create an emulator using the the previous GUI or using the following command:
 
 ```bash
 avdmanager create avd -n Android26 -k "system-images;android-26;default;x86_64" -c 10M
@@ -106,7 +94,7 @@ Verify that the device has been installed correctly:
 avdmanager list avd
 ```
 
-![alt text](image-5.png)
+![alt text](./images/image-5.png)
 
 Start the emulator as follows:
 
@@ -114,11 +102,9 @@ Start the emulator as follows:
 emulator -avd Android26
 ```
 
-![alt text](image-6.png)
+![alt text](./images/image-6.png)
 
----
-
-### **c) Install Android Debug Bridge (ADB Platform Tools)**
+### Install Android Debug Bridge (ADB Platform Tools) and test it**
 
 Installation on Debian/Ubuntu:
 
@@ -132,8 +118,16 @@ Verify installation:
 ```bash
 adb version
 ```
-![alt text](image-7.png)
+![alt text](./images/image-7.png)
 
+Inside the emulator:
+
+1. Open `Settings`.
+2. Go to `About phone`.
+3. Tap `Build number` 7 times.
+4. Developer options will be enabled.
+5. Go to `Developer Options`.
+6. Enable `USB debugging`.
 
 Start ADB server:
 
@@ -147,28 +141,13 @@ Stop ADB server:
 adb kill-server
 ```
 
----
-
-### **d) Enable debugging and practice ADB commands**
-
-Inside the emulator:
-
-1. Open `Settings`.
-2. Go to `About phone`.
-3. Tap `Build number` 7 times.
-4. Developer options will be enabled.
-5. Go to `Developer Options`.
-6. Enable `USB debugging`.
-
-#### ADB Commands
-
 List devices:
 
 ```bash
 adb devices
 ```
 
-![alt text](image-8.png)
+![alt text](./images/image-8.png)
 
 Open shell:
 
@@ -176,7 +155,7 @@ Open shell:
 adb shell
 ```
 
-![alt text](image-9.png)
+![alt text](./images/image-9.png)
 
 Restart ADB as root:
 
@@ -184,7 +163,7 @@ Restart ADB as root:
 adb root
 ```
 
-![alt text](image-10.png)
+![alt text](./images/image-10.png)
 
 Pull files from device:
 
@@ -192,7 +171,7 @@ Pull files from device:
 adb pull /sdcard/Download/
 ```
 
-![alt text](image-11.png)
+![alt text](./images/image-11.png)
 
 Push files to device:
 
@@ -201,7 +180,7 @@ echo hello > hello.txt
 adb push hello.txt /sdcard/Download
 ```
 
-![alt text](image-12.png)
+![alt text](./images/image-12.png)
 
 Reboot device:
 
@@ -215,7 +194,7 @@ Install APK:
 adb install app.apk
 ```
 
-![alt text](image-13.png)
+![alt text](./images/image-13.png)
 
 Uninstall application:
 
@@ -223,7 +202,7 @@ Uninstall application:
 adb uninstall owasp.mstg.uncrackable2
 ```
 
-![alt text](image-14.png)
+![alt text](./images/image-14.png)
 
 List installed packages:
 
@@ -231,7 +210,7 @@ List installed packages:
 adb shell pm list packages
 ```
 
-![alt text](image-15.png)
+![alt text](./images/image-15.png)
 
 Capture screenshots:
 
@@ -239,7 +218,7 @@ Capture screenshots:
 adb exec-out screencap -p > screenshot.png
 ```
 
-![alt text](image-16.png)
+![alt text](./images/image-16.png)
 
 Record screen:
 
@@ -247,7 +226,7 @@ Record screen:
 adb shell screenrecord /sdcard/demo.mp4
 ```
 
-![alt text](image-17.png)
+![alt text](./images/image-17.png)
 
 Pull recorded video:
 
@@ -255,232 +234,192 @@ Pull recorded video:
 adb pull /sdcard/demo.mp4
 ```
 
-![alt text](image-18.png)
+![alt text](./images/image-18.png)
 
----
+## Android Virtualization Close to Real Conditions
 
-## 2) Android Virtualization Close to Real Conditions
-
-### **a) Download Android x86**
-
-Official website:
-
-https://www.android-x86.org/
-
-Download ISO using wget:
+Download Android from the [official website](https://www.android-x86.org/) or using wget:
 
 ```bash
 wget https://sourceforge.net/projects/android-x86/files/latest/download -O android-x86.iso
 ```
 
-Verify ISO:
+Recommended VMWare configuration:
 
-```bash
-sha256sum android-x86.iso
-```
-
----
-
-### **b) Create a 32-bit Linux VM**
-
-Recommended VirtualBox configuration:
-
-- 2GB RAM
-- 8GB Hard Disk
+- 4GB RAM
+- 20GB Hard Disk
 - 256MB Video Memory
 
-Create VM using VBoxManage:
+After inicializing the machine, click on "Installation - Install Android-x86 to hardisk".
+
+![alt text](./images/image-19.png)
+
+Select the "Create/Modify partitions" option.
+
+![alt text](./images/image-20.png)
+
+Select "Yes" when asked for GPT.
+
+![alt text](./images/image-21.png)
+
+And createa "Linux filesystem" partition.
+
+![alt text](./images/image-22.png)
+
+![alt text](./images/image-23.png)
+
+![alt text](./images/image-24.png)
+
+![alt text](./images/image-25.png)
+
+Once the partition is created, click on "OK".
+
+![alt text](./images/image-26.png)
+
+Select "ext4" and click on "OK".
+
+![alt text](./images/image-27.png)
+
+Click on "YES" several times until reboot.
+
+![alt text](./images/image-28.png)
+
+![alt text](./images/image-29.png)
+
+![alt text](./images/image-30.png)
+
+![alt text](./images/image-31.png)
+
+![alt text](./images/image-32.png)
+
+Once the device is rebooted and the ISO is removed, before starting the device, click "e" twice on the GRUB menu to edit it.
+
+![alt text](./images/image-33.png)
+
+![alt text](./images/image-34.png)
+
+Remove the "quiet" line and type "nomodeseet xforvesa". Then, click `ESC` + `b`. This step is done because if these words are not added, the mobile will not have graphical interfe, having only a console tty.
+
+![alt text](./images/image-35.png)
+
+![alt text](./images/image-36.png)
+
+After login, an graphical interface will appear.
+
+![alt text](./images/image-37.png)
+
+Enable the developer mode in the device as previously with the Android Studio device.
+
+![alt text](./images/image-38.png)
+
+![alt text](./images/image-47.png)
+
+![alt text](./images/image-48.png)
+
+![alt text](./images/image-49.png)
+
+![alt text](./images/image-50.png)
+
+Lastly, check the IP of the device, there are multiple options, but it can be done opening a terminal and executing the following command:
 
 ```bash
-VBoxManage createvm --name AndroidVM --ostype Linux_64 --register
+ip a
 ```
 
-Create disk:
+![alt text](./images/image-51.png)
 
-```bash
-VBoxManage createmedium disk --filename AndroidVM.vdi --size 8192
-```
-
-Set RAM:
-
-```bash
-VBoxManage modifyvm AndroidVM --memory 2048 --vram 256
-```
-
-Attach disk:
-
-```bash
-VBoxManage storagectl AndroidVM --name "SATA Controller" --add sata
-```
-
-Attach ISO:
-
-```bash
-VBoxManage storageattach AndroidVM --storagectl "SATA Controller" --port 0 --device 0 --type dvddrive --medium android-x86.iso
-```
-
----
-
-### **c) Install Android in the VM**
-
-Boot the VM and select:
-
-```text
-Installation - Install Android-x86 to harddisk
-```
-
-Create partitions.
-
-Select filesystem:
-
-```text
-ext4
-```
-
-After installation:
-
-Remove ISO from the VM.
-
-Edit GRUB boot parameters:
-
-Replace:
-
-```text
-quiet
-```
-
-With:
-
-```text
-nomodeset xforcevesa
-```
-
-Boot the system.
-
-Configure Android normally.
-
-Add Google account:
-
-```text
-Settings -> Accounts -> Add account
-```
-
-Enable synchronization:
-
-```text
-Automatically sync data
-```
-
----
-
-### **d) Install AFLogical OSE and perform forensic extraction**
-
-Connect to the Android VM:
-
-```bash
-adb connect 10.206.8.1
-```
-
-Verify connection:
+In the main machine, connect to the device using adb and shown below. Take note of chaging the IP address by the one extracted in the step before.
 
 ```bash
 adb devices
+adb connect 192.168.1.41:5555
+adb devices
 ```
 
-Install AFLogical OSE:
+![alt text](./images/image-52.png)
+
+If we want to add an account, open settings and navigate to the "Accounts" section.
+
+![alt text](./images/image-39.png)
+
+Click on "Add account".
+
+![alt text](./images/image-40.png)
+
+And sign in using any account.
+
+![alt text](./images/image-42.png)
+
+Once the login is successfull, the account should appear in the menu.
+
+![alt text](./images/image-43.png)
+
+In order to install AFLogical OSE, download it from [here](https://github.com/nowsecure/android-forensics) and execute the following command:
 
 ```bash
-adb install AFLogical-OSE_1.5.2.apk
+adb install ./AFLogical-OSE_1.5.2.apk
 ```
 
-Launch the application.
+![alt text](./images/image-44.png)
 
-Select:
+Select everything and click on "Capture".
 
-```text
-Select All -> Capture
-```
+![alt text](./images/image-45.png)
 
-Evidence will be stored inside:
+Once the extraction is done, a dialogue with "Data extraction completed" should appear.
 
-```text
-/sdcard/forensics/
-```
+![alt text](./images/image-46.png)
 
-Extract evidence:
+Extract the evidences folder using the following command:
 
 ```bash
 adb pull /sdcard/forensics/ .
 ```
 
-List extracted files:
+The following folders should appear.
+
+![alt text](./images/image-53.png)
+
+Now, the application andriller will be used to extract evidences. Note that it will be done using fish, so it may vary if using other terminals:
 
 ```bash
-ls forensics/
+python -m venv env
+source env/bin/activate.fish
+python -m pip install --upgrade pip
+python -m pip install andriller
 ```
 
-Generate hashes:
+![alt text](./images/image-54.png)
 
-```bash
-sha256sum forensics/*
-```
-
----
-
-### **e) Install Andriller and perform evidence extraction**
-
-Create virtual environment:
-
-```bash
-python3 -m venv env
-```
-
-Activate environment:
-
-```bash
-source env/bin/activate
-```
-
-Install Andriller:
-
-```bash
-pip install andriller -U
-```
-
-Launch Andriller:
+Execute the program:
 
 ```bash
 python -m andriller
 ```
 
-Select:
+The following menu should appear, click on "Output.." and set the output folder.
 
-- Output directory
-- ADB-connected device
+![alt text](./images/image-55.png)
 
-Start extraction.
+Once the folder is selected, click on "Check".
 
-The final report will be generated as HTML.
+![alt text](./images/image-56.png)
 
-Useful commands:
+Lastly, click on "Extract" and the program will connect to the device automatilly and will extract the evicences.
 
-Verify ADB connection:
+![alt text](./images/image-57.png)
 
-```bash
-adb devices
-```
+Once finished, a report like the following will be generated:
 
-Generate Android backup:
+![alt text](./images/image-58.png)
 
-```bash
-adb backup -all
-```
+These are the generated files:
 
----
+![alt text](./images/image-59.png)
 
-## 3) WhatsApp Forensic Analysis
+## WhatsApp Forensic Analysis
 
-### **a) What are consensual and non-consensual forensic analyses?**
+### What are consensual and non-consensual forensic analyses?
 
 #### Consensual Analysis
 
@@ -501,9 +440,7 @@ In these situations:
 - Advanced forensic methods may be required.
 - Physical acquisition may become necessary.
 
----
-
-### **b) What techniques can be used to analyze WhatsApp conversations?**
+### What techniques can be used to analyze WhatsApp conversations?
 
 #### Screenshot Analysis
 
@@ -538,9 +475,7 @@ adb shell
 find /data/data/com.whatsapp -name "*.db"
 ```
 
----
-
-### **c) Where does WhatsApp store encryption keys and databases?**
+### Where does WhatsApp store encryption keys and databases?
 
 #### Encryption Key
 
@@ -578,99 +513,6 @@ adb root
 adb shell
 ```
 
----
-
-## 4) Install WhatsApp and Extract Databases
-
-Install WhatsApp from Google Play.
-
-Alternatively:
-
-```bash
-adb install WhatsApp.apk
-```
-
-Verify installation:
-
-```bash
-adb shell pm list packages | grep whatsapp
-```
-
-After receiving messages:
-
-Open root shell:
-
-```bash
-adb root
-adb shell
-```
-
-Navigate to databases:
-
-```bash
-cd /data/data/com.whatsapp/databases
-```
-
-List files:
-
-```bash
-ls
-```
-
-Extract databases:
-
-```bash
-adb pull /data/data/com.whatsapp/databases
-```
-
-Extract encryption key:
-
-```bash
-adb pull /data/data/com.whatsapp/files/key
-```
-
-Analyze SQLite database:
-
-```bash
-sqlite3 msgstore.db
-```
-
-View messages:
-
-```sql
-select * from message ORDER BY timestamp;
-```
-
-List tables:
-
-```sql
-.tables
-```
-
-Exit SQLite:
-
-```sql
-.exit
-```
-
-Decrypt crypt databases using Andriller.
-
-Useful forensic commands:
-
-Generate hashes:
-
-```bash
-sha256sum msgstore.db
-```
-
-Check file metadata:
-
-```bash
-stat msgstore.db
-```
-
-Analyze APK information:
-
 ```bash
 aapt dump badging WhatsApp.apk
 ```
@@ -702,3 +544,97 @@ Capture device filesystem:
 ```bash
 adb shell ls -R /sdcard/
 ```
+
+## Whatsapp analysis
+
+Whatsapp has been installed and linked to an account as shown below (to be honest I did not blurred anything, characters are simply not loading XD):
+
+![alt text](./images/image-60.png)
+
+Connect to the device using root and verify the whatsapp database directory:
+
+```bash
+adb root
+adb shell
+ls -lah /data/data/com.whatsapp/database/
+```
+
+![alt text](./images/image-61.png)
+
+Extract the entire whatsapp directory using adb for an easier analysis.
+
+```bash
+adb pull /data/data/com.whatsapp
+```
+
+![alt text](./images/image-62.png)
+
+There are several databases with useful info, but the following one contains the messages:
+
+```bash
+sqlite3 msgstore.db
+select * from message ORDER BY timestamp;
+```
+
+![alt text](./images/image-63.png)
+
+Here is a small summary to understand what is happening:
+
+TBD traducir y poner bonito!
+
+1. ID del mensaje
+El número tipo 518, 517, 516...
+Es el identificador interno del mensaje (primary key)
+2. Campos técnicos (flags / estado)
+Muchos 0, -1, NULL
+Son estados internos como:
+leído / no leído
+enviado / recibido / pendiente
+flags de sistema
+3. Identificador del chat o usuario
+Valores tipo:
+3AFDC...
+Esto suele ser el JID (Jabber ID):
+número de teléfono o grupo
+formato interno de WhatsApp
+4. Timestamp (muy importante)
+Números como:
+17007477, 19000, 36000, etc.
+Normalmente son timestamps en formato UNIX o milisegundos
+Indican cuándo se envió/recibió el mensaje
+5. Campo de texto del mensaje
+Lo que ves a la derecha:
+“Seguro q hace tela calor”
+“Ya”
+“No sé si es lo mejor”
+“Comemos en algún sitio?”
+Esto normalmente corresponde a algo como:
+data
+text
+message
+6. Campos multimedia (vacíos en tu captura)
+Muchos NULL
+Significa:
+no hay imagen
+no hay audio
+no hay vídeo
+Si hubiera media verías rutas o MIME types
+7. Otros campos técnicos comunes (los que no se ven bien)
+
+En WhatsApp suelen existir también:
+
+media_type
+status
+key_from_me (si lo enviaste tú o no)
+remote_resource
+quoted_row_id (respuestas citadas)
+latitude/longitude (si hay ubicación)
+📌 Interpretación rápida de tu imagen
+
+Lo más importante de lo que muestras:
+
+Cada fila = 1 mensaje
+La columna final visible = texto del mensaje
+Los bloques de NULL = sin multimedia o campos no usados
+Los números grandes = timestamps o IDs internos
+El hash largo (3AFDC...) = chat o usuario/grupo
